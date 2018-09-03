@@ -1,5 +1,13 @@
 #include <stdio.h>
+#include <iostream>
+#include "Game.h"
 int main() {
-	printf("Hello World");
+	Game* mygame = new Game();
+	mygame->Initialize();
+	mygame->Draw();
+	while (true) {
+		mygame->Update();
+		mygame->Draw();
+	}
 	return 0;
 }

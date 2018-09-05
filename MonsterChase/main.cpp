@@ -9,5 +9,7 @@ int main() {
 		mygame->Update();
 		mygame->Draw();
 	}
+	delete mygame;
+	mygame = nullptr;
 	return 0;
 }

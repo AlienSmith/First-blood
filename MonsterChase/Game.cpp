@@ -45,12 +45,16 @@ void Game::Update()
 	this->PlayerInput();
 	Monster* temp;
 	temp = start;
-	if (temp->after == nullptr) {
-		return;
-	}
-	while (temp->after != nullptr) {
-		temp = temp->after;
+	Monster* after;
+	after = temp->after;
+	temp = after;
+	while (temp != nullptr) {
 		temp->Update(this->playerx, this->playersy, this->time);
+		after = temp->after;
+		if (temp->lifetime < this->time) {
+			delete temp;
+		}
+		temp = after;
 	}
 }
 

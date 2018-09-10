@@ -33,7 +33,9 @@ void Game::Addmonster(int numbers)
 void Game::AddNewmonster()
 {
 	Monster* currentmonster = new Monster(Game::time + Game::monsterlifetime);
-	(*(this->start->after)).previous = currentmonster;
+	if (this->start->after != nullptr) {
+		(*(this->start->after)).previous = currentmonster;
+	}
 	(*currentmonster).after = this->start->after;
 	(*(this->start)).after = currentmonster;
 	(*currentmonster).previous = this->start;

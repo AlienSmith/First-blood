@@ -150,10 +150,10 @@ namespace GStar {
 	inline void GStar::Vector2::Normalize() {
 		float length = this->Length();
 		this->m_x = this->m_x/length;
-		this->m_y /= this->m_y/length;
+		this->m_y = this->m_y/length;
 		return;
 	}
-	// return projective form vector A onto vector B
+	// return projective from vector A onto vector B
 	inline GStar::Vector2 GStar::Vector2::ProjAtoB(const Vector2& A, const Vector2& B) {
 		return A.Dot(B) / B.Length()* (B/B.Length());
 	}

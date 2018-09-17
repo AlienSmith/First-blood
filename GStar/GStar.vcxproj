@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Assert.h" />
+    <ClInclude Include="Coordinate.h" />
     <ClInclude Include="GStar_init.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="Vector2.h" />

@@ -1,18 +1,22 @@
 #pragma once
 #include <Vector>
 #include "Assert.h"
+#include "Vector3.h"
 #ifndef MATRIX4
 #define MATRIX4
 #define out
 #define SIZE 4
 #define ZERO_ARRAY { {0,0,0,0},{0, 0, 0, 0},{ 0,0,0,0 },{ 0,0,0,0 }, }
+#define IDENTICAL_MATRIX { {1,0,0,0},{0, 1, 0, 0},{ 0,0,1,0 },{ 0,0,0,1 }, }
 typedef float array_ff[SIZE][SIZE];
 namespace GStar {
 	class Matrix4;
 	std::vector<Matrix4*>* tempresultpool;
 	inline Matrix4& AddPool(array_ff& rdata);
 	inline void CleanPool();
-	//Plase use = in all the equations to release temperary pointers.
+	//Plase do not contain constructor in equations.
+	//Constructor with parameters and = += *= -= /=  will clean the temperary data
+	//function return a reference of Matrix4 will add entries to the temperary data
 	class Matrix4
 	{
 	public:
@@ -152,6 +156,22 @@ namespace GStar {
 				this->data[i][j] /= A;
 			}
 		}
+	}
+	// multiply a matrix with a vector3
+	inline Vector3 operator* (Matrix4& trans, Vector3& ve) {
+		const array_ff& temp = trans.Get();
+		float tempvector[4] = {0,0,0,0};
+		tempvector[0] = ve.x();
+		tempvector[1] = ve.y();
+		tempvector[2] = ve.z();
+		tempvector[3] = 1;
+		float result[4] = { 0,0,0,0 };
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				result[i] += temp[i][j]*tempvector[j];
+			}
+		}
+		return Vector3(result[0], result[1], result[2]);
 	}
 	//return the matrix product between two matrics
 	inline void Matrix4::Dot(const Matrix4 & B, Matrix4& out matrix3) const

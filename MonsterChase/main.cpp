@@ -5,11 +5,18 @@
 #include "Vector2.h"
 #include "Vector3.h"
 #include "GStar_init.cpp"
+#include "Coordinate.h"
 //void test();
 //void test1();
 //void Game1();
 int main() {
 	GStar::Initialize();
+	GStar::Vector3 Object = GStar::Vector3(1, 1, 1);
+	GStar::Coordinate tempcoordinate = GStar::Coordinate(GStar::Coordinate::TYPE::OBJECT);
+	tempcoordinate.move(1, 1, 1);
+	Object = tempcoordinate.Apply(Object);
+
+
 
 	float da[4][4] = { 
 		{1,2,3,0},

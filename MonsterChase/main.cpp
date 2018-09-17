@@ -4,7 +4,7 @@
 #include "Matrix4.h"
 #include "Vector2.h"
 #include "Vector3.h"
-#include "GStar_init.h"
+#include "GStar_init.cpp"
 //void test();
 //void test1();
 //void Game1();
@@ -12,14 +12,26 @@ int main() {
 	GStar::Initialize();
 
 	float da[4][4] = { 
-		{1,2,0,0},
+		{1,2,3,0},
 	{2, 0, 0, 0},
 	{ 0,0,0,0 },
 	{ 0,0,0,0 }, };
 	GStar::Matrix4 matrix1 = GStar::Matrix4(da);
 	GStar::Matrix4 matrix2 = GStar::Matrix4(da);
 	GStar::Matrix4 matrix3 = (matrix1.Dot(matrix2).Dot(matrix1));
+	GStar::Matrix4 matrix4 = matrix1.T();
 
+	float da1[4][4] = {
+		{1,0,0,0},
+	{0, 2, 0, 0},
+	{ 0,0,3,0 },
+	{ 0,0,0,4 }, };
+	GStar::Matrix4 matrix5 = GStar::Matrix4(da1);
+	float y = matrix5.determinant();
+	float prey = matrix5.determinantc();
+	GStar::Matrix4 matrix6 = matrix5.I();
+
+	GStar::Terminate();
 	int a;
 	std::cin >> a;
 	return 0;

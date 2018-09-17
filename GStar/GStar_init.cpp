@@ -1,4 +1,5 @@
 #include "GStar_init.h"
+#include "Matrix4.h"
 #include <stdio.h>
 bool GStar::Initialize()
 {
@@ -7,6 +8,7 @@ bool GStar::Initialize()
 }
 bool GStar::Terminate()
 {
-	return false;
+	//GStar::CleanPool();
+	printf("Terminated");
+	return true;
 }
-

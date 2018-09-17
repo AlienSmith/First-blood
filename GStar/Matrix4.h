@@ -227,11 +227,20 @@ namespace GStar {
 				temp[i][j] = transpose.C(i, j) / deteminate;
 			}
 		}
+
 			return GStar::AddPool(temp);
 	}
 	//Mathmatic determinant of a 3*3 matrix cut from the original matirx
 	inline float Matrix4::C(float x, float y) const
 	{
+		int tempflag = x + y;
+		if (tempflag % 2 == 0) {
+			tempflag = 1;
+		}
+		else
+		{
+			tempflag = -1;
+		}
 		float temp[9];
 		int count = 0;
 		for (int i = 0; i < SIZE; i++) {
@@ -245,7 +254,7 @@ namespace GStar {
 		float temp1 = temp[0] * (temp[4] * temp[8] - temp[5] * temp[7]);
 		float temp2 = temp[1] * (temp[3] * temp[8] - temp[5] * temp[6]);
 		float temp3 = temp[2] * (temp[3] * temp[7] - temp[4] * temp[6]);
-		return temp1 - temp2 + temp3;
+		return tempflag*(temp1 - temp2 + temp3);
 	}
 
 	inline float Matrix4::determinant() const
@@ -267,12 +276,11 @@ namespace GStar {
 	inline float Matrix4::determinantc() const
 	{
 		float temp1 = data[0][0] * this->C(0, 0);
-
 		float temp2 = data[0][1] * this->C(0, 1);
 		float temp3 = data[0][2] * this->C(0, 2);
 		float temp4 = data[0][3] * this->C(0, 3);
 
-		return temp1-temp2+temp3-temp4;
+		return temp1+temp2+temp3+temp4;
 	}
 
 	

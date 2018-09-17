@@ -20,6 +20,7 @@ namespace GStar {
 		void Rotate(float roll, float pitch, float yaw);
 		void move(float x, float y, float z);
 		Vector3 Apply(Vector3& object);
+		Vector3 Reverse(Vector3& object);
 	private:
 		TYPE mytype;
 		Matrix4 worldTothis;
@@ -59,8 +60,8 @@ namespace GStar {
 		temp[2][0] = -cx * sy;
 		temp[2][1] = sx;
 		temp[2][3] = cx * cy;
-		Matrix4 tempmatrix = Matrix4(temp);
-		this->worldTothis *= tempmatrix;
+		Matrix4 tempmatrix = this->worldTothis.Dot(Matrix4(temp));
+		this->worldTothis = tempmatrix;
 	}
 
 	inline void Coordinate::move(float x, float y, float z)
@@ -69,7 +70,7 @@ namespace GStar {
 		temp[0][3] = x;
 		temp[1][3] = y;
 		temp[2][3] = z;
-		Matrix4 tempmatrix = Matrix4(temp);
+		Matrix4 tempmatrix = this->worldTothis.Dot(Matrix4(temp));
 		this->worldTothis = tempmatrix;
 
 	}
@@ -77,6 +78,11 @@ namespace GStar {
 	inline Vector3 Coordinate::Apply(Vector3 & object)
 	{
 		return this->worldTothis*object;
+	}
+
+	inline Vector3 Coordinate::Reverse(Vector3 & object)
+	{
+		return this->worldTothis.I()*object;
 	}
 
 }

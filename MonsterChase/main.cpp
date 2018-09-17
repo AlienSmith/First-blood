@@ -10,11 +10,23 @@
 //void test1();
 //void Game1();
 int main() {
+	float daat[4][4] = {
+		{1,0,0,1},
+	{0, 1, 0, 1},
+	{ 0,0,1,1 },
+	{ 0,0,0,1 }, };
+	GStar::Matrix4 test = GStar::Matrix4(daat);
+	float determinant = test.determinant();
+	GStar::Matrix4 test2 = test.I();
+
 	GStar::Initialize();
 	GStar::Vector3 Object = GStar::Vector3(1, 1, 1);
 	GStar::Coordinate tempcoordinate = GStar::Coordinate(GStar::Coordinate::TYPE::OBJECT);
 	tempcoordinate.move(1, 1, 1);
 	Object = tempcoordinate.Apply(Object);
+
+
+	Object = tempcoordinate.Reverse(Object);
 
 
 

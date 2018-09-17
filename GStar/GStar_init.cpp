@@ -5,3 +5,8 @@ bool GStar::Initialize()
 	printf("Initialized");
 	return true;
 }
+bool GStar::Terminate()
+{
+	return false;
+}
+

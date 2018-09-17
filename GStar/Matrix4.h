@@ -1,12 +1,15 @@
 #pragma once
+#include <Vector>
 #ifndef MATRIX4
 #define MATRIX4
-#include <vector>
 #define out
 #define SIZE 4
 #define ZERO_ARRAY { {0,0,0,0},{0, 0, 0, 0},{ 0,0,0,0 },{ 0,0,0,0 }, }
 typedef float array_ff[SIZE][SIZE];
 namespace GStar {
+	class Matrix4;
+	std::vector<Matrix4*>* tempresultpool;
+	//Plase use = in all the equations to release temperary pointers.
 	class Matrix4
 	{
 	public:
@@ -26,14 +29,35 @@ namespace GStar {
 		void operator -= (float A);
 		void operator *= (float A);
 		void operator /= (float A);
-		
 		void Dot(const Matrix4& B, Matrix4& out result) const;
-		// A funtion that should not work
-		const Matrix4& Dot(const Matrix4& B) const;
+		void CleanPool() const;
+		Matrix4& AddPool(array_ff& rdata) const;
+		Matrix4& Dot(const Matrix4& B)const;
 		//void Transform();
 	private:
 		array_ff data = ZERO_ARRAY;
 	};
+	void Matrix4::CleanPool() const
+	{
+		if (GStar::tempresultpool != nullptr) {
+			for (Matrix4* pointer : *GStar::tempresultpool) {
+				delete(pointer);
+			}
+			delete(GStar::tempresultpool);
+			GStar::tempresultpool = nullptr;
+		}
+	}
+	Matrix4& Matrix4::AddPool(array_ff & rdata) const
+	{
+		if (GStar::tempresultpool == nullptr) {
+			GStar::tempresultpool = new std::vector<Matrix4*>();
+		}
+		Matrix4* p_temp = new Matrix4(rdata);
+		Matrix4& temp = *p_temp;
+		GStar::tempresultpool->push_back(p_temp);
+		return temp;
+;
+	}
 	// Matrix to Matrix = += -= *= /= 
 	inline void Matrix4::operator=(const Matrix4 & A)
 	{
@@ -43,6 +67,7 @@ namespace GStar {
 				this->data[i][j] = TA[i][j];
 			}
 		}
+		this->CleanPool();
 	}
 	inline void Matrix4::operator+=(const Matrix4 & A)
 	{
@@ -52,6 +77,7 @@ namespace GStar {
 				this->data[i][j] += TA[i][j];
 			}
 		}
+		this->CleanPool();
 	}
 	inline void Matrix4::operator-=(const Matrix4 & A)
 	{
@@ -61,6 +87,7 @@ namespace GStar {
 				this->data[i][j] -= TA[i][j];
 			}
 		}
+		this->CleanPool();
 	}
 	inline void Matrix4::operator*=(const Matrix4 & A)
 	{
@@ -70,6 +97,7 @@ namespace GStar {
 				this->data[i][j] *= TA[i][j];
 			}
 		}
+		this->CleanPool();
 	}
 	inline void Matrix4::operator/=(const Matrix4 & A)
 	{
@@ -79,6 +107,7 @@ namespace GStar {
 				this->data[i][j] /= TA[i][j];
 			}
 		}
+		this->CleanPool();
 	}
 
 	//Matrix to float = += -= *= /=
@@ -134,13 +163,15 @@ namespace GStar {
 				}
 			}
 		}
-
+		
 		matrix3.Copy(temp);
 	}
 
-	inline const Matrix4& Matrix4::Dot(const Matrix4& B)  const
+
+	inline Matrix4& Matrix4::Dot(const Matrix4& B) const
 	{
 		array_ff temp = ZERO_ARRAY;
+		array_ff & rtemp = temp;
 		const array_ff& TB = B.Get();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
@@ -149,12 +180,14 @@ namespace GStar {
 				}
 			}
 		}
-		return temp;
+		
+		return AddPool(rtemp);
 	}
 
 
 	
 
+	// override operators MAtrix4 +-*/ Matrix4
 	inline const Matrix4& operator+ (const Matrix4& A, const Matrix4& B) {
 		array_ff temp;
 		array_ff & rtemp = temp;
@@ -163,6 +196,79 @@ namespace GStar {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				temp[i][j] = TA[i][j] + TB[i][j];
+			}
+		}
+		return rtemp;
+	}
+	inline const Matrix4& operator- (const Matrix4& A, const Matrix4& B) {
+		array_ff temp;
+		array_ff & rtemp = temp;
+		const array_ff& TA = A.Get();
+		const array_ff& TB = B.Get();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				temp[i][j] = TA[i][j] - TB[i][j];
+			}
+		}
+		return rtemp;
+	}
+	inline const Matrix4& operator* (const Matrix4& A, const Matrix4& B) {
+		array_ff temp;
+		array_ff & rtemp = temp;
+		const array_ff& TA = A.Get();
+		const array_ff& TB = B.Get();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				temp[i][j] = TA[i][j] * TB[i][j];
+			}
+		}
+		return rtemp;
+	}
+	inline const Matrix4& operator/ (const Matrix4& A, const Matrix4& B) {
+		array_ff temp;
+		array_ff & rtemp = temp;
+		const array_ff& TA = A.Get();
+		const array_ff& TB = B.Get();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				temp[i][j] = TA[i][j] / TB[i][j];
+			}
+		}
+		return rtemp;
+	}
+	// number and matrix4 */
+
+	inline const Matrix4& operator* (float A, const Matrix4& B){
+		array_ff temp;
+		array_ff & rtemp = temp;
+		const array_ff& TB = B.Get();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				temp[i][j] = A * TB[i][j];
+			}
+		}
+		return rtemp;
+	}
+
+	inline const Matrix4& operator* (const Matrix4& A, float B) {
+		array_ff temp;
+		array_ff & rtemp = temp;
+		const array_ff& TA = A.Get();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				temp[i][j] = TA[i][j] * B;
+			}
+		}
+		return rtemp;
+	}
+
+	inline const Matrix4& operator/ (const Matrix4& A, float B) {
+		array_ff temp;
+		array_ff & rtemp = temp;
+		const array_ff& TA = A.Get();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				temp[i][j] = TA[i][j] / B;
 			}
 		}
 		return rtemp;

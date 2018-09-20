@@ -8,7 +8,7 @@
 #define SIZE 4
 #define ZERO_MATRIX { {0,0,0,0},{0, 0, 0, 0},{ 0,0,0,0 },{ 0,0,0,0 }, }
 #define IDENTICAL_MATRIX { {1,0,0,0},{0, 1, 0, 0},{ 0,0,1,0 },{ 0,0,0,1 }, }
-typedef float array_ff[SIZE][SIZE];
+typedef float array_ff[SIZE][SIZE]; 
 namespace GStar {
 	class Matrix4;
 	std::vector<Matrix4*>* tempresultpool;
@@ -201,7 +201,7 @@ namespace GStar {
 				}
 			}
 		}
-		return temp;
+		return AddPool(temp);
 	}
 
 	// Mathmatic transpose of matrix

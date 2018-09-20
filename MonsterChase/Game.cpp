@@ -1,7 +1,8 @@
 #include "Game.h"
-
+#include <stdio.h>
+#include <iostream>
 char Game::info1[] = "Use \"wasd\" keys to move player, Use \"Q\" for quite,Use \"R\" for add a monster";
-char Game::info2[] = "Please enter players name";
+char Game::info2[] = "Please enter players name end with \".\"";
 char Game::info3[] = "Enter the number of monsters";
 char Game::info4[] = "No Monster Left";
 int Game::monsterlifetime = 10;
@@ -10,70 +11,67 @@ int Game::playersx = 1;
 int Game::playersy = 15;
 int Game::playerspeed = 2;
 Game::Game() {
-	this->playerx = Game::playersx;
-	this->palyery = Game::playersy;
+	this->Playerposition = GStar::Vector2(Game::playersx, Game::playersy);
+	this->PlayerName = new GStar::SingleLinkedList<char>();
+	this->MonsterList = new GStar::SingleLinkedList<Monster*>();
+}
+Game::~Game()
+{
+	delete PlayerName;
+	GStar::SingleLinkedListNode<Monster*>* temp = MonsterList->GetHead();
+	delete temp->GetData();
+	temp = temp->GetNext();
 }
 void Game::Addmonster(int numbers)
 {
-	this->start = new Monster();
-	Monster* currentmonster;
-	Monster* privousMonster;
-	Monster* successMonster;
-	privousMonster = this->start;
-	successMonster = nullptr;
 	for (int i = 0; i < numbers; i++) {
-		currentmonster = new Monster(Game::monsterlifetime);
-		(*privousMonster).after = currentmonster;
-		(*currentmonster).previous = privousMonster;
-		(*currentmonster).after = successMonster;
-		privousMonster = currentmonster;
+		this->AddNewmonster();
 	}
 }
 
 void Game::AddNewmonster()
 {
-	Monster* currentmonster = new Monster(Game::time + Game::monsterlifetime);
-	if (this->start->after != nullptr) {
-		(*(this->start->after)).previous = currentmonster;
-	}
-	(*currentmonster).after = this->start->after;
-	(*(this->start)).after = currentmonster;
-	(*currentmonster).previous = this->start;
+	this->MonsterList->Push(new Monster(Monster::lifespan+Game::time));
 }
 
 void Game::Update()
 {
 	Game::time++;
 	this->PlayerInput();
-	Monster* temp;
-	temp = start;
-	Monster* after;
-	after = temp->after;
-	temp = after;
-	while (temp != nullptr) {
-		temp->Update(this->playerx, this->playersy, this->time);
-		after = temp->after;
-		if (temp->lifetime < this->time) {
-			delete temp;
+	GStar::SingleLinkedListNode<Monster*>* temp = this->MonsterList->GetHead();
+	GStar::SingleLinkedListNode<Monster*>* temp1 = temp->GetNext();
+
+	while (temp1 != nullptr) {
+		if (!(temp1->GetData()->CheckLife(Game::time))) {
+			delete temp1->GetData();
+			temp1->Delete(temp,this->MonsterList);
+			temp1 = temp->GetNext();
 		}
-		temp = after;
+		else {
+			temp = temp1;
+			temp1 = temp->GetNext();
+		}
+		
 	}
+
 }
 
 
 void Game::Draw()
 {
-	printf("%s is at (%i,%i)\n", this->PlayerName, this->playerx, this->palyery);
-	Monster* temp;
-	temp = start;
-	if (temp->after == nullptr) {
-		printf("%s \n", this->info4);
-		return;
+	GStar::SingleLinkedListNode<char>* temp =  this->PlayerName->GetHead();
+	temp = temp->GetNext();
+	while (temp != nullptr) {
+		printf("%c", temp->GetData());
+		temp = temp->GetNext();
 	}
 
-	while (temp->after != nullptr) {
-		temp = temp->after;
-		temp->Print();
+	printf(" is at (%f,%f)\n", this->Playerposition.x(), this->Playerposition.y());
+	GStar::SingleLinkedListNode<Monster*>* tempmonster = this->MonsterList->GetHead();
+	tempmonster = tempmonster->GetNext();
+	while (tempmonster != nullptr) {
+		tempmonster->GetData()->Print();
+		tempmonster = tempmonster->GetNext();
 	}
 }
 
@@ -81,7 +79,13 @@ void Game::GetPlayerName()
 {
 	printf("%s\n", Game::info1);
 	printf("%s\n", Game::info2);
-	std::cin >> this->PlayerName;
+	char next='1';
+	std::cin >> next;
+	while (next != '.') {
+		this->PlayerName->Push(next);
+		std::cin >> next;
+	}
+	this->PlayerName->Push('\0');
 }
 
 void Game::Initialize()
@@ -103,16 +107,16 @@ void Game::PlayerInput()
 	char temp;
 	std::cin >> temp;
 	if (temp == 'w') {
-		this->palyery += playerspeed;
+		this->Playerposition += GStar::Vector2(0,Game::playerspeed);
 	}
 	else if (temp == 's') {
-		this->palyery -= playerspeed;
+		this->Playerposition -= GStar::Vector2(0, Game::playerspeed);
 	}
 	else if (temp == 'a') {
-		this->playerx -= playerspeed;
+		this->Playerposition -= GStar::Vector2(Game::playerspeed, 0);
 	}
 	else if (temp == 'd') {
-		this->playerx += playerspeed;
+		this->Playerposition += GStar::Vector2(Game::playerspeed, 0);
 	}
 	else if (temp == 'r') {
 		this->AddNewmonster();

@@ -1,56 +1,79 @@
 #include "Monster.h"
 #include <stdio.h>
+#include <iostream>
 int Monster::count = 0;
 int Monster::speed = 1;
+int Monster::lifespan = 1;
+//take the head pointer of the list.
+void Monster::printlist(GStar::SingleLinkedListNode<char>* temper)
+{
+	GStar::SingleLinkedListNode<char>* temp = temper;
+	temp = temp->GetNext();
+	while (temp != nullptr) {
+		printf("%c", temp->GetData());
+		temp = temp->GetNext();
+	}
+}
 
 Monster::Monster()
 {
 }
 
+Monster::~Monster()
+{
+	delete MonsterName;
+}
+
 Monster::Monster(int lifetime)
 {
-	previous = nullptr;
-	after = nullptr;
+	this->MonsterName = new GStar::SingleLinkedList<char>();
 	count++;
 	this->lifetime = lifetime;
-	this->postionx = count%10 + count%3;
-	this->positiony = count%10 + count % 14;
+	this->m_position = GStar::Vector2(count % 10 + count % 3, count % 10 + count % 14);
 	this->mynumber = Monster::count;
+	this->GetName();
 }
 
-void Monster::Update(int x, int y, int time)
+void Monster::Update(GStar::Vector2 position, int time)
 {
 	this->CheckLife(time);
-	this->MoveTo(x, y);
+	this->MoveTo(position);
 }
 
-void Monster::MoveTo(int x, int y)
+void Monster::MoveTo(GStar::Vector2 position)
 {
-	if (x > this->postionx) {
-		this->postionx += speed;
-	}
-	else if (x < this->postionx) {
-		this->postionx -= speed;
-	}
-	if (y > this->positiony) {
-		this->positiony += speed;
-	}
-	else if (y < this->positiony) {
-		this->positiony -= speed;
-	}
+	GStar::Vector2 temp = position - this->m_position;
+	temp.Normalize();
+	this->m_position += (Monster::speed*temp);
 }
 
-void Monster::CheckLife(int time)
+bool Monster::CheckLife(int time)
 {
-	if (time > this->lifetime) {
-		(*previous).after = this->after;
-		if (after != nullptr) {
-			(*after).previous = this->previous;
-		}
+	if (this->lifetime < time) {
+		return false;
 	}
+	return true;
 }
 
 void Monster::Print()
 {
-	printf("%s%i is at (%i,%i)\n", this->monstername, this->mynumber,this->postionx, this->positiony);
+	GStar::SingleLinkedListNode<char>* temp = this->MonsterName->GetHead();
+	temp = temp->GetNext();
+	while (temp != nullptr) {
+		printf("%c", temp->GetData());
+		temp = temp->GetNext();
+	}
+	printf(" is at (%f,%f)\n",this->m_position.x(), this->m_position.y());
+}
+
+void Monster::GetName()
+{
+	printf("Please enter name for monster %i end with \".\" \n", this->mynumber );
+	char next;
+	std::cin >> next;
+	while (next != '.') {
+		this->MonsterName->Push(next);
+		std::cin >> next;
+	}
+	this->MonsterName->Push('\0');
 }

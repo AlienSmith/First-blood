@@ -1,22 +1,25 @@
 #pragma 
+#include "SingleLinkedList.h"
+#include "Vector2.h"
 #ifndef MONSTERH
 #define MONSTERH
 class Monster {
 public:
+	static void printlist(GStar::SingleLinkedListNode<char>* temp);
 	static int count;
 	static int speed;
-	Monster* previous;
-	Monster* after;
-	char monstername[10] = "monster";
+	static int lifespan;
+	GStar::SingleLinkedList<char>* MonsterName;
 	int mynumber;
-	int postionx;
-	int positiony;
+	GStar::Vector2 m_position;
 	int lifetime;
 	Monster();
+	~Monster();
 	Monster(int lifetime);
-	void Update(int x, int y, int time);
-	void MoveTo(int x, int y);
-	void CheckLife(int time);
+	void Update(GStar::Vector2 position, int time);
+	void MoveTo(GStar::Vector2 position);
+	bool CheckLife(int time);
 	void Print();
+	void GetName();
 };
 #endif

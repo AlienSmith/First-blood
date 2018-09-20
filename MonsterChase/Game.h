@@ -2,24 +2,23 @@
 #ifndef GAMEH
 #define GAMEH
 #include "Monster.h"
-#include <stdio.h>
-#include <iostream>
 class Game {
 public:
+	Game();
+	~Game();
 	static char info1[];
 	static char info2[];
 	static char info3[];
 	static char info4[];
 	static int monsterlifetime;
 	static int time;
-	static int playersx;
 	static int playersy;
+	static int playersx;
+	GStar::Vector2 Playerposition;
 	static int playerspeed;
-	char PlayerName[10];
-	Monster* start;
-	int playerx;
-	int palyery;
-	Game();
+	//TODO question why make playername list autoallocate will lead to error?
+	GStar::SingleLinkedList<char>* PlayerName;
+	GStar::SingleLinkedList<Monster*>* MonsterList;
 	void Addmonster(int numbers);
 	void AddNewmonster();
 	void Update();

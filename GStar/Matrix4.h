@@ -6,7 +6,7 @@
 #define MATRIX4
 #define out
 #define SIZE 4
-#define ZERO_ARRAY { {0,0,0,0},{0, 0, 0, 0},{ 0,0,0,0 },{ 0,0,0,0 }, }
+#define ZERO_MATRIX { {0,0,0,0},{0, 0, 0, 0},{ 0,0,0,0 },{ 0,0,0,0 }, }
 #define IDENTICAL_MATRIX { {1,0,0,0},{0, 1, 0, 0},{ 0,0,1,0 },{ 0,0,0,1 }, }
 typedef float array_ff[SIZE][SIZE];
 namespace GStar {
@@ -43,7 +43,7 @@ namespace GStar {
 		float determinant() const;
 		float determinantc() const;
 	private:
-		array_ff data = ZERO_ARRAY;
+		array_ff data = ZERO_MATRIX;
 		float C(float x, float y) const;
 	};
 	inline GStar::Matrix4& GStar::AddPool(array_ff& rdata) {
@@ -176,7 +176,7 @@ namespace GStar {
 	//return the matrix product between two matrics
 	inline void Matrix4::Dot(const Matrix4 & B, Matrix4& out matrix3) const
 	{
-		array_ff temp = ZERO_ARRAY;
+		array_ff temp = ZERO_MATRIX;
 		const array_ff& TB = B.Get();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
@@ -191,7 +191,8 @@ namespace GStar {
 	//Mathmatic implementation of Dot
 	inline Matrix4& Matrix4::Dot(const Matrix4& B) const
 	{
-		array_ff temp = ZERO_ARRAY;
+		array_ff temp = ZERO_MATRIX;
+		array_ff& temp1 = temp;
 		const array_ff& TB = B.Get();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
@@ -200,13 +201,13 @@ namespace GStar {
 				}
 			}
 		}
-		return GStar::AddPool(temp);
+		return temp;
 	}
 
 	// Mathmatic transpose of matrix
 	inline Matrix4 & Matrix4::T() const
 	{
-		array_ff temp = ZERO_ARRAY;
+		array_ff temp = ZERO_MATRIX;
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				temp[j][i] = this->data[i][j];
@@ -218,7 +219,7 @@ namespace GStar {
 	//Mathmatic inverse of matrix
 	inline Matrix4 & Matrix4::I() const
 	{
-		array_ff temp = ZERO_ARRAY;
+		array_ff temp = ZERO_MATRIX;
 		float deteminate = this->determinantc();
 		ASSERT(deteminate != 0, "The Matrix do not have a reverse");
 		Matrix4& transpose = this->T();

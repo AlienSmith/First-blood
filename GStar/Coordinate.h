@@ -3,6 +3,7 @@
 #define COORDINATE_H
 #include "Matrix4.h"
 #include "math.h"
+#define PI 3.14159265
 namespace GStar {
 	//right hand coordinate
 	class Coordinate
@@ -45,12 +46,13 @@ namespace GStar {
 	inline void Coordinate::Rotate(float roll, float pitch, float yaw)
 	{
 		array_ff temp = IDENTICAL_MATRIX;
-		float sx = sin(roll);
-		float sy = sin(pitch);
-		float sz = sin(yaw);
-		float cx = cos(roll);
-		float cy = cos(pitch);
-		float cz = cos(yaw);
+		float sx = sin(roll*PI/180);
+		float sy = sin(pitch*PI / 180);
+		float sz = sin(yaw*PI / 180);
+		float cx = cos(roll*PI / 180);
+		float cy = cos(pitch*PI / 180);
+		float cz = cos(yaw*PI / 180);
+
 		temp[0][0] = cz * cy - sz * sx*sy;
 		temp[0][1] = -sz*cx;
 		temp[0][2] = sy * cz + sz * sx*cy;
@@ -59,8 +61,9 @@ namespace GStar {
 		temp[1][2] = sz * sy - cz * sx*cy;
 		temp[2][0] = -cx * sy;
 		temp[2][1] = sx;
-		temp[2][3] = cx * cy;
+		temp[2][2] = cx * cy;
 		Matrix4 tempmatrix = this->worldTothis.Dot(Matrix4(temp));
+
 		this->worldTothis = tempmatrix;
 	}
 
@@ -77,6 +80,7 @@ namespace GStar {
 
 	inline Vector3 Coordinate::Apply(Vector3 & object)
 	{
+
 		return this->worldTothis*object;
 	}
 

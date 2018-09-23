@@ -13,6 +13,12 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="Res">
+      <UniqueIdentifier>{6065b863-7e09-49ce-b95f-d339d0d4fc23}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Res\shaders">
+      <UniqueIdentifier>{6c2088d7-2507-4485-97e4-f885124d8e03}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h">
@@ -44,5 +50,13 @@
     <ClCompile Include="Vector2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="OpenGL.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="res\shader\Basic.shader">
+      <Filter>Res\shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

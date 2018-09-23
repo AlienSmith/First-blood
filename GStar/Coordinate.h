@@ -3,6 +3,7 @@
 #define COORDINATE_H
 #include "Matrix4.h"
 #include "math.h"
+#include "Vector3.h"
 #define PI 3.14159265
 namespace GStar {
 	//right hand coordinate

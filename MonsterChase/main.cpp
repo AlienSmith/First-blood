@@ -2,18 +2,23 @@
 #include <crtdbg.h>
 //#include <stdio.h>
 #include <iostream>
-//#include "Matrix4.h"
-//#include "Vector2.h"
-//#include "Vector3.h"
-//#include "GStar_init.cpp"
-//#include "Coordinate.h"
-//#include "SingleLinkedList.h"
+#include "OpenGL.cpp"
+//#include Matrix4.h
+//#include Vector2.h
+//#include Vector3.h
+#include "GStar_init.cpp"
+//#include Coordinate.h
+//#include SingleLinkedList.h
 //void test();
 //void test1();
 //void test2();
 //void test3();
+//int Entrance();
 int main() {
 	{
+		//GStar::Initialize();
+		//GStar::Terminate();
+		return ExampleEntrance();
 		/*GStar::SingleLinkedList<char> TestChar = GStar::SingleLinkedList<char>();
 		char next;
 		std::cin >> next;
@@ -34,6 +39,7 @@ int main() {
 		return 0;
 	};
 }
+
 //void test3() {
 //	GStar::SingleLinkedList<char> IntList = GStar::SingleLinkedList<char>();
 //	char a = '1';
@@ -45,7 +51,7 @@ int main() {
 //	GStar::SingleLinkedListNode<char>* temp = IntList.GetHead();
 //	temp = temp->GetNext();
 //	while (temp != nullptr) {
-//		printf("%c", temp->GetData());
+//		printf(%c, temp->GetData());
 //		temp = temp->GetNext();
 //	}
 //	int d;
@@ -114,9 +120,9 @@ int main() {
 //	GStar::Initialize();
 //	GStar::Vector3 v1(1, 0, 0);
 //	GStar::Vector3 v2(0, 0, 1);
-//	printf("%f\n", (v1 + v2).Length());
-//	printf("%f\n", (v1 * v2).Length());
-//	printf("%f\n", v1.Dot(v2));
-//	printf("%f\n", GStar::Vector3::ProjAtoB(v1, v2).Length());
+//	printf(%f, (v1 + v2).Length());
+//	printf(%f, (v1 * v2).Length());
+//	printf(%f, v1.Dot(v2));
+//	printf(%f, GStar::Vector3::ProjAtoB(v1, v2).Length());
 //}
 //

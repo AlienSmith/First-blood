@@ -63,12 +63,12 @@ void Monster::Print()
 		printf("%c", temp->GetData());
 		temp = temp->GetNext();
 	}
-	printf(" is at (%f,%f)\n",this->m_position.x(), this->m_position.y());
+	printf( "is at (%f,%f)",this->m_position.x(), this->m_position.y());
 }
 
 void Monster::GetName()
 {
-	printf("Please enter name for monster %i end with \".\" \n", this->mynumber );
+	printf("Please enter name for monster %i end with \".\" , this->mynumber" );
 	char next;
 	std::cin >> next;
 	while (next != '.') {

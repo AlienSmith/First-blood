@@ -1,7 +1,7 @@
 #include "Game.h"
 #include <stdio.h>
 #include <iostream>
-char Game::info1[] = "Use \"wasd\" keys to move player, Use \"Q\" for quite,Use \"R\" for add a monster";
+char Game::info1[] = "Use \wasd\ keys to move player, Use \"Q\"for quite,Use \"R\" for add a monster";
 char Game::info2[] = "Please enter players name end with \".\"";
 char Game::info3[] = "Enter the number of monsters";
 char Game::info4[] = "No Monster Left";
@@ -66,7 +66,7 @@ void Game::Draw()
 		temp = temp->GetNext();
 	}
 
-	printf(" is at (%f,%f)\n", this->Playerposition.x(), this->Playerposition.y());
+	printf( "is at (%f,%f)", this->Playerposition.x(), this->Playerposition.y());
 	GStar::SingleLinkedListNode<Monster*>* tempmonster = this->MonsterList->GetHead();
 	tempmonster = tempmonster->GetNext();
 	while (tempmonster != nullptr) {
@@ -77,8 +77,8 @@ void Game::Draw()
 
 void Game::GetPlayerName()
 {
-	printf("%s\n", Game::info1);
-	printf("%s\n", Game::info2);
+	printf("%s", Game::info1);
+	printf("%s", Game::info2);
 	char next='1';
 	std::cin >> next;
 	while (next != '.') {
@@ -96,7 +96,7 @@ void Game::Initialize()
 
 void Game::InitializeMonsters()
 {
-	printf("%s\n", Game::info3);
+	printf("%s", Game::info3);
 	int temp;
 	std::cin >> temp;
 	this->Addmonster(temp);

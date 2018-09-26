@@ -116,6 +116,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Assert.h" />
+    <ClInclude Include="ConsolePrint.h" />
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="GStar_init.h" />
     <ClInclude Include="Matrix4.h" />
@@ -124,6 +125,7 @@
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="ConcolePrint.cpp" />
     <ClCompile Include="GStar_init.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>

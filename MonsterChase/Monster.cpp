@@ -3,7 +3,7 @@
 #include <iostream>
 int Monster::count = 0;
 int Monster::speed = 1;
-int Monster::lifespan = 12;
+int Monster::lifespan = 11;
 //take the head pointer of the list.
 void Monster::printlist(GStar::SingleLinkedListNode<char>* temper)
 {

@@ -4,14 +4,14 @@ namespace GStar {
 	template <class T>
 	static void deleteIfPointer(const T& t)
 	{
-		std::cout << "not pointer" << std::endl;
+		//std::cout << "not pointer" << std::endl;
 	}
 
 	template <class T>
 	static void deleteIfPointer(T* t)
 		//                           ^
 	{
-		std::cout << "is pointer" << std::endl;
+		//std::cout << "is pointer" << std::endl;
 		delete t;
 	}
 	template<class T>

@@ -14,13 +14,12 @@ Game::Game() {
 	this->Playerposition = GStar::Vector2(Game::playersx, Game::playersy);
 	this->PlayerName = new GStar::SingleLinkedList<char>();
 	this->MonsterList = new GStar::SingleLinkedList<Monster*>();
+	this->flag = true;
 }
 Game::~Game()
 {
 	delete PlayerName;
-	GStar::SingleLinkedListNode<Monster*>* temp = MonsterList->GetHead();
-	delete temp->GetData();
-	temp = temp->GetNext();
+	delete MonsterList;
 }
 void Game::Addmonster(int numbers)
 {
@@ -43,7 +42,6 @@ void Game::Update()
 
 	while (temp1 != nullptr) {
 		if (!(temp1->GetData()->CheckLife(Game::time))) {
-			delete temp1->GetData();
 			temp1->Delete(temp,this->MonsterList);
 			temp1 = temp->GetNext();
 		}
@@ -122,6 +120,6 @@ void Game::PlayerInput()
 		this->AddNewmonster();
 	}
 	else if (temp == 'q') {
-		exit(0);
+		this->flag = false;
 	}
 }

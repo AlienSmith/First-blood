@@ -123,10 +123,6 @@ void Game::PlayerInput()
 		this->AddNewmonster();
 	}
 	else if (temp == 'q') {
-<<<<<<< HEAD
-		flag = false;
-=======
 		this->flag = false;
->>>>>>> Assignment1.02
 	}
 }

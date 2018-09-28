@@ -2,6 +2,7 @@
 #define _CRTDBG_MAP_ALLOC  
 #include <stdlib.h>  
 #include <crtdbg.h>
+#include "ConsolePrint.h"
 //#include <stdio.h>
 #include <iostream>
 #include "Debug.h"
@@ -26,6 +27,7 @@ int main() {
 		}
 		Monster::printlist(TestChar.GetHead());
 		std::cin >> next;*/
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Game Start");
 		Game mygame =  Game();
 		mygame.Initialize();
 		mygame.Draw();
@@ -33,6 +35,7 @@ int main() {
 			mygame.Update();
 			mygame.Draw();
 		}
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Game End");
 	};
 	_CrtDumpMemoryLeaks();
 	return 0;

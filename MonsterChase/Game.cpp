@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "Debug.h"
+#include "ConsolePrint.h"
 char Game::info1[] = "Use \"wasd\" keys to move player, Use \"Q\" for quite,Use \"R\" for add a monster";
 char Game::info2[] = "Please enter players name end with \".\"";
 char Game::info3[] = "Enter the number of monsters";
@@ -27,6 +28,7 @@ void Game::Addmonster(int numbers)
 	for (int i = 0; i < numbers; i++) {
 		this->AddNewmonster();
 	}
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log,  " %d monsters created",numbers);
 }
 
 void Game::AddNewmonster()
@@ -44,7 +46,6 @@ void Game::Update()
 
 	while (temp1 != nullptr) {
 		if (!(temp1->GetData()->CheckLife(Game::time))) {
-			delete temp1->GetData();
 			temp1->Delete(temp,this->MonsterList);
 			temp1 = temp->GetNext();
 		}

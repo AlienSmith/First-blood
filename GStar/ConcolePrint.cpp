@@ -11,7 +11,7 @@ namespace GStar
 		assert(i_fmt);
 		const size_t lenTemp = 256;
 		char strTemp[lenTemp] = "";
-		char* PreFix = (char*)(malloc(sizeof(char) * 8));
+		char* PreFix = (char*)(malloc(sizeof(char) * 10));// Turn this number to 8 to see a heep curruption error
 
 		memset(PreFix, '\0', 10);
 		if (type == LOGType::Log) {
@@ -51,7 +51,6 @@ namespace GStar
 		}
 		ASSERT(!(type == GStar::LOGType::Error), "ConcolePrint Error");
 		free(PreFix);
-		free(PostFix);
 	}
 
 } // namespace Engine

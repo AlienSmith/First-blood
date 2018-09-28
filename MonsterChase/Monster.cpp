@@ -2,6 +2,7 @@
 #include <stdio.h>
 #include <iostream>
 #include "Debug.h"
+#include "ConsolePrint.h"
 int Monster::count = 0;
 int Monster::speed = 1;
 int Monster::lifespan = 1;
@@ -23,6 +24,7 @@ Monster::Monster()
 Monster::~Monster()
 {
 	delete MonsterName;
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "monsters %i deleted", mynumber);
 }
 
 Monster::Monster(int lifetime)
@@ -33,6 +35,7 @@ Monster::Monster(int lifetime)
 	this->m_position = GStar::Vector2(count % 10 + count % 3, count % 10 + count % 14);
 	this->mynumber = Monster::count;
 	this->GetName();
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "monsters %i created", mynumber);
 }
 
 void Monster::Update(GStar::Vector2 position, int time)

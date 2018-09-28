@@ -18,7 +18,6 @@ int main() {
 	{
 		//GStar::Initialize();
 		//GStar::Terminate();
-		return ExampleEntrance();
 		/*GStar::SingleLinkedList<char> TestChar = GStar::SingleLinkedList<char>();
 		char next;
 		std::cin >> next;

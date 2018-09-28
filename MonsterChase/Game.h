@@ -28,6 +28,5 @@ public:
 	void Initialize();
 	void InitializeMonsters();
 	void PlayerInput();
-	bool flag;
 };
 #endif // GAMEH

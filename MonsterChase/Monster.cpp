@@ -1,9 +1,10 @@
 #include "Monster.h"
 #include <stdio.h>
 #include <iostream>
+#include "Debug.h"
 int Monster::count = 0;
 int Monster::speed = 1;
-int Monster::lifespan = 11;
+int Monster::lifespan = 1;
 //take the head pointer of the list.
 void Monster::printlist(GStar::SingleLinkedListNode<char>* temper)
 {

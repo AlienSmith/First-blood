@@ -1,6 +1,7 @@
 #include "Game.h"
 #include <stdio.h>
 #include <iostream>
+#include "Debug.h"
 char Game::info1[] = "Use \"wasd\" keys to move player, Use \"Q\" for quite,Use \"R\" for add a monster";
 char Game::info2[] = "Please enter players name end with \".\"";
 char Game::info3[] = "Enter the number of monsters";
@@ -14,13 +15,12 @@ Game::Game() {
 	this->Playerposition = GStar::Vector2(Game::playersx, Game::playersy);
 	this->PlayerName = new GStar::SingleLinkedList<char>();
 	this->MonsterList = new GStar::SingleLinkedList<Monster*>();
+	this->flag = true;
 }
 Game::~Game()
 {
 	delete PlayerName;
-	GStar::SingleLinkedListNode<Monster*>* temp = MonsterList->GetHead();
-	delete temp->GetData();
-	temp = temp->GetNext();
+	delete MonsterList;
 }
 void Game::Addmonster(int numbers)
 {
@@ -122,6 +122,6 @@ void Game::PlayerInput()
 		this->AddNewmonster();
 	}
 	else if (temp == 'q') {
-		exit(0);
+		flag = false;
 	}
 }

@@ -1,7 +1,10 @@
 #include "Game.h"
+#define _CRTDBG_MAP_ALLOC  
+#include <stdlib.h>  
 #include <crtdbg.h>
 //#include <stdio.h>
 #include <iostream>
+#include "Debug.h"
 //#include "Matrix4.h"
 //#include "Vector2.h"
 //#include "Vector3.h"
@@ -23,16 +26,17 @@ int main() {
 		}
 		Monster::printlist(TestChar.GetHead());
 		std::cin >> next;*/
-		Game mygame = Game();
+		Game mygame =  Game();
 		mygame.Initialize();
 		mygame.Draw();
-		while (true) {
+		while (mygame.flag) {
 			mygame.Update();
 			mygame.Draw();
 		}
-		_CrtDumpMemoryLeaks();
-		return 0;
+
 	};
+	_CrtDumpMemoryLeaks();
+	return 0;
 }
 //void test3() {
 //	GStar::SingleLinkedList<char> IntList = GStar::SingleLinkedList<char>();

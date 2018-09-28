@@ -1,6 +1,19 @@
 #pragma once
+#include <iostream>
 #include <type_traits>
+#include <crtdbg.h>
+#include "Debug.h"
 namespace GStar {
+	template <class T>
+	static void deleteIfPointer(const T& t)
+	{
+	}
+
+	template <class T>
+	static void deleteIfPointer(T* t)
+	{
+		delete t;
+	}
 	template<class T>
 	class SingleLinkedList;
 	template<class T>
@@ -67,12 +80,11 @@ namespace GStar {
 	inline SingleLinkedList<T>::~SingleLinkedList()
 	{
 		SingleLinkedListNode<T>* temp = m_pHead;
-		SingleLinkedListNode<T>* temp1 = m_pHead;
+		SingleLinkedListNode<T>* temp1;
 		while (temp != nullptr)
 		{
 			temp1 = temp->GetNext();
 			delete temp;
-			temp->SetNext(nullptr);
 			temp = temp1;
 		}
 	}
@@ -104,6 +116,7 @@ namespace GStar {
 	template<class T>
 	inline SingleLinkedListNode<T>::~SingleLinkedListNode()
 	{
+		deleteIfPointer(this->GetData());
 	}
 
 	template<class T>
@@ -115,7 +128,7 @@ namespace GStar {
 		}
 		previous->m_Next = this->m_Next;
 		delete temp;
-	}
-	
+		temp = nullptr;
+	}	
 }
 

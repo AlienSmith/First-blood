@@ -48,6 +48,9 @@
     <ClInclude Include="ConsolePrint.h">
       <Filter>Header Files\Console_Debug</Filter>
     </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header Files\Console_Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GStar_init.cpp">

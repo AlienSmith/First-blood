@@ -1,6 +1,19 @@
 #pragma once
 #include <type_traits>
 namespace GStar {
+	template <class T>
+	static void deleteIfPointer(const T& t)
+	{
+		//std::cout << "not pointer" << std::endl;
+	}
+
+	template <class T>
+	static void deleteIfPointer(T* t)
+		//                           ^
+	{
+		//std::cout << "is pointer" << std::endl;
+		delete t;
+	}
 	template<class T>
 	class SingleLinkedList;
 	template<class T>
@@ -72,7 +85,6 @@ namespace GStar {
 		{
 			temp1 = temp->GetNext();
 			delete temp;
-			temp->SetNext(nullptr);
 			temp = temp1;
 		}
 	}
@@ -104,6 +116,7 @@ namespace GStar {
 	template<class T>
 	inline SingleLinkedListNode<T>::~SingleLinkedListNode()
 	{
+		deleteIfPointer(this->GetData());
 	}
 
 	template<class T>

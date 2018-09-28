@@ -31,13 +31,13 @@ int main() {
 		Game mygame = Game();
 		mygame.Initialize();
 		mygame.Draw();
-		while (true) {
+		while (mygame.flag) {
 			mygame.Update();
 			mygame.Draw();
 		}
-		_CrtDumpMemoryLeaks();
-		return 0;
 	};
+	_CrtDumpMemoryLeaks();
+	return 0;
 }
 
 //void test3() {

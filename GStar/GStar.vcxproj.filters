@@ -13,34 +13,48 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+<<<<<<< HEAD
     <Filter Include="Res">
       <UniqueIdentifier>{6065b863-7e09-49ce-b95f-d339d0d4fc23}</UniqueIdentifier>
     </Filter>
     <Filter Include="Res\shaders">
       <UniqueIdentifier>{6c2088d7-2507-4485-97e4-f885124d8e03}</UniqueIdentifier>
+=======
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{22d2b239-497b-406d-bfcc-e997cb3fded2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Container">
+      <UniqueIdentifier>{a7ffb277-4d92-4b81-9d72-631dfd42fbf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Console_Debug">
+      <UniqueIdentifier>{5221099b-dbd7-443b-8226-b580fb5b8888}</UniqueIdentifier>
+>>>>>>> Assignment1.02
     </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Vector2.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Vector3.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Matrix4.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Assert.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Coordinate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
     <ClInclude Include="SingleLinkedList.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="Assert.h">
+      <Filter>Header Files\Console_Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsolePrint.h">
+      <Filter>Header Files\Console_Debug</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -50,6 +64,7 @@
     <ClCompile Include="Vector2.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+<<<<<<< HEAD
     <ClCompile Include="OpenGL.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -61,5 +76,10 @@
     <None Include="res\shader\Basic.shader">
       <Filter>Res\shaders</Filter>
     </None>
+=======
+    <ClCompile Include="ConcolePrint.cpp">
+      <Filter>Header Files\Console_Debug</Filter>
+    </ClCompile>
+>>>>>>> Assignment1.02
   </ItemGroup>
 </Project>

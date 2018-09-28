@@ -125,6 +125,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Assert.h" />
+    <ClInclude Include="ConsolePrint.h" />
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="GStar_init.h" />
     <ClInclude Include="Matrix4.h" />
@@ -133,7 +134,11 @@
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+<<<<<<< HEAD
     <ClCompile Include="GLAD\glad.c" />
+=======
+    <ClCompile Include="ConcolePrint.cpp" />
+>>>>>>> Assignment1.02
     <ClCompile Include="GStar_init.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="Vector2.cpp" />

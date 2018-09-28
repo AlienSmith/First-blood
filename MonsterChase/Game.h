@@ -14,6 +14,7 @@ public:
 	static int time;
 	static int playersy;
 	static int playersx;
+	bool flag;
 	GStar::Vector2 Playerposition;
 	static int playerspeed;
 	//TODO question why make playername list autoallocate will lead to error?

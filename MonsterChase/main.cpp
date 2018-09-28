@@ -33,7 +33,10 @@ int main() {
 			mygame.Update();
 			mygame.Draw();
 		}
+<<<<<<< HEAD
 
+=======
+>>>>>>> Assignment1.02
 	};
 	_CrtDumpMemoryLeaks();
 	return 0;

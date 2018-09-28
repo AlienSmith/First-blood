@@ -36,6 +36,7 @@ void Game::AddNewmonster()
 
 void Game::Update()
 {
+	printf("%s\n", Game::info1);
 	Game::time++;
 	this->PlayerInput();
 	GStar::SingleLinkedListNode<Monster*>* temp = this->MonsterList->GetHead();
@@ -122,6 +123,10 @@ void Game::PlayerInput()
 		this->AddNewmonster();
 	}
 	else if (temp == 'q') {
+<<<<<<< HEAD
 		flag = false;
+=======
+		this->flag = false;
+>>>>>>> Assignment1.02
 	}
 }

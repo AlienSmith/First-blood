@@ -7,11 +7,21 @@ namespace GStar {
 	template <class T>
 	static void deleteIfPointer(const T& t)
 	{
+<<<<<<< HEAD
+=======
+		//std::cout << "not pointer" << std::endl;
+>>>>>>> Assignment1.02
 	}
 
 	template <class T>
 	static void deleteIfPointer(T* t)
+<<<<<<< HEAD
 	{
+=======
+		//                           ^
+	{
+		//std::cout << "is pointer" << std::endl;
+>>>>>>> Assignment1.02
 		delete t;
 	}
 	template<class T>

@@ -125,6 +125,8 @@
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="GStar_init.h" />
+    <ClInclude Include="HeapManager.h" />
+    <ClInclude Include="HeapManagerProxy.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="SingleLinkedList.h" />
     <ClInclude Include="Vector2.h" />
@@ -133,6 +135,9 @@
   <ItemGroup>
     <ClCompile Include="ConcolePrint.cpp" />
     <ClCompile Include="GStar_init.cpp" />
+    <ClCompile Include="HeapManager.cpp" />
+    <ClCompile Include="HeapManagerProxy.cpp" />
+    <ClCompile Include="HeapManager_UnitTest.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

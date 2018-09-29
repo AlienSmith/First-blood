@@ -22,6 +22,9 @@
     <Filter Include="Header Files\Console_Debug">
       <UniqueIdentifier>{5221099b-dbd7-443b-8226-b580fb5b8888}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\HeapManager">
+      <UniqueIdentifier>{0d0ca811-8aa2-40c3-af80-c572ecd39819}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h">
@@ -51,6 +54,12 @@
     <ClInclude Include="Debug.h">
       <Filter>Header Files\Console_Debug</Filter>
     </ClInclude>
+    <ClInclude Include="HeapManagerProxy.h">
+      <Filter>Header Files\HeapManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HeapManager.h">
+      <Filter>Header Files\HeapManager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GStar_init.cpp">
@@ -61,6 +70,15 @@
     </ClCompile>
     <ClCompile Include="ConcolePrint.cpp">
       <Filter>Header Files\Console_Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="HeapManagerProxy.cpp">
+      <Filter>Header Files\HeapManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HeapManager_UnitTest.cpp">
+      <Filter>Header Files\HeapManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HeapManager.cpp">
+      <Filter>Header Files\HeapManager</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

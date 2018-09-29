@@ -6,6 +6,7 @@
 //#include <stdio.h>
 #include <iostream>
 #include "Debug.h"
+#include "HeapManager_UnitTest.cpp"
 //#include "Matrix4.h"
 //#include "Vector2.h"
 //#include "Vector3.h"
@@ -18,6 +19,10 @@
 //void test3();
 int main() {
 	{
+		HeapManager_UnitTest();
+		int a = 0;
+		std::cin >> a;
+		return a;
 		/*GStar::SingleLinkedList<char> TestChar = GStar::SingleLinkedList<char>();
 		char next;
 		std::cin >> next;

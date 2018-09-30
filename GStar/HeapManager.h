@@ -18,18 +18,23 @@ public:
 	static const char infoisusing = 'y';
 	static const char infoisnotusing = 'n';
 	static const char infoend = 'e';
-	static constexpr const char const guardarray[4] = { NULL,NULL,NULL,NULL };
 	static const int guardsize = 4;
 	static const char fillguard = '\0';
 	static const char fillfreed = 'f';
 	static const char fillinitialfilled = 'i';
-	static const char padding = 'p';
+	static const char fillpadding = 'p';
 	HeapManager(size_t HeapSize, unsigned int numDescriptors, void* _pHeapMemeoy);
+	void* FindFirstFit(rsize_t size);
 private:
 	size_t _sizeHeap;
 	unsigned int _numDescriptors;
 	void* _pHeapMemory;
 	void* _current;
-	void* _movePointer(void* _pointer, int number);
+	void* _movePointerForward(void* _pointer, int number);
+	void* _movePointerBackward(void* _pointer, int number);
+	void _Travel();
+	bool _Match(rsize_t size,unsigned int alignment);
 	bool _isdebugactivited = ACTIVITE;
+	bool _TryCut(rsize_t size, unsigned int alignment);
+	void _addinfoblock(size_t size);
 };

@@ -47,10 +47,15 @@ HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _p
 
 void * HeapManager::FindFirstFit(rsize_t size)
 {
+	return FindFirstFit(size,4);
+}
+
+void * HeapManager::FindFirstFit(rsize_t size, unsigned int i_alignment)
+{
 	_current = _pHeapMemory;
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _current);
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
-	while (!(this->_Match(size,4))) {
+	while (!(this->_Match(size,i_alignment))) {
 		_Travel();
 		if (current->isusing == HeapManager::infoend) {
 			return nullptr;

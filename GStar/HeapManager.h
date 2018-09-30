@@ -25,6 +25,7 @@ public:
 	static const char fillpadding = 'p';
 	HeapManager(size_t HeapSize, unsigned int numDescriptors, void* _pHeapMemeoy);
 	void* FindFirstFit(rsize_t size);
+	void* FindFirstFit(rsize_t size,unsigned int i_alignment);
 private:
 	size_t _sizeHeap;
 	unsigned int _numDescriptors;

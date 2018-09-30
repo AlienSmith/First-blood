@@ -26,7 +26,7 @@ bool HeapManager_UnitTest()
 
 	if (pHeapManager == nullptr)
 		return false;
-	alloc(pHeapManager, 20);
+	alloc(pHeapManager, 20,7);
 	alloc(pHeapManager, 20);
 	return true;
 }

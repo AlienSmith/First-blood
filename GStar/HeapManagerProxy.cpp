@@ -9,3 +9,8 @@ void * GStar::alloc(HeapManager * i_pManager, size_t i_size)
 {
 	return i_pManager->FindFirstFit(i_size);
 }
+
+void * GStar::alloc(HeapManager * i_pManager, size_t i_size, unsigned int i_alignment)
+{
+	return i_pManager->FindFirstFit(i_size,i_alignment);
+}

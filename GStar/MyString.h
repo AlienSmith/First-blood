@@ -17,8 +17,8 @@ namespace GStar {
 		//Move Constructor
 		MyString(MyString&& other);
 		//Copy Assignment operator
-		MyString& operator= (MyString other);
-		//MyString& operator= (MyString other);
+		MyString& operator= (const MyString& other);
+		//MyString& operator= (MyString other); and MyString& operator= (MyString && other); will lead to a error
 		//Move Assignment operator
 		MyString& operator= (MyString && other);
 		MyString& operator= (const char other[]);

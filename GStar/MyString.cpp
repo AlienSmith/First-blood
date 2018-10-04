@@ -40,7 +40,7 @@ GStar::MyString::MyString( size_t size):my_size(size)
 // Copy Constructor A deep copy of the string
 GStar::MyString::MyString(const MyString & other)
 	: my_size(other.my_size),
-	my_string(my_size ? new char[my_size] : nullptr)
+	my_string(other.my_size ? new char[other.my_size] : nullptr)
 {
 	std::copy(other.my_string, other.my_string + my_size, my_string);
 }
@@ -51,9 +51,10 @@ GStar::MyString::MyString(MyString && other)
 //Here input is a Value(Object) instead of a reference type(const reference)
 //let the compile handle copy could be beneficial other will be generated using copy constrctor
 // Notice copy is not a temporary Temporary exist when function returns
-GStar::MyString& GStar::MyString::operator=(MyString other)
+GStar::MyString& GStar::MyString::operator=(const MyString& other)
 {
-	swap(*this, other);
+	MyString temp = MyString(other);
+	swap(*this, temp);
 	return *this;
 }
 

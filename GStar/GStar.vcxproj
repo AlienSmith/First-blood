@@ -129,6 +129,7 @@
     <ClInclude Include="HeapManagerProxy.h" />
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="SingleLinkedList.h" />
+    <ClInclude Include="MyString.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
@@ -138,6 +139,7 @@
     <ClCompile Include="HeapManager.cpp" />
     <ClCompile Include="HeapManagerProxy.cpp" />
     <ClCompile Include="HeapManager_UnitTest.cpp" />
+    <ClCompile Include="MyString.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

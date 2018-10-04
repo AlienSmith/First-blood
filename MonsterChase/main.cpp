@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Debug.h"
 #include "HeapManager_UnitTest.cpp"
+#include "MyString.h"
 //#include "Matrix4.h"
 //#include "Vector2.h"
 //#include "Vector3.h"
@@ -17,33 +18,52 @@
 //void test1();
 //void test2();
 //void test3();
+//The Game itself
+int Game1();
+// HeapManger UnitTest
+void HeapTest();
 int main() {
+	GStar::MyString  Hello = GStar::MyString("Hello");
+	GStar::MyString World = GStar::MyString("World");
+	printf("%s\n", Hello.GetString());
+	GStar::MyString output = Hello + World;
+	printf("%s\n", output.GetString());
+	GStar::MyString test = GStar::MyString();
+	test = "Hello my Friend";
+	output = output + test;
+	printf("%s\n", output.GetString());
+	int a = 0;
+	std::cin >> a;
+	return a;
+}
+void HeapTest() {
+	HeapManager_UnitTest();
+	int a = 0;
+	std::cin >> a;
+}
+int Game1() {
 	{
-		HeapManager_UnitTest();
-		int a = 0;
-		std::cin >> a;
-		return a;
-		/*GStar::SingleLinkedList<char> TestChar = GStar::SingleLinkedList<char>();
-		char next;
+	/*GStar::SingleLinkedList<char> TestChar = GStar::SingleLinkedList<char>();
+	char next;
+	std::cin >> next;
+	while (next != '.') {
+		TestChar.Push(next);
 		std::cin >> next;
-		while (next != '.') {
-			TestChar.Push(next);
-			std::cin >> next;
-		}
-		Monster::printlist(TestChar.GetHead());
-		std::cin >> next;*/
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Game Start");
-		Game mygame =  Game();
-		mygame.Initialize();
+	}
+	Monster::printlist(TestChar.GetHead());
+	std::cin >> next;*/
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Game Start");
+	Game mygame = Game();
+	mygame.Initialize();
+	mygame.Draw();
+	while (mygame.flag) {
+		mygame.Update();
 		mygame.Draw();
-		while (mygame.flag) {
-			mygame.Update();
-			mygame.Draw();
-		}
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Game End");
-	};
-	_CrtDumpMemoryLeaks();
-	return 0;
+	}
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Game End");
+};
+_CrtDumpMemoryLeaks();
+return 0;
 }
 //void test3() {
 //	GStar::SingleLinkedList<char> IntList = GStar::SingleLinkedList<char>();

@@ -60,6 +60,9 @@
     <ClInclude Include="HeapManager.h">
       <Filter>Header Files\HeapManager</Filter>
     </ClInclude>
+    <ClInclude Include="MyString.h">
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GStar_init.cpp">
@@ -79,6 +82,9 @@
     </ClCompile>
     <ClCompile Include="HeapManager.cpp">
       <Filter>Header Files\HeapManager</Filter>
+    </ClCompile>
+    <ClCompile Include="MyString.cpp">
+      <Filter>Header Files\Container</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@
 #include <iostream>
 #include "Debug.h"
 #include "HeapManager_UnitTest.cpp"
+#include "OpenGL_Entrance.cpp"
 //#include "Matrix4.h"
 //#include "Vector2.h"
 //#include "Vector3.h"
@@ -19,7 +20,8 @@
 //void test3();
 int main() {
 	{
-		HeapManager_UnitTest();
+		//HeapManager_UnitTest();
+		Entrance();
 		int a = 0;
 		std::cin >> a;
 		return a;

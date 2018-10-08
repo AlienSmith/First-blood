@@ -46,10 +46,48 @@ void Entrance() {
 
 	//vertex data only position now
 	float vertices[] = {
-		-.5f, -.5f,0.0f,
-		.5f,-.5f,0.0f,
-		0.0f,.5f,0.0f
+	 // first triangle
+	  0.5f,  0.5f, 0.0f,  // top right
+	  0.5f, -0.5f, 0.0f,  // bottom right
+	 -0.5f,  0.5f, 0.0f,  // top left 
 	};
+	//Rectangle
+	float verticesRec[] = {
+	 0.5f,  0.5f, 0.0f,  // top right
+	 0.5f, -0.5f, 0.0f,  // bottom right
+	-0.5f, -0.5f, 0.0f,  // bottom left
+	-0.5f,  0.5f, 0.0f   // top left 
+	};
+	unsigned int indices[] = {  // note that we start from 0!
+		0, 1, 3,   // first triangle
+		1, 2, 3    // second triangle
+	};
+
+	//VAO for draw Rectangle
+	//Element Buffer Object 
+	///Bind VAO
+	unsigned int VAOREC;
+	glGenVertexArrays(1, &VAOREC);
+	glBindVertexArray(VAOREC);
+	///COPY vertex array
+	unsigned int VBORec;
+	glGenBuffers(1, &VBORec);
+	glBindBuffer(GL_ARRAY_BUFFER, VBORec);
+	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesRec), verticesRec, GL_STATIC_DRAW);
+	///Copy index Array
+	unsigned int EBO;
+	glGenBuffers(1, &EBO);// claim a name samve with VBO
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);// bind the name here is element array
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
+	///we need six point to draw to tirangle. int have same size as float buffer data
+
+	///Set Attribute Pointer
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+
+
+	
 
 	//Vertex Array Object VAO to avoid previous problem
 	//VAO is a array that sotre the pointer to VBO's each attribute
@@ -74,7 +112,7 @@ void Entrance() {
 	glEnableVertexAttribArray(0);
 	///Every time we want to draw a object we need to bind the name, buffer the 
 	///data and Link Vertex Attributes and Enable it.
-
+	
 
 	//Compile shaders
 	///VERTEX_SHADER how to interprate vertex
@@ -144,8 +182,10 @@ void Entrance() {
 
 		//Draw
 		glUseProgram(shaderprogram);
-		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points
+		glBindVertexArray(VAOREC);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//glBindVertexArray(VAO);
+		//glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points
 		// check and call events and swap the buffers
 		glfwSwapBuffers(window);// swamp color buffer. and show what drawed in this iteration
 		glfwPollEvents();// checks events update functions

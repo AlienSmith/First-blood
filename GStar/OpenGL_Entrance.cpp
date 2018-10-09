@@ -46,10 +46,9 @@ void Entrance() {
 
 	//vertex data only position now
 	float vertices[] = {
-	 // first triangle
-	  0.5f,  0.5f, 0.0f,  // top right
-	  0.5f, -0.5f, 0.0f,  // bottom right
-	 -0.5f,  0.5f, 0.0f,  // top left 
+	-0.5f, -0.5f, 0.0f,
+	 0.5f, -0.5f, 0.0f,
+	 0.0f,  0.5f, 0.0f
 	};
 	//Rectangle
 	float verticesRec[] = {
@@ -171,7 +170,8 @@ void Entrance() {
 
 
 
-
+	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//set both front and back buffer to line mode
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
 	//The render loop
 	while (!glfwWindowShouldClose(window))// return ture if GLFW is instructed to close
 	{	//input 
@@ -182,10 +182,12 @@ void Entrance() {
 
 		//Draw
 		glUseProgram(shaderprogram);
+
+		
 		glBindVertexArray(VAOREC);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		//glBindVertexArray(VAO);
-		//glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points
+		glBindVertexArray(VAO);
+		glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points
 		// check and call events and swap the buffers
 		glfwSwapBuffers(window);// swamp color buffer. and show what drawed in this iteration
 		glfwPollEvents();// checks events update functions

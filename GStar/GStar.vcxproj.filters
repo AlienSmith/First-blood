@@ -25,7 +25,10 @@
     <Filter Include="Header Files\HeapManager">
       <UniqueIdentifier>{0d0ca811-8aa2-40c3-af80-c572ecd39819}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Shader">
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{4162bf6e-459b-42b2-b1f6-8949f83bced1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Shader">
       <UniqueIdentifier>{23fa547e-74df-415b-9f57-344ab6813c66}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
@@ -83,16 +86,22 @@
     <ClCompile Include="HeapManager.cpp">
       <Filter>Header Files\HeapManager</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL_Entrance.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="GLAD\glad.c">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL.cpp">
+      <Filter>OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL_Entrance.cpp">
+      <Filter>OpenGL</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexShader.shader">
-      <Filter>Shader</Filter>
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="FragmentShader.shader">
+      <Filter>OpenGL\Shader</Filter>
     </None>
   </ItemGroup>
 </Project>

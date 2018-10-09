@@ -2,6 +2,93 @@
 #include<GLFW\glfw3.h>
 #include<iostream>
 #include"ConsolePrint.h"
+#include <fstream>
+#include <string>
+#include <sstream>
+//This structure store the two source
+struct ShaderSource {
+	std::string VertexSource;
+	std::string FragmentSource;
+};
+static ShaderSource myshader = ShaderSource();
+//This read the shader from .shader file
+static void ReadShader(const std::string& filepath) {
+	std::ifstream stream(filepath);
+	enum class ShaderType {
+		NONE = -1, VERTEX = 0, FRAGMENT = 1
+	};
+	int flag = 0; // 0 for null 1 for vertex, 2 for fragment, 3 for both.
+	std::string line;
+	std::stringstream ss[2];
+	ShaderType type = ShaderType::NONE;
+	while (getline(stream, line)) {
+		if (line.find("#shader") != std::string::npos) {
+			if (line.find("vertex") != std::string::npos) {
+				type = ShaderType::VERTEX;
+				flag += 1;
+			}
+			else if (line.find("fragment") != std::string::npos) {
+				type = ShaderType::FRAGMENT;
+				flag += 10;
+			}
+		}
+		else {
+			ss[(int)type] << line << '\n';
+		}
+	}
+	std::cout << "VertexSource" << std::endl;
+	std::cout << ss[0].str() << std::endl;
+	std::cout << "Fragment" << std::endl;
+	std::cout << ss[1].str() << std::endl;
+	if ((flag %2 ) ==1) {
+		myshader.VertexSource = ss[0].str();
+	}if (flag > 1){
+		myshader.FragmentSource = ss[1].str();
+	}
+	return;
+}
+
+//This Compile the Shaders 
+static unsigned int CompileShader(const std::string& source, unsigned int type) {
+	unsigned int id = glCreateShader(type);
+	const char* src = source.c_str();
+	glShaderSource(id, 1, &src, nullptr);
+	glCompileShader(id);
+
+	int result;
+	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
+	if (result == GL_FALSE)
+	{
+		int length;
+		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
+		char* message = (char*)alloca(length * sizeof(char));
+		glGetShaderInfoLog(id, length, &length, message);
+		std::cout << "Fialed to compile" << (type == GL_VERTEX_SHADER ? "vertex" : "fragment")
+			<< "Shader" << std::endl;
+		std::cout << message << std::endl;
+		glDeleteShader(id);
+		return 0;
+	}
+
+	return id;
+}
+//This attach shader and link the program.
+static unsigned int CraeteShader(const std::string& vertexshader, const std::string& fragmentshader) {
+	unsigned int program = glCreateProgram();
+	unsigned int vs = CompileShader(vertexshader, GL_VERTEX_SHADER);
+	unsigned int fs = CompileShader(fragmentshader, GL_FRAGMENT_SHADER);
+
+	glAttachShader(program, vs);
+	glAttachShader(program, fs);
+	glLinkProgram(program);
+	glValidateProgram(program);
+
+	glDeleteShader(vs);
+	glDeleteShader(fs);
+
+	return program;
+}
+
 //Initial window size
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -85,7 +172,6 @@ void Entrance() {
 	glEnableVertexAttribArray(0);
 
 
-
 	
 
 	//Vertex Array Object VAO to avoid previous problem
@@ -111,8 +197,14 @@ void Entrance() {
 	glEnableVertexAttribArray(0);
 	///Every time we want to draw a object we need to bind the name, buffer the 
 	///data and Link Vertex Attributes and Enable it.
-	
+	//Compile Shaders
+	ReadShader("C:/Users/HP/Documents/u1217369/GStar/FragmentShader.shader");
+	ReadShader("C:/Users/HP/Documents/u1217369/GStar/VertexShader.shader");
+	unsigned int shaderprogram = CraeteShader(myshader.VertexSource, myshader.FragmentSource);
 
+
+
+	/*
 	//Compile shaders
 	///VERTEX_SHADER how to interprate vertex
 	unsigned int vertexShader;
@@ -163,7 +255,7 @@ void Entrance() {
 	glUseProgram(shaderprogram);
 
 	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentshader);
+	glDeleteShader(fragmentshader);*/
 
 
 

@@ -198,9 +198,12 @@ void Entrance() {
 	///Every time we want to draw a object we need to bind the name, buffer the 
 	///data and Link Vertex Attributes and Enable it.
 	//Compile Shaders
-	ReadShader("C:/Users/HP/Documents/u1217369/GStar/FragmentShader.shader");
-	ReadShader("C:/Users/HP/Documents/u1217369/GStar/VertexShader.shader");
+	//ReadShader("../GStar/FragmentShader.shader");
+	ReadShader("../GStar/VertexShader.shader");
+	ReadShader("../GStar/FragmentShader2.shader");
+
 	unsigned int shaderprogram = CraeteShader(myshader.VertexSource, myshader.FragmentSource);
+	
 
 
 
@@ -272,10 +275,15 @@ void Entrance() {
 		//Clean Window or the old pixel will stay
 		CleanSCreen();
 
-		//Draw
+		///Change the uniformed variable defined in the fragmentshader
+		float timeValue = glfwGetTime();
+		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
+		int vertexColorLocation = glGetUniformLocation(shaderprogram, "ourColor");
 		glUseProgram(shaderprogram);
+		/// Change the value
+		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
 
-		
+		//Draw
 		glBindVertexArray(VAOREC);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(VAO);

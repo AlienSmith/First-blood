@@ -103,5 +103,8 @@
     <None Include="FragmentShader.shader">
       <Filter>OpenGL\Shader</Filter>
     </None>
+    <None Include="FragmentShader2.shader">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
   </ItemGroup>
 </Project>

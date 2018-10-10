@@ -132,6 +132,7 @@
     <ClInclude Include="Matrix4.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SingleLinkedList.h" />
+    <ClInclude Include="stb_image.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
@@ -145,6 +146,7 @@
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="OpenGL_Entrance.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -156,6 +158,10 @@
     <None Include="VertexColor.ves" />
     <None Include="VertexShader.shader" />
     <None Include="VertexShader2.shader" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="wall.jpg" />
+    <Image Include="woodcontainer.jpg" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

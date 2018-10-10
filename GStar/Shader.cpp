@@ -41,7 +41,7 @@ unsigned int Shader::CompileShader(std::string & source, unsigned int type)
 	glGetShaderiv(result, GL_COMPILE_STATUS, &success);
 	if (!success) {
 		glGetShaderInfoLog(result, 256, NULL, infoLog);
-		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "%s\n",infoLog);
+		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "%s failed %s\n", (type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT"),infoLog);
 	}
 	return result;
 }

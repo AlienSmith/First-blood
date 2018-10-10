@@ -3,6 +3,7 @@
 #include<iostream>
 #include"ConsolePrint.h"
 #include"Shader.h"
+#include"stb_image.h"
 //Initial window size
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -47,12 +48,46 @@ void Entrance() {
 
 	//vertex data only position now
 	float vertices[] = {
-		// positions         // colors
-		0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
-	   -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
-		0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
+		// positions          // colors           // texture coords
+		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
 	};
-	
+	unsigned int indices[] = {
+		0, 1, 3, // first triangle
+		1, 2, 3  // second triangle
+	};
+	// use to specify where three vertex be on the texture
+	float texCoords[] = {
+	0.0f, 0.0f,  // lower-left corner  
+	1.0f, 0.0f,  // lower-right corner
+	0.5f, 1.0f   // top-center corner
+	};
+
+	//load texture
+	int width, height, nrChannels; //out parameter
+	unsigned char *data = stbi_load("../GStar/woodcontainer.jpg", &width, &height, &nrChannels, 0);
+
+	unsigned int texture;// the texture object
+	glGenTextures(1, &texture); // claim a name 1 texture out parameter name.
+
+	glBindTexture(GL_TEXTURE_2D, texture); // bind name
+
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	///load texture data into graphic card
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else
+	{
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Error, "Fail to LoadTexture");
+	}//Create minimap since the texture is binded.
+	stbi_image_free(data);
 
 	//Vertex Array Object VAO to avoid previous problem
 	//VAO is a array that sotre the pointer to VBO's each attribute
@@ -71,14 +106,21 @@ void Entrance() {
 	// static_Draw will rarely change, dynamic_draw will change, stream_draw change every time it draw
 	// deteminds where the data will be putted
 
+	unsigned int VEO;
+	glGenBuffers(1, &VEO); // Claim a name
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VEO);
+	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 
 	//Link Vertex Attributes
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	///Every time we want to draw a object we need to bind the name, buffer the 
 	///data and Link Vertex Attributes and Enable it.
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
+
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FASTEST, 8 * sizeof(float), (void*)(6 * sizeof(float)));
+	glEnableVertexAttribArray(2);
 	//Compile Shaders
 	Shader my_shader = Shader("../GStar/VertexColor.ves", "../GStar/VertexColor.frs");
 	
@@ -96,8 +138,10 @@ void Entrance() {
 		my_shader.use();
 		my_shader.setFloat("offset", 0.1);
 		//Draw
+		glBindTexture(GL_TEXTURE_2D, texture); // this will help set he uniform samplor
 		glBindVertexArray(VAO);
-		glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+		//glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points
 		// check and call events and swap the buffers
 		glfwSwapBuffers(window);// swamp color buffer. and show what drawed in this iteration
 		glfwPollEvents();// checks events update functions

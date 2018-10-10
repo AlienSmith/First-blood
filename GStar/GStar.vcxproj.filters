@@ -31,6 +31,9 @@
     <Filter Include="OpenGL\Shader">
       <UniqueIdentifier>{23fa547e-74df-415b-9f57-344ab6813c66}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OpenGL\Texture">
+      <UniqueIdentifier>{61070df4-1248-426b-af1d-cede24551323}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h">
@@ -69,6 +72,9 @@
     <ClInclude Include="Shader.h">
       <Filter>OpenGL</Filter>
     </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GStar_init.cpp">
@@ -101,6 +107,9 @@
     <ClCompile Include="ConsolePrint.cpp">
       <Filter>Header Files\Console_Debug</Filter>
     </ClCompile>
+    <ClCompile Include="stb_activate.cpp">
+      <Filter>OpenGL</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexShader.shader">
@@ -127,5 +136,13 @@
     <None Include="Exercises1.4.ves">
       <Filter>OpenGL\Shader</Filter>
     </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="wall.jpg">
+      <Filter>OpenGL\Texture</Filter>
+    </Image>
+    <Image Include="woodcontainer.jpg">
+      <Filter>OpenGL\Texture</Filter>
+    </Image>
   </ItemGroup>
 </Project>

@@ -29,8 +29,8 @@ namespace GStar {
 		//Destructor
 		~MyString();
 	private:
-		char* my_string;
-		size_t my_size;
+		char* my_string = nullptr;
+		size_t my_size = 0;
 	};
 	GStar::MyString operator+ (const GStar::MyString& A, const GStar::MyString& B);
 }

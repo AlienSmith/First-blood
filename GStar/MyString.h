@@ -8,7 +8,7 @@ namespace GStar {
 		static void swap(MyString& string,MyString& other);
 		static void swap(MyString& string, char*& other, size_t size);
 		static size_t length(const char* other);
-		MyString() {}
+		MyString();
 		//Value Constructor
 		MyString(const char other[]);
 		MyString(size_t size);

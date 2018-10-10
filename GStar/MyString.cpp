@@ -26,6 +26,10 @@ size_t GStar::MyString::length(const char * other)
 	return len;
 }
 
+GStar::MyString::MyString():my_size(0), my_string(nullptr)
+{
+}
+
 GStar::MyString::MyString(const char other[])
 	:my_size(MyString::length(other)+2),
 	my_string(new char[MyString::length(other) + 2])
@@ -91,7 +95,9 @@ const char * const GStar::MyString::GetString() const
 
 GStar::MyString::~MyString()
 {
-	delete[] my_string;
+	if (my_string) {
+		delete[] my_string;
+	}
 }
 
 GStar::MyString GStar::operator+(const GStar::MyString & A, const GStar::MyString & B)

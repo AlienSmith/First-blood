@@ -66,6 +66,9 @@
     <ClInclude Include="HeapManager.h">
       <Filter>Header Files\HeapManager</Filter>
     </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GStar_init.cpp">
@@ -73,9 +76,6 @@
     </ClCompile>
     <ClCompile Include="Vector2.cpp">
       <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="ConcolePrint.cpp">
-      <Filter>Header Files\Console_Debug</Filter>
     </ClCompile>
     <ClCompile Include="HeapManagerProxy.cpp">
       <Filter>Header Files\HeapManager</Filter>
@@ -95,6 +95,12 @@
     <ClCompile Include="OpenGL_Entrance.cpp">
       <Filter>OpenGL</Filter>
     </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsolePrint.cpp">
+      <Filter>Header Files\Console_Debug</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexShader.shader">
@@ -103,7 +109,19 @@
     <None Include="FragmentShader.shader">
       <Filter>OpenGL\Shader</Filter>
     </None>
+    <None Include="VertexShader2.shader">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="FragmentShader1.2.shader">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
     <None Include="FragmentShader2.shader">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="VertexColor.frs">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="VertexColor.ves">
       <Filter>OpenGL\Shader</Filter>
     </None>
   </ItemGroup>

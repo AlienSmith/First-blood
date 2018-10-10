@@ -130,12 +130,13 @@
     <ClInclude Include="HeapManager.h" />
     <ClInclude Include="HeapManagerProxy.h" />
     <ClInclude Include="Matrix4.h" />
+    <ClInclude Include="Shader.h" />
     <ClInclude Include="SingleLinkedList.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="ConcolePrint.cpp" />
+    <ClCompile Include="ConsolePrint.cpp" />
     <ClCompile Include="GLAD\glad.c" />
     <ClCompile Include="GStar_init.cpp" />
     <ClCompile Include="HeapManager.cpp" />
@@ -143,12 +144,17 @@
     <ClCompile Include="HeapManager_UnitTest.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="OpenGL_Entrance.cpp" />
+    <ClCompile Include="Shader.cpp" />
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="FragmentShader.shader" />
+    <None Include="FragmentShader1.2.shader" />
     <None Include="FragmentShader2.shader" />
+    <None Include="VertexColor.frs" />
+    <None Include="VertexColor.ves" />
     <None Include="VertexShader.shader" />
+    <None Include="VertexShader2.shader" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

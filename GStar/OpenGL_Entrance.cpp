@@ -2,93 +2,7 @@
 #include<GLFW\glfw3.h>
 #include<iostream>
 #include"ConsolePrint.h"
-#include <fstream>
-#include <string>
-#include <sstream>
-//This structure store the two source
-struct ShaderSource {
-	std::string VertexSource;
-	std::string FragmentSource;
-};
-static ShaderSource myshader = ShaderSource();
-//This read the shader from .shader file
-static void ReadShader(const std::string& filepath) {
-	std::ifstream stream(filepath);
-	enum class ShaderType {
-		NONE = -1, VERTEX = 0, FRAGMENT = 1
-	};
-	int flag = 0; // 0 for null 1 for vertex, 2 for fragment, 3 for both.
-	std::string line;
-	std::stringstream ss[2];
-	ShaderType type = ShaderType::NONE;
-	while (getline(stream, line)) {
-		if (line.find("#shader") != std::string::npos) {
-			if (line.find("vertex") != std::string::npos) {
-				type = ShaderType::VERTEX;
-				flag += 1;
-			}
-			else if (line.find("fragment") != std::string::npos) {
-				type = ShaderType::FRAGMENT;
-				flag += 10;
-			}
-		}
-		else {
-			ss[(int)type] << line << '\n';
-		}
-	}
-	std::cout << "VertexSource" << std::endl;
-	std::cout << ss[0].str() << std::endl;
-	std::cout << "Fragment" << std::endl;
-	std::cout << ss[1].str() << std::endl;
-	if ((flag %2 ) ==1) {
-		myshader.VertexSource = ss[0].str();
-	}if (flag > 1){
-		myshader.FragmentSource = ss[1].str();
-	}
-	return;
-}
-
-//This Compile the Shaders 
-static unsigned int CompileShader(const std::string& source, unsigned int type) {
-	unsigned int id = glCreateShader(type);
-	const char* src = source.c_str();
-	glShaderSource(id, 1, &src, nullptr);
-	glCompileShader(id);
-
-	int result;
-	glGetShaderiv(id, GL_COMPILE_STATUS, &result);
-	if (result == GL_FALSE)
-	{
-		int length;
-		glGetShaderiv(id, GL_INFO_LOG_LENGTH, &length);
-		char* message = (char*)alloca(length * sizeof(char));
-		glGetShaderInfoLog(id, length, &length, message);
-		std::cout << "Fialed to compile" << (type == GL_VERTEX_SHADER ? "vertex" : "fragment")
-			<< "Shader" << std::endl;
-		std::cout << message << std::endl;
-		glDeleteShader(id);
-		return 0;
-	}
-
-	return id;
-}
-//This attach shader and link the program.
-static unsigned int CraeteShader(const std::string& vertexshader, const std::string& fragmentshader) {
-	unsigned int program = glCreateProgram();
-	unsigned int vs = CompileShader(vertexshader, GL_VERTEX_SHADER);
-	unsigned int fs = CompileShader(fragmentshader, GL_FRAGMENT_SHADER);
-
-	glAttachShader(program, vs);
-	glAttachShader(program, fs);
-	glLinkProgram(program);
-	glValidateProgram(program);
-
-	glDeleteShader(vs);
-	glDeleteShader(fs);
-
-	return program;
-}
-
+#include"Shader.h"
 //Initial window size
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -133,45 +47,11 @@ void Entrance() {
 
 	//vertex data only position now
 	float vertices[] = {
-	-0.5f, -0.5f, 0.0f,
-	 0.5f, -0.5f, 0.0f,
-	 0.0f,  0.5f, 0.0f
+		// positions         // colors
+		0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,   // bottom right
+	   -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   // bottom left
+		0.0f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f    // top 
 	};
-	//Rectangle
-	float verticesRec[] = {
-	 0.5f,  0.5f, 0.0f,  // top right
-	 0.5f, -0.5f, 0.0f,  // bottom right
-	-0.5f, -0.5f, 0.0f,  // bottom left
-	-0.5f,  0.5f, 0.0f   // top left 
-	};
-	unsigned int indices[] = {  // note that we start from 0!
-		0, 1, 3,   // first triangle
-		1, 2, 3    // second triangle
-	};
-
-	//VAO for draw Rectangle
-	//Element Buffer Object 
-	///Bind VAO
-	unsigned int VAOREC;
-	glGenVertexArrays(1, &VAOREC);
-	glBindVertexArray(VAOREC);
-	///COPY vertex array
-	unsigned int VBORec;
-	glGenBuffers(1, &VBORec);
-	glBindBuffer(GL_ARRAY_BUFFER, VBORec);
-	glBufferData(GL_ARRAY_BUFFER, sizeof(verticesRec), verticesRec, GL_STATIC_DRAW);
-	///Copy index Array
-	unsigned int EBO;
-	glGenBuffers(1, &EBO);// claim a name samve with VBO
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO);// bind the name here is element array
-	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-	///we need six point to draw to tirangle. int have same size as float buffer data
-
-	///Set Attribute Pointer
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-
-
 	
 
 	//Vertex Array Object VAO to avoid previous problem
@@ -193,80 +73,18 @@ void Entrance() {
 
 
 	//Link Vertex Attributes
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 3 * sizeof(float), (void*)0);
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	///Every time we want to draw a object we need to bind the name, buffer the 
 	///data and Link Vertex Attributes and Enable it.
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 6 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 	//Compile Shaders
-	//ReadShader("../GStar/FragmentShader.shader");
-	ReadShader("../GStar/VertexShader.shader");
-	ReadShader("../GStar/FragmentShader2.shader");
-
-	unsigned int shaderprogram = CraeteShader(myshader.VertexSource, myshader.FragmentSource);
+	Shader my_shader = Shader("../GStar/VertexColor.ves", "../GStar/VertexColor.frs");
 	
 
-
-
-	/*
-	//Compile shaders
-	///VERTEX_SHADER how to interprate vertex
-	unsigned int vertexShader;
-	vertexShader = glCreateShader(GL_VERTEX_SHADER); // obtain a name
-
-	glShaderSource(vertexShader, 1, &vertexShaderSource, NULL); // attach the code
-	
-	glCompileShader(vertexShader); //Compile shaders
-
-	///Store the compile error
-	int success;
-	char infoLog[512];
-	glGetShaderiv(vertexShader, GL_COMPILE_STATUS, &success);// pass lots of things by address
-	///if not success print the info.
-	if (!success) {
-		glGetShaderInfoLog(vertexShader, 512, NULL, infoLog);
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Vertex Shader Compile error %s", infoLog);
-	}
-	///Fragment Shader calculate color for each pixel
-
-	unsigned int fragmentshader;
-	fragmentshader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fragmentshader, 1, &fragmentShaderSource, NULL);
-	glCompileShader(fragmentshader);
-
-	///Store the compile error
-	glGetShaderiv(fragmentshader, GL_COMPILE_STATUS, &success);// pass lots of things by address
-	///if not success print the info.
-	if (!success) {
-		glGetShaderInfoLog(fragmentshader, 512, NULL, infoLog);
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Fragment Shader Compile error %s",infoLog);
-	}
-
-	// Bind shader to program
-	unsigned int shaderprogram;
-	shaderprogram = glCreateProgram();
-
-	glAttachShader(shaderprogram, vertexShader);
-	glAttachShader(shaderprogram, fragmentshader);
-	glLinkProgram(shaderprogram);
-
-	glGetProgramiv(shaderprogram, GL_LINK_STATUS, &success);
-	if (!success) {
-		glGetProgramInfoLog(shaderprogram, 512, NULL, infoLog);
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Link Error");
-	}
-	
-	glUseProgram(shaderprogram);
-
-	glDeleteShader(vertexShader);
-	glDeleteShader(fragmentshader);*/
-
-
-
-
-
-
-	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//set both front and back buffer to line mode
-	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//set both front and back buffer to line mode
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
 	//The render loop
 	while (!glfwWindowShouldClose(window))// return ture if GLFW is instructed to close
 	{	//input 
@@ -275,17 +93,9 @@ void Entrance() {
 		//Clean Window or the old pixel will stay
 		CleanSCreen();
 
-		///Change the uniformed variable defined in the fragmentshader
-		float timeValue = glfwGetTime();
-		float greenValue = (sin(timeValue) / 2.0f) + 0.5f;
-		int vertexColorLocation = glGetUniformLocation(shaderprogram, "ourColor");
-		glUseProgram(shaderprogram);
-		/// Change the value
-		glUniform4f(vertexColorLocation, 0.0f, greenValue, 0.0f, 1.0f);
+		my_shader.use();
 
 		//Draw
-		glBindVertexArray(VAOREC);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points
 		// check and call events and swap the buffers
@@ -293,10 +103,6 @@ void Entrance() {
 		glfwPollEvents();// checks events update functions
 	}
 	glfwTerminate();
-
-
-
-
 
 }
 // Whenever the window changes in size, GLFW calls 

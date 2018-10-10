@@ -71,7 +71,6 @@ void Entrance() {
 
 	unsigned int texture;// the texture object
 	glGenTextures(1, &texture); // claim a name 1 texture out parameter name.
-
 	glBindTexture(GL_TEXTURE_2D, texture); // bind name
 
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
@@ -87,6 +86,24 @@ void Entrance() {
 	{
 		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Error, "Fail to LoadTexture");
 	}//Create minimap since the texture is binded.
+	stbi_image_free(data);
+
+	//load another texture and store it in texture unit 1
+	unsigned int textureface;
+	glGenTextures(1, &textureface); // claim name;
+	glBindTexture(GL_TEXTURE_2D,textureface);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	data = stbi_load("../GStar/awesomeface.png", &width, &height, &nrChannels, 0);
+	if (data) {
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGBA, GL_UNSIGNED_BYTE, data);
+		glGenerateMipmap(GL_TEXTURE_2D);
+	}
+	else {
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Error, "Fail to LoadTexture");
+	}
 	stbi_image_free(data);
 
 	//Vertex Array Object VAO to avoid previous problem
@@ -124,7 +141,15 @@ void Entrance() {
 	//Compile Shaders
 	Shader my_shader = Shader("../GStar/VertexColor.ves", "../GStar/VertexColor.frs");
 	
+	glActiveTexture(GL_TEXTURE0); // activate the texture unit 0
+	glBindTexture(GL_TEXTURE_2D, texture); // bind name
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, textureface);
 
+	my_shader.use();
+	//my_shader.setFloat("offset", 0.1);
+	my_shader.setInt("texture1", 0);
+	my_shader.setInt("texture2", 1);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//set both front and back buffer to line mode
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
 	//The render loop
@@ -135,8 +160,6 @@ void Entrance() {
 		//Clean Window or the old pixel will stay
 		CleanSCreen();
 
-		my_shader.use();
-		my_shader.setFloat("offset", 0.1);
 		//Draw
 		glBindTexture(GL_TEXTURE_2D, texture); // this will help set he uniform samplor
 		glBindVertexArray(VAO);

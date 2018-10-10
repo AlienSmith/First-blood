@@ -144,5 +144,8 @@
     <Image Include="woodcontainer.jpg">
       <Filter>OpenGL\Texture</Filter>
     </Image>
+    <Image Include="awesomeface.png">
+      <Filter>OpenGL\Texture</Filter>
+    </Image>
   </ItemGroup>
 </Project>

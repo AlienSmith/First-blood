@@ -15,7 +15,7 @@ void GStar::MyString::swap(MyString & string, char *& other, size_t size)
 	string.my_size = size;
 }
 
-size_t GStar::MyString::length(const char * other)
+size_t GStar::MyString::stringlength(const char * other)
 {
 	int len = 0;
 	const char * p = other;
@@ -31,8 +31,8 @@ GStar::MyString::MyString():my_size(0), my_string(nullptr)
 }
 
 GStar::MyString::MyString(const char other[])
-	:my_size(MyString::length(other)+2),
-	my_string(new char[MyString::length(other) + 2])
+	:my_size(MyString::stringlength(other)+2),
+	my_string(new char[MyString::stringlength(other) + 2])
 {
 	strcpy_s(my_string, my_size, other);
 }
@@ -77,7 +77,7 @@ GStar::MyString & GStar::MyString::operator=(const char other[])
 
 GStar::MyString & GStar::MyString::operator=(const char(&& other)[])
 {
-	this->my_size = GStar::MyString::length(other) + 1;
+	this->my_size = GStar::MyString::stringlength(other) + 1;
 	delete[] this->my_string;
 	this->my_string = const_cast<char*>(&other[0]);
 	return *this;

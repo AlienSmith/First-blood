@@ -26,7 +26,7 @@ int main() {
 	GStar::MyString  Hello = GStar::MyString("Hello");
 	GStar::MyString World = GStar::MyString("World");
 	printf("%s\n", Hello.GetString());
-	GStar::MyString output = Hello + World;
+	GStar::MyString output = Hello + World; // why this will lead to heap corruption?
 	printf("%s\n", output.GetString());
 	GStar::MyString test = GStar::MyString();
 	test = "Hello my Friend";

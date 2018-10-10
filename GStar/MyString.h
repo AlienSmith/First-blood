@@ -7,7 +7,7 @@ namespace GStar {
 	public:
 		static void swap(MyString& string,MyString& other);
 		static void swap(MyString& string, char*& other, size_t size);
-		static size_t length(const char* other);
+		static size_t stringlength(const char* other);
 		MyString();
 		//Value Constructor
 		MyString(const char other[]);
@@ -29,7 +29,7 @@ namespace GStar {
 		//Destructor
 		~MyString();
 	private:
-		char* my_string = nullptr;
+		char* my_string = nullptr;// always always intialize those that need to be delete check the prvious version for compiler constructor empty object without using default constructor.
 		size_t my_size = 0;
 	};
 	GStar::MyString operator+ (const GStar::MyString& A, const GStar::MyString& B);

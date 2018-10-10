@@ -66,6 +66,7 @@ void Entrance() {
 	};
 
 	//load texture
+	stbi_set_flip_vertically_on_load(true);// Flip the picture by x axies
 	int width, height, nrChannels; //out parameter
 	unsigned char *data = stbi_load("../GStar/woodcontainer.jpg", &width, &height, &nrChannels, 0);
 
@@ -161,7 +162,7 @@ void Entrance() {
 		CleanSCreen();
 
 		//Draw
-		glBindTexture(GL_TEXTURE_2D, texture); // this will help set he uniform samplor
+		//glBindTexture(GL_TEXTURE_2D, texture); // this will help set he uniform samplor if you bind the texture again the texture unit 1 will be fill with the texture.
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		//glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points

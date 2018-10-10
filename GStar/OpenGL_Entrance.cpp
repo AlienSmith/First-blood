@@ -94,7 +94,7 @@ void Entrance() {
 		CleanSCreen();
 
 		my_shader.use();
-
+		my_shader.setFloat("offset", 0.1);
 		//Draw
 		glBindVertexArray(VAO);
 		glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points

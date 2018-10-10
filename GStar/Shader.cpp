@@ -85,7 +85,7 @@ void Shader::CreateShader(Shader::ShaderSource && source)
 	char infoLog[256];
 	int success;
 	unsigned int vertex = CompileShader(source.VertexSource, GL_VERTEX_SHADER);
-	unsigned int fragment = CompileShader(source.VertexSource, GL_FRAGMENT_SHADER);
+	unsigned int fragment = CompileShader(source.FragmentSource, GL_FRAGMENT_SHADER);
 	ID = glCreateProgram();
 	glAttachShader(ID, vertex);
 	glAttachShader(ID, fragment);

@@ -4,9 +4,12 @@
 #include"ConsolePrint.h"
 #include"Shader.h"
 #include"stb_image.h"
+#include "Coordinate.h"
 //Initial window size
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
+float mixValue = 0.2f;
+
 
 //Shaders
 const char *vertexShaderSource = "#version 330 core\n"
@@ -33,12 +36,12 @@ void Entrance() {
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
 	if (window == nullptr) {
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Fail to create GLFW window");
+		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Fail to create GLFW window");
 		glfwTerminate();
 	}
 	glfwMakeContextCurrent(window);
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Failed to initialize GLAD");
+		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Failed to initialize GLAD");
 	}
 
 	// we do not need to sed viewport because the callback function will be called at beginning.
@@ -141,19 +144,16 @@ void Entrance() {
 	glEnableVertexAttribArray(2);
 	//Compile Shaders
 	Shader my_shader = Shader("../GStar/VertexColor.ves", "../GStar/VertexColor.frs");
-	
+	Shader scale_shader = Shader("../GStar/Excercise1.6.ves", "../GStar/VertexColor.frs");
 	glActiveTexture(GL_TEXTURE0); // activate the texture unit 0
 	glBindTexture(GL_TEXTURE_2D, texture); // bind name
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, textureface);
 
-	my_shader.use();
-	//my_shader.setFloat("offset", 0.1);
-	my_shader.setInt("texture1", 0);
-	my_shader.setInt("texture2", 1);
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//set both front and back buffer to line mode
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
 	//The render loop
+
 	while (!glfwWindowShouldClose(window))// return ture if GLFW is instructed to close
 	{	//input 
 		processInput(window);
@@ -161,8 +161,39 @@ void Entrance() {
 		//Clean Window or the old pixel will stay
 		CleanSCreen();
 
+		//Change The mixed value
+		//my_shader.setFloat("alphavalue", mixValue);
+
+		//Rotate the matrix
+		my_shader.use();
+		//my_shader.setFloat("offset", 0.1);
+		my_shader.setInt("texture1", 0);
+		my_shader.setInt("texture2", 1);
+		GStar::Matrix4 trans = GStar::Matrix4(IDENTICAL_MATRIX);
+		float temparray[16];
+		trans = GStar::Transform(trans, 0.5f, -0.5f, 0.0f); // TODO write a move constrctor;
+		trans = GStar::Rotate(trans, 0, 0, (float)glfwGetTime()*100);
+		/// Rotation is a change base transformation hence if we rotate before move it will generate effect of circle around the middle point of screen
+		GStar::Matrix4::value_ptr(trans, temparray);
+		unsigned int transformloc = glGetUniformLocation(my_shader.ID, "transform");
+		glUniformMatrix4fv(transformloc, 1, GL_FALSE, temparray);
 		//Draw
 		//glBindTexture(GL_TEXTURE_2D, texture); // this will help set he uniform samplor if you bind the texture again the texture unit 1 will be fill with the texture.
+		glBindVertexArray(VAO);
+		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
+
+		//Excercise1.6 draw another one
+		scale_shader.use();
+		scale_shader.setInt("texture1", 0);
+		scale_shader.setInt("texture2", 1);
+		GStar::Matrix4 trans_scale = GStar::Matrix4(IDENTICAL_MATRIX);
+		float scalearray[16];
+		trans_scale = GStar::Transform(trans_scale, -.5, .5, 0.0f);
+		trans_scale = GStar::Scale(trans_scale, sin((float)glfwGetTime()), sin((float)glfwGetTime()), 0);
+		GStar::Matrix4::value_ptr(trans_scale, scalearray);
+		unsigned int scaleLoc = glGetUniformLocation(scale_shader.ID, "Scale");
+		glUniformMatrix4fv(scaleLoc, 1, GL_FALSE, scalearray);
+		//Draw
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		//glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points
@@ -186,6 +217,17 @@ void processInput(GLFWwindow * window)
 	//if not pressed the return value is GLFW_RELEASE
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {
 		glfwSetWindowShouldClose(window, true);
+	}
+	if (glfwGetKey(window, GLFW_KEY_UP) == GLFW_PRESS) {
+		mixValue += 0.001f;
+		if (mixValue >= 1.0f) {
+			mixValue = 1.0f;
+		}
+	}else if (glfwGetKey(window, GLFW_KEY_DOWN) == GLFW_PRESS) {
+		mixValue -= 0.001f;
+		if (mixValue <= 0.0f) {
+			mixValue = 0.0f;
+		}
 	}
 }
 

@@ -34,12 +34,12 @@
     <Filter Include="OpenGL\Texture">
       <UniqueIdentifier>{61070df4-1248-426b-af1d-cede24551323}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Header Files\Coordinate">
+      <UniqueIdentifier>{bb437c7b-02ed-47d3-9f6b-865264b16ddb}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Coordinate.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Vector2.h">
@@ -74,6 +74,9 @@
     </ClInclude>
     <ClInclude Include="stb_image.h">
       <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Coordinate.h">
+      <Filter>Header Files\Coordinate</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -134,6 +137,12 @@
       <Filter>OpenGL\Shader</Filter>
     </None>
     <None Include="Exercises1.4.ves">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="Exercises1.5.frs">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="Excercise1.6.ves">
       <Filter>OpenGL\Shader</Filter>
     </None>
   </ItemGroup>

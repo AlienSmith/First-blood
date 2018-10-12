@@ -9,6 +9,7 @@
 #define ZERO_MATRIX { {0,0,0,0},{0, 0, 0, 0},{ 0,0,0,0 },{ 0,0,0,0 }, }
 #define IDENTICAL_MATRIX { {1,0,0,0},{0, 1, 0, 0},{ 0,0,1,0 },{ 0,0,0,1 }, }
 typedef float array_ff[SIZE][SIZE]; 
+typedef float array_f[SIZE*SIZE];
 namespace GStar {
 	class Matrix4;
 	std::vector<Matrix4*>* tempresultpool;
@@ -20,6 +21,7 @@ namespace GStar {
 	class Matrix4
 	{
 	public:
+		static void value_ptr(const Matrix4 & matrix, array_f & temparray);
 		Matrix4();
 		~Matrix4();
 		Matrix4(const array_ff & rdata);
@@ -204,7 +206,7 @@ namespace GStar {
 		return AddPool(temp);
 	}
 
-	// Mathmatic transpose of matrix
+	// POOL Mathmatic transpose of matrix 
 	inline Matrix4 & Matrix4::T() const
 	{
 		array_ff temp = ZERO_MATRIX;
@@ -364,6 +366,18 @@ namespace GStar {
 			}
 		}
 		return GStar::AddPool(temp);
+	}
+
+	inline void Matrix4::value_ptr(const Matrix4 & matrix,array_f & temparray)
+	{   // Since OpenGL use column major order so we need to transpose ower matrix
+		Matrix4 tempmatrix;
+		tempmatrix = matrix.T();
+		const array_ff& TA = tempmatrix.Get();
+		for (int i = 0; i < SIZE; i++) {
+			for (int j = 0; j < SIZE; j++) {
+				temparray[i*SIZE + j] = TA[i][j];
+			}
+		}
 	}
 
 	inline Matrix4::Matrix4()

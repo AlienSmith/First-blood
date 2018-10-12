@@ -1,0 +1,16 @@
+#version 330 core
+out vec4 FragColor;
+
+in vec3 ourColor;
+in vec2 TextCoord;
+
+uniform sampler2D texture1; // this will be filled automatically by Opengl
+uniform sampler2D texture2;
+uniform float alphavalue;
+void main() 
+{
+	//vec2 UpsideDown = vec2(TextCoord.x, 1.0- TextCoord.y);
+	//vec2 Repeat = vec2(2.0*TextCoord.x, 2.0 * TextCoord.y);
+	vec2 CenterPixel = vec2(.25 + TextCoord.x/2.0,.25 +TextCoord.y/2.0);// Set Filter to Nearest.
+	FragColor = mix(texture(texture1,TextCoord),texture(texture2,CenterPixel),alphavalue)*vec4(ourColor,1.0); // texture sampler, correspoding texture coordinate
+} 

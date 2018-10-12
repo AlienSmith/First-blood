@@ -150,6 +150,8 @@
     <ClCompile Include="Vector2.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="Excercise1.6.ves" />
+    <None Include="Exercises1.5.frs" />
     <None Include="FragmentShader.shader" />
     <None Include="FragmentShader1.2.shader" />
     <None Include="FragmentShader2.shader" />

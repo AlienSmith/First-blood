@@ -5,7 +5,11 @@
 #include "math.h"
 #include "Vector3.h"
 #define PI 3.14159265
+#include "ConsolePrint.h"
 namespace GStar {
+	static GStar::Matrix4 Transform(Matrix4& offset,float x, float y, float z);
+	static GStar::Matrix4 Scale(Matrix4& offset, float x, float y, float z);
+	static GStar::Matrix4 Rotate(Matrix4& offset,float roll, float pitch, float yaw);
 	//right hand coordinate
 	class Coordinate
 	{
@@ -90,5 +94,50 @@ namespace GStar {
 		return this->worldTothis.I()*object;
 	}
 
+	//TODO add a move constructor and operator for Matrix4
+	//TODO add rotation arround a Axies
+	inline GStar::Matrix4 GStar::Transform(Matrix4& offset,float x, float y, float z)
+	{
+		array_ff temp = IDENTICAL_MATRIX;
+		temp[0][3] = x;
+		temp[1][3] = y;
+		temp[2][3] = z;
+		Matrix4 tempmatrix = Matrix4(temp);
+		tempmatrix = offset.Dot(tempmatrix);
+		return tempmatrix;
+	}
+	GStar::Matrix4 Scale(Matrix4 & offset, float x, float y, float z)
+	{
+		array_ff temp = IDENTICAL_MATRIX;
+		temp[0][0] = x;
+		temp[1][1] = y;
+		temp[2][2] = z;
+		Matrix4 tempmatrix = GStar::Matrix4(temp);
+		tempmatrix = offset.Dot(tempmatrix);
+		return tempmatrix;
+	}
+	inline GStar::Matrix4 Rotate(Matrix4& offset,float roll, float pitch, float yaw)
+	{
+		array_ff temp = IDENTICAL_MATRIX;
+		float sx = sin(roll*PI / 180);
+		float sy = sin(pitch*PI / 180);
+		float sz = sin(yaw*PI / 180);
+		float cx = cos(roll*PI / 180);
+		float cy = cos(pitch*PI / 180);
+		float cz = cos(yaw*PI / 180);
+		//DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "sx %f, sy %f, sz %f", sx, sy, sz);
+		temp[0][0] = cz * cy - sz * sx*sy;
+		temp[0][1] = -sz * cx;
+		temp[0][2] = sy * cz + sz * sx*cy;
+		temp[1][0] = sz * cy + cz * sx*sy;
+		temp[1][1] = cz * cx;
+		temp[1][2] = sz * sy - cz * sx*cy;
+		temp[2][0] = -cx * sy;
+		temp[2][1] = sx;
+		temp[2][2] = cx * cy;
+		Matrix4 tempmatrix = GStar::Matrix4(temp);
+		tempmatrix = offset.Dot(tempmatrix);
+		return tempmatrix;
+	}
 }
 #endif // ! COORDINATE_H

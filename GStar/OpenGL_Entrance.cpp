@@ -30,6 +30,12 @@ void processInput(GLFWwindow* window);
 void CleanSCreen();
 
 void Entrance() {
+	//Going to 3D
+	GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX); //Transform in to world space
+	model = GStar::Rotate(model, -55, 0, 0);
+	GStar::Matrix4 view = GStar::Matrix4(IDENTICAL_MATRIX); // Transform to camera space
+	view = GStar::Transform(view, 0, 0, -3);
+
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);

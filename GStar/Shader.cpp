@@ -3,6 +3,7 @@
 #include<sstream>
 #include<iostream>
 #include"ConsolePrint.h"
+#include "Matrix4.h"
 Shader::Shader(const GLchar * vertexPath, const GLchar * fragmentPath)
 {
 	CreateShader(ReadShader(vertexPath, fragmentPath));
@@ -27,6 +28,15 @@ void Shader::setFloat(const std::string & name, float value) const
 {
 	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
+
+void Shader::setMat4(const std::string & name, const GStar::Matrix4& value)
+{
+	float temparray[16];
+	unsigned int transformloc = glGetUniformLocation(this->ID, name.c_str());
+	GStar::Matrix4::value_ptr(value, temparray);
+	glUniformMatrix4fv(transformloc, 1, GL_FALSE, temparray);
+}
+
 
 unsigned int Shader::CompileShader(std::string & source, unsigned int type)
 {

@@ -6,10 +6,14 @@ layout(location = 2) in vec2 aTextCoord;
 out vec3 ourColor; //Out put color for fragment shader
 out vec2 TextCoord;
 
-uniform mat4 transform;
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
 void main()
 {
-	gl_Position = transform * vec4(aPos, 1.0f); // see how we directly give a vec3 to vec4's constructor
+	vec4 temp = projection*view*model*vec4(aPos, 1.0f); // see how we directly give a vec3 to vec4's constructor
+	gl_Position = temp;
+	//gl_Position = vec4(temp.x/temp.w,temp.y/temp.w,temp.z/temp.w,1.0f);
 	ourColor = aColor;
 	TextCoord = aTextCoord;
 }

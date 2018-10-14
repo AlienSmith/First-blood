@@ -2,7 +2,7 @@
 #include<GLFW\glfw3.h>
 #include<iostream>
 #include"ConsolePrint.h"
-#include"Shader.h"
+#include"Shader.cpp"
 #include"stb_image.h"
 #include "Coordinate.h"
 //Initial window size
@@ -31,11 +31,19 @@ void CleanSCreen();
 
 void Entrance() {
 	//Going to 3D
+	GStar::Vector3 topleft = GStar::Vector3(-.5f, .5f, 0.0f);
+	GStar::Vector3 topright = GStar::Vector3(.5f, .5f, 0.0f);
+	GStar::Vector3 bleft = GStar::Vector3(-.5f, -.5f, 0.0f);
+	GStar::Vector3 bright = GStar::Vector3(.5f, -.5f, 0.0f);
 	GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX); //Transform in to world space
-	model = GStar::Rotate(model, -55, 0, 0);
+	model = GStar::Rotate(model, -45, 0, 0);
+	//topleft = model * topleft;
 	GStar::Matrix4 view = GStar::Matrix4(IDENTICAL_MATRIX); // Transform to camera space
 	view = GStar::Transform(view, 0, 0, -3);
-
+	topleft = view * topleft;
+	GStar::Matrix4 projection = GStar::Matrix4(IDENTICAL_MATRIX);
+	projection = GStar::perspective(projection, 45, SCR_WIDTH/SCR_HEIGHT,.1f,100.0f);
+	topleft = projection * topleft;
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -58,10 +66,10 @@ void Entrance() {
 	//vertex data only position now
 	float vertices[] = {
 		// positions          // colors           // texture coords
-		 0.5f,  0.5f, 0.0f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		 0.5f, -0.5f, 0.0f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		-0.5f, -0.5f, 0.0f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.5f,  0.5f, 0.0f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
+		 0.5f,  0.5f, -.2f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
+		 0.5f, -0.5f, -.2f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
+		-0.5f, -0.5f, -.2f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
+		-0.5f,  0.5f, -.2f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
 	};
 	unsigned int indices[] = {
 		0, 1, 3, // first triangle
@@ -169,26 +177,34 @@ void Entrance() {
 
 		//Change The mixed value
 		//my_shader.setFloat("alphavalue", mixValue);
-
-		//Rotate the matrix
 		my_shader.use();
-		//my_shader.setFloat("offset", 0.1);
+		//Rotate the matrix
+		my_shader.setFloat("offset", 0.1);
 		my_shader.setInt("texture1", 0);
 		my_shader.setInt("texture2", 1);
 		GStar::Matrix4 trans = GStar::Matrix4(IDENTICAL_MATRIX);
-		float temparray[16];
-		trans = GStar::Transform(trans, 0.5f, -0.5f, 0.0f); // TODO write a move constrctor;
-		trans = GStar::Rotate(trans, 0, 0, (float)glfwGetTime()*100);
-		/// Rotation is a change base transformation hence if we rotate before move it will generate effect of circle around the middle point of screen
-		GStar::Matrix4::value_ptr(trans, temparray);
+		my_shader.setMat4("model", model);
+		my_shader.setMat4("view", view);
+		my_shader.setMat4("projection", projection);
+		/*float temparray[16];
 		unsigned int transformloc = glGetUniformLocation(my_shader.ID, "transform");
 		glUniformMatrix4fv(transformloc, 1, GL_FALSE, temparray);
+		GStar::Matrix4::value_ptr(model, temparray);
+		unsigned int modelmloc = glGetUniformLocation(my_shader.ID, "model");
+		glUniformMatrix4fv(modelmloc, 1, GL_FALSE, temparray);
+		GStar::Matrix4::value_ptr(view, temparray);
+		unsigned int viewmloc = glGetUniformLocation(my_shader.ID, "view");
+		glUniformMatrix4fv(viewmloc, 1, GL_FALSE, temparray);
+		GStar::Matrix4::value_ptr(projection,temparray);
+		unsigned int projectmloc = glGetUniformLocation(my_shader.ID, "projection");
+		glUniformMatrix4fv(projectmloc, 1, GL_FALSE, temparray);
 		//Draw
 		//glBindTexture(GL_TEXTURE_2D, texture); // this will help set he uniform samplor if you bind the texture again the texture unit 1 will be fill with the texture.
+		*/
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		//Excercise1.6 draw another one
+		/*//Excercise1.6 draw another one
 		scale_shader.use();
 		scale_shader.setInt("texture1", 0);
 		scale_shader.setInt("texture2", 1);
@@ -203,6 +219,7 @@ void Entrance() {
 		glBindVertexArray(VAO);
 		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 		//glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points
+		*/
 		// check and call events and swap the buffers
 		glfwSwapBuffers(window);// swamp color buffer. and show what drawed in this iteration
 		glfwPollEvents();// checks events update functions

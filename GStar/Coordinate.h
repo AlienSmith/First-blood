@@ -10,6 +10,8 @@ namespace GStar {
 	static GStar::Matrix4 Transform(Matrix4& offset,float x, float y, float z);
 	static GStar::Matrix4 Scale(Matrix4& offset, float x, float y, float z);
 	static GStar::Matrix4 Rotate(Matrix4& offset,float roll, float pitch, float yaw);
+	static GStar::Matrix4 perspective(Matrix4& offset,float horangle, float widthbyheight, float nsize, float fsize);
+	static GStar::Matrix4 perspective(Matrix4& offset, float horangle, float widthbyheight, float nsize, float fsize);
 	//right hand coordinate
 	class Coordinate
 	{
@@ -106,7 +108,7 @@ namespace GStar {
 		tempmatrix = offset.Dot(tempmatrix);
 		return tempmatrix;
 	}
-	GStar::Matrix4 Scale(Matrix4 & offset, float x, float y, float z)
+	inline GStar::Matrix4 Scale(Matrix4 & offset, float x, float y, float z)
 	{
 		array_ff temp = IDENTICAL_MATRIX;
 		temp[0][0] = x;
@@ -135,6 +137,25 @@ namespace GStar {
 		temp[2][0] = -cx * sy;
 		temp[2][1] = sx;
 		temp[2][2] = cx * cy;
+		Matrix4 tempmatrix = GStar::Matrix4(temp);
+		tempmatrix = offset.Dot(tempmatrix);
+		return tempmatrix;
+	}
+	inline GStar::Matrix4 perspective(Matrix4& offset, float horangle, float widthbyheight, float nsize, float fsize)
+	{
+		float value = tan(horangle*PI / 360);
+		float width = 2*nsize*value;
+		float height = width / widthbyheight;
+
+		array_ff temp = IDENTICAL_MATRIX;
+		temp[0][0] = 2 * nsize / width;
+		//temp[0][2] = 0;
+		temp[1][1] = 2 * nsize / height;
+		//temp[1][2] = 0;
+		temp[2][2] = (fsize+nsize)/(nsize-fsize);
+		temp[2][3] = (2 * nsize*fsize)/ (nsize - fsize);
+		temp[3][2] = -1;
+		temp[3][3] =  0;
 		Matrix4 tempmatrix = GStar::Matrix4(temp);
 		tempmatrix = offset.Dot(tempmatrix);
 		return tempmatrix;

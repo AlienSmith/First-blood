@@ -5,51 +5,26 @@
 #include"Shader.cpp"
 #include"stb_image.h"
 #include "Coordinate.h"
+void framebuffer_size_callback(GLFWwindow* windwo, int width, int height);
+void processInput(GLFWwindow* window);
+void CleanSCreen();
+
 //Initial window size
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 float mixValue = 0.2f;
 
 
-//Shaders
-const char *vertexShaderSource = "#version 330 core\n"
-"layout (location = 0) in vec3 aPos;\n"
-"void main()\n"
-"{\n"
-"   gl_Position = vec4(aPos.x, aPos.y, aPos.z, 1.0);\n"
-"}\0";
-const char *fragmentShaderSource = "#version 330 core\n"
-"out vec4 FragColor;\n"
-"void main()\n"
-"{\n"
-"   FragColor = vec4(1.0f, 0.5f, 0.2f, 1.0f);\n"
-"}\n\0";
-
-void framebuffer_size_callback(GLFWwindow* windwo, int width, int height);
-void processInput(GLFWwindow* window);
-void CleanSCreen();
-
 void Entrance() {
 	//Going to 3D
-	GStar::Vector3 topleft = GStar::Vector3(-.5f, .5f, 0.0f);
-	GStar::Vector3 topright = GStar::Vector3(.5f, .5f, 0.0f);
-	GStar::Vector3 bleft = GStar::Vector3(-.5f, -.5f, 0.0f);
-	GStar::Vector3 bright = GStar::Vector3(.5f, -.5f, 0.0f);
-	GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX); //Transform in to world space
-	model = GStar::Rotate(model, -45, 0, 0);
+
 	//topleft = model * topleft;
-	GStar::Matrix4 view = GStar::Matrix4(IDENTICAL_MATRIX); // Transform to camera space
-	view = GStar::Transform(view, 0, 0, -3);
-	topleft = view * topleft;
-	GStar::Matrix4 projection = GStar::Matrix4(IDENTICAL_MATRIX);
-	projection = GStar::perspective(projection, 45, SCR_WIDTH/SCR_HEIGHT,.1f,100.0f);
-	topleft = projection * topleft;
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
 	glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 	GLFWwindow* window = glfwCreateWindow(SCR_WIDTH, SCR_HEIGHT, "LearnOpenGL", NULL, NULL);
-	if (window == nullptr) {
+	if (window == NULL) {
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Fail to create GLFW window");
 		glfwTerminate();
 	}
@@ -57,7 +32,7 @@ void Entrance() {
 	if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress)) {
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Failed to initialize GLAD");
 	}
-
+	glEnable(GL_DEPTH_TEST);
 	// we do not need to sed viewport because the callback function will be called at beginning.
 	//glViewport(0, 0, 800, 600);
 	//Register the resize callback function
@@ -65,15 +40,47 @@ void Entrance() {
 
 	//vertex data only position now
 	float vertices[] = {
-		// positions          // colors           // texture coords
-		 0.5f,  0.5f, -.2f,   1.0f, 0.0f, 0.0f,   1.0f, 1.0f,   // top right
-		 0.5f, -0.5f, -.2f,   0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   // bottom right
-		-0.5f, -0.5f, -.2f,   0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   // bottom left
-		-0.5f,  0.5f, -.2f,   1.0f, 1.0f, 0.0f,   0.0f, 1.0f    // top left 
-	};
-	unsigned int indices[] = {
-		0, 1, 3, // first triangle
-		1, 2, 3  // second triangle
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f, -0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f, -0.5f, -0.5f,  0.0f, 1.0f,
+
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f,
+	 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 0.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
+	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 	};
 	// use to specify where three vertex be on the texture
 	float texCoords[] = {
@@ -81,6 +88,28 @@ void Entrance() {
 	1.0f, 0.0f,  // lower-right corner
 	0.5f, 1.0f   // top-center corner
 	};
+
+	unsigned int VAO;
+	glGenVertexArrays(1, &VAO);//claim a name different function from VBO
+	glBindVertexArray(VAO);
+
+	//Put the data inside
+	// require buffers for the vertices on GPU VBO for Vertex buffer object
+	unsigned int VBO;
+	glGenBuffers(1, &VBO); // how many object names (unsigned integer) and where to store it.
+
+	glBindBuffer(GL_ARRAY_BUFFER, VBO); //VBO is GL_ARRAY_BUFFER. see docs.GL for other type
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // COPY DATA IN TO BUFFER
+	// static_Draw will rarely change, dynamic_draw will change, stream_draw change every time it draw
+	// deteminds where the data will be putted
+
+	//Link Vertex Attributes
+	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FASTEST, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glEnableVertexAttribArray(1);
 
 	//load texture
 	stbi_set_flip_vertically_on_load(true);// Flip the picture by x axies
@@ -126,39 +155,14 @@ void Entrance() {
 
 	//Vertex Array Object VAO to avoid previous problem
 	//VAO is a array that sotre the pointer to VBO's each attribute
-	unsigned int VAO;
-	glGenVertexArrays(1, &VAO);//claim a name different function from VBO
-	glBindVertexArray(VAO);
 
-	//Put the data inside
-	// require buffers for the vertices on GPU VBO for Vertex buffer object
-	unsigned int VBO;
-	glGenBuffers(1, &VBO); // how many object names (unsigned integer) and where to store it.
-
-	glBindBuffer(GL_ARRAY_BUFFER, VBO); //VBO is GL_ARRAY_BUFFER. see docs.GL for other type
-
-	glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), vertices, GL_STATIC_DRAW); // COPY DATA IN TO BUFFER
-	// static_Draw will rarely change, dynamic_draw will change, stream_draw change every time it draw
-	// deteminds where the data will be putted
-
-	unsigned int VEO;
+	/*unsigned int VEO;
 	glGenBuffers(1, &VEO); // Claim a name
 	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, VEO);
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
-
-	//Link Vertex Attributes
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)0);
-	glEnableVertexAttribArray(0);
-	///Every time we want to draw a object we need to bind the name, buffer the 
-	///data and Link Vertex Attributes and Enable it.
-	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, 8 * sizeof(float), (void*)(3 * sizeof(float)));
-	glEnableVertexAttribArray(1);
-
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FASTEST, 8 * sizeof(float), (void*)(6 * sizeof(float)));
-	glEnableVertexAttribArray(2);
+	*/
 	//Compile Shaders
 	Shader my_shader = Shader("../GStar/VertexColor.ves", "../GStar/VertexColor.frs");
-	Shader scale_shader = Shader("../GStar/Excercise1.6.ves", "../GStar/VertexColor.frs");
 	glActiveTexture(GL_TEXTURE0); // activate the texture unit 0
 	glBindTexture(GL_TEXTURE_2D, texture); // bind name
 	glActiveTexture(GL_TEXTURE1);
@@ -167,6 +171,10 @@ void Entrance() {
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//set both front and back buffer to line mode
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
 	//The render loop
+	GStar::Matrix4 view = GStar::Matrix4(IDENTICAL_MATRIX); // Transform to camera space
+	view = GStar::Transform(view, 0, 0, -10);
+	GStar::Matrix4 projection = GStar::Matrix4(IDENTICAL_MATRIX);
+	projection = GStar::perspective(projection, 45, SCR_WIDTH / SCR_HEIGHT, .1f, 100.0f);
 
 	while (!glfwWindowShouldClose(window))// return ture if GLFW is instructed to close
 	{	//input 
@@ -182,45 +190,16 @@ void Entrance() {
 		my_shader.setFloat("offset", 0.1);
 		my_shader.setInt("texture1", 0);
 		my_shader.setInt("texture2", 1);
-		GStar::Matrix4 trans = GStar::Matrix4(IDENTICAL_MATRIX);
+		GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX); //Transform in to world space
+		model = GStar::Rotate(model, (float)glfwGetTime()*100, (float)glfwGetTime() * 100, (float)glfwGetTime() * 100);
 		my_shader.setMat4("model", model);
 		my_shader.setMat4("view", view);
 		my_shader.setMat4("projection", projection);
-		/*float temparray[16];
-		unsigned int transformloc = glGetUniformLocation(my_shader.ID, "transform");
-		glUniformMatrix4fv(transformloc, 1, GL_FALSE, temparray);
-		GStar::Matrix4::value_ptr(model, temparray);
-		unsigned int modelmloc = glGetUniformLocation(my_shader.ID, "model");
-		glUniformMatrix4fv(modelmloc, 1, GL_FALSE, temparray);
-		GStar::Matrix4::value_ptr(view, temparray);
-		unsigned int viewmloc = glGetUniformLocation(my_shader.ID, "view");
-		glUniformMatrix4fv(viewmloc, 1, GL_FALSE, temparray);
-		GStar::Matrix4::value_ptr(projection,temparray);
-		unsigned int projectmloc = glGetUniformLocation(my_shader.ID, "projection");
-		glUniformMatrix4fv(projectmloc, 1, GL_FALSE, temparray);
-		//Draw
-		//glBindTexture(GL_TEXTURE_2D, texture); // this will help set he uniform samplor if you bind the texture again the texture unit 1 will be fill with the texture.
-		*/
-		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
 
-		/*//Excercise1.6 draw another one
-		scale_shader.use();
-		scale_shader.setInt("texture1", 0);
-		scale_shader.setInt("texture2", 1);
-		GStar::Matrix4 trans_scale = GStar::Matrix4(IDENTICAL_MATRIX);
-		float scalearray[16];
-		trans_scale = GStar::Transform(trans_scale, -.5, .5, 0.0f);
-		trans_scale = GStar::Scale(trans_scale, sin((float)glfwGetTime()), sin((float)glfwGetTime()), 0);
-		GStar::Matrix4::value_ptr(trans_scale, scalearray);
-		unsigned int scaleLoc = glGetUniformLocation(scale_shader.ID, "Scale");
-		glUniformMatrix4fv(scaleLoc, 1, GL_FALSE, scalearray);
-		//Draw
 		glBindVertexArray(VAO);
-		glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, 0);
-		//glDrawArrays(GL_TRIANGLES, 0, 3); //which primitive, vertex array start, how may points
-		*/
-		// check and call events and swap the buffers
+
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+
 		glfwSwapBuffers(window);// swamp color buffer. and show what drawed in this iteration
 		glfwPollEvents();// checks events update functions
 	}
@@ -257,5 +236,6 @@ void processInput(GLFWwindow * window)
 void CleanSCreen()
 {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);// set color
-	glClear(GL_COLOR_BUFFER_BIT); // only clean the color not depth and stencil
+	//glClear(GL_COLOR_BUFFER_BIT); // only clean the color not depth and stencil
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//  clean the color and depth
 }

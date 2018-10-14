@@ -17,7 +17,18 @@ float mixValue = 0.2f;
 
 void Entrance() {
 	//Going to 3D
-
+	GStar::Vector3 cubPosition[] = {
+	GStar::Vector3(0.0f,0.0f,0.0f),
+	GStar::Vector3(2.0f,5.0f,-15.0f),
+	GStar::Vector3(-1.5f, -2.2f, -2.5f),
+	GStar::Vector3(-3.8f, -2.0f, -12.3f),
+	GStar::Vector3(2.4f, -0.4f, -3.5f),
+	GStar::Vector3(-1.7f,  3.0f, -7.5f),
+	GStar::Vector3(1.3f, -2.0f, -2.5f),
+	GStar::Vector3(1.5f,  2.0f, -2.5f),
+	GStar::Vector3(1.5f,  0.2f, -1.5f),
+	GStar::Vector3(-1.3f,  1.0f, -1.5f)
+	};
 	//topleft = model * topleft;
 	glfwInit();
 	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -186,20 +197,26 @@ void Entrance() {
 		//Change The mixed value
 		//my_shader.setFloat("alphavalue", mixValue);
 		my_shader.use();
+
+		glBindVertexArray(VAO);
+		//render loop
+		for (unsigned int i = 0; i < 10; i++) {
+			GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX);
+			model = GStar::Transform(model, cubPosition[i].x(), cubPosition[i].y(),cubPosition[i].z());
+			float angle = 20.0f*i;
+			model = GStar::Rotate(model, (float)glfwGetTime() * 100, angle / 2, 0.0f);
+			my_shader.setMat4("model", model);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 		//Rotate the matrix
 		my_shader.setFloat("offset", 0.1);
 		my_shader.setInt("texture1", 0);
 		my_shader.setInt("texture2", 1);
-		GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX); //Transform in to world space
-		model = GStar::Rotate(model, (float)glfwGetTime()*100, (float)glfwGetTime() * 100, (float)glfwGetTime() * 100);
-		my_shader.setMat4("model", model);
+		//GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX); //Transform in to world space
+		//model = GStar::Rotate(model, (float)glfwGetTime() * 100, (float)glfwGetTime() * 100, (float)glfwGetTime() * 100);
+		//my_shader.setMat4("model", model);
 		my_shader.setMat4("view", view);
 		my_shader.setMat4("projection", projection);
-
-		glBindVertexArray(VAO);
-
-		glDrawArrays(GL_TRIANGLES, 0, 36);
-
 		glfwSwapBuffers(window);// swamp color buffer. and show what drawed in this iteration
 		glfwPollEvents();// checks events update functions
 	}

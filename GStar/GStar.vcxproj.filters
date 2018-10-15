@@ -37,6 +37,9 @@
     <Filter Include="Header Files\Coordinate">
       <UniqueIdentifier>{bb437c7b-02ed-47d3-9f6b-865264b16ddb}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OpenGL\Camera">
+      <UniqueIdentifier>{af0ab019-4c33-4074-a82a-ba5ee5f7dd33}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h">
@@ -78,6 +81,9 @@
     <ClInclude Include="Coordinate.h">
       <Filter>Header Files\Coordinate</Filter>
     </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>OpenGL\Camera</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GStar_init.cpp">
@@ -112,6 +118,9 @@
     </ClCompile>
     <ClCompile Include="stb_activate.cpp">
       <Filter>OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>OpenGL\Camera</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

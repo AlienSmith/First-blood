@@ -5,6 +5,7 @@
 #include"Shader.cpp"
 #include"stb_image.h"
 #include "Coordinate.h"
+#include "Camera.cpp"
 void framebuffer_size_callback(GLFWwindow* windwo, int width, int height);
 void processInput(GLFWwindow* window);
 void CleanSCreen();
@@ -182,11 +183,10 @@ void Entrance() {
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//set both front and back buffer to line mode
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
 	//The render loop
-	GStar::Matrix4 view = GStar::Matrix4(IDENTICAL_MATRIX); // Transform to camera space
-	view = GStar::Transform(view, 0, 0, -10);
 	GStar::Matrix4 projection = GStar::Matrix4(IDENTICAL_MATRIX);
 	projection = GStar::perspective(projection, 45, SCR_WIDTH / SCR_HEIGHT, .1f, 100.0f);
-
+	
+	GStar::Camera my_camera = GStar::Camera();
 	while (!glfwWindowShouldClose(window))// return ture if GLFW is instructed to close
 	{	//input 
 		processInput(window);
@@ -200,11 +200,17 @@ void Entrance() {
 
 		glBindVertexArray(VAO);
 		//render loop
+		float radius = 10.0f;
+		float camX = sin(glfwGetTime())*radius;
+		float camZ = cos(glfwGetTime())*radius;
+		my_camera.Set_Pos(GStar::Vector3(camX, 0.0, camZ));
+		my_camera.Update();
+		GStar::Matrix4 view = my_camera.view;
 		for (unsigned int i = 0; i < 10; i++) {
 			GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX);
 			model = GStar::Transform(model, cubPosition[i].x(), cubPosition[i].y(),cubPosition[i].z());
 			float angle = 20.0f*i;
-			model = GStar::Rotate(model, (float)glfwGetTime() * 100, angle / 2, 0.0f);
+			model = GStar::Rotate(model, (float)glfwGetTime() * 100,cubPosition[i]);
 			my_shader.setMat4("model", model);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}

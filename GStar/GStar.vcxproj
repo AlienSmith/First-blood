@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Assert.h" />
+    <ClInclude Include="Camera.h" />
     <ClInclude Include="ConsolePrint.h" />
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="Debug.h" />
@@ -137,6 +138,7 @@
     <ClInclude Include="Vector3.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsolePrint.cpp" />
     <ClCompile Include="GLAD\glad.c" />
     <ClCompile Include="GStar_init.cpp" />

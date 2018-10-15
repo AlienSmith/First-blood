@@ -10,6 +10,7 @@ namespace GStar {
 	static GStar::Matrix4 Transform(Matrix4& offset,float x, float y, float z);
 	static GStar::Matrix4 Scale(Matrix4& offset, float x, float y, float z);
 	static GStar::Matrix4 Rotate(Matrix4& offset,float roll, float pitch, float yaw);
+	static GStar::Matrix4 Rotate(Matrix4& offset, GStar::Vector3 direction);
 	static GStar::Matrix4 perspective(Matrix4& offset,float horangle, float widthbyheight, float nsize, float fsize);
 	static GStar::Matrix4 perspective(Matrix4& offset, float horangle, float widthbyheight, float nsize, float fsize);
 	//right hand coordinate
@@ -140,6 +141,11 @@ namespace GStar {
 		Matrix4 tempmatrix = GStar::Matrix4(temp);
 		tempmatrix = offset.Dot(tempmatrix);
 		return tempmatrix;
+	}
+	GStar::Matrix4 Rotate(Matrix4 & offset, GStar::Vector3 direction)
+	{
+
+		return GStar::Matrix4();
 	}
 	inline GStar::Matrix4 perspective(Matrix4& offset, float horangle, float widthbyheight, float nsize, float fsize)
 	{

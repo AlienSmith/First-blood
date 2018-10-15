@@ -203,7 +203,7 @@ void Entrance() {
 		float radius = 10.0f;
 		float camX = sin(glfwGetTime())*radius;
 		float camZ = cos(glfwGetTime())*radius;
-		my_camera.Set_Pos(GStar::Vector3(camX, 0.0, camZ));
+		my_camera.Set_Pos(GStar::Vector3(camX, 0.0, 10.0));
 		my_camera.Update();
 		GStar::Matrix4 view = my_camera.view;
 		for (unsigned int i = 0; i < 10; i++) {

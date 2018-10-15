@@ -17,24 +17,20 @@ void GStar::Camera::Set_Up(GStar::Vector3 Target)
 
 void GStar::Camera::Update()
 {
+	cameraDirection = cameraPos - cameraTarget;
+	cameraDirection.Normalize();
+	cameraRight = GStar::Vector3::Cross(up, cameraDirection);
+	cameraUp = GStar::Vector3::Cross(cameraDirection, cameraRight);
 	view = Lookat(cameraRight, cameraUp, cameraDirection, cameraPos);
 }
 
 GStar::Camera::Camera(GStar::Vector3 camPos, GStar::Vector3 camTarget):cameraPos(camPos),cameraTarget(camTarget)
 {
-	cameraDirection = camPos - camTarget;
-	cameraDirection.Normalize();
-	cameraRight = GStar::Vector3::Cross(up, cameraDirection);
-	cameraUp = GStar::Vector3::Cross(cameraDirection, cameraRight);
 	Update();
 }
 
 GStar::Camera::Camera()
 {
-	cameraDirection = cameraPos- cameraTarget;
-	cameraDirection.Normalize();
-	cameraRight = GStar::Vector3::Cross(up, cameraDirection);
-	cameraUp = GStar::Vector3::Cross(cameraDirection, cameraRight);
 	Update();
 }
 

@@ -14,7 +14,7 @@ namespace GStar {
 		GStar::Matrix4 view;
 	private:
 		GStar::Vector3 cameraTarget = GStar::Vector3(0.0f, 0.0f, 0.0f);
-		GStar::Vector3 cameraPos = GStar::Vector3(0.0f, 0.0f, 3.0f);
+		GStar::Vector3 cameraPos = GStar::Vector3(0.0f, 0.0f, 10.0f);
 		GStar::Vector3 cameraDirection = GStar::Vector3(0.0f, 0.0f, 0.0f);
 		GStar::Vector3 up = GStar::Vector3(0.0f, 1.0f, 0.0f);
 		GStar::Vector3 cameraRight = GStar::Vector3(0.0f, 0.0f, 0.0f);

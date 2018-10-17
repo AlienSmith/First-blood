@@ -29,12 +29,12 @@ void Shader::setFloat(const std::string & name, float value) const
 	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
 }
 
-void Shader::setMat4(const std::string & name, const GStar::Matrix4& value)
+void Shader::setMat4(const std::string &name, const GStar::Matrix4& value, unsigned int Flip)
 {
 	float temparray[16];
 	unsigned int transformloc = glGetUniformLocation(this->ID, name.c_str());
 	GStar::Matrix4::value_ptr(value, temparray);
-	glUniformMatrix4fv(transformloc, 1, GL_FALSE, temparray);
+	glUniformMatrix4fv(transformloc, 1, Flip, temparray);
 }
 
 

@@ -203,17 +203,9 @@ void Entrance() {
 		float radius = 10.0f;
 		float camX = sin(glfwGetTime())*radius;
 		float camZ = cos(glfwGetTime())*radius;
-		my_camera.Set_Pos(GStar::Vector3(camX, 0.0, 10.0));
+		my_camera.Set_Pos(GStar::Vector3(camX, 0.0f, camZ));
 		my_camera.Update();
 		GStar::Matrix4 view = my_camera.view;
-		for (unsigned int i = 0; i < 10; i++) {
-			GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX);
-			model = GStar::Transform(model, cubPosition[i].x(), cubPosition[i].y(),cubPosition[i].z());
-			float angle = 20.0f*i;
-			model = GStar::Rotate(model, (float)glfwGetTime() * 100,cubPosition[i]);
-			my_shader.setMat4("model", model);
-			glDrawArrays(GL_TRIANGLES, 0, 36);
-		}
 		//Rotate the matrix
 		my_shader.setFloat("offset", 0.1);
 		my_shader.setInt("texture1", 0);
@@ -221,8 +213,16 @@ void Entrance() {
 		//GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX); //Transform in to world space
 		//model = GStar::Rotate(model, (float)glfwGetTime() * 100, (float)glfwGetTime() * 100, (float)glfwGetTime() * 100);
 		//my_shader.setMat4("model", model);
-		my_shader.setMat4("view", view);
-		my_shader.setMat4("projection", projection);
+		my_shader.setMat4("view", view, GLFW_TRUE);
+		my_shader.setMat4("projection", projection,GL_FALSE);
+		for (unsigned int i = 0; i < 10; i++) {
+			GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX);
+			model = GStar::Transform(model, cubPosition[i].x(), cubPosition[i].y(),cubPosition[i].z());
+			float angle = 20.0f*i;
+			//model = GStar::Rotate(model, (float)glfwGetTime() * 100,cubPosition[i]);
+			my_shader.setMat4("model", model, GL_FALSE);
+			glDrawArrays(GL_TRIANGLES, 0, 36);
+		}
 		glfwSwapBuffers(window);// swamp color buffer. and show what drawed in this iteration
 		glfwPollEvents();// checks events update functions
 	}

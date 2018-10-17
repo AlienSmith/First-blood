@@ -10,14 +10,11 @@ namespace GStar {
 		void Update();
 		Camera(GStar::Vector3 cameraPos, GStar::Vector3 cameraTarget);
 		Camera();
-		static GStar::Matrix4 Lookat(GStar::Vector3 right, GStar::Vector3 up, GStar::Vector3 direction, GStar::Vector3 position);
+		static GStar::Matrix4 Lookat( GStar::Vector3 worldup, GStar::Vector3 target, GStar::Vector3 position);
 		GStar::Matrix4 view;
 	private:
 		GStar::Vector3 cameraTarget = GStar::Vector3(0.0f, 0.0f, 0.0f);
 		GStar::Vector3 cameraPos = GStar::Vector3(0.0f, 0.0f, 10.0f);
-		GStar::Vector3 cameraDirection = GStar::Vector3(0.0f, 0.0f, 0.0f);
 		GStar::Vector3 up = GStar::Vector3(0.0f, 1.0f, 0.0f);
-		GStar::Vector3 cameraRight = GStar::Vector3(0.0f, 0.0f, 0.0f);
-		GStar::Vector3 cameraUp = GStar::Vector3(0.0f, 0.0f, 0.0f);
 	};
 }

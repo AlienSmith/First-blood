@@ -30,7 +30,9 @@ int main() {
 		std::cin >> next;
 		while (next != '.') {
 			TestChar.Push(next);
-			std::cin >> next;
+
+
+.0			std::cin >> next;
 		}
 		Monster::printlist(TestChar.GetHead());
 		std::cin >> next;*/

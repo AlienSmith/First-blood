@@ -145,6 +145,7 @@
     <ClCompile Include="HeapManager.cpp" />
     <ClCompile Include="HeapManagerProxy.cpp" />
     <ClCompile Include="HeapManager_UnitTest.cpp" />
+    <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="OpenGL_Entrance.cpp" />
     <ClCompile Include="Shader.cpp" />

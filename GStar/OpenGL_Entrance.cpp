@@ -2,7 +2,7 @@
 #include<GLFW\glfw3.h>
 #include<iostream>
 #include"ConsolePrint.h"
-#include"Shader.cpp"
+#include"Shader.h"
 #include"stb_image.h"
 #include "Coordinate.h"
 #include "Camera.cpp"

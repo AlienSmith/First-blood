@@ -12,7 +12,7 @@ typedef float array_ff[SIZE][SIZE];
 typedef float array_f[SIZE*SIZE];
 namespace GStar {
 	class Matrix4;
-	std::vector<Matrix4*>* tempresultpool;
+	extern  std::vector<Matrix4*>* tempresultpool;
 	inline Matrix4& AddPool(array_ff& rdata);
 	inline void CleanPool();
 	//Plase do not contain constructor in equations.

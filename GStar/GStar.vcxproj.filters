@@ -122,6 +122,9 @@
     <ClCompile Include="Camera.cpp">
       <Filter>OpenGL\Camera</Filter>
     </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="VertexShader.shader">

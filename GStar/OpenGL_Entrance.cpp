@@ -14,9 +14,14 @@ void CleanSCreen();
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 float mixValue = 0.2f;
-
-
+//
+GStar::Camera my_camera;
+float deltaTime = 0;
+float LastFrame = 0;
+float currentFrame= 0;
 void Entrance() {
+	//Initialize Camera
+	my_camera = GStar::Camera();
 	//Going to 3D
 	GStar::Vector3 cubPosition[] = {
 	GStar::Vector3(0.0f,0.0f,0.0f),
@@ -186,7 +191,6 @@ void Entrance() {
 	GStar::Matrix4 projection = GStar::Matrix4(IDENTICAL_MATRIX);
 	projection = GStar::perspective(projection, 45, SCR_WIDTH / SCR_HEIGHT, .1f, 100.0f);
 	
-	GStar::Camera my_camera = GStar::Camera();
 	while (!glfwWindowShouldClose(window))// return ture if GLFW is instructed to close
 	{	//input 
 		processInput(window);
@@ -238,6 +242,9 @@ void framebuffer_size_callback(GLFWwindow * windwo, int width, int height)
 
 void processInput(GLFWwindow * window)
 {
+	currentFrame = glfwGetTime();
+	deltaTime = currentFrame - LastFrame;
+	LastFrame = currentFrame;
 	//if focused on the window and esc pressed set shouldclose to true
 	//if not pressed the return value is GLFW_RELEASE
 	if (glfwGetKey(window, GLFW_KEY_ESCAPE) == GLFW_PRESS) {

@@ -7,6 +7,7 @@
 #define PI 3.14159265
 #include "ConsolePrint.h"
 namespace GStar {
+	inline static float radians(float angle) { return angle * PI / 180.0; };
 	static GStar::Matrix4 Transform(Matrix4& offset,float x, float y, float z);
 	static GStar::Matrix4 Scale(Matrix4& offset, float x, float y, float z);
 	static GStar::Matrix4 Rotate(Matrix4& offset,float roll, float pitch, float yaw);

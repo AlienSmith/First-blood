@@ -7,6 +7,7 @@
 #include "Coordinate.h"
 #include "Camera.cpp"
 void framebuffer_size_callback(GLFWwindow* windwo, int width, int height);
+void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window);
 void CleanSCreen();
 
@@ -14,14 +15,19 @@ void CleanSCreen();
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
 float mixValue = 0.2f;
-//
+//Camera
 GStar::Camera my_camera;
+//Time
 float deltaTime = 0;
 float LastFrame = 0;
 float currentFrame= 0;
+//Mouse Reading
+float xoffset=0;
+float yoffset=0;
+float lastX = 400;
+float lastY = 300;
+float sensitivity = 0.0005f;
 void Entrance() {
-	//Initialize Camera
-	my_camera = GStar::Camera();
 	//Going to 3D
 	GStar::Vector3 cubPosition[] = {
 	GStar::Vector3(0.0f,0.0f,0.0f),
@@ -54,6 +60,12 @@ void Entrance() {
 	//glViewport(0, 0, 800, 600);
 	//Register the resize callback function
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
+
+	//Initialize Camera
+	my_camera = GStar::Camera();
+	///Hide CURSOR and add mouse callback function
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	glfwSetCursorPosCallback(window, mouse_callback);
 
 	//vertex data only position now
 	float vertices[] = {
@@ -207,7 +219,7 @@ void Entrance() {
 		float radius = 10.0f;
 		float camX = sin(glfwGetTime())*radius;
 		float camZ = cos(glfwGetTime())*radius;
-		my_camera.Set_Pos(GStar::Vector3(camX, 0.0f, camZ));
+		//my_camera.Set_Pos(GStar::Vector3(camX, 0.0f, camZ));
 		my_camera.Update();
 		GStar::Matrix4 view = my_camera.view;
 		//Rotate the matrix
@@ -223,7 +235,7 @@ void Entrance() {
 			GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX);
 			model = GStar::Transform(model, cubPosition[i].x(), cubPosition[i].y(),cubPosition[i].z());
 			float angle = 20.0f*i;
-			//model = GStar::Rotate(model, (float)glfwGetTime() * 100,cubPosition[i]);
+			model = GStar::Rotate(model, (float)glfwGetTime() * 100,cubPosition[i]);
 			my_shader.setMat4("model", model, GL_FALSE);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
@@ -239,6 +251,18 @@ void framebuffer_size_callback(GLFWwindow * windwo, int width, int height)
 {
 	glViewport(0, 0, width, height);// Viewport and window are different.
 }
+
+void mouse_callback(GLFWwindow * window, double xpos, double ypos)
+{
+	xoffset = (xpos - lastX)*sensitivity;
+	yoffset = (lastY - ypos)*sensitivity;
+	lastX = xpos;
+	lastY = ypos;
+	my_camera.setyaw(my_camera.getyaw() + xoffset);
+	my_camera.setpitch(my_camera.getpitch() + yoffset);
+	my_camera.RotateUpdate();
+}
+
 
 void processInput(GLFWwindow * window)
 {
@@ -261,6 +285,7 @@ void processInput(GLFWwindow * window)
 			mixValue = 0.0f;
 		}
 	}
+	my_camera.processInput(window, deltaTime);
 }
 
 void CleanSCreen()

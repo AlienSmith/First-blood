@@ -1,35 +1,60 @@
 #include "Camera.h"
-
+#include"GLFW/glfw3.h"
+#include "Coordinate.h"
 void GStar::Camera::Set_Target(GStar::Vector3 Target)
 {
 	cameraTarget = Target;
+	//TODO Seperate this part as a function
+	CameraFront = cameraPos - cameraTarget;
+	CameraFront.Normalize();
+	NeedUpdate = true;
 }
 
 void GStar::Camera::Set_Pos(GStar::Vector3 Target)
 {
 	cameraPos = Target;
+	CameraFront = cameraPos - cameraTarget;
+	CameraFront.Normalize();
+	NeedUpdate = true;
 }
 
 
 void GStar::Camera::Update()
 {
-	view = Lookat(Vector3(0,1,0), cameraTarget,cameraPos,CameraFront,CameraUp,CameraRight);
+	if (NeedUpdate) {
+		view = Lookat(Vector3(0, 1, 0),CameraFront,cameraPos,CameraUp,CameraRight);
+		NeedUpdate = false;
+	}	
+}
+
+void GStar::Camera::RotateUpdate()
+{
+	float x = cos(GStar::radians(pitch)) * cos(GStar::radians(yaw));
+	float y = sin(GStar::radians(pitch));
+	float z = cos(GStar::radians(pitch)) * sin(GStar::radians(yaw));
+	//TODO add a seter for Vector3
+	CameraFront = Vector3(x, y, z);
+	NeedUpdate = true;
 }
 
 GStar::Camera::Camera(GStar::Vector3 camPos, GStar::Vector3 camTarget):cameraPos(camPos),cameraTarget(camTarget)
 {
+	NeedUpdate = true;
+	CameraFront = cameraPos - cameraTarget;
+	CameraFront.Normalize();
 	Update();
 }
 
 GStar::Camera::Camera()
 {
+	NeedUpdate = true;
+	CameraFront = cameraPos - cameraTarget;
+	CameraFront.Normalize();
 	Update();
 }
 
-GStar::Matrix4 GStar::Camera::Lookat(const GStar::Vector3& worldup, const GStar::Vector3& target, const GStar::Vector3& position)
+GStar::Matrix4 GStar::Camera::Lookat(const GStar::Vector3& worldup, const GStar::Vector3& reverseDirection, const GStar::Vector3& position)
 {
-	GStar::Vector3 reverseDirection =  position-target;
-	reverseDirection.Normalize();
 	GStar::Vector3 right = GStar::Vector3::Cross(worldup, reverseDirection);
 	GStar::Vector3 up = GStar::Vector3::Cross(reverseDirection, right);
 	array_ff templ = IDENTICAL_MATRIX;
@@ -50,10 +75,8 @@ GStar::Matrix4 GStar::Camera::Lookat(const GStar::Vector3& worldup, const GStar:
 	return tempmatrxl;
 }
 
-GStar::Matrix4 GStar::Camera::Lookat(const GStar::Vector3& worldup, const GStar::Vector3& target, const GStar::Vector3& position, GStar::Vector3& reverseDirection, GStar::Vector3& up, GStar::Vector3& right)
+GStar::Matrix4 GStar::Camera::Lookat(const GStar::Vector3& worldup, const GStar::Vector3& reverseDirection, const GStar::Vector3& position, GStar::Vector3& up, GStar::Vector3& right)
 {
-	reverseDirection = position - target;
-	reverseDirection.Normalize();
 	right = GStar::Vector3::Cross(worldup, reverseDirection);
 	up = GStar::Vector3::Cross(reverseDirection, right);
 	array_ff templ = IDENTICAL_MATRIX;
@@ -76,7 +99,23 @@ GStar::Matrix4 GStar::Camera::Lookat(const GStar::Vector3& worldup, const GStar:
 
 void GStar::Camera::processInput(GLFWwindow * window, float deltatime)
 {
-
+	float cameraspeed = CameraMoveSpeed * deltatime;
+	if (glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+		cameraPos -= cameraspeed * CameraFront;
+		NeedUpdate = true;
+	}
+	if (glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+		cameraPos += cameraspeed * CameraFront;
+		NeedUpdate = true;
+	}
+	if (glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+		cameraPos -= cameraspeed * CameraRight;
+		NeedUpdate = true;
+	}
+	if (glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+		cameraPos += cameraspeed * CameraRight;
+		NeedUpdate = true;
+	}
 }
 
 

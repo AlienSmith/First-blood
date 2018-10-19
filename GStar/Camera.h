@@ -18,16 +18,16 @@ namespace GStar {
 		void processInput(GLFWwindow * window, float deltatime);
 		bool NeedUpdate = false;
 		inline float  getpitch() const { return pitch; };
-		inline float getyaw() const { return yaw; };
-		inline void setpitch(float pit) { pitch = pit; if (pit > 89.0f)pitch = 89.0f; if (pit < -89.0f)pitch = -89.0f; };
-		inline void setyaw(float yaw) { yaw = yaw; };
+		inline float getroll() const { return roll; };
+		inline void setpitch(float pit) { pitch = pit; };
+		inline void setroll(float rol) { roll = rol; if (roll > 89.0f)roll = 89.0f; if (roll < -89.0f)roll = -89.0f;};
 	private:
 		GStar::Vector3 cameraTarget = GStar::Vector3(0.0f, 0.0f, 0.0f);
 		GStar::Vector3 cameraPos = GStar::Vector3(0.0f, 0.0f, 10.0f);
 		GStar::Vector3 CameraUp = GStar::Vector3(0.0f, 0.0f, 0.0f);
 		GStar::Vector3 CameraFront = GStar::Vector3(0.0f, 0.0f, 0.0f);
 		GStar::Vector3 CameraRight = GStar::Vector3(0.0f, 0.0f, 0.0f);
+		float roll = 0;
 		float pitch = 0;
-		float yaw = 0;
 	};
 }

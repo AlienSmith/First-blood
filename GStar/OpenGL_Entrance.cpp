@@ -26,7 +26,7 @@ float xoffset=0;
 float yoffset=0;
 float lastX = 400;
 float lastY = 300;
-float sensitivity = 0.0005f;
+float sensitivity = 0.05f;
 void Entrance() {
 	//Going to 3D
 	GStar::Vector3 cubPosition[] = {
@@ -235,7 +235,7 @@ void Entrance() {
 			GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX);
 			model = GStar::Transform(model, cubPosition[i].x(), cubPosition[i].y(),cubPosition[i].z());
 			float angle = 20.0f*i;
-			model = GStar::Rotate(model, (float)glfwGetTime() * 100,cubPosition[i]);
+			//model = GStar::Rotate(model, (float)glfwGetTime() * 100,cubPosition[i]);
 			my_shader.setMat4("model", model, GL_FALSE);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
 		}
@@ -258,8 +258,8 @@ void mouse_callback(GLFWwindow * window, double xpos, double ypos)
 	yoffset = (lastY - ypos)*sensitivity;
 	lastX = xpos;
 	lastY = ypos;
-	my_camera.setyaw(my_camera.getyaw() + xoffset);
-	my_camera.setpitch(my_camera.getpitch() + yoffset);
+	my_camera.setroll(my_camera.getroll() - yoffset);
+	my_camera.setpitch(my_camera.getpitch() - xoffset);
 	my_camera.RotateUpdate();
 }
 

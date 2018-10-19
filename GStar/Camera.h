@@ -23,7 +23,7 @@ namespace GStar {
 		inline void setroll(float rol) { roll = rol; if (roll > 89.0f)roll = 89.0f; if (roll < -89.0f)roll = -89.0f;};
 	private:
 		GStar::Vector3 cameraTarget = GStar::Vector3(0.0f, 0.0f, 0.0f);
-		GStar::Vector3 cameraPos = GStar::Vector3(0.0f, 0.0f, 1.0f);
+		GStar::Vector3 cameraPos = GStar::Vector3(0.0f, 0.0f, 10.0f);
 		GStar::Vector3 CameraUp = GStar::Vector3(0.0f, 0.0f, 0.0f);
 		GStar::Vector3 CameraFront = GStar::Vector3(0.0f, 0.0f, 0.0f);
 		GStar::Vector3 CameraRight = GStar::Vector3(0.0f, 0.0f, 0.0f);

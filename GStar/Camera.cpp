@@ -69,9 +69,9 @@ GStar::Matrix4 GStar::Camera::Lookat(const GStar::Vector3& worldup, const GStar:
 	templ[1][2] = reverseDirection.y();
 	templ[2][2] = reverseDirection.z();
 
-	templ[0][3] = -position.x();
-	templ[1][3] = -position.y();
-	templ[2][3] = -position.z();
+	templ[0][3] = position.x();
+	templ[1][3] = position.y();
+	templ[2][3] = position.z();
 	GStar::Matrix4 tempmatrxl = GStar::Matrix4(templ);
 	tempmatrxl = tempmatrxl.I();
 	return tempmatrxl;
@@ -83,19 +83,20 @@ GStar::Matrix4 GStar::Camera::Lookat(const GStar::Vector3& worldup, const GStar:
 	up = GStar::Vector3::Cross(reverseDirection, right);
 	array_ff templ = IDENTICAL_MATRIX;
 	templ[0][0] = right.x();
-	templ[0][1] = right.y();
-	templ[0][2] = right.z();
-	templ[1][0] = up.x();
+	templ[1][0] = right.y();
+	templ[2][0] = right.z();
+	templ[0][1] = up.x();
 	templ[1][1] = up.y();
-	templ[1][2] = up.z();
-	templ[2][0] = -reverseDirection.x();
-	templ[2][1] = -reverseDirection.y();
-	templ[2][2] = -reverseDirection.z();
+	templ[2][1] = up.z();
+	templ[0][2] = reverseDirection.x();
+	templ[1][2] = reverseDirection.y();
+	templ[2][2] = reverseDirection.z();
 
-	templ[3][0] = -right.Dot(position);
-	templ[3][1] = -up.Dot(position);
-	templ[3][2] = -reverseDirection.Dot(position);
+	templ[0][3] = position.x();
+	templ[1][3] = position.y();
+	templ[2][3] = position.z();
 	GStar::Matrix4 tempmatrxl = GStar::Matrix4(templ);
+	tempmatrxl = tempmatrxl.I();
 	return tempmatrxl;
 }
 

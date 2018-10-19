@@ -195,7 +195,7 @@ namespace GStar {
 	//this return the cross product
 	inline Vector3 GStar::Vector3::Cross(const Vector3& A, const Vector3& B) {
 		float temp_x = A.y()*B.z() - A.z()*B.y();
-		float temp_y = A.x()*B.z() - A.z()*B.x();
+		float temp_y = A.z()*B.x() - A.x()*B.z();
 		float temp_Z = A.x()*B.y() - A.y()*B.x();
 		return Vector3(temp_x,temp_y,temp_Z);
 	}

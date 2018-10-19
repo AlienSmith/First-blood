@@ -27,6 +27,7 @@ float yoffset=0;
 float lastX = 400;
 float lastY = 300;
 float sensitivity = 0.05f;
+GStar::Vector3 righttop = GStar::Vector3(.5f, .5f, .5f);
 void Entrance() {
 	//Going to 3D
 	GStar::Vector3 cubPosition[] = {
@@ -238,9 +239,13 @@ void Entrance() {
 			//model = GStar::Rotate(model, (float)glfwGetTime() * 100,cubPosition[i]);
 			my_shader.setMat4("model", model, GL_FALSE);
 			glDrawArrays(GL_TRIANGLES, 0, 36);
+			righttop = model * righttop;
 		}
+		righttop = view * righttop;
+		righttop = projection * righttop;
 		glfwSwapBuffers(window);// swamp color buffer. and show what drawed in this iteration
 		glfwPollEvents();// checks events update functions
+		
 	}
 	glfwTerminate();
 

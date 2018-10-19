@@ -13,7 +13,7 @@ namespace GStar {
 	static GStar::Matrix4 Rotate(Matrix4& offset,float roll, float pitch, float yaw);
 	static GStar::Matrix4 Rotate(Matrix4 & offset, float degree, GStar::Vector3 direction);
 	static GStar::Matrix4 perspective(Matrix4& offset, float horangle, float widthbyheight, float nsize, float fsize);
-	//right hand coordinate
+	inline GStar::Matrix4 orthogrphic(Matrix4& offset, float horangle, float widthbyheight, float nsize, float fsize);
 	class Coordinate
 	{
 	public:
@@ -183,5 +183,25 @@ namespace GStar {
 		tempmatrix = offset.Dot(tempmatrix);
 		return tempmatrix;
 	}
+
+	GStar::Matrix4 orthogrphic(Matrix4 & offset, float horangle, float widthbyheight, float nsize, float fsize)
+	{
+		float value = tan(horangle*PI / 360);
+		float width = 2 * nsize*value;
+		float height = width / widthbyheight;
+
+		array_ff temp = IDENTICAL_MATRIX;
+		temp[0][0] = 2 * nsize / width;
+		//temp[0][2] = 0;
+		temp[1][1] = 2 * nsize / height;
+		//temp[1][2] = 0;
+		temp[2][2] = 2 / (nsize - fsize);
+		temp[2][3] = (nsize+fsize) / (nsize - fsize);
+		temp[3][3] = 1;
+		Matrix4 tempmatrix = GStar::Matrix4(temp);
+		tempmatrix = offset.Dot(tempmatrix);
+		return tempmatrix;
+	}
+
 }
 #endif // ! COORDINATE_H

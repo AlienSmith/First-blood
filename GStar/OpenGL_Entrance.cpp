@@ -229,7 +229,7 @@ void Entrance() {
 		//GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX); //Transform in to world space
 		//model = GStar::Rotate(model, (float)glfwGetTime() * 100, (float)glfwGetTime() * 100, (float)glfwGetTime() * 100);
 		//my_shader.setMat4("model", model);
-		my_shader.setMat4("view", view, GLFW_TRUE);
+		my_shader.setMat4("view", view, GL_FALSE);
 		my_shader.setMat4("projection", projection,GL_FALSE);
 		for (unsigned int i = 0; i < 10; i++) {
 			GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX);

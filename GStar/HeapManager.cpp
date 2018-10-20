@@ -102,14 +102,20 @@ void HeapManager::Collect()
 	INFOBLCOK*  d_ptr= (INFOBLCOK*)_pHeapMemory;
 	//the start of user info
 	void*  i_ptr= _movePointerForward(d_ptr, INFOSIZE);
-	while (contains(i_ptr)&&(d_ptr->isusing == HeapManager::infoisnotusing)) {
-		_current = _TravelToNextDescriptor(d_ptr);
-		void* next = _TravelToNextDescriptor((INFOBLCOK*)_current);
-		if (_tryFastBackCollect()) {
-			d_ptr->size = difference(i_ptr, next);
+	while (contains(i_ptr)) {
+		if (d_ptr->isusing == HeapManager::infoisnotusing) {
+			_current = _TravelToNextDescriptor(d_ptr);
+			void* next = _TravelToNextDescriptor((INFOBLCOK*)_current);
+			if (_tryFastBackCollect()) {
+				d_ptr->size = difference(i_ptr, next);
+			}
+			else {
+				d_ptr = (INFOBLCOK*)next;
+				i_ptr = _movePointerForward(d_ptr, INFOSIZE);
+			}
 		}
 		else {
-			d_ptr = (INFOBLCOK*)next;
+			d_ptr = _TravelToNextDescriptor(d_ptr);
 			i_ptr = _movePointerForward(d_ptr, INFOSIZE);
 		}
 		

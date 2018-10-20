@@ -45,6 +45,11 @@ HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _p
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", temp);*/
 }
 
+HeapManager::~HeapManager()
+{
+	delete _pHeapMemory;
+}
+
 void * HeapManager::FindFirstFit(rsize_t size)
 {
 	return FindFirstFit(size,4);
@@ -64,6 +69,111 @@ void * HeapManager::FindFirstFit(rsize_t size, unsigned int i_alignment)
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _current);
 	return _current;
 }
+
+bool HeapManager::free(void * i_ptr)
+{
+	if (IsAllocated(i_ptr)) {
+		_current = _movePointerBackward(i_ptr, INFOSIZE);
+		INFOBLCOK* temp = (INFOBLCOK*)_current;
+		temp->isusing = HeapManager::infoisnotusing;
+#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
+		_FreeCheck(i_ptr);
+#endif
+		_current = _TravelToNextDescriptor(i_ptr);// move to the next dicriptor
+		_tryFastBackCollect();
+	}
+
+	return false;
+}
+#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
+void HeapManager::_FreeCheck(void* ipr)
+{
+	INFOBLCOK* temp = (INFOBLCOK*)_movePointerBackward(ipr, INFOSIZE);
+	INFOBLCOK* tempnext = (INFOBLCOK*)_TravelToNextDescriptor(ipr);
+	for (int i = 0; i < 4; i++) {
+		if (temp->start[i] != HeapManager::fillguard || temp->end[i] != HeapManager::fillguard|| tempnext->start[i] != HeapManager::fillguard || tempnext->end[i] != HeapManager::fillguard) {
+			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Error, "Write on the Fill Guard %p", ipr);
+		}
+	}
+}
+#endif
+void * HeapManager::_TravelToNextDescriptor(void * i_ptr)
+{
+	INFOBLCOK* temp = (INFOBLCOK*)_movePointerBackward(i_ptr, INFOSIZE);
+	char* start = (char*)_movePointerForward(i_ptr, temp->size);// lead to place after the users data
+	while (*start == HeapManager::fillpadding) {
+		start = start++;
+	}
+#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
+	if (*start != HeapManager::fillguard) {
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Error, "Write on the Guard %p", i_ptr);
+	}
+#endif
+
+	return (void*)start;
+}
+void HeapManager::Collect()
+{
+	void* temp = _movePointerForward(_pHeapMemory,INFOSIZE);
+	_current = _pHeapMemory;
+	while (contains(temp)) {
+		_tryFastBackCollect();
+		_current = _TravelToNextDescriptor(temp);
+		temp = _movePointerForward(_pHeapMemory,INFOSIZE);
+	}
+}
+
+int HeapManager::_tryFastBackCollect()
+{
+	INFOBLCOK* temp = (INFOBLCOK*)_current;
+	if (temp->isusing == HeapManager::infoisnotusing) {
+		return _deletHead();
+	}
+	return -1;
+}
+
+int HeapManager::_deletHead()
+{
+	INFOBLCOK* temp = (INFOBLCOK*)_current;
+	size_t result = temp->size;
+	result += INFOSIZE;
+	memset(_current, HeapManager::fillinitialfilled, INFOSIZE);
+	return result;
+}
+bool HeapManager::contains(void * ipr) const
+{
+	bool result = true;
+	void* _current = _movePointerBackward(ipr, INFOSIZE);
+	INFOBLCOK* temp = (INFOBLCOK*)_current;
+	int count = 0;
+	if (temp->isusing != HeapManager::infoisusing &&temp->isusing != HeapManager::infoisnotusing) {
+		return false;
+	}
+	while(count < 2){
+		count++;
+		if (temp->isusing == HeapManager::infoend) {
+			break;
+		}
+		else if (temp->isusing != HeapManager::infoisusing && temp->isusing != HeapManager::infoisnotusing) {
+			result = false;
+			break;
+		}
+	}
+	return result;
+}
+
+bool HeapManager::IsAllocated(void * ipr) const
+{
+	if (contains(ipr)) {
+		void* _current = _movePointerBackward(ipr, INFOSIZE);
+		INFOBLCOK* temp = (INFOBLCOK*)_current;
+		if (temp->isusing == HeapManager::infoisusing) {
+			return true;
+		}
+	}
+	return false;
+}
+
 
 void* HeapManager::_movePointerForward(void * _pointer, int number)
 {
@@ -143,3 +253,4 @@ void HeapManager::_addinfoblock(size_t size)
 	memset(_current, HeapManager::fillinitialfilled, infoblock->size);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "userinfomation start at%p", _current);
 }
+

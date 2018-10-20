@@ -70,26 +70,11 @@ void * HeapManager::FindFirstFit(rsize_t size, unsigned int i_alignment)
 	return _current;
 }
 
-bool HeapManager::free(void * i_ptr)
-{
-	if (IsAllocated(i_ptr)) {
-		_current = _movePointerBackward(i_ptr, INFOSIZE);
-		INFOBLCOK* temp = (INFOBLCOK*)_current;
-		temp->isusing = HeapManager::infoisnotusing;
-#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
-		_FreeCheck(i_ptr);
-#endif
-		_current = _TravelToNextDescriptor(i_ptr);// move to the next dicriptor
-		_tryFastBackCollect();
-	}
-
-	return false;
-}
 #if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
 void HeapManager::_FreeCheck(void* ipr)
 {
 	INFOBLCOK* temp = (INFOBLCOK*)_movePointerBackward(ipr, INFOSIZE);
-	INFOBLCOK* tempnext = (INFOBLCOK*)_TravelToNextDescriptor(ipr);
+	INFOBLCOK* tempnext = (INFOBLCOK*)_TravelToNextDescriptor(temp);
 	for (int i = 0; i < 4; i++) {
 		if (temp->start[i] != HeapManager::fillguard || temp->end[i] != HeapManager::fillguard|| tempnext->start[i] != HeapManager::fillguard || tempnext->end[i] != HeapManager::fillguard) {
 			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Error, "Write on the Fill Guard %p", ipr);
@@ -97,10 +82,9 @@ void HeapManager::_FreeCheck(void* ipr)
 	}
 }
 #endif
-void * HeapManager::_TravelToNextDescriptor(void * i_ptr)
+INFOBLCOK * HeapManager::_TravelToNextDescriptor(INFOBLCOK * i_ptr)
 {
-	INFOBLCOK* temp = (INFOBLCOK*)_movePointerBackward(i_ptr, INFOSIZE);
-	char* start = (char*)_movePointerForward(i_ptr, temp->size);// lead to place after the users data
+	char* start = (char*)_movePointerForward(i_ptr, i_ptr->size+ INFOSIZE);// lead to place after the users data
 	while (*start == HeapManager::fillpadding) {
 		start = start++;
 	}
@@ -110,35 +94,60 @@ void * HeapManager::_TravelToNextDescriptor(void * i_ptr)
 	}
 #endif
 
-	return (void*)start;
-}
-void HeapManager::Collect()
-{
-	void* temp = _movePointerForward(_pHeapMemory,INFOSIZE);
-	_current = _pHeapMemory;
-	while (contains(temp)) {
-		_tryFastBackCollect();
-		_current = _TravelToNextDescriptor(temp);
-		temp = _movePointerForward(_pHeapMemory,INFOSIZE);
-	}
+	return (INFOBLCOK*)start;
 }
 
-int HeapManager::_tryFastBackCollect()
+void HeapManager::Collect()
+{
+	INFOBLCOK*  d_ptr= (INFOBLCOK*)_pHeapMemory;
+	//the start of user info
+	void*  i_ptr= _movePointerForward(d_ptr, INFOSIZE);
+	while (contains(i_ptr)&&(d_ptr->isusing == HeapManager::infoisnotusing)) {
+		_current = _TravelToNextDescriptor(d_ptr);
+		void* next = _TravelToNextDescriptor((INFOBLCOK*)_current);
+		if (_tryFastBackCollect()) {
+			d_ptr->size = difference(i_ptr, next);
+		}
+		else {
+			d_ptr = (INFOBLCOK*)next;
+			i_ptr = _movePointerForward(d_ptr, INFOSIZE);
+		}
+		
+	}
+}
+bool HeapManager::free(void * i_ptr)
+{
+	if (IsAllocated(i_ptr)) {
+		_current = _movePointerBackward(i_ptr, INFOSIZE);
+		INFOBLCOK* temp = (INFOBLCOK*)_current;
+		temp->isusing = HeapManager::infoisnotusing;
+#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
+		_FreeCheck(i_ptr);
+#endif
+		_current = _TravelToNextDescriptor(temp);// move to the next dicriptor
+		void* next = _TravelToNextDescriptor((INFOBLCOK*)_current);
+		if (_tryFastBackCollect()) {
+			temp->size = difference(i_ptr,next);
+		}
+
+	}
+
+	return false;
+}
+bool HeapManager::_tryFastBackCollect()
 {
 	INFOBLCOK* temp = (INFOBLCOK*)_current;
 	if (temp->isusing == HeapManager::infoisnotusing) {
-		return _deletHead();
+		_deletHead();
+		return true;
 	}
-	return -1;
+	return false;
 }
 
-int HeapManager::_deletHead()
+void HeapManager::_deletHead()
 {
 	INFOBLCOK* temp = (INFOBLCOK*)_current;
-	size_t result = temp->size;
-	result += INFOSIZE;
 	memset(_current, HeapManager::fillinitialfilled, INFOSIZE);
-	return result;
 }
 bool HeapManager::contains(void * ipr) const
 {
@@ -186,6 +195,18 @@ void* HeapManager::_movePointerBackward(void * _pointer, int number)
 	unsigned long address = reinterpret_cast<unsigned long>(_pointer);
 	address -= number;
 	return reinterpret_cast<void*>(address);
+}
+size_t HeapManager::difference(void * one, void * two)
+{
+	unsigned long address1 = reinterpret_cast<unsigned long>(one);
+	unsigned long address2 = reinterpret_cast<unsigned long>(two);
+	if (address1 > address2) {
+		return address1 - address2;
+	}
+	else
+	{
+		return address2 - address1;
+	}
 }
 void HeapManager::_Travel()
 {

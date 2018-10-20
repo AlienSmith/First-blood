@@ -29,8 +29,9 @@ bool HeapManager_UnitTest()
 	void* nada1 = GStar::alloc(pHeapManager, 20);
 	bool success1 = GStar::Contains(pHeapManager, nada);
 	bool success2 =  GStar::IsAllocated(pHeapManager, nada);
-	bool success3 = GStar::free(pHeapManager, nada);
 	bool success4 = GStar::free(pHeapManager, nada1);
+	bool success3 = GStar::free(pHeapManager, nada);
+	GStar::Collect(pHeapManager);
 	return true;
 }
 /*#ifdef TEST_SINGLE_LARGE_ALLOCATION

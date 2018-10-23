@@ -6,8 +6,8 @@
 #include <vector>
 
 #define SUPPORTS_ALIGNMENT
-#define SUPPORTS_SHOWFREEBLOCKS
-#define SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
+//#define SUPPORTS_SHOWFREEBLOCKS
+//#define SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
 
 bool HeapManager_UnitTest()
 {
@@ -32,9 +32,8 @@ bool HeapManager_UnitTest()
 	bool success4 = GStar::free(pHeapManager, nada1);
 	bool success3 = GStar::free(pHeapManager, nada);
 	GStar::Collect(pHeapManager);
-	return true;
-}
-/*#ifdef TEST_SINGLE_LARGE_ALLOCATION
+
+#ifdef TEST_SINGLE_LARGE_ALLOCATION
 	// This is a test I wrote to check to see if using the whole block if it was almost consumed by 
 	// an allocation worked. Also helped test my ShowFreeBlocks() and ShowOutstandingAllocations().
 	{
@@ -239,4 +238,4 @@ bool HeapManager_UnitTest()
 
 	// we succeeded
 	return true;
-}*/
+}

@@ -61,7 +61,7 @@ void * HeapManager::FindFirstFit(rsize_t size, unsigned int i_alignment)
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _current);
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
 	while (!(this->_Match(size,i_alignment))) {
-		_Travel();
+		_current = _TravelToNextDescriptor(current);
 		if (current->isusing == HeapManager::infoend) {
 			return nullptr;
 		}
@@ -123,10 +123,12 @@ void HeapManager::Collect()
 }
 bool HeapManager::free(void * i_ptr)
 {
+	bool result = false;
 	if (IsAllocated(i_ptr)) {
 		_current = _movePointerBackward(i_ptr, INFOSIZE);
 		INFOBLCOK* temp = (INFOBLCOK*)_current;
 		temp->isusing = HeapManager::infoisnotusing;
+		result = true;
 #if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
 		_FreeCheck(i_ptr);
 #endif
@@ -138,7 +140,7 @@ bool HeapManager::free(void * i_ptr)
 
 	}
 
-	return false;
+	return result;
 }
 bool HeapManager::_tryFastBackCollect()
 {

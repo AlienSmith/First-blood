@@ -1,37 +1,31 @@
-#include"Assert.h"
 #include "HeapManagerProxy.h"
 #include <Windows.h>
 
+#include <assert.h>
 #include <algorithm>
 #include <vector>
 
 #define SUPPORTS_ALIGNMENT
-//#define SUPPORTS_SHOWFREEBLOCKS
-//#define SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
+#define SUPPORTS_SHOWFREEBLOCKS
+#define SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
 
 bool HeapManager_UnitTest()
 {
-
+	using namespace HeapManagerProxy;
+	
 	const size_t 		sizeHeap = 1024 * 1024;
 	const unsigned int 	numDescriptors = 2048;
 
 	// Allocate memory for my test heap.
 	void * pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
-	//assert(pHeapMemory);
+	assert(pHeapMemory);
 
 	// Create a heap manager for my test heap.
-	HeapManager * pHeapManager = GStar::CreateHeapManager(pHeapMemory, sizeHeap, numDescriptors);
-	//assert(pHeapManager);
+	HeapManager * pHeapManager = CreateHeapManager(pHeapMemory, sizeHeap, numDescriptors);
+	assert(pHeapManager);
 
 	if (pHeapManager == nullptr)
 		return false;
-	void* nada = GStar::alloc(pHeapManager, 20, 7);
-	void* nada1 = GStar::alloc(pHeapManager, 20);
-	bool success1 = GStar::Contains(pHeapManager, nada);
-	bool success2 =  GStar::IsAllocated(pHeapManager, nada);
-	bool success4 = GStar::free(pHeapManager, nada1);
-	bool success3 = GStar::free(pHeapManager, nada);
-	GStar::Collect(pHeapManager);
 
 #ifdef TEST_SINGLE_LARGE_ALLOCATION
 	// This is a test I wrote to check to see if using the whole block if it was almost consumed by 
@@ -59,10 +53,10 @@ bool HeapManager_UnitTest()
 
 			size_t largestAfterAlloc = GetLargestFreeBlock(pHeapManager);
 			bool success = Contains(pHeapManager, pPtr) && IsAllocated(pHeapManager, pPtr);
-			ASSERT(success,"1111111");
+			assert(success);
 
 			success = free(pHeapManager, pPtr);
-			ASSERT(success, "2222222");
+			assert(success);
 
 			Collect(pHeapManager);
 
@@ -104,10 +98,10 @@ bool HeapManager_UnitTest()
 
 		const unsigned int	alignment = alignments[index];
 
-		void * pPtr = GStar::alloc(pHeapManager, sizeAlloc, alignment);
+		void * pPtr = alloc(pHeapManager, sizeAlloc, alignment);
 
 		// check that the returned address has the requested alignment
-		ASSERT((reinterpret_cast<uintptr_t>(pPtr) & (alignment - 1)) == 0,"Return address aligment wrong");
+		assert((reinterpret_cast<uintptr_t>(pPtr) & (alignment - 1)) == 0);
 #else
 		void * pPtr = alloc(pHeapManager, sizeAlloc);
 #endif // SUPPORT_ALIGNMENT
@@ -115,10 +109,10 @@ bool HeapManager_UnitTest()
 		// if allocation failed see if garbage collecting will create a large enough block
 		if (pPtr == nullptr)
 		{
-			GStar::Collect(pHeapManager);
+			Collect(pHeapManager);
 
 #ifdef SUPPORTS_ALIGNMENT
-			pPtr = GStar::alloc(pHeapManager, sizeAlloc, alignment);
+			pPtr = alloc(pHeapManager, sizeAlloc, alignment);
 #else
 			pPtr = alloc(pHeapManager, sizeAlloc);
 #endif // SUPPORT_ALIGNMENT
@@ -140,18 +134,18 @@ bool HeapManager_UnitTest()
 			void * pPtr = AllocatedAddresses.back();
 			AllocatedAddresses.pop_back();
 
-			bool success = GStar::Contains(pHeapManager, pPtr) && GStar::IsAllocated(pHeapManager, pPtr);
-			ASSERT(success, "Contain function wrong");
+			bool success = Contains(pHeapManager, pPtr) && IsAllocated(pHeapManager, pPtr);
+			assert(success);
 
-			success = GStar::free(pHeapManager, pPtr);
-			ASSERT(success, "Free Function wrong");
+			success = free(pHeapManager, pPtr);
+			assert(success);
 
 			numFrees++;
 		}
 
 		if ((rand() % garbageCollectAboutEvery) == 0)
 		{
-			GStar::Collect(pHeapManager);
+			Collect(pHeapManager);
 
 			numCollects++;
 		}
@@ -161,10 +155,10 @@ bool HeapManager_UnitTest()
 #if defined(SUPPORTS_SHOWFREEBLOCKS) || defined(SUPPORTS_SHOWOUTSTANDINGALLOCATIONS)
 	printf("After exhausting allocations:\n");
 #ifdef SUPPORTS_SHOWFREEBLOCKS
-	GStar::ShowFreeBlocks(pHeapManager);
+	ShowFreeBlocks(pHeapManager);
 #endif // SUPPORTS_SHOWFREEBLOCKS
 #ifdef SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
-	GStar::ShowOutstandingAllocations(pHeapManager);
+	ShowOutstandingAllocations(pHeapManager);
 #endif // SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
 	printf("\n");
 #endif
@@ -181,57 +175,57 @@ bool HeapManager_UnitTest()
 			void * pPtr = AllocatedAddresses.back();
 			AllocatedAddresses.pop_back();
 
-			bool success = GStar::Contains(pHeapManager, pPtr) && GStar::IsAllocated(pHeapManager, pPtr);
-			ASSERT(success, "Contain function wrong");
+			bool success = Contains(pHeapManager, pPtr) && IsAllocated(pHeapManager, pPtr);
+			assert(success);
 
-			success = GStar::free(pHeapManager, pPtr);
-			ASSERT(success, "Free Function wrong");
+			success = free(pHeapManager, pPtr);
+			assert(success);
 		}
 
 #if defined(SUPPORTS_SHOWFREEBLOCKS) || defined(SUPPORTS_SHOWOUTSTANDINGALLOCATIONS)
 		printf("After freeing allocations:\n");
 #ifdef SUPPORTS_SHOWFREEBLOCKS
-		GStar::ShowFreeBlocks(pHeapManager);
+		ShowFreeBlocks(pHeapManager);
 #endif // SUPPORTS_SHOWFREEBLOCKS
 
 #ifdef SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
-		GStar::ShowOutstandingAllocations(pHeapManager);
+		ShowOutstandingAllocations(pHeapManager);
 #endif // SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
 		printf("\n");
 #endif
 
 		// do garbage collection
-		GStar::Collect(pHeapManager);
+		Collect(pHeapManager);
 		// our heap should be one single block, all the memory it started with
 
 #if defined(SUPPORTS_SHOWFREEBLOCKS) || defined(SUPPORTS_SHOWOUTSTANDINGALLOCATIONS)
 		printf("After garbage collection:\n");
 #ifdef SUPPORTS_SHOWFREEBLOCKS
-		GStar::ShowFreeBlocks(pHeapManager);
+		ShowFreeBlocks(pHeapManager);
 #endif // SUPPORTS_SHOWFREEBLOCKS
 
 #ifdef SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
-		GStar::ShowOutstandingAllocations(pHeapManager);
+		ShowOutstandingAllocations(pHeapManager);
 #endif // SUPPORTS_SHOWOUTSTANDINGALLOCATIONS
 		printf("\n");
 #endif
 
 		// do a large test allocation to see if garbage collection worked
-		void * pPtr = GStar::alloc(pHeapManager, sizeHeap / 2);
-		ASSERT(pPtr, "Allocation Wrong");
+		void * pPtr = alloc(pHeapManager, sizeHeap / 2);
+		assert(pPtr);
 
 		if (pPtr)
 		{
-			bool success = GStar::Contains(pHeapManager, pPtr) && GStar::IsAllocated(pHeapManager, pPtr);
-			ASSERT(success,"Contain Worng");
+			bool success = Contains(pHeapManager, pPtr) && IsAllocated(pHeapManager, pPtr);
+			assert(success);
 
-			success = GStar::free(pHeapManager, pPtr);
-			ASSERT(success,"Free Wrong");
+			success = free(pHeapManager, pPtr);
+			assert(success);
 
 		}
 	}
 
-	GStar::Destroy(pHeapManager);
+	Destroy(pHeapManager);
 	pHeapManager = nullptr;
 
 	HeapFree(GetProcessHeap(), 0, pHeapMemory);

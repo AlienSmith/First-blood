@@ -82,7 +82,7 @@ void HeapManager::_FreeCheck(void* ipr)
 	}
 }
 #endif
-INFOBLCOK * HeapManager::_TravelToNextDescriptor(INFOBLCOK * i_ptr)
+INFOBLCOK * HeapManager::_TravelToNextDescriptor(const INFOBLCOK* const i_ptr) const
 {
 	char* start = (char*)_movePointerForward(i_ptr, i_ptr->size+ INFOSIZE);// lead to place after the users data
 	while (*start == HeapManager::fillpadding) {
@@ -120,6 +120,32 @@ void HeapManager::Collect()
 		}
 		
 	}
+}
+void HeapManager::ShowFreeBlocks() const
+{
+	INFOBLCOK* current = (INFOBLCOK*)_pHeapMemory;
+	int count = 0;
+	while (current->isusing != HeapManager::infoend) {
+		if (current->isusing == HeapManager::infoisnotusing) {
+			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Free Block %i has size %u \n", count, current->size);
+			count++;
+		}
+		current = _TravelToNextDescriptor(current);
+	}
+	return;
+}
+void HeapManager::ShowOutstandingAllocations() const
+{
+	INFOBLCOK* current = (INFOBLCOK*)_pHeapMemory;
+	int count = 0;
+	while (current->isusing != HeapManager::infoend) {
+		if (current->isusing == HeapManager::infoisusing) {
+			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "OUtStanding Block %i has size %u \n", count, current->size);
+			count++;
+		}
+		current = _TravelToNextDescriptor(current);
+	}
+	return;
 }
 bool HeapManager::free(void * i_ptr)
 {
@@ -192,13 +218,13 @@ bool HeapManager::IsAllocated(void * ipr) const
 }
 
 
-void* HeapManager::_movePointerForward(void * _pointer, int number)
+void* HeapManager::_movePointerForward(const void const * _pointer, int number)
 {
 	unsigned long address = reinterpret_cast<unsigned long>(_pointer);
 	address += number;
 	return reinterpret_cast<void*>(address);
 }
-void* HeapManager::_movePointerBackward(void * _pointer, int number)
+void* HeapManager::_movePointerBackward(const void const * _pointer, int number)
 {
 	unsigned long address = reinterpret_cast<unsigned long>(_pointer);
 	address -= number;

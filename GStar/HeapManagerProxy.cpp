@@ -39,3 +39,13 @@ bool HeapManagerProxy::IsAllocated(const HeapManager * i_pManager, void * i_ptr)
 {
 	return i_pManager->IsAllocated(i_ptr);
 }
+
+void HeapManagerProxy::ShowFreeBlocks(const HeapManager * i_pManager)
+{
+	i_pManager->ShowFreeBlocks();
+}
+
+void HeapManagerProxy::ShowOutstandingAllocations(const HeapManager * i_pManager)
+{
+	i_pManager->ShowOutstandingAllocations();
+}

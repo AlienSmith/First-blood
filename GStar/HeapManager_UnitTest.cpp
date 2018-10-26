@@ -1,7 +1,7 @@
 #include "HeapManagerProxy.h"
 #include <Windows.h>
-
-#include <assert.h>
+#include <stdio.h>
+#include "Assert.h"
 #include <algorithm>
 #include <vector>
 
@@ -13,16 +13,16 @@ bool HeapManager_UnitTest()
 {
 	using namespace HeapManagerProxy;
 	
-	const size_t 		sizeHeap = 1024 * 1024;
+	const size_t 		sizeHeap = 64 * 1024;
 	const unsigned int 	numDescriptors = 2048;
 
 	// Allocate memory for my test heap.
 	void * pHeapMemory = HeapAlloc(GetProcessHeap(), 0, sizeHeap);
-	assert(pHeapMemory);
+	ASSERT(pHeapMemory,"pHeapMemory");
 
 	// Create a heap manager for my test heap.
 	HeapManager * pHeapManager = CreateHeapManager(pHeapMemory, sizeHeap, numDescriptors);
-	assert(pHeapManager);
+	ASSERT(pHeapMemory, "pHeapManager");
 
 	if (pHeapManager == nullptr)
 		return false;
@@ -101,7 +101,7 @@ bool HeapManager_UnitTest()
 		void * pPtr = alloc(pHeapManager, sizeAlloc, alignment);
 
 		// check that the returned address has the requested alignment
-		assert((reinterpret_cast<uintptr_t>(pPtr) & (alignment - 1)) == 0);
+		ASSERT((reinterpret_cast<uintptr_t>(pPtr) & (alignment - 1)) == 0,"Alignment Wrong");
 #else
 		void * pPtr = alloc(pHeapManager, sizeAlloc);
 #endif // SUPPORT_ALIGNMENT
@@ -135,10 +135,10 @@ bool HeapManager_UnitTest()
 			AllocatedAddresses.pop_back();
 
 			bool success = Contains(pHeapManager, pPtr) && IsAllocated(pHeapManager, pPtr);
-			assert(success);
+			ASSERT(success,"Contain");
 
 			success = free(pHeapManager, pPtr);
-			assert(success);
+			ASSERT(success,"Free");
 
 			numFrees++;
 		}
@@ -176,10 +176,10 @@ bool HeapManager_UnitTest()
 			AllocatedAddresses.pop_back();
 
 			bool success = Contains(pHeapManager, pPtr) && IsAllocated(pHeapManager, pPtr);
-			assert(success);
+			ASSERT(success,"Contain 2");
 
 			success = free(pHeapManager, pPtr);
-			assert(success);
+			ASSERT(success,"Free 2");
 		}
 
 #if defined(SUPPORTS_SHOWFREEBLOCKS) || defined(SUPPORTS_SHOWOUTSTANDINGALLOCATIONS)
@@ -212,15 +212,15 @@ bool HeapManager_UnitTest()
 
 		// do a large test allocation to see if garbage collection worked
 		void * pPtr = alloc(pHeapManager, sizeHeap / 2);
-		assert(pPtr);
+		ASSERT(pPtr,"alloc 1");
 
 		if (pPtr)
 		{
 			bool success = Contains(pHeapManager, pPtr) && IsAllocated(pHeapManager, pPtr);
-			assert(success);
+			ASSERT(success,"Contain 0");
 
 			success = free(pHeapManager, pPtr);
-			assert(success);
+			ASSERT(success,"Free 1");
 
 		}
 	}

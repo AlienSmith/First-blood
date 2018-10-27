@@ -14,6 +14,8 @@ struct INFOBLCOK {  char isusing; size_t size };
 #endif
 class HeapManager {
 public:
+	int jump = 0;
+
 	static void* _movePointerForward(const void* const _pointer, int number) ;
 	static void* _movePointerBackward(const void* const _pointer, int number);
 	static size_t difference(void* one, void* two);
@@ -45,7 +47,6 @@ private:
 	unsigned int _numDescriptors;
 	void* _pHeapMemory;
 	void* _current;
-	void _Travel();
 	bool _Match(rsize_t size,unsigned int alignment);
 	bool _isdebugactivited = ACTIVITE;
 	bool _TryCut(rsize_t size, unsigned int alignment);

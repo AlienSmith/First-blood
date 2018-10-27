@@ -13,7 +13,7 @@ bool HeapManager_UnitTest()
 {
 	using namespace HeapManagerProxy;
 	
-	const size_t 		sizeHeap = 64 * 1024;
+	const size_t 		sizeHeap = 1024 * 1024;
 	const unsigned int 	numDescriptors = 2048;
 
 	// Allocate memory for my test heap.
@@ -26,6 +26,8 @@ bool HeapManager_UnitTest()
 
 	if (pHeapManager == nullptr)
 		return false;
+	alloc(pHeapManager, 10, 10);
+	alloc(pHeapManager, 10, 10);
 
 #ifdef TEST_SINGLE_LARGE_ALLOCATION
 	// This is a test I wrote to check to see if using the whole block if it was almost consumed by 
@@ -97,7 +99,6 @@ bool HeapManager_UnitTest()
 		const unsigned int	index = rand() % (sizeof(alignments) / sizeof(alignments[0]));
 
 		const unsigned int	alignment = alignments[index];
-
 		void * pPtr = alloc(pHeapManager, sizeAlloc, alignment);
 
 		// check that the returned address has the requested alignment

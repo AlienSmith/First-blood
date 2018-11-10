@@ -41,7 +41,7 @@ HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _p
 
 	/*DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%i", sizeof(bool));
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%i", sizeof(size_t));
-	unsigned long address = reinterpret_cast<unsigned long>(_pHeapMemeoy);
+	size_t address = reinterpret_cast<size_t>(_pHeapMemeoy);
 	address += 1;
 	void* temp = reinterpret_cast<void*>(address);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", temp);*/
@@ -232,20 +232,20 @@ bool HeapManager::IsAllocated(void * ipr) const
 
 void* HeapManager::_movePointerForward(const void const * _pointer, int number)
 {
-	unsigned long address = reinterpret_cast<unsigned long>(_pointer);
+	size_t address = reinterpret_cast<size_t>(_pointer);
 	address += number;
 	return reinterpret_cast<void*>(address);
 }
 void* HeapManager::_movePointerBackward(const void const * _pointer, int number)
 {
-	unsigned long address = reinterpret_cast<unsigned long>(_pointer);
+	size_t address = reinterpret_cast<size_t>(_pointer);
 	address -= number;
 	return reinterpret_cast<void*>(address);
 }
 size_t HeapManager::difference(void * one, void * two)
 {
-	unsigned long address1 = reinterpret_cast<unsigned long>(one);
-	unsigned long address2 = reinterpret_cast<unsigned long>(two);
+	size_t address1 = reinterpret_cast<size_t>(one);
+	size_t address2 = reinterpret_cast<size_t>(two);
 	if (address1 > address2) {
 		return address1 - address2;
 	}

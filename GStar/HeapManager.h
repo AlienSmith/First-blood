@@ -1,7 +1,6 @@
 #pragma once
 #include <stdio.h>
 #if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
-#define INFOSIZE 16
 #define ACTIVITE true;
 // on this machine size_t takes 7 bytes
 struct INFOBLCOK { char start[4]; char isusing; size_t size; char end[4]; };

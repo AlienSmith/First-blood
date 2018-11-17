@@ -82,7 +82,7 @@ void * HeapManager::FindFirstFit(rsize_t size, unsigned int i_alignment)
 
 INFOBLCOK * HeapManager::_TravelToNextDescriptor(const INFOBLCOK* const i_ptr) const
 {
-	char* start = (char*)_movePointerForward(i_ptr, i_ptr->size+ INFOSIZE);// lead to place after the users data
+	char* start = (char*)_movePointerForward(i_ptr, i_ptr->size+ sizeof(INFOBLCOK));// lead to place after the users data
 	int a = 0;
 	while (*start == HeapManager::fillpadding) {
 		start = (char*)_movePointerForward(start,1);
@@ -100,7 +100,7 @@ void HeapManager::Collect()
 {
 	INFOBLCOK*  d_ptr= (INFOBLCOK*)_pHeapMemory;
 	//the start of user info
-	void*  i_ptr= _movePointerForward(d_ptr, INFOSIZE);
+	void*  i_ptr= _movePointerForward(d_ptr, sizeof(INFOBLCOK));
 	while (contains(i_ptr)) {
 		if (d_ptr->isusing == HeapManager::infoisnotusing) {
 			_current = _TravelToNextDescriptor(d_ptr);
@@ -110,12 +110,12 @@ void HeapManager::Collect()
 			}
 			else {
 				d_ptr = (INFOBLCOK*)next;
-				i_ptr = _movePointerForward(d_ptr, INFOSIZE);
+				i_ptr = _movePointerForward(d_ptr, sizeof(INFOBLCOK));
 			}
 		}
 		else {
 			d_ptr = _TravelToNextDescriptor(d_ptr);
-			i_ptr = _movePointerForward(d_ptr, INFOSIZE);
+			i_ptr = _movePointerForward(d_ptr, sizeof(INFOBLCOK));
 		}
 		
 	}
@@ -149,7 +149,7 @@ void HeapManager::ShowOutstandingAllocations() const
 #if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
 void HeapManager::_FreeCheck(void* ipr)
 {
-	INFOBLCOK* temp = (INFOBLCOK*)_movePointerBackward(ipr, INFOSIZE);
+	INFOBLCOK* temp = (INFOBLCOK*)_movePointerBackward(ipr, sizeof(INFOBLCOK));
 	INFOBLCOK* tempnext = (INFOBLCOK*)_TravelToNextDescriptor(temp);
 	for (int i = 0; i < 4; i++) {
 		if (temp->start[i] != HeapManager::fillguard || temp->end[i] != HeapManager::fillguard || tempnext->start[i] != HeapManager::fillguard || tempnext->end[i] != HeapManager::fillguard) {
@@ -162,7 +162,7 @@ bool HeapManager::free(void * i_ptr)
 {
 	bool result = false;
 	if (IsAllocated(i_ptr)) {
-		_current = _movePointerBackward(i_ptr, INFOSIZE);
+		_current = _movePointerBackward(i_ptr, sizeof(INFOBLCOK));
 		INFOBLCOK* temp = (INFOBLCOK*)_current;
 		temp->isusing = HeapManager::infoisnotusing;
 		result = true;
@@ -193,12 +193,12 @@ bool HeapManager::_tryFastBackCollect()
 void HeapManager::_deletHead()
 {
 	INFOBLCOK* temp = (INFOBLCOK*)_current;
-	memset(_current, HeapManager::fillinitialfilled, INFOSIZE);
+	memset(_current, HeapManager::fillinitialfilled, sizeof(INFOBLCOK));
 }
 bool HeapManager::contains(void * ipr) const
 {
 	bool result = true;
-	void* _current = _movePointerBackward(ipr, INFOSIZE);
+	void* _current = _movePointerBackward(ipr, sizeof(INFOBLCOK));
 	INFOBLCOK* temp = (INFOBLCOK*)_current;
 	int count = 0;
 	if (temp->isusing != HeapManager::infoisusing &&temp->isusing != HeapManager::infoisnotusing) {
@@ -220,7 +220,7 @@ bool HeapManager::contains(void * ipr) const
 bool HeapManager::IsAllocated(void * ipr) const
 {
 	if (contains(ipr)) {
-		void* _current = _movePointerBackward(ipr, INFOSIZE);
+		void* _current = _movePointerBackward(ipr, sizeof(INFOBLCOK));
 		INFOBLCOK* temp = (INFOBLCOK*)_current;
 		if (temp->isusing == HeapManager::infoisusing) {
 			return true;
@@ -273,12 +273,12 @@ bool HeapManager::_TryCut(rsize_t size, unsigned int alignment)
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
 	INFOBLCOK* endinfo = _TravelToNextDescriptor(current);
 	size_t realsize = difference(current, endinfo);
-	realsize -= INFOSIZE;
+	realsize -= sizeof(INFOBLCOK);
 	size_t end = reinterpret_cast<size_t>(endinfo);
 	end -= size;
 	size_t padding = end % alignment;
 	//If the real size of the block can not put the size + alignment + padding
-	if (realsize < size + padding + INFOSIZE*2) {
+	if (realsize < size + padding + sizeof(INFOBLCOK) *2) {
 		return false;
 	}
 	else
@@ -288,10 +288,10 @@ bool HeapManager::_TryCut(rsize_t size, unsigned int alignment)
 		void* temppointer = _movePointerForward(_current,size);
 		memset(temppointer, HeapManager::fillpadding, padding);
 		memset(_current, HeapManager::fillinitialfilled, size);
-		_current = _movePointerBackward(_current, INFOSIZE);
+		_current = _movePointerBackward(_current, sizeof(INFOBLCOK));
 		_addinfoblock(size);
 		size_t output = current->size;
-		current->size = realsize -(size + padding + INFOSIZE);
+		current->size = realsize -(size + padding + sizeof(INFOBLCOK));
 		if (current->size > output) {
 			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Wrong Size At %p is used to have length %u", current, output);
 		}

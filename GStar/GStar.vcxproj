@@ -144,7 +144,6 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsolePrint.cpp" />
-    <ClCompile Include="Data.cpp" />
     <ClCompile Include="GLAD\glad.c" />
     <ClCompile Include="GStar_init.cpp" />
     <ClCompile Include="HeapManager.cpp" />
@@ -153,6 +152,7 @@
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="OpenGL_Entrance.cpp" />
+    <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="Vector2.cpp" />

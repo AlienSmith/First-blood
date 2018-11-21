@@ -1,25 +1,7 @@
 #pragma once
 #include"Vector3.h"
-class Data {
-public:
-	//Cube
-	const static float cubevertexs[];
-	const static GStar::Vector3 cubPosition[];
-
-	//Window
-	const static unsigned int SCR_WIDTH = 800;
-	const static unsigned int SCR_HEIGHT = 600;
-	const static char title[];
-
-	//Texture Coordinate
-	const static float texCoords[];
-	const static char WoodBox[];
-	const static char SmileFace[];
-
-	//Shaders
-	const static char vs[];
-	const static char fs[];
-};
+const static unsigned int SCR_WIDTH = 800;
+const static unsigned int SCR_HEIGHT = 600;
 //Postion and Texture position
 const static float cubevertexs[] = {
 	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,

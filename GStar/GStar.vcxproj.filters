@@ -40,6 +40,12 @@
     <Filter Include="OpenGL\Camera">
       <UniqueIdentifier>{af0ab019-4c33-4074-a82a-ba5ee5f7dd33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="OpenGL\BasicShape">
+      <UniqueIdentifier>{357cf91a-c56f-4c03-91ce-0cbce4b00917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Core">
+      <UniqueIdentifier>{eefa6e02-6c3a-47c9-bcc6-a523843da79d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h">
@@ -84,6 +90,18 @@
     <ClInclude Include="Camera.h">
       <Filter>OpenGL\Camera</Filter>
     </ClInclude>
+    <ClInclude Include="NormalCube.h">
+      <Filter>OpenGL\BasicShape</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>OpenGL\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Data.h">
+      <Filter>OpenGL\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>OpenGL\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GStar_init.cpp">
@@ -124,6 +142,9 @@
     </ClCompile>
     <ClCompile Include="Matrix.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Data.cpp">
+      <Filter>OpenGL\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

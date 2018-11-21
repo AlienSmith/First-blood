@@ -10,7 +10,7 @@ void framebuffer_size_callback(GLFWwindow* windwo, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window);
 void CleanSCreen();
-
+ 
 //Initial window size
 const unsigned int SCR_WIDTH = 800;
 const unsigned int SCR_HEIGHT = 600;
@@ -57,6 +57,9 @@ void Entrance() {
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Failed to initialize GLAD");
 	}
 	glEnable(GL_DEPTH_TEST);
+
+
+	//TODO put this part to other place
 	// we do not need to sed viewport because the callback function will be called at beginning.
 	//glViewport(0, 0, 800, 600);
 	//Register the resize callback function
@@ -67,6 +70,9 @@ void Entrance() {
 	///Hide CURSOR and add mouse callback function
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	glfwSetCursorPosCallback(window, mouse_callback);
+
+
+
 
 	//vertex data only position now
 	float vertices[] = {

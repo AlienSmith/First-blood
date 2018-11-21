@@ -125,12 +125,16 @@
     <ClInclude Include="Assert.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ConsolePrint.h" />
+    <ClInclude Include="Controller.h" />
     <ClInclude Include="Coordinate.h" />
+    <ClInclude Include="Data.h" />
     <ClInclude Include="Debug.h" />
     <ClInclude Include="GStar_init.h" />
     <ClInclude Include="HeapManager.h" />
     <ClInclude Include="HeapManagerProxy.h" />
     <ClInclude Include="Matrix4.h" />
+    <ClInclude Include="NormalCube.h" />
+    <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="SingleLinkedList.h" />
     <ClInclude Include="stb_image.h" />
@@ -140,6 +144,7 @@
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsolePrint.cpp" />
+    <ClCompile Include="Data.cpp" />
     <ClCompile Include="GLAD\glad.c" />
     <ClCompile Include="GStar_init.cpp" />
     <ClCompile Include="HeapManager.cpp" />

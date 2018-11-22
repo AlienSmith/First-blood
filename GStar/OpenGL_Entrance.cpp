@@ -62,6 +62,7 @@ void Entrance() {
 	//TODO put this part to other place
 	// we do not need to sed viewport because the callback function will be called at beginning.
 	//glViewport(0, 0, 800, 600);
+	//glViewport(0, 0, 800, 600);
 	//Register the resize callback function
 	glfwSetFramebufferSizeCallback(window, framebuffer_size_callback);
 
@@ -214,7 +215,7 @@ void Entrance() {
 	{	//input 
 		processInput(window);
 
-		//Clean Window or the old pixel will stay
+		//Clean Window or the old pixel will stay 
 		CleanSCreen();
 
 		//Change The mixed value

@@ -102,6 +102,9 @@
     <ClInclude Include="Controller.h">
       <Filter>OpenGL\Core</Filter>
     </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>OpenGL\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GStar_init.cpp">
@@ -144,7 +147,16 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Scene.cpp">
+      <Filter>OpenGL\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>OpenGL\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainRenderLoop.cpp">
+      <Filter>OpenGL\Core</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

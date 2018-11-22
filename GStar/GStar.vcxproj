@@ -140,15 +140,18 @@
     <ClInclude Include="stb_image.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
+    <ClInclude Include="View.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="ConsolePrint.cpp" />
+    <ClCompile Include="Controller.cpp" />
     <ClCompile Include="GLAD\glad.c" />
     <ClCompile Include="GStar_init.cpp" />
     <ClCompile Include="HeapManager.cpp" />
     <ClCompile Include="HeapManagerProxy.cpp" />
     <ClCompile Include="HeapManager_UnitTest.cpp" />
+    <ClCompile Include="MainRenderLoop.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="OpenGL_Entrance.cpp" />
@@ -156,6 +159,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="Vector2.cpp" />
+    <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Excercise1.6.ves" />

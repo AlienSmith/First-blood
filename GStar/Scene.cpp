@@ -1,5 +1,3 @@
-#include<glad\glad.h>
-#include<GLFW\glfw3.h>
 #include "Scene.h"
 #include "Data.h"
 #include"ConsolePrint.h"
@@ -25,17 +23,18 @@ Scene* Scene::Create()
 bool Scene::Update()
 {
 	glBindVertexArray(VAO);
-	//render loop
-	float radius = 10.0f;
-	float camX = sin(glfwGetTime())*radius;
-	float camZ = cos(glfwGetTime())*radius;
-	//my_camera.Set_Pos(GStar::Vector3(camX, 0.0f, camZ));
-	my_camera.Update();
-	GStar::Matrix4 view = my_camera.view;
 	my_shaders.setMat4("view", view, GL_FALSE);
 	//Rotate the matrix
 
 	return false;
+}
+
+
+void Scene::UpdateTime()
+{
+	currentFrame = glfwGetTime();
+	deltaTime = currentFrame - LastFrame;
+	LastFrame = currentFrame;
 }
 
 //This function specifies opengl version set glfw window and initialize glad 
@@ -139,9 +138,8 @@ bool Scene::SetPespective()
 
 
 Scene::Scene():
-	my_camera(GStar::Camera()),
 	projection(GStar::Matrix4(IDENTICAL_MATRIX)),
-	model(GStar::Matrix4(IDENTICAL_MATRIX)),
+	view(GStar::Matrix4(IDENTICAL_MATRIX)),
 	my_shaders(Shader(vs, fs)), //TODO add Creator To Shader
 	deltaTime(0.0f),
 	LastFrame(0.0f),

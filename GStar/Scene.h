@@ -28,10 +28,11 @@ public:
 	void UpdateTime();
 	//Call UpdateTime first and only once 
 	inline const float Deltatime()const { return deltaTime; }
+	inline void UpdateView(){ my_shaders.setMat4("view", view, GL_FALSE); }
 private:
 	bool SetupWindow();
 	bool LoadObject();
-	unsigned int LoadTexture(const char file[]);
+	unsigned int LoadTexture(const char file[], unsigned int type);
 	bool SetPespective();
 	bool CompileShader();
 	Scene();

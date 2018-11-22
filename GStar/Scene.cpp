@@ -27,7 +27,12 @@ Scene* Scene::Create()
 bool Scene::Update()
 {
 	glBindVertexArray(VAO);
+	my_shaders.use();
+	my_shaders.setFloat("offset", 0.1);
+	my_shaders.setInt("texture1", 0);
+	my_shaders.setInt("texture2", 1);
 	my_shaders.setMat4("view", view, GL_FALSE);
+	my_shaders.setMat4("projection", projection, GL_FALSE);
 	//Rotate the matrix
 
 	return false;
@@ -60,6 +65,7 @@ bool Scene::SetupWindow()
 		return false;
 	}
 	glEnable(GL_DEPTH_TEST);
+	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	return true;
 }
 
@@ -87,10 +93,10 @@ bool Scene::LoadObject()
 	return true;
 }
 
-unsigned int Scene::LoadTexture(const char file[])
+unsigned int Scene::LoadTexture(const char file[],unsigned int type)
 {
 	//load texture
-	stbi_set_flip_vertically_on_load(true);// Flip the picture by x axies
+	//stbi_set_flip_vertically_on_load(true);// Flip the picture by x axies
 	int width, height, nrChannels; //out parameter
 	unsigned char *data = stbi_load(file, &width, &height, &nrChannels, 0);
 
@@ -104,7 +110,7 @@ unsigned int Scene::LoadTexture(const char file[])
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	///load texture data into graphic card
 	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, data);
+		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, type, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
@@ -117,32 +123,25 @@ unsigned int Scene::LoadTexture(const char file[])
 
 bool Scene::SetPespective()
 {
-	//TODO rewrite and seperate this parts when put textuers in singlelinkedlist
-	texture1 = LoadTexture(WoodBox);
-	glActiveTexture(GL_TEXTURE0); // activate the texture unit 0
-	glBindTexture(GL_TEXTURE_2D, texture1); // bind name
-	texture2 = LoadTexture(SmileFace);
-	glActiveTexture(GL_TEXTURE1);
-	glBindTexture(GL_TEXTURE_2D, texture2);
-
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//set both front and back buffer to line mode
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
-	projection = GStar::perspective(projection, 45, SCR_WIDTH / SCR_HEIGHT, .1f, 100.0f);
-
-	//TODO seperate this part to load shader
-	my_shaders.use();
-	my_shaders.setFloat("offset", 0.1);
-	my_shaders.setInt("texture1", 0);
-	my_shaders.setInt("texture2", 1);
-	my_shaders.setMat4("projection", projection, GL_FALSE);
-
 	return true;
 }
 
 bool Scene::CompileShader()
 {
+	texture1 = LoadTexture(WoodBox, GL_RGB);
+	texture2 = LoadTexture(SmileFace, GL_RGBA);
 	my_shaders = Shader(vs, fs);
+	//TODO rewrite and seperate this parts when put textuers in singlelinkedlist
+	glActiveTexture(GL_TEXTURE0); // activate the texture unit 0
+	glBindTexture(GL_TEXTURE_2D, texture1); // bind name
+	glActiveTexture(GL_TEXTURE1);
+	glBindTexture(GL_TEXTURE_2D, texture2);
+
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
+	projection = GStar::perspective(projection, 45, SCR_WIDTH / SCR_HEIGHT, .1f, 100.0f);
+
 	return true;
 }
 

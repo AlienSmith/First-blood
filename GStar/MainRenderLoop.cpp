@@ -14,7 +14,6 @@ void MainEntrance() {
 	//RenderLoop
 	while (!glfwWindowShouldClose(myScene->Window())) {
 		myScene->UpdateTime();
-		myController.processInput(myScene->Window());
 		myController.Update();
 		myScene->Update();
 		myView.Update();

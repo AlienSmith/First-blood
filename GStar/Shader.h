@@ -4,6 +4,8 @@
 #include <glad/glad.h>
 #include<string>
 //TODO use MyString Instead of std::string
+//TODO change ID to private
+//For release Use pointer to string and delete it after success compile
 namespace GStar { class Matrix4; };
 class Shader {
 public:
@@ -11,6 +13,7 @@ public:
 	unsigned int ID;
 	//constructor reads and builds the shader
 	Shader(const GLchar* vertexPath, const GLchar* fragmentPath);
+	Shader() {}
 	//use activate the shader
 	void use();
 	//utility uniform functions

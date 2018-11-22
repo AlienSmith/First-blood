@@ -16,6 +16,10 @@ Scene* Scene::Create()
 		return nullptr;
 	}
 	currentScene->SetPespective();
+	if (!currentScene->CompileShader()) {
+		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail set Compile Shader");
+		return nullptr;
+	}
 
 	return currentScene;
 }
@@ -136,11 +140,17 @@ bool Scene::SetPespective()
 	return true;
 }
 
+bool Scene::CompileShader()
+{
+	my_shaders = Shader(vs, fs);
+	return true;
+}
+
 
 Scene::Scene():
 	projection(GStar::Matrix4(IDENTICAL_MATRIX)),
 	view(GStar::Matrix4(IDENTICAL_MATRIX)),
-	my_shaders(Shader(vs, fs)), //TODO add Creator To Shader
+	my_shaders(Shader()), //TODO add Creator To Shader
 	deltaTime(0.0f),
 	LastFrame(0.0f),
 	currentFrame(0.0f),

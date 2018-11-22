@@ -33,6 +33,7 @@ private:
 	bool LoadObject();
 	unsigned int LoadTexture(const char file[]);
 	bool SetPespective();
+	bool CompileShader();
 	Scene();
 	GStar::Matrix4 projection;
 	GStar::Matrix4 view;

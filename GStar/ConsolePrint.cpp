@@ -50,6 +50,9 @@ namespace GStar
 			printf(strOutput);
 		}
 		ASSERT(!(type == GStar::LOGType::Error), "ConcolePrint Error");
+		if (type == GStar::LOGType::Waring) {
+			DebugBreak();
+		}
 		free(PreFix);
 	}
 

@@ -1,25 +1,27 @@
 #include "HeapManager.h"
-#include <stdio.h>
+
 #include <cstring>
 #include "ConsolePrint.h"
+#include <stdio.h>
 HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy)
 {
 	this->_sizeHeap = HeapSize;
 	this->_numDescriptors = numDescriptors;
 	this->_pHeapMemory = _pHeapMemeoy;
 	//memset(_pHeapMemeoy, '\0', HeapSize);
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%s", _pHeapMemeoy);
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _pHeapMemeoy);
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "The memory block Start at%p", _pHeapMemeoy);
 	_current = _pHeapMemeoy;
 	INFOBLCOK* infoblock = reinterpret_cast<INFOBLCOK*>(_current);
 	memset(&(infoblock->start),HeapManager::fillguard,4);
 	memset(&(infoblock->end), HeapManager::fillguard, 4);
 	infoblock->isusing = HeapManager::infoisnotusing;
 	infoblock->size = HeapSize - sizeof(INFOBLCOK) - guardsize - 1; // start with infroblock end with guards
+
 	_current = _movePointerForward(_current, sizeof(INFOBLCOK));
 	memset(_current, HeapManager::fillinitialfilled, infoblock->size);
 	_current = _movePointerForward(_current, infoblock->size);
-	_current = _movePointerForward(_pHeapMemeoy, HeapSize);
+	memset(_current, HeapManager::fillguard, guardsize);
+	_current = _movePointerForward(_current, guardsize);
 	char* end = reinterpret_cast<char*>(_current);
 	*end = HeapManager::infoend;
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _current);
@@ -39,10 +41,15 @@ HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _p
 
 	/*DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%i", sizeof(bool));
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%i", sizeof(size_t));
-	unsigned long address = reinterpret_cast<unsigned long>(_pHeapMemeoy);
+	size_t address = reinterpret_cast<size_t>(_pHeapMemeoy);
 	address += 1;
 	void* temp = reinterpret_cast<void*>(address);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", temp);*/
+}
+
+HeapManager::~HeapManager()
+{
+	//delete this->_pHeapMemory;
 }
 
 void * HeapManager::FindFirstFit(rsize_t size)
@@ -52,41 +59,204 @@ void * HeapManager::FindFirstFit(rsize_t size)
 
 void * HeapManager::FindFirstFit(rsize_t size, unsigned int i_alignment)
 {
+	jump = 0;
 	_current = _pHeapMemory;
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _current);
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
 	while (!(this->_Match(size,i_alignment))) {
-		_Travel();
+		if (current->isusing != HeapManager::infoend && current->isusing != HeapManager::infoisusing && current->isusing != HeapManager::infoisnotusing) {
+			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Gonna Go Wrong  %p \n", _current);
+		}
 		if (current->isusing == HeapManager::infoend) {
 			return nullptr;
 		}
+		else
+		{
+			_current = _TravelToNextDescriptor(current);
+			jump++;
+			current = reinterpret_cast<INFOBLCOK*>(_current);
+		}
 	}
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _current);
+	DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Allocated Block  %p \n", _current);
 	return _current;
 }
 
-void* HeapManager::_movePointerForward(void * _pointer, int number)
+INFOBLCOK * HeapManager::_TravelToNextDescriptor(const INFOBLCOK* const i_ptr) const
 {
-	unsigned long address = reinterpret_cast<unsigned long>(_pointer);
+	char* start = (char*)_movePointerForward(i_ptr, i_ptr->size+ sizeof(INFOBLCOK));// lead to place after the users data
+	int a = 0;
+	while (*start == HeapManager::fillpadding) {
+		start = (char*)_movePointerForward(start,1);
+	}
+#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
+	if (*start != HeapManager::fillguard) {
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "Write on the Guard %p %p", i_ptr,start);
+	}
+#endif
+
+	return (INFOBLCOK*)start;
+}
+
+void HeapManager::Collect()
+{
+	INFOBLCOK*  d_ptr= (INFOBLCOK*)_pHeapMemory;
+	//the start of user info
+	void*  i_ptr= _movePointerForward(d_ptr, sizeof(INFOBLCOK));
+	while (contains(i_ptr)) {
+		if (d_ptr->isusing == HeapManager::infoisnotusing) {
+			_current = _TravelToNextDescriptor(d_ptr);
+			void* next = _TravelToNextDescriptor((INFOBLCOK*)_current);
+			if (_tryFastBackCollect()) {
+				d_ptr->size = difference(i_ptr, next);
+			}
+			else {
+				d_ptr = (INFOBLCOK*)next;
+				i_ptr = _movePointerForward(d_ptr, sizeof(INFOBLCOK));
+			}
+		}
+		else {
+			d_ptr = _TravelToNextDescriptor(d_ptr);
+			i_ptr = _movePointerForward(d_ptr, sizeof(INFOBLCOK));
+		}
+		
+	}
+}
+void HeapManager::ShowFreeBlocks() const
+{
+	INFOBLCOK* current = (INFOBLCOK*)_pHeapMemory;
+	int count = 0;
+	while (current->isusing != HeapManager::infoend) {
+		if (current->isusing == HeapManager::infoisnotusing) {
+			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Free Block %i has size %u \n", count, current->size);
+			count++;
+		}
+		current = _TravelToNextDescriptor(current);
+	}
+	return;
+}
+void HeapManager::ShowOutstandingAllocations() const
+{
+	INFOBLCOK* current = (INFOBLCOK*)_pHeapMemory;
+	int count = 0;
+	while (current->isusing != HeapManager::infoend) {
+		if (current->isusing == HeapManager::infoisusing) {
+			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "OUtStanding Block %i has size %u \n", count, current->size);
+			count++;
+		}
+		current = _TravelToNextDescriptor(current);
+	}
+	return;
+}
+#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
+void HeapManager::_FreeCheck(void* ipr)
+{
+	INFOBLCOK* temp = (INFOBLCOK*)_movePointerBackward(ipr, sizeof(INFOBLCOK));
+	INFOBLCOK* tempnext = (INFOBLCOK*)_TravelToNextDescriptor(temp);
+	for (int i = 0; i < 4; i++) {
+		if (temp->start[i] != HeapManager::fillguard || temp->end[i] != HeapManager::fillguard || tempnext->start[i] != HeapManager::fillguard || tempnext->end[i] != HeapManager::fillguard) {
+			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "Write on the Fill Guard %p", ipr);
+		}
+	}
+}
+#endif
+bool HeapManager::free(void * i_ptr)
+{
+	bool result = false;
+	if (IsAllocated(i_ptr)) {
+		_current = _movePointerBackward(i_ptr, sizeof(INFOBLCOK));
+		INFOBLCOK* temp = (INFOBLCOK*)_current;
+		temp->isusing = HeapManager::infoisnotusing;
+		result = true;
+		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Free Block %p \n", _current);
+#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
+		_FreeCheck(i_ptr);
+#endif
+		_current = _TravelToNextDescriptor(temp);// move to the next dicriptor
+		void* next = _TravelToNextDescriptor((INFOBLCOK*)_current);
+		if (_tryFastBackCollect()) {
+			temp->size = difference(i_ptr, next);;
+		}
+
+	}
+
+	return result;
+}
+bool HeapManager::_tryFastBackCollect()
+{
+	INFOBLCOK* temp = (INFOBLCOK*)_current;
+	if (temp->isusing == HeapManager::infoisnotusing) {
+		_deletHead();
+		return true;
+	}
+	return false;
+}
+
+void HeapManager::_deletHead()
+{
+	INFOBLCOK* temp = (INFOBLCOK*)_current;
+	memset(_current, HeapManager::fillinitialfilled, sizeof(INFOBLCOK));
+}
+bool HeapManager::contains(void * ipr) const
+{
+	bool result = true;
+	void* _current = _movePointerBackward(ipr, sizeof(INFOBLCOK));
+	INFOBLCOK* temp = (INFOBLCOK*)_current;
+	int count = 0;
+	if (temp->isusing != HeapManager::infoisusing &&temp->isusing != HeapManager::infoisnotusing) {
+		return false;
+	}
+	while(count < 2){
+		count++;
+		if (temp->isusing == HeapManager::infoend) {
+			break;
+		}
+		else if (temp->isusing != HeapManager::infoisusing && temp->isusing != HeapManager::infoisnotusing) {
+			result = false;
+			break;
+		}
+	}
+	return result;
+}
+
+bool HeapManager::IsAllocated(void * ipr) const
+{
+	if (contains(ipr)) {
+		void* _current = _movePointerBackward(ipr, sizeof(INFOBLCOK));
+		INFOBLCOK* temp = (INFOBLCOK*)_current;
+		if (temp->isusing == HeapManager::infoisusing) {
+			return true;
+		}
+	}
+	return false;
+}
+
+
+void* HeapManager::_movePointerForward(const void const * _pointer, int number)
+{
+	size_t address = reinterpret_cast<size_t>(_pointer);
 	address += number;
 	return reinterpret_cast<void*>(address);
 }
-void* HeapManager::_movePointerBackward(void * _pointer, int number)
+void* HeapManager::_movePointerBackward(const void const * _pointer, int number)
 {
-	unsigned long address = reinterpret_cast<unsigned long>(_pointer);
+	size_t address = reinterpret_cast<size_t>(_pointer);
 	address -= number;
 	return reinterpret_cast<void*>(address);
 }
-void HeapManager::_Travel()
+size_t HeapManager::difference(void * one, void * two)
 {
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _current);
-	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
-	_current = _movePointerForward(_current, sizeof(INFOBLCOK) + current->size);
+	size_t address1 = reinterpret_cast<size_t>(one);
+	size_t address2 = reinterpret_cast<size_t>(two);
+	if (address1 > address2) {
+		return address1 - address2;
+	}
+	else
+	{
+		return address2 - address1;
+	}
 }
 
 bool HeapManager::_Match(rsize_t size, unsigned int alignment)
 {
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _current);
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
 	if ((current->size > size + sizeof(INFOBLCOK))&&current->isusing == HeapManager::infoisnotusing) {
 		return _TryCut(size,alignment);
@@ -100,20 +270,32 @@ bool HeapManager::_Match(rsize_t size, unsigned int alignment)
 
 bool HeapManager::_TryCut(rsize_t size, unsigned int alignment)
 {
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _current);
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
-	size_t end = reinterpret_cast<size_t>(_movePointerForward(_current, current->size + sizeof(INFOBLCOK)));
+	INFOBLCOK* endinfo = _TravelToNextDescriptor(current);
+	size_t realsize = difference(current, endinfo);
+	realsize -= sizeof(INFOBLCOK);
+	size_t end = reinterpret_cast<size_t>(endinfo);
 	end -= size;
-	size_t temp = end % alignment;
-	if (current->size < temp) {
+	size_t padding = end % alignment;
+	//If the real size of the block can not put the size + alignment + padding
+	if (realsize < size + padding + sizeof(INFOBLCOK) *2) {
 		return false;
 	}
 	else
 	{
-		end -= temp;
+		end -= padding;
 		_current = reinterpret_cast<void*>(end);
 		void* temppointer = _movePointerForward(_current,size);
-		memset(temppointer, HeapManager::fillpadding, temp);
+		memset(temppointer, HeapManager::fillpadding, padding);
+		memset(_current, HeapManager::fillinitialfilled, size);
+		_current = _movePointerBackward(_current, sizeof(INFOBLCOK));
+		_addinfoblock(size);
+		size_t output = current->size;
+		current->size = realsize -(size + padding + sizeof(INFOBLCOK));
+		if (current->size > output) {
+			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Wrong Size At %p is used to have length %u", current, output);
+		}
+		/*
 		//Fill the padding 
 		//if the block is too small just give it all to the user
 		if (current->size < temp + sizeof(INFOBLCOK) * 2) {
@@ -125,8 +307,12 @@ bool HeapManager::_TryCut(rsize_t size, unsigned int alignment)
 			_current = _movePointerBackward(_current,sizeof(INFOBLCOK));
 			_addinfoblock(size);
 			//size + padding + info block
+			size_t output = current->size;
 			current->size -= size + temp + sizeof(INFOBLCOK);
-		}
+			if (current->size > output ) {
+				DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Wrong Size At %p is used to have length %u", current,output);
+			}
+		}*/
 	}
 	return true;
 }
@@ -141,5 +327,5 @@ void HeapManager::_addinfoblock(size_t size)
 	infoblock->size = size; // start with infroblock end with guards
 	_current = _movePointerForward(_current, sizeof(INFOBLCOK));
 	memset(_current, HeapManager::fillinitialfilled, infoblock->size);
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "userinfomation start at%p", _current);
 }
+

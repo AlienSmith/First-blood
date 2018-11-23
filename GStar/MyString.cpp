@@ -113,7 +113,8 @@ GStar::MyString::~MyString()
 GStar::MyString GStar::operator+(const GStar::MyString & A, const GStar::MyString & B)
 {
 	rsize_t temp_size = A.GetSize() + B.GetSize() -1;
-	char* temp = new char[temp_size -1];
+	char* temp = new char[temp_size];
+	//strcat will look for the null - terminator, interpret that as the end of the string, and append the new text there, overwriting the null - terminator in the process, and writing a new null - terminator at the end of the concatenation.
 	strcpy_s(temp, temp_size, A.GetString());
 	strcat_s(temp, temp_size, B.GetString());
 	// Here I used the copy constructor and deep copyed the value

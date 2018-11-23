@@ -20,7 +20,7 @@
 //void test3();
 int main() 
 	{
-		HeapManager_UnitTest();
+	bool success = HeapManager_UnitTest();
 		MainEntrance();
 		int a = 0;
 		std::cin >> a;

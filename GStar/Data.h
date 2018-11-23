@@ -71,3 +71,5 @@ const static char WoodBox[] = "../GStar/woodcontainer.jpg";
 const static char SmileFace[] = "../GStar/awesomeface.png";
 const static char vs[] = "../GStar/VertexColor.ves";
 const static char fs[] = "../GStar/VertexColor.frs";
+// Shader
+const static int ShadersHeapSize = 1024;

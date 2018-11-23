@@ -13,6 +13,8 @@ struct INFOBLCOK {  char isusing; size_t size };
 #endif
 class HeapManager {
 public:
+	static HeapManager TheManager;
+	static void Initialize();
 	int jump = 0;
 
 	static void* _movePointerForward(const void* const _pointer, int number) ;

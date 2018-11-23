@@ -231,6 +231,11 @@ bool HeapManager::IsAllocated(void * ipr) const
 }
 
 
+void HeapManager::Initialize()
+{
+	
+}
+
 void* HeapManager::_movePointerForward(const void const * _pointer, int number)
 {
 	size_t address = reinterpret_cast<size_t>(_pointer);

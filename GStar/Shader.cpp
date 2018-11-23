@@ -4,9 +4,15 @@
 #include<iostream>
 #include"ConsolePrint.h"
 #include "Matrix4.h"
-Shader::Shader(const GLchar * vertexPath, const GLchar * fragmentPath)
+//This will return nullptr as fail, dynamically allocated remember to delete it.
+Shader * Shader::Create(const GLchar * vertexPath, const GLchar * fragmentPath)
 {
-	CreateShader(ReadShader(vertexPath, fragmentPath));
+	Shader* result = new Shader();
+	bool successful = true;
+	if (result->CreateShader(result->ReadShader(vertexPath, fragmentPath, successful), successful)) {
+		return result;
+	}
+	return nullptr;
 }
 
 void Shader::use()
@@ -14,33 +20,33 @@ void Shader::use()
 	glUseProgram(ID);
 }
 
-void Shader::setBool(const std::string & name, bool value) const
+void Shader::setBool(const GStar::MyString & name, bool value) const
 {
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+	glUniform1i(glGetUniformLocation(ID, name.GetString()), (int)value);
 }
 
-void Shader::setInt(const std::string & name, int value) const
+void Shader::setInt(const GStar::MyString & name, int value) const
 {
-	glUniform1i(glGetUniformLocation(ID, name.c_str()), (int)value);
+	glUniform1i(glGetUniformLocation(ID, name.GetString()), (int)value);
 }
 
-void Shader::setFloat(const std::string & name, float value) const
+void Shader::setFloat(const GStar::MyString & name, float value) const
 {
-	glUniform1f(glGetUniformLocation(ID, name.c_str()), value);
+	glUniform1f(glGetUniformLocation(ID, name.GetString()), value);
 }
 
-void Shader::setMat4(const std::string &name, const GStar::Matrix4& value, unsigned int Flip) const
+void Shader::setMat4(const GStar::MyString &name, const GStar::Matrix4& value, unsigned int Flip) const
 {
 	float temparray[16];
-	unsigned int transformloc = glGetUniformLocation(this->ID, name.c_str());
+	unsigned int transformloc = glGetUniformLocation(this->ID, name.GetString());
 	GStar::Matrix4::value_ptr(value, temparray);
 	glUniformMatrix4fv(transformloc, 1, Flip, temparray);
 }
 
 
-unsigned int Shader::CompileShader(std::string & source, unsigned int type)
+unsigned int Shader::CompileShader(GStar::MyString & source, unsigned int type,bool& successful)
 {
-	const char* ShaderCode = source.c_str();
+	const char* ShaderCode = source.GetString();
 	unsigned int result;
 	int success;
 	char infoLog[256];
@@ -52,15 +58,16 @@ unsigned int Shader::CompileShader(std::string & source, unsigned int type)
 	if (!success) {
 		glGetShaderInfoLog(result, 256, NULL, infoLog);
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "%s failed %s\n", (type == GL_VERTEX_SHADER ? "VERTEX" : "FRAGMENT"),infoLog);
+		successful = false;
 	}
 	return result;
 }
 
-Shader::ShaderSource Shader::ReadShader(const GLchar * vertexPath, const GLchar * fragmentPath)
+Shader::ShaderSource Shader::ReadShader(const GLchar * vertexPath, const GLchar * fragmentPath, bool& successful)
 {
 	// retrieve the vertex/fragment source code from filepath
-	std::string vertexCode;
-	std::string fragmentCode;
+	GStar::MyString vertexCode;
+	GStar::MyString fragmentCode;
 	std::ifstream vShaderFile;
 	std::ifstream fShaderFile;
 	// ensure ifstream objects can throw exception:
@@ -79,23 +86,24 @@ Shader::ShaderSource Shader::ReadShader(const GLchar * vertexPath, const GLchar 
 		vShaderFile.close();
 		fShaderFile.close();
 		//convert stream into string
-		vertexCode = vShaderStream.str();
-		fragmentCode = fShaderStream.str();
+		vertexCode = vShaderStream.str().c_str();
+		fragmentCode = fShaderStream.str().c_str();
 
 	}
 	catch (std::ifstream::failure e) {
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "SHADER::FILE_NOT_SUCCESFULLY_READ\n");
+		successful = false;
 	}
 	//Convert to char* string
 	return { vertexCode,fragmentCode };
 }
 
-void Shader::CreateShader(Shader::ShaderSource && source)
+bool Shader::CreateShader(Shader::ShaderSource && source, bool& successful)
 {
 	char infoLog[256];
 	int success;
-	unsigned int vertex = CompileShader(source.VertexSource, GL_VERTEX_SHADER);
-	unsigned int fragment = CompileShader(source.FragmentSource, GL_FRAGMENT_SHADER);
+	unsigned int vertex = CompileShader(source.VertexSource, GL_VERTEX_SHADER, successful);
+	unsigned int fragment = CompileShader(source.FragmentSource, GL_FRAGMENT_SHADER, successful);
 	ID = glCreateProgram();
 	glAttachShader(ID, vertex);
 	glAttachShader(ID, fragment);
@@ -105,7 +113,9 @@ void Shader::CreateShader(Shader::ShaderSource && source)
 	if (!success) {
 		glGetProgramInfoLog(ID, 256, NULL, infoLog);
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "%s\n", infoLog);
+		successful = false;
 	}
 	glDeleteShader(vertex);
 	glDeleteShader(fragment);
+	return successful;
 }

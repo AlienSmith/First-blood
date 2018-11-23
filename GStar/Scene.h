@@ -13,7 +13,7 @@ public:
 	bool Update();
 	Scene(const Scene& other) = delete;
 	Scene& operator = (const Scene& other) = delete;
-	inline const Shader& Shaders() const { return my_shaders; }
+	inline const Shader& Shaders() const { return *my_shaders; }
 	inline GLFWwindow* Window() { return window; }
 	inline bool UpdateEnd() {
 		glfwSwapBuffers(window);// swamp color buffer. and show what drawed in this iteration
@@ -28,7 +28,8 @@ public:
 	void UpdateTime();
 	//Call UpdateTime first and only once 
 	inline const float Deltatime()const { return deltaTime; }
-	inline void UpdateView(){ my_shaders.setMat4("view", view, GL_FALSE); }
+	inline void UpdateView(){ my_shaders->setMat4("view", view, GL_FALSE); }
+	virtual ~Scene() { delete my_shaders; }
 private:
 	bool SetupWindow();
 	bool LoadObject();
@@ -38,7 +39,7 @@ private:
 	Scene();
 	GStar::Matrix4 projection;
 	GStar::Matrix4 view;
-	Shader my_shaders;
+	Shader* my_shaders;
 	float deltaTime;
 	float LastFrame;
 	float currentFrame;

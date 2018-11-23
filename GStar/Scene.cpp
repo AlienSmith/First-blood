@@ -27,12 +27,12 @@ Scene* Scene::Create()
 bool Scene::Update()
 {
 	glBindVertexArray(VAO);
-	my_shaders.use();
-	my_shaders.setFloat("offset", 0.1);
-	my_shaders.setInt("texture1", 0);
-	my_shaders.setInt("texture2", 1);
-	my_shaders.setMat4("view", view, GL_FALSE);
-	my_shaders.setMat4("projection", projection, GL_FALSE);
+	my_shaders->use();
+	my_shaders->setFloat("offset", 0.1);
+	my_shaders->setInt("texture1", 0);
+	my_shaders->setInt("texture2", 1);
+	my_shaders->setMat4("view", view, GL_FALSE);
+	my_shaders->setMat4("projection", projection, GL_FALSE);
 	//Rotate the matrix
 
 	return false;
@@ -132,7 +132,7 @@ bool Scene::CompileShader()
 {
 	texture1 = LoadTexture(WoodBox, GL_RGB);
 	texture2 = LoadTexture(SmileFace, GL_RGBA);
-	my_shaders = Shader(vs, fs);
+	my_shaders = Shader::Create(vs,fs);
 	//TODO rewrite and seperate this parts when put textuers in singlelinkedlist
 	glActiveTexture(GL_TEXTURE0); // activate the texture unit 0
 	glBindTexture(GL_TEXTURE_2D, texture1); // bind name
@@ -149,7 +149,7 @@ bool Scene::CompileShader()
 Scene::Scene():
 	projection(GStar::Matrix4(IDENTICAL_MATRIX)),
 	view(GStar::Matrix4(IDENTICAL_MATRIX)),
-	my_shaders(Shader()), //TODO add Creator To Shader
+	my_shaders(), //TODO add Creator To Shader
 	deltaTime(0.0f),
 	LastFrame(0.0f),
 	currentFrame(0.0f),

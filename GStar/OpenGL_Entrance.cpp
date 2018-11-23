@@ -6,6 +6,7 @@
 #include"stb_image.h"
 #include "Coordinate.h"
 #include "Camera.cpp"
+//Do not use this script anymore This will lead to memory leak
 void framebuffer_size_callback(GLFWwindow* windwo, int width, int height);
 void mouse_callback(GLFWwindow* window, double xpos, double ypos);
 void processInput(GLFWwindow* window);
@@ -199,7 +200,7 @@ void Entrance() {
 	glBufferData(GL_ELEMENT_ARRAY_BUFFER, sizeof(indices), indices, GL_STATIC_DRAW);
 	*/
 	//Compile Shaders
-	Shader my_shader = Shader("../GStar/VertexColor.ves", "../GStar/VertexColor.frs");
+	Shader my_shader = *Shader::Create("../GStar/VertexColor.ves", "../GStar/VertexColor.frs");
 	glActiveTexture(GL_TEXTURE0); // activate the texture unit 0
 	glBindTexture(GL_TEXTURE_2D, texture); // bind name
 	glActiveTexture(GL_TEXTURE1);

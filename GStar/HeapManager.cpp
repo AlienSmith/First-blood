@@ -154,7 +154,7 @@ void HeapManager::_FreeCheck(void* ipr)
 	INFOBLCOK* temp = (INFOBLCOK*)_movePointerBackward(ipr, sizeof(INFOBLCOK));
 	INFOBLCOK* tempnext = (INFOBLCOK*)_TravelToNextDescriptor(temp);
 	for (int i = 0; i < 4; i++) {
-		if (temp->start[i] != HeapManager::fillguard || temp->end[i] != HeapManager::fillguard || tempnext->start[i] != HeapManager::fillguard || tempnext->end[i] != HeapManager::fillguard) {
+		if (temp->start[i] != HeapManager::fillguard || temp->end[i] != HeapManager::fillguard || tempnext->start[i] != HeapManager::fillguard) {
 			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "Write on the Fill Guard %p", ipr);
 		}
 	}
@@ -173,9 +173,11 @@ bool HeapManager::free(void * i_ptr)
 		_FreeCheck(i_ptr);
 #endif
 		_current = _TravelToNextDescriptor(temp);// move to the next dicriptor
-		void* next = _TravelToNextDescriptor((INFOBLCOK*)_current);
-		if (_tryFastBackCollect()) {
-			temp->size = difference(i_ptr, next);;
+		if (((INFOBLCOK*)_current)->isusing != HeapManager::infoend) {
+			void* next = _TravelToNextDescriptor((INFOBLCOK*)_current);
+			if (_tryFastBackCollect()) {
+				temp->size = difference(i_ptr, next);;
+			}
 		}
 
 	}

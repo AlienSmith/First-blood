@@ -25,7 +25,7 @@ public:
 	void* operator new (size_t i_size);
 	void operator delete(void* i_ptr);
 private:
-	Shader() {}
+	Shader():ID(1234) {}
 	struct ShaderSource {
 		GStar::MyString VertexSource;
 		GStar::MyString FragmentSource;

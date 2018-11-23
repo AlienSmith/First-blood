@@ -26,6 +26,14 @@ Shader * Shader::Create(const GLchar * vertexPath, const GLchar * fragmentPath)
 	return nullptr;
 }
 
+void Shader::Terminate()
+{
+	
+		if (ShadersHeap) {
+			free(ShadersHeap);
+		}
+}
+
 void Shader::use()
 {
 	glUseProgram(ID);
@@ -67,6 +75,7 @@ void Shader::operator delete(void * i_ptr)
 {
 	HeapManager::TheManager.SetPointerTo(Shader::ShadersHeap);
 	HeapManager::TheManager.free(i_ptr);
+	HeapManager::TheManager.Collect();
 }
 
 

@@ -3,9 +3,18 @@
 #include"ConsolePrint.h"
 #include"stb_image.h"
 #include "Coordinate.h"
+void* Scene::Sceneheap = nullptr;
+void Scene::Initialize()
+{
+	Scene::Sceneheap = malloc(SceneHeapSize);
+	HeapManager::TheManager.InitializeWith(SceneHeapSize, SceneHeapSize, Scene::Sceneheap);
+}
 // return nullptr as fail, Remeber to delete this pointer
 Scene* Scene::Create()
 {
+	if (!Scene::Sceneheap) {
+		Scene::Initialize();
+	}
 	//Load Shader
 	Scene* currentScene = new Scene(); 
 	if (!currentScene->SetupWindow()) {
@@ -22,6 +31,27 @@ Scene* Scene::Create()
 	}
 
 	return currentScene;
+}
+
+void Scene::Terminate()
+{
+		if (Sceneheap) {
+			free(Sceneheap);
+		}
+	
+}
+
+void * Scene::operator new(size_t i_size)
+{
+	HeapManager::TheManager.SetPointerTo(Scene::Sceneheap);
+	return HeapManager::TheManager.FindFirstFit(sizeof(Scene));
+}
+
+void Scene::operator delete(void * i_ptr)
+{
+	HeapManager::TheManager.SetPointerTo(Scene::Sceneheap);
+	HeapManager::TheManager.free(i_ptr);
+	HeapManager::TheManager.Collect();
 }
 
 bool Scene::Update()

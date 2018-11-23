@@ -12,6 +12,7 @@ public:
 	static void* ShadersHeap;
 	static void InitalizeHeap();
 	static Shader* Create(const GLchar * vertexPath, const GLchar * fragmentPath);
+	static void Terminate();
 	// This program ID
 	unsigned int ID;
 	//constructor reads and builds the shader

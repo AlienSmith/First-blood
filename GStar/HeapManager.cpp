@@ -106,6 +106,9 @@ void HeapManager::Collect()
 	while (contains(i_ptr)) {
 		if (d_ptr->isusing == HeapManager::infoisnotusing) {
 			_current = _TravelToNextDescriptor(d_ptr);
+			if (((INFOBLCOK*)_current)->isusing == HeapManager::infoend) {
+				return;
+			}
 			void* next = _TravelToNextDescriptor((INFOBLCOK*)_current);
 			if (_tryFastBackCollect()) {
 				d_ptr->size = difference(i_ptr, next);
@@ -114,6 +117,7 @@ void HeapManager::Collect()
 				d_ptr = (INFOBLCOK*)next;
 				i_ptr = _movePointerForward(d_ptr, sizeof(INFOBLCOK));
 			}
+			
 		}
 		else {
 			d_ptr = _TravelToNextDescriptor(d_ptr);

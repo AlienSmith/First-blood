@@ -3,13 +3,19 @@
 #include<GLFW\glfw3.h>
 #include"Camera.h"
 #include"Shader.h"
+#include"HeapManager.h"
 //TODO use heap manager instead of the C++ new
 //TODO use Single linked list to store multiple textures and Object;
 //TODO add Creat function to Shader class
 class GLFWwindow;
 class Scene {
 public:
+	static void* Sceneheap;
+	static void Initialize();
 	static Scene* Create();
+	static void Terminate();
+	void* operator new (size_t i_size);
+	void operator delete(void* i_ptr);
 	bool Update();
 	Scene(const Scene& other) = delete;
 	Scene& operator = (const Scene& other) = delete;

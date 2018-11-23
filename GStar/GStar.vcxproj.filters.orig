@@ -1,0 +1,216 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="Source Files">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="Header Files">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="Resource Files">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="Header Files\Math">
+      <UniqueIdentifier>{22d2b239-497b-406d-bfcc-e997cb3fded2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Container">
+      <UniqueIdentifier>{a7ffb277-4d92-4b81-9d72-631dfd42fbf1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Console_Debug">
+      <UniqueIdentifier>{5221099b-dbd7-443b-8226-b580fb5b8888}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\HeapManager">
+      <UniqueIdentifier>{0d0ca811-8aa2-40c3-af80-c572ecd39819}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL">
+      <UniqueIdentifier>{4162bf6e-459b-42b2-b1f6-8949f83bced1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Shader">
+      <UniqueIdentifier>{23fa547e-74df-415b-9f57-344ab6813c66}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Texture">
+      <UniqueIdentifier>{61070df4-1248-426b-af1d-cede24551323}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Coordinate">
+      <UniqueIdentifier>{bb437c7b-02ed-47d3-9f6b-865264b16ddb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Camera">
+      <UniqueIdentifier>{af0ab019-4c33-4074-a82a-ba5ee5f7dd33}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\BasicShape">
+      <UniqueIdentifier>{357cf91a-c56f-4c03-91ce-0cbce4b00917}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGL\Core">
+      <UniqueIdentifier>{eefa6e02-6c3a-47c9-bcc6-a523843da79d}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="GStar_init.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector3.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="Matrix4.h">
+      <Filter>Header Files\Math</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleLinkedList.h">
+      <Filter>Header Files\Container</Filter>
+    </ClInclude>
+    <ClInclude Include="Assert.h">
+      <Filter>Header Files\Console_Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="ConsolePrint.h">
+      <Filter>Header Files\Console_Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>Header Files\Console_Debug</Filter>
+    </ClInclude>
+    <ClInclude Include="HeapManagerProxy.h">
+      <Filter>Header Files\HeapManager</Filter>
+    </ClInclude>
+    <ClInclude Include="HeapManager.h">
+      <Filter>Header Files\HeapManager</Filter>
+    </ClInclude>
+<<<<<<< HEAD
+    <ClInclude Include="Shader.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="stb_image.h">
+      <Filter>OpenGL</Filter>
+    </ClInclude>
+    <ClInclude Include="Coordinate.h">
+      <Filter>Header Files\Coordinate</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>OpenGL\Camera</Filter>
+    </ClInclude>
+    <ClInclude Include="NormalCube.h">
+      <Filter>OpenGL\BasicShape</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>OpenGL\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Data.h">
+      <Filter>OpenGL\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>OpenGL\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>OpenGL\Core</Filter>
+=======
+    <ClInclude Include="MyString.h">
+      <Filter>Header Files\Container</Filter>
+>>>>>>> GStar_Dev
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="GStar_init.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Vector2.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="HeapManagerProxy.cpp">
+      <Filter>Header Files\HeapManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HeapManager_UnitTest.cpp">
+      <Filter>Header Files\HeapManager</Filter>
+    </ClCompile>
+    <ClCompile Include="HeapManager.cpp">
+      <Filter>Header Files\HeapManager</Filter>
+    </ClCompile>
+<<<<<<< HEAD
+    <ClCompile Include="GLAD\glad.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL.cpp">
+      <Filter>OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="OpenGL_Entrance.cpp">
+      <Filter>OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="ConsolePrint.cpp">
+      <Filter>Header Files\Console_Debug</Filter>
+    </ClCompile>
+    <ClCompile Include="stb_activate.cpp">
+      <Filter>OpenGL</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>OpenGL\Camera</Filter>
+    </ClCompile>
+    <ClCompile Include="Matrix.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>OpenGL\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="View.cpp">
+      <Filter>OpenGL\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MainRenderLoop.cpp">
+      <Filter>OpenGL\Core</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="VertexShader.shader">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="FragmentShader.shader">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="VertexShader2.shader">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="FragmentShader1.2.shader">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="FragmentShader2.shader">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="VertexColor.frs">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="VertexColor.ves">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="Exercises1.4.ves">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="Exercises1.5.frs">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+    <None Include="Excercise1.6.ves">
+      <Filter>OpenGL\Shader</Filter>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="wall.jpg">
+      <Filter>OpenGL\Texture</Filter>
+    </Image>
+    <Image Include="woodcontainer.jpg">
+      <Filter>OpenGL\Texture</Filter>
+    </Image>
+    <Image Include="awesomeface.png">
+      <Filter>OpenGL\Texture</Filter>
+    </Image>
+=======
+    <ClCompile Include="MyString.cpp">
+      <Filter>Header Files\Container</Filter>
+    </ClCompile>
+>>>>>>> GStar_Dev
+  </ItemGroup>
+</Project>

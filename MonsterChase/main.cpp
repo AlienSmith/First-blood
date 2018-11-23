@@ -26,11 +26,15 @@ int main() {
 	GStar::MyString  Hello = GStar::MyString("Hello");
 	GStar::MyString World = GStar::MyString("World");
 	printf("%s\n", Hello.GetString());
-	GStar::MyString output = Hello + World; // why this will lead to heap corruption?
+	GStar::MyString output = Hello + World;
 	printf("%s\n", output.GetString());
 	GStar::MyString test = GStar::MyString();
 	test = "Hello my Friend";
-	output = output + test;
+	printf("Last \n");
+	GStar::MyString result = GStar::MyString();
+	result = test;
+	printf("%s\n", result.GetString());
+	output = test;
 	printf("%s\n", output.GetString());
 	int a = 0;
 	std::cin >> a;

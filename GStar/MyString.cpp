@@ -17,7 +17,7 @@ void GStar::MyString::swap(MyString & string, char *& other, size_t size)
 
 size_t GStar::MyString::stringlength(const char * other)
 {
-	int len = 0;
+	int len = 1;
 	const char * p = other;
 	while (*p != '\0') {
 		len++;
@@ -28,17 +28,20 @@ size_t GStar::MyString::stringlength(const char * other)
 
 GStar::MyString::MyString():my_size(0), my_string(nullptr)
 {
+	printf("default constructor called \n");
 }
 
 GStar::MyString::MyString(const char other[])
-	:my_size(MyString::stringlength(other)+2),
-	my_string(new char[MyString::stringlength(other) + 2])
+	:my_size(MyString::stringlength(other)),
+	my_string(new char[MyString::stringlength(other)])
 {
+	printf("string constructor Called \n");
 	strcpy_s(my_string, my_size, other);
 }
 
 GStar::MyString::MyString( size_t size):my_size(size)
 {
+	printf("size constructor Called \n");
 	my_string = new char[size];
 }
 // Copy Constructor A deep copy of the string
@@ -46,10 +49,14 @@ GStar::MyString::MyString(const MyString & other)
 	: my_size(other.my_size),
 	my_string(other.my_size ? new char[other.my_size] : nullptr)
 {
-	std::copy(other.my_string, other.my_string + my_size, my_string);
+	printf("copy constructor Called \n");
+	//std::copy(other.my_string, other.my_string + my_size, my_string); This is a shallow copy .. wired
+	strcpy_s(my_string, my_size, other.my_string);
+	
 }
 GStar::MyString::MyString(MyString && other)
 {
+	printf("move constructor Called \n");
 	swap(*this, other);
 }
 //Here input is a Value(Object) instead of a reference type(const reference)
@@ -57,6 +64,7 @@ GStar::MyString::MyString(MyString && other)
 // Notice copy is not a temporary Temporary exist when function returns
 GStar::MyString& GStar::MyString::operator=(const MyString& other)
 {
+	printf("Copy operator Called \n");
 	MyString temp = MyString(other);
 	swap(*this, temp);
 	return *this;
@@ -64,12 +72,14 @@ GStar::MyString& GStar::MyString::operator=(const MyString& other)
 
 GStar::MyString & GStar::MyString::operator=(MyString && other)
 {
+	printf("move operator Called \n");
 	swap(*this,other);
 	return *this;
 }
 
 GStar::MyString & GStar::MyString::operator=(const char other[])
 {
+	printf("copy string Called \n");
 	GStar::MyString temp = GStar::MyString(other);
 	*this = temp;
 	return *this;
@@ -77,7 +87,7 @@ GStar::MyString & GStar::MyString::operator=(const char other[])
 
 GStar::MyString & GStar::MyString::operator=(const char(&& other)[])
 {
-	this->my_size = GStar::MyString::stringlength(other) + 1;
+	this->my_size = GStar::MyString::stringlength(other);
 	delete[] this->my_string;
 	this->my_string = const_cast<char*>(&other[0]);
 	return *this;
@@ -102,8 +112,8 @@ GStar::MyString::~MyString()
 
 GStar::MyString GStar::operator+(const GStar::MyString & A, const GStar::MyString & B)
 {
-	rsize_t temp_size = A.GetSize() + B.GetSize();
-	char* temp = new char[temp_size - 1];
+	rsize_t temp_size = A.GetSize() + B.GetSize() -1;
+	char* temp = new char[temp_size -1];
 	strcpy_s(temp, temp_size, A.GetString());
 	strcat_s(temp, temp_size, B.GetString());
 	// Here I used the copy constructor and deep copyed the value

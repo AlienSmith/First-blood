@@ -37,6 +37,7 @@ public:
 	inline void UpdateView(){ my_shaders->setMat4("view", view, GL_FALSE); }
 	virtual ~Scene() { delete my_shaders; }
 private:
+	static Scene* Instance;
 	bool SetupWindow();
 	bool LoadObject();
 	unsigned int LoadTexture(const char file[], unsigned int type);

@@ -4,6 +4,7 @@
 #include"stb_image.h"
 #include "Coordinate.h"
 void* Scene::Sceneheap = nullptr;
+Scene* Scene::Instance = nullptr;
 void Scene::Initialize()
 {
 	Scene::Sceneheap = malloc(SceneHeapSize);
@@ -15,28 +16,33 @@ Scene* Scene::Create()
 	if (!Scene::Sceneheap) {
 		Scene::Initialize();
 	}
-	//Load Shader
-	Scene* currentScene = new Scene(); 
-	if (!currentScene->SetupWindow()) {
-		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail set up window");
-		return nullptr;
-	}if (!currentScene->LoadObject()) {
-		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail load Object");
-		return nullptr;
+	if (Scene::Instance == nullptr) {
+		Scene* currentScene = new Scene();
+		//Load Default;
+		if (!currentScene->SetupWindow()) {
+			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail set up window");
+			return nullptr;
+		}if (!currentScene->LoadObject()) {
+			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail load Object");
+			return nullptr;
+		}
+		currentScene->SetPespective();
+		if (!currentScene->CompileShader()) {
+			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail set Compile Shader");
+			return nullptr;
+		}
+		Scene::Instance = currentScene;
 	}
-	currentScene->SetPespective();
-	if (!currentScene->CompileShader()) {
-		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail set Compile Shader");
-		return nullptr;
-	}
-
-	return currentScene;
+	return Scene::Instance;
 }
 
 void Scene::Terminate()
 {
 		if (Sceneheap) {
 			free(Sceneheap);
+		}
+		if (Instance) {
+			delete Instance;
 		}
 	
 }

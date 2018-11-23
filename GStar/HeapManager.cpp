@@ -3,6 +3,7 @@
 #include <cstring>
 #include "ConsolePrint.h"
 #include <stdio.h>
+//TODO make a effecient version for realease
 HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy)
 {
 	this->_sizeHeap = HeapSize;

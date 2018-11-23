@@ -8,7 +8,6 @@
 #include "Debug.h"
 #include "HeapManager_UnitTest.cpp"
 #include "MainRenderLoop.cpp"
-//#include "OpenGL_Entrance.cpp"
 //#include "Matrix4.h"
 //#include "Vector2.h"
 //#include "Vector3.h"
@@ -29,26 +28,7 @@ int main() {
 		/*GStar::SingleLinkedList<char> TestChar = GStar::SingleLinkedList<char>();
 		char next;
 		std::cin >> next;
-		while (next != '.') {
-			TestChar.Push(next);
-
-
-.0			std::cin >> next;
-		}
-		Monster::printlist(TestChar.GetHead());
-		std::cin >> next;*/
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Game Start");
-		Game mygame =  Game();
-		mygame.Initialize();
 		mygame.Draw();
-		while (mygame.flag) {
-			mygame.Update();
-			mygame.Draw();
-		}
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Game End");
-	};
-	_CrtDumpMemoryLeaks();
-	return 0;
 }
 //void test3() {
 //	GStar::SingleLinkedList<char> IntList = GStar::SingleLinkedList<char>();

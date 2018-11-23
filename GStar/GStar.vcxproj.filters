@@ -86,6 +86,8 @@
     </ClInclude>
     <ClInclude Include="Coordinate.h">
       <Filter>Header Files\Coordinate</Filter>
+    <ClInclude Include="MyString.h">
+      <Filter>Header Files\Container</Filter>
     </ClInclude>
     <ClInclude Include="Camera.h">
       <Filter>OpenGL\Camera</Filter>
@@ -133,6 +135,8 @@
     </ClCompile>
     <ClCompile Include="Shader.cpp">
       <Filter>OpenGL</Filter>
+    <ClCompile Include="MyString.cpp">
+      <Filter>Header Files\Container</Filter>
     </ClCompile>
     <ClCompile Include="ConsolePrint.cpp">
       <Filter>Header Files\Console_Debug</Filter>

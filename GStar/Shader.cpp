@@ -4,9 +4,20 @@
 #include<iostream>
 #include"ConsolePrint.h"
 #include "Matrix4.h"
+#include "HeapManager.h"
+#include "Data.h"
+void* Shader::ShadersHeap = nullptr;
+void Shader::InitalizeHeap()
+{
+	Shader::ShadersHeap = malloc(ShadersHeapSize);
+	HeapManager::TheManager.InitializeWith(ShadersHeapSize, ShadersHeapSize, Shader::ShadersHeap);
+}
 //This will return nullptr as fail, dynamically allocated remember to delete it.
 Shader * Shader::Create(const GLchar * vertexPath, const GLchar * fragmentPath)
 {
+	if (!Shader::ShadersHeap) {
+		Shader::InitalizeHeap();
+	}
 	Shader* result = new Shader();
 	bool successful = true;
 	if (result->CreateShader(result->ReadShader(vertexPath, fragmentPath, successful), successful)) {
@@ -41,6 +52,21 @@ void Shader::setMat4(const GStar::MyString &name, const GStar::Matrix4& value, u
 	unsigned int transformloc = glGetUniformLocation(this->ID, name.GetString());
 	GStar::Matrix4::value_ptr(value, temparray);
 	glUniformMatrix4fv(transformloc, 1, Flip, temparray);
+}
+
+void * Shader::operator new(size_t i_size)
+{
+	if (Shader::ShadersHeap) {
+		HeapManager::TheManager.SetPointerTo(Shader::ShadersHeap);
+		return HeapManager::TheManager.FindFirstFit(sizeof(Shader), 4);
+	}
+	return nullptr;
+}
+
+void Shader::operator delete(void * i_ptr)
+{
+	HeapManager::TheManager.SetPointerTo(Shader::ShadersHeap);
+	HeapManager::TheManager.free(i_ptr);
 }
 
 

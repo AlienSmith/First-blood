@@ -10,6 +10,7 @@ namespace GStar { class Matrix4; };
 class Shader {
 public:
 	static void* ShadersHeap;
+	static void InitalizeHeap();
 	static Shader* Create(const GLchar * vertexPath, const GLchar * fragmentPath);
 	// This program ID
 	unsigned int ID;
@@ -21,6 +22,8 @@ public:
 	void setInt(const GStar::MyString &name, int value) const;
 	void setFloat(const GStar::MyString &name, float value) const;
 	void setMat4(const GStar::MyString &name, const GStar::Matrix4& value, unsigned int Flip) const;
+	void* operator new (size_t i_size);
+	void operator delete(void* i_ptr);
 private:
 	Shader() {}
 	struct ShaderSource {

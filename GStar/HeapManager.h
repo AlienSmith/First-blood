@@ -14,9 +14,11 @@ struct INFOBLCOK {  char isusing; size_t size };
 class HeapManager {
 public:
 	static HeapManager TheManager;
-	static void Initialize();
+	HeapManager(){}
 	int jump = 0;
 
+	void InitializeWith(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy);
+	void SetPointerTo(void * _pHeapMemeoy);
 	static void* _movePointerForward(const void* const _pointer, int number) ;
 	static void* _movePointerBackward(const void* const _pointer, int number);
 	static size_t difference(void* one, void* two);
@@ -41,6 +43,7 @@ public:
 	void Collect();
 	void ShowFreeBlocks() const;
 	void ShowOutstandingAllocations() const;
+	//Temp Function
 private:
 	bool _tryFastBackCollect();// Require the _current pointer set to the descriptor return blocksize + INFOSIZE -1 for false
 	void _deletHead();// Require the _current pointer set to the descriptor return blocksize + INFOSIZE

@@ -43,9 +43,32 @@ namespace GStar {
 		void Push(T data);
 		SingleLinkedList();
 		~SingleLinkedList();
+		inline void Resetcurrent() {
+			m_current = m_pHead;
+		}
+		inline T& GetNext() {
+			if (m_current->GetNext()) {
+				return m_current->GetNext()->GetData();
+			}
+		}
+		inline bool HasNext() {
+			if (m_current->GetNext()) {
+				return true;
+			}
+			return false;
+		}
+		inline void Move() {
+			if (m_current->GetNext()) {
+				m_current = m_current->GetNext();
+			}
+		}
+		inline void DeleteNext() {
+			m_current->GetNext()->Delete(m_current, this);
+		}
 	private:
 		SingleLinkedListNode<T>* m_pHead;
 		SingleLinkedListNode<T>* m_end;
+		SingleLinkedListNode<T>* m_current;
 	};
 
 	// this function will return a nullptr if nothing has been added to the list
@@ -120,7 +143,7 @@ namespace GStar {
 	{
 		deleteIfPointer(this->GetData());
 	}
-
+	//Delete my self
 	template<class T>
 	inline void SingleLinkedListNode<T>::Delete(SingleLinkedListNode<T>* previous, SingleLinkedList<T>* List)
 	{

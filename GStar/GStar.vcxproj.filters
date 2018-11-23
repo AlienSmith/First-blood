@@ -53,6 +53,9 @@
     <ClCompile Include="Shader.cpp">
       <Filter>OpenGl\Core\Shader</Filter>
     </ClCompile>
+    <ClCompile Include="MeshComponent.cpp">
+      <Filter>Structure\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -109,6 +112,21 @@
     </ClInclude>
     <ClInclude Include="Shader.h">
       <Filter>OpenGl\Core\Shader</Filter>
+    </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Structure</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshComponent.h">
+      <Filter>Structure\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="Component.h">
+      <Filter>Structure\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshManager.h">
+      <Filter>Structure\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleLinkedDictionary.h">
+      <Filter>Container</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -187,6 +205,15 @@
     </Filter>
     <Filter Include="OpenGl\Core\Shader">
       <UniqueIdentifier>{943fadb7-94de-4381-9375-250d68197118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Structure">
+      <UniqueIdentifier>{59d18350-f82d-47f8-bdb0-c05d43364451}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Structure\Component">
+      <UniqueIdentifier>{dfa2ccef-cb65-4fd6-9a9c-aea0706f0d6a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Structure\Manager">
+      <UniqueIdentifier>{4cf51011-9a23-4920-b09e-00e0a04cd5eb}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

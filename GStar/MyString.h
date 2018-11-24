@@ -1,6 +1,10 @@
 #pragma once
 #ifndef GSTAR_MyString_H
 #define GSTAR_MyString_H
+#define PrimeA 54059 /* a prime */
+#define PrimeB 76963 /* another prime */
+#define PrimeC 86969 /* yet another prime */
+#define FIRSTH 37 /* also prime */
 //How write a rvalue referece of char array
 namespace GStar {
 	class MyString {
@@ -11,6 +15,15 @@ namespace GStar {
 		static void swap(MyString& string,MyString& other);
 		static void swap(MyString& string, char*& other, size_t size);
 		static size_t stringlength(const char* other);
+		static unsigned int hash_str(const char* s)
+		{
+			unsigned int h = FIRSTH;
+			while (*s) {
+				h = (h * PrimeA) ^ (s[0] * PrimeB);
+				s++;
+			}
+			return h % PrimeC;
+		}
 		MyString();
 		//Value Constructor
 		MyString(const char other[]);

@@ -128,6 +128,9 @@
     <ClInclude Include="SingleLinkedDictionary.h">
       <Filter>Container</Filter>
     </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>Structure\Manager</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">

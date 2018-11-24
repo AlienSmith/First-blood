@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
@@ -134,6 +134,7 @@
     <ClInclude Include="HeapManager.h" />
     <ClInclude Include="HeapManagerProxy.h" />
     <ClInclude Include="Matrix4.h" />
+    <ClInclude Include="Mesh.h" />
     <ClInclude Include="MeshComponent.h" />
     <ClInclude Include="MeshManager.h" />
     <ClInclude Include="NormalCube.h" />
@@ -159,6 +160,7 @@
     <ClCompile Include="MainRenderLoop.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
+    <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="OpenGL.cpp" />
     <ClCompile Include="OpenGL_Entrance.cpp" />
     <ClCompile Include="Scene.cpp" />

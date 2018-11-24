@@ -37,6 +37,7 @@ Scene* Scene::Create()
 }
 
 void Scene::Terminate()
+
 {
 		if (Sceneheap) {
 			free(Sceneheap);

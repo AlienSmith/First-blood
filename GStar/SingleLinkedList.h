@@ -51,6 +51,9 @@ namespace GStar {
 				return m_current->GetNext()->GetData();
 			}
 		}
+		inline SingleLinkedListNode<T>* GetNextNode() {
+			return m_current->GetNext();
+		}
 		inline bool HasNext() {
 			if (m_current->GetNext()) {
 				return true;

@@ -62,6 +62,10 @@
     <ClCompile Include="ShaderManger.cpp">
       <Filter>Structure\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="ShaderComponent.cpp">
+      <Filter>Structure\Component</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -142,6 +146,9 @@
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>OpenGl\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureComponent.h">
+      <Filter>Structure\Component</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

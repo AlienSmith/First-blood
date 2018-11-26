@@ -146,6 +146,7 @@
     <ClInclude Include="SingleLinkedDictionary.h" />
     <ClInclude Include="SingleLinkedList.h" />
     <ClInclude Include="MyString.h" />
+    <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="View.h" />
@@ -167,9 +168,11 @@
     <ClCompile Include="OpenGL_Entrance.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderComponent.cpp" />
     <ClCompile Include="ShaderManger.cpp" />
     <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="MyString.cpp" />
+    <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>

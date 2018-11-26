@@ -83,6 +83,34 @@ void Scene::UpdateTime()
 	LastFrame = currentFrame;
 }
 
+unsigned int Scene::LoadMesh(const MeshParameters & parameters)
+{
+	int entrysize = parameters.positionsize + parameters.texturesize;
+	unsigned int TempVAO;
+	glGenVertexArrays(1, &TempVAO);//claim a name different function from VBO
+	glBindVertexArray(TempVAO);
+
+	unsigned int TempVBO;
+	//Put the data inside
+	// require buffers for the vertices on GPU VBO for Vertex buffer object
+	glGenBuffers(1, &TempVBO); // how many object names (unsigned integer) and where to store it.
+
+	glBindBuffer(GL_ARRAY_BUFFER, TempVBO); //VBO is GL_ARRAY_BUFFER. see docs.GL for other type
+
+	glBufferData(GL_ARRAY_BUFFER, sizeof(float)* parameters.numelements, parameters.data, GL_STATIC_DRAW); // COPY DATA IN TO BUFFER
+	// static_Draw will rarely change, dynamic_draw will change, stream_draw change every time it draw
+	// deteminds where the data will be putted
+
+	//Link Vertex Attributes
+	glVertexAttribPointer(0, parameters.positionsize, GL_FLOAT, GL_FALSE,  entrysize* sizeof(float), (void*)0);
+	glEnableVertexAttribArray(0);
+
+	glVertexAttribPointer(1, parameters.texturesize, GL_FLOAT, GL_FASTEST, entrysize * sizeof(float), (void*)(parameters.positionsize * sizeof(float)));
+	glEnableVertexAttribArray(1);
+
+	return TempVAO;
+}
+
 //This function specifies opengl version set glfw window and initialize glad 
 bool Scene::SetupWindow()
 {

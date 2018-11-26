@@ -2,7 +2,19 @@
 #include"Vector3.h"
 const static unsigned int SCR_WIDTH = 800;
 const static unsigned int SCR_HEIGHT = 600;
+//TODO Could add more details
+const struct ShaderParameters {
+	const char* vs;
+	const char* fs;
+};
 //Postion and Texture position
+const struct MeshParameters
+{
+	const int numelements;
+	const int positionsize;
+	const int texturesize;
+	const float* data;
+};
 const static float cubevertexs[] = {
 	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -46,7 +58,6 @@ const static float cubevertexs[] = {
 	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
-
 const static GStar::Vector3 cubPosition[] = {
 	GStar::Vector3(0.0f,0.0f,0.0f),
 	GStar::Vector3(2.0f,5.0f,-15.0f),
@@ -74,3 +85,5 @@ const static char fs[] = "../GStar/VertexColor.frs";
 // Shader
 const static size_t ShadersHeapSize = 1024;
 const static size_t SceneHeapSize = 32768;
+static MeshParameters cubeparameters = { 180,3,2,cubevertexs };
+static ShaderParameters DefaultShader2T = { vs,fs };

@@ -141,6 +141,8 @@
     <ClInclude Include="Object.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="Shader.h" />
+    <ClInclude Include="ShaderComponent.h" />
+    <ClInclude Include="ShaderManger.h" />
     <ClInclude Include="SingleLinkedDictionary.h" />
     <ClInclude Include="SingleLinkedList.h" />
     <ClInclude Include="MyString.h" />
@@ -165,6 +167,7 @@
     <ClCompile Include="OpenGL_Entrance.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="Shader.cpp" />
+    <ClCompile Include="ShaderManger.cpp" />
     <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="Vector2.cpp" />

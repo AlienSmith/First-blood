@@ -7,6 +7,7 @@
 //TODO use heap manager instead of the C++ new
 //TODO use Single linked list to store multiple textures and Object;
 //TODO add Creat function to Shader class
+struct MeshParameters;
 class GLFWwindow;
 class Scene {
 public:
@@ -36,6 +37,7 @@ public:
 	inline const float Deltatime()const { return deltaTime; }
 	inline void UpdateView(){ my_shaders->setMat4("view", view, GL_FALSE); }
 	virtual ~Scene() { delete my_shaders; }
+	unsigned int LoadMesh(const MeshParameters& parameters);
 private:
 	static Scene* Instance;
 	bool SetupWindow();

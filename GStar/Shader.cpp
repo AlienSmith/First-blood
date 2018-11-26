@@ -135,6 +135,7 @@ Shader::ShaderSource Shader::ReadShader(const GLchar * vertexPath, const GLchar 
 
 bool Shader::CreateShader(Shader::ShaderSource && source, bool& successful)
 {
+	this->uniqueid = GStar::MyString::hash_str(source.FragmentSource.GetString());
 	char infoLog[256];
 	int success;
 	unsigned int vertex = CompileShader(source.VertexSource, GL_VERTEX_SHADER, successful);

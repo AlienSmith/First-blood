@@ -3,19 +3,10 @@
 #include"ConsolePrint.h"
 #include"stb_image.h"
 #include "Coordinate.h"
-void* Scene::Sceneheap = nullptr;
 Scene* Scene::Instance = nullptr;
-void Scene::Initialize()
-{
-	Scene::Sceneheap = malloc(SceneHeapSize);
-	HeapManager::TheManager.InitializeWith(SceneHeapSize, SceneHeapSize, Scene::Sceneheap);
-}
 // return nullptr as fail, Remeber to delete this pointer
 Scene* Scene::Create()
 {
-	if (!Scene::Sceneheap) {
-		Scene::Initialize();
-	}
 	if (Scene::Instance == nullptr) {
 		Scene* currentScene = new Scene();
 		//Load Default;
@@ -34,31 +25,6 @@ Scene* Scene::Create()
 		Scene::Instance = currentScene;
 	}
 	return Scene::Instance;
-}
-
-void Scene::Terminate()
-
-{
-		if (Sceneheap) {
-			free(Sceneheap);
-		}
-		if (Instance) {
-			delete Instance;
-		}
-	
-}
-
-void * Scene::operator new(size_t i_size)
-{
-	HeapManager::TheManager.SetPointerTo(Scene::Sceneheap);
-	return HeapManager::TheManager.FindFirstFit(sizeof(Scene));
-}
-
-void Scene::operator delete(void * i_ptr)
-{
-	HeapManager::TheManager.SetPointerTo(Scene::Sceneheap);
-	HeapManager::TheManager.free(i_ptr);
-	HeapManager::TheManager.Collect();
 }
 
 bool Scene::Update()

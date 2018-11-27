@@ -8,7 +8,7 @@ void* GStar::MyString::StringHeap = nullptr;
 void GStar::MyString::Initialize()
 {
 	StringHeap = malloc(StringHeapSize);
-	HeapManager::TheManager.InitializeWith(StringHeapSize, StringHeapSize, StringHeap);
+	HeapManager::Instance().InitializeWith(StringHeapSize, StringHeapSize, StringHeap);
 }
 // this is a swap using shallow opearation
 void GStar::MyString::swap(MyString & string, MyString & other)
@@ -112,19 +112,21 @@ GStar::MyString::~MyString()
 
 void * GStar::MyString::operator new(size_t i_size)
 {
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "string allocator called");
 	if (!MyString::StringHeap) {
 		MyString::Initialize();
 	}
-	HeapManager::TheManager.SetPointerTo(MyString::StringHeap);
-	return HeapManager::TheManager.FindFirstFit(i_size);
+	HeapManager::Instance().SetPointerTo(MyString::StringHeap);
+	return HeapManager::Instance().FindFirstFit(i_size);
 }
 
 void GStar::MyString::operator delete(void * i_ptr)
 {
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "string free called");
 	//Do not need to set pointer if not collect
-	HeapManager::TheManager.SetPointerTo(MyString::StringHeap);
-	HeapManager::TheManager.free(i_ptr);
-	HeapManager::TheManager.Collect();
+	HeapManager::Instance().SetPointerTo(MyString::StringHeap);
+	HeapManager::Instance().free(i_ptr);
+	HeapManager::Instance().Collect();
 }
 
 GStar::MyString GStar::operator+(const GStar::MyString & A, const GStar::MyString & B)

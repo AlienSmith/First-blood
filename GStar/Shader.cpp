@@ -10,7 +10,7 @@ void* Shader::ShadersHeap = nullptr;
 void Shader::InitalizeHeap()
 {
 	Shader::ShadersHeap = malloc(ShadersHeapSize);
-	HeapManager::TheManager.InitializeWith(ShadersHeapSize, ShadersHeapSize, Shader::ShadersHeap);
+	HeapManager::Instance().InitializeWith(ShadersHeapSize, ShadersHeapSize, Shader::ShadersHeap);
 }
 //This will return nullptr as fail, dynamically allocated remember to delete it.
 Shader * Shader::Create(const GLchar * vertexPath, const GLchar * fragmentPath)
@@ -64,18 +64,20 @@ void Shader::setMat4(const GStar::MyString &name, const GStar::Matrix4& value, u
 
 void * Shader::operator new(size_t i_size)
 {
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Shader allocator called");
 	if (Shader::ShadersHeap) {
-		HeapManager::TheManager.SetPointerTo(Shader::ShadersHeap);
-		return HeapManager::TheManager.FindFirstFit(sizeof(Shader), 4);
+		HeapManager::Instance().SetPointerTo(Shader::ShadersHeap);
+		return HeapManager::Instance().FindFirstFit(sizeof(Shader), 4);
 	}
 	return nullptr;
 }
 
 void Shader::operator delete(void * i_ptr)
 {
-	HeapManager::TheManager.SetPointerTo(Shader::ShadersHeap);
-	HeapManager::TheManager.free(i_ptr);
-	HeapManager::TheManager.Collect();
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "shader free called");
+	HeapManager::Instance().SetPointerTo(Shader::ShadersHeap);
+	HeapManager::Instance().free(i_ptr);
+	HeapManager::Instance().Collect();
 }
 
 

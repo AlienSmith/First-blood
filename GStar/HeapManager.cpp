@@ -3,8 +3,9 @@
 #include <cstring>
 #include "ConsolePrint.h"
 #include <stdio.h>
+#include <stdlib.h>
 //TODO make a effecient version for realease
-HeapManager HeapManager::TheManager = HeapManager();
+void* HeapManager::GeneralHeap = nullptr;
 HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy)
 {
 	this->_sizeHeap = HeapSize;
@@ -372,3 +373,24 @@ void HeapManager::_addinfoblock(size_t size)
 	memset(_current, HeapManager::fillinitialfilled, infoblock->size);
 }
 
+void * operator new(size_t i_size)
+{
+	if (!HeapManager::GeneralHeap) {
+		HeapManager::GeneralHeap = malloc(GENERALHEAPSIZE);
+		HeapManager::Instance().InitializeWith(GENERALHEAPSIZE, GENERALHEAPSIZE, HeapManager::GeneralHeap);
+	}
+	HeapManager::Instance().SetPointerTo(HeapManager::GeneralHeap);
+	return HeapManager::Instance().FindFirstFit(i_size);
+}
+
+void operator delete(void * i_ptr)
+{
+	if ((rand() % 1000) == 0) {
+		HeapManager::Instance().SetPointerTo(HeapManager::GeneralHeap);
+		HeapManager::Instance().free(i_ptr);
+		HeapManager::Instance().Collect();
+	}
+	else {
+		HeapManager::Instance().free(i_ptr);
+	}
+}

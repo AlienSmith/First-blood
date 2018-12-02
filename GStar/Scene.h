@@ -1,6 +1,5 @@
 #pragma once
-#include<glad\glad.h>
-#include<GLFW\glfw3.h>
+#include"GLINCLUDE.h"
 #include"Camera.h"
 #include"Shader.h"
 #include"HeapManager.h"
@@ -33,6 +32,7 @@ public:
 	inline void UpdateView(){ my_shaders->setMat4("view", view, GL_FALSE); }
 	virtual ~Scene() { delete my_shaders; }
 	unsigned int LoadMesh(const MeshParameters& parameters);
+	// This is wired 
 private:
 	static Scene* Instance;
 	bool SetupWindow();

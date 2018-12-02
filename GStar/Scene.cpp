@@ -142,6 +142,8 @@ unsigned int Scene::LoadTexture(const char file[],unsigned int type)
 	///load texture data into graphic card
 	if (data) {
 		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, type, GL_UNSIGNED_BYTE, data);
+		unsigned int rgb = GL_RGB;
+		unsigned int rgba = GL_RGBA;
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else

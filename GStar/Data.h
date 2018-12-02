@@ -1,8 +1,14 @@
 #pragma once
 #include"Vector3.h"
+#include"GLINCLUDE.h"
 const static unsigned int SCR_WIDTH = 800;
 const static unsigned int SCR_HEIGHT = 600;
 //TODO Could add more details
+const struct TextureParameters {
+	const char* textureroute;
+	unsigned int inchannel;
+	unsigned int outchannel;
+};
 const struct ShaderParameters {
 	const char* vs;
 	const char* fs;
@@ -87,3 +93,5 @@ const static size_t ShadersHeapSize = 1024;
 const static size_t SceneHeapSize = 32768;
 static MeshParameters cubeparameters = { 180,3,2,cubevertexs };
 static ShaderParameters DefaultShader2T = { vs,fs };
+static TextureParameters BOX = { WoodBox,GL_RGB,GL_RGB };
+static TextureParameters Face = { SmileFace, GL_RGB,GL_RGBA };

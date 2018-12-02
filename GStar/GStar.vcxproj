@@ -130,6 +130,7 @@
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="GLINCLUDE.h" />
     <ClInclude Include="GStar_init.h" />
     <ClInclude Include="HeapManager.h" />
     <ClInclude Include="HeapManagerProxy.h" />
@@ -146,7 +147,9 @@
     <ClInclude Include="SingleLinkedDictionary.h" />
     <ClInclude Include="SingleLinkedList.h" />
     <ClInclude Include="MyString.h" />
+    <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureComponent.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="View.h" />

@@ -1,5 +1,6 @@
 #pragma once
 #include"Component.h"
+#include"SingleLinkedList.h"
 class Texture;
 namespace GStar {
 	class TextureParameters;
@@ -12,8 +13,8 @@ namespace GStar {
 		//Mesh do not have these functions
 		inline bool Update() {} 
 		inline bool Terminate() {}
-		TextureComponent() :my_texture(nullptr) {}
+		TextureComponent() :my_textures(SingleLinkedList<Texture*>()) {}
 	private:
-		Texture* my_texture;
+		SingleLinkedList<Texture*> my_textures;
 	};
 }

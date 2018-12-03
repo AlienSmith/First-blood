@@ -165,6 +165,7 @@
     <ClCompile Include="HeapManager_UnitTest.cpp" />
     <ClCompile Include="MainRenderLoop.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="OpenGL.cpp" />
@@ -175,7 +176,9 @@
     <ClCompile Include="ShaderManger.cpp" />
     <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="MyString.cpp" />
+    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 #include "MeshManager.h"
 #include "MyString.h"
 #include "Scene.h"
+#include "Data.h"
 //Mesh is like a two unsinged int number would be a waste to use dynamic allocation
 GStar::Mesh GStar::MeshManager::GetMesh(const MeshParameters& parameters)
 {

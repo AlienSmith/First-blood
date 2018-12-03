@@ -32,12 +32,12 @@ public:
 	inline void UpdateView(){ my_shaders->setMat4("view", view, GL_FALSE); }
 	virtual ~Scene() { delete my_shaders; }
 	unsigned int LoadMesh(const MeshParameters& parameters);
+	unsigned int LoadTexture(const char file[], unsigned int type);
 	// This is wired 
 private:
 	static Scene* Instance;
 	bool SetupWindow();
 	bool LoadObject();
-	unsigned int LoadTexture(const char file[], unsigned int type);
 	bool SetPespective();
 	bool CompileShader();
 	Scene();

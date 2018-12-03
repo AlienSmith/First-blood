@@ -12,12 +12,13 @@ namespace GStar {
 			}
 			return instance;
 		}
-		Texture* GetTexture(const TextureParameters& parameters);
-		TextureManager() :MeshSource(GStar::SingleLinkedList<GStar::Texture>()), size(0) {}
+		static unsigned int TextureGetId(const TextureParameters& parameters);
+		Texture GetTexture(const TextureParameters& parameters);
+		TextureManager() :TextureSource(GStar::SingleLinkedList<GStar::Texture>()), size(0) {}
 	private:
 		unsigned int LoadTexture(const TextureParameters& parameters);
 		static TextureManager* instance;
-		GStar::SingleLinkedList<GStar::Texture> MeshSource;
+		GStar::SingleLinkedList<GStar::Texture> TextureSource;
 		int size;
 	};
 }

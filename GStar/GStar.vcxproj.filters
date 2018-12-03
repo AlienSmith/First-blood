@@ -68,6 +68,15 @@
     <ClCompile Include="TextureComponent.cpp">
       <Filter>Structure\Component</Filter>
     </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Structure\Manager</Filter>
+    </ClCompile>
+    <ClCompile Include="Texture.cpp">
+      <Filter>OpenGl\Core\Texture</Filter>
+    </ClCompile>
+    <ClCompile Include="Mesh.cpp">
+      <Filter>OpenGl\Core\Mesh</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -146,14 +155,20 @@
     <ClInclude Include="ShaderManger.h">
       <Filter>Structure\Manager</Filter>
     </ClInclude>
-    <ClInclude Include="Mesh.h">
-      <Filter>OpenGl\Core</Filter>
-    </ClInclude>
     <ClInclude Include="TextureComponent.h">
       <Filter>Structure\Component</Filter>
     </ClInclude>
     <ClInclude Include="GLINCLUDE.h">
       <Filter>OpenGl\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Structure\Manager</Filter>
+    </ClInclude>
+    <ClInclude Include="Texture.h">
+      <Filter>OpenGl\Core\Texture</Filter>
+    </ClInclude>
+    <ClInclude Include="Mesh.h">
+      <Filter>OpenGl\Core\Mesh</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -241,6 +256,12 @@
     </Filter>
     <Filter Include="OpenGl\Core\Shader">
       <UniqueIdentifier>{943fadb7-94de-4381-9375-250d68197118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Core\Texture">
+      <UniqueIdentifier>{abe41098-92f1-4d78-befa-a5112c5b44c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Core\Mesh">
+      <UniqueIdentifier>{5ad54a04-3aa7-4082-8d9d-f834bd4cd25e}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

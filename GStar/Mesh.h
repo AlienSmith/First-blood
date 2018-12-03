@@ -2,6 +2,11 @@
 namespace GStar {
 	class Mesh {
 	public:
+		//TODO override allocation if data grow
+		static void* MeshHeap;
+		static void InitializeHeap();
+		static void Terminate();
+
 		Mesh() :uniqueId(0), my_VAO(0) {}
 		inline void	SetID(unsigned int Id) { uniqueId = Id; }
 		inline void SetVAO(unsigned int VAO) { my_VAO = VAO; }

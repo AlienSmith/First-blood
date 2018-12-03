@@ -33,7 +33,8 @@ namespace GStar {
 		SingleLinkedListNode<T>* m_Next;
 		T m_data;
 	};
-	//the list end will nullptr
+	/**Objects stored as Pointer will be deleted automatically when the list are deleted 
+	 *the list end will nullptr*/
 	template<class T>
 	class SingleLinkedList
 	{

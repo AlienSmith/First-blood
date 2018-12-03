@@ -3,5 +3,6 @@
 #include "Texture.h"
 bool GStar::TextureComponent::Initialize(const TextureParameters & parameters)
 {
-	return false;
+	my_textures.Push(GStar::TextureManager::Instance()->GetTexture(parameters));
+	return true;
 }

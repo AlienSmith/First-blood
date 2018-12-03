@@ -6,13 +6,13 @@ namespace GStar {
 	class MeshComponent : public Component {
 	public:
 		const static char TypeWord() {
-			return 'm';
+			return MESH_WORD;
 		}
 		bool Initialize(const MeshParameters& parameters);
 		//Mesh do not have these functions
-		inline bool Update() {} 
+		inline bool Update() const {} 
 		inline bool Terminate() {}
-		MeshComponent() {}
+		MeshComponent():Component(MESH_WORD) {}
 	private:
 		GStar::Mesh my_mesh;
 	};

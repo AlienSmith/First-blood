@@ -6,13 +6,13 @@ namespace GStar {
 	class ShaderComponent:public Component {
 	public:
 		const static char TypeWord() {
-			return 's';
+			return SHADER_WORD;
 		}
 		bool Initialize(const ShaderParameters& parameters);
 		//Mesh do not have these functions
-		inline bool Update() {}
+		inline bool Update() const{}
 		inline bool Terminate() {}
-		ShaderComponent():my_shader(nullptr) {}
+		ShaderComponent():Component(SHADER_WORD),my_shader(nullptr) {}
 	private:
 		Shader* my_shader;
 	};

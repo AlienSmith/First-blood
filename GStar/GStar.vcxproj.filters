@@ -77,6 +77,10 @@
     <ClCompile Include="Mesh.cpp">
       <Filter>OpenGl\Core\Mesh</Filter>
     </ClCompile>
+    <ClCompile Include="Object.cpp">
+      <Filter>Structure</Filter>
+    </ClCompile>
+    <ClCompile Include="UpdateObject.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -169,6 +173,9 @@
     </ClInclude>
     <ClInclude Include="Mesh.h">
       <Filter>OpenGl\Core\Mesh</Filter>
+    </ClInclude>
+    <ClInclude Include="UpdateObject.h">
+      <Filter>Structure</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

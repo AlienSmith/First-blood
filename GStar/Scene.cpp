@@ -49,7 +49,7 @@ void Scene::UpdateTime()
 	LastFrame = currentFrame;
 }
 
-unsigned int Scene::LoadMesh(const MeshParameters & parameters)
+unsigned int Scene::LoadMesh(const MeshParameters & parameters) const
 {
 	int entrysize = parameters.positionsize + parameters.texturesize;
 	unsigned int TempVAO;
@@ -124,12 +124,12 @@ bool Scene::LoadObject()
 	return true;
 }
 
-unsigned int Scene::LoadTexture(const char file[],unsigned int type)
+unsigned int Scene::LoadTexture(const TextureParameters& parameters) const
 {
 	//load texture
 	//stbi_set_flip_vertically_on_load(true);// Flip the picture by x axies
 	int width, height, nrChannels; //out parameter
-	unsigned char *data = stbi_load(file, &width, &height, &nrChannels, 0);
+	unsigned char *data = stbi_load(parameters.textureroute, &width, &height, &nrChannels, 0);
 
 	unsigned int texture;// the texture object
 	glGenTextures(1, &texture); // claim a name 1 texture out parameter name.
@@ -141,9 +141,7 @@ unsigned int Scene::LoadTexture(const char file[],unsigned int type)
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	///load texture data into graphic card
 	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, type, GL_UNSIGNED_BYTE, data);
-		unsigned int rgb = GL_RGB;
-		unsigned int rgba = GL_RGBA;
+		glTexImage2D(GL_TEXTURE_2D, 0, parameters.inchannel, width, height, 0, parameters.outchannel, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else
@@ -163,8 +161,8 @@ bool Scene::SetPespective()
 
 bool Scene::CompileShader()
 {
-	texture1 = LoadTexture(WoodBox, GL_RGB);
-	texture2 = LoadTexture(SmileFace, GL_RGBA);
+	texture1 = LoadTexture(Default_Texture_BOX);
+	texture2 = LoadTexture(Default_TextureFace);
 	my_shaders = Shader::Create(vs,fs);
 	//TODO rewrite and seperate this parts when put textuers in singlelinkedlist
 	glActiveTexture(GL_TEXTURE0); // activate the texture unit 0

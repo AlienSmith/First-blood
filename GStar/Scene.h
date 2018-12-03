@@ -7,6 +7,7 @@
 //TODO use Single linked list to store multiple textures and Object;
 //TODO add Creat function to Shader class
 struct MeshParameters;
+struct TextureParameters;
 class GLFWwindow;
 class Scene {
 public:
@@ -31,8 +32,8 @@ public:
 	inline const float Deltatime()const { return deltaTime; }
 	inline void UpdateView(){ my_shaders->setMat4("view", view, GL_FALSE); }
 	virtual ~Scene() { delete my_shaders; }
-	unsigned int LoadMesh(const MeshParameters& parameters);
-	unsigned int LoadTexture(const char file[], unsigned int type);
+	unsigned int LoadMesh(const MeshParameters& parameters) const;
+	unsigned int LoadTexture(const TextureParameters& parameters) const;
 	// This is wired 
 private:
 	static Scene* Instance;

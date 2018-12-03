@@ -93,5 +93,5 @@ const static size_t ShadersHeapSize = 1024;
 const static size_t SceneHeapSize = 32768;
 static MeshParameters cubeparameters = { 180,3,2,cubevertexs };
 static ShaderParameters DefaultShader2T = { vs,fs };
-static TextureParameters BOX = { WoodBox,GL_RGB,GL_RGB };
-static TextureParameters Face = { SmileFace, GL_RGB,GL_RGBA };
+static TextureParameters Default_Texture_BOX = { WoodBox,GL_RGB,GL_RGB };
+static TextureParameters  Default_TextureFace = { SmileFace, GL_RGB,GL_RGBA };

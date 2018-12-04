@@ -18,7 +18,7 @@ public:
 	static void Swamp() {
 		UpdateObject* temp = OUT_Instance;
 		OUT_Instance = IN_Instance;
-		IN_Instance = OUT_Instance;
+		IN_Instance = temp;
 	}
 	void Update();
 	inline void SetMesh(const GStar::MeshComponent* mesh) { my_mesh = mesh;}

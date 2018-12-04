@@ -28,7 +28,6 @@ Shader * Shader::Create(const GLchar * vertexPath, const GLchar * fragmentPath)
 
 void Shader::Terminate()
 {
-	
 		if (ShadersHeap) {
 			free(ShadersHeap);
 		}

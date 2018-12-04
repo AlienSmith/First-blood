@@ -1,4 +1,5 @@
 #include "Object.h"
+#include "UpdateObject.h"
 bool Object::Update()
 {
 	Component* temp;
@@ -7,6 +8,8 @@ bool Object::Update()
 		temp = my_components.GetNextNode()->GetData();
 		temp->Update();
 	}
+	UpdateObject::OUT_Instance->Update();
+	UpdateObject::Swamp();
 	return true;
 }
 

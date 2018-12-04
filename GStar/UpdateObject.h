@@ -7,6 +7,19 @@ class UpdateObject {
 public:
 	static UpdateObject* OUT_Instance;
 	static UpdateObject* IN_Instance;
+	static void Initialize() {
+		OUT_Instance = new UpdateObject();
+		IN_Instance = new UpdateObject();
+	}
+	static void Terminate() {
+		delete OUT_Instance;
+		delete IN_Instance;
+	}
+	static void Swamp() {
+		UpdateObject* temp = OUT_Instance;
+		OUT_Instance = IN_Instance;
+		IN_Instance = OUT_Instance;
+	}
 	void Update();
 	inline void SetMesh(const GStar::MeshComponent* mesh) { my_mesh = mesh;}
 	inline void SetTexture(const GStar::TextureComponent* textur) { my_texture = textur; }

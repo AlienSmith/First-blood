@@ -78,9 +78,14 @@
       <Filter>OpenGl\Core\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
-      <Filter>Structure</Filter>
+      <Filter>Structure\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="UpdateObject.cpp" />
+    <ClCompile Include="UpdateObject.cpp">
+      <Filter>Structure\Objects</Filter>
+    </ClCompile>
+    <ClCompile Include="Component.cpp">
+      <Filter>Structure\Component</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -138,9 +143,6 @@
     <ClInclude Include="Shader.h">
       <Filter>OpenGl\Core\Shader</Filter>
     </ClInclude>
-    <ClInclude Include="Object.h">
-      <Filter>Structure</Filter>
-    </ClInclude>
     <ClInclude Include="MeshComponent.h">
       <Filter>Structure\Component</Filter>
     </ClInclude>
@@ -174,8 +176,11 @@
     <ClInclude Include="Mesh.h">
       <Filter>OpenGl\Core\Mesh</Filter>
     </ClInclude>
+    <ClInclude Include="Object.h">
+      <Filter>Structure\Objects</Filter>
+    </ClInclude>
     <ClInclude Include="UpdateObject.h">
-      <Filter>Structure</Filter>
+      <Filter>Structure\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -269,6 +274,9 @@
     </Filter>
     <Filter Include="OpenGl\Core\Mesh">
       <UniqueIdentifier>{5ad54a04-3aa7-4082-8d9d-f834bd4cd25e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Structure\Objects">
+      <UniqueIdentifier>{2d40643a-d300-46be-8e1a-ad0bb865dd8a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

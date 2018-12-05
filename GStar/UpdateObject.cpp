@@ -1,5 +1,7 @@
 #include "UpdateObject.h"
 
+UpdateObject* OUT_Instance = nullptr;
+UpdateObject* IN_Instance = nullptr;
 void UpdateObject::Update()
 {
 	if (my_texture) {

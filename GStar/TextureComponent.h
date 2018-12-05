@@ -3,8 +3,8 @@
 #include"SingleLinkedList.h"
 #include "Texture.h"
 #include "Scene.h"
+const struct TextureParameters;
 namespace GStar {
-	class TextureParameters;
 	class TextureComponent :public Component {
 	public:
 		const static char TypeWord() {

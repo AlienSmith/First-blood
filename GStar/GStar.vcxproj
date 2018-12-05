@@ -125,6 +125,7 @@
     <ClInclude Include="Assert.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
+    <ClInclude Include="ComponentInclude.h" />
     <ClInclude Include="ConsolePrint.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Coordinate.h" />
@@ -155,6 +156,7 @@
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
     <ClInclude Include="View.h" />
+    <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Camera.cpp" />
@@ -167,6 +169,7 @@
     <ClCompile Include="HeapManagerProxy.cpp" />
     <ClCompile Include="HeapManager_UnitTest.cpp" />
     <ClCompile Include="MainRenderLoop.cpp" />
+    <ClCompile Include="Main_Entrance.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshComponent.cpp" />

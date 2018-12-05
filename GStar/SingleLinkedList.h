@@ -42,6 +42,9 @@ namespace GStar {
 		SingleLinkedListNode<T> * GetHead();
 		void Reset();
 		void Push(T data);
+		inline T* GetEnd() {
+			return &(this->m_end->GetData());
+		}
 		SingleLinkedList();
 		~SingleLinkedList();
 		inline void Resetcurrent() {

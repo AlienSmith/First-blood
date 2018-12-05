@@ -18,6 +18,7 @@ GStar::Mesh GStar::MeshManager::GetMesh(const MeshParameters& parameters)
 	}
 	current.SetVAO( LoadMesh(parameters));
 	current.SetID ( CurrentID);
+	current.SetIndex(parameters.TriangleIndex);
 	MeshSource.Push(current);
 	return current;
 }

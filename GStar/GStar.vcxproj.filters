@@ -86,6 +86,7 @@
     <ClCompile Include="Component.cpp">
       <Filter>Structure\Component</Filter>
     </ClCompile>
+    <ClCompile Include="Main_Entrance.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -185,6 +186,12 @@
     <ClInclude Include="TransformComponent.h">
       <Filter>Structure\Component</Filter>
     </ClInclude>
+    <ClInclude Include="World.h">
+      <Filter>OpenGl\Core\World</Filter>
+    </ClInclude>
+    <ClInclude Include="ComponentInclude.h">
+      <Filter>Structure\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -280,6 +287,9 @@
     </Filter>
     <Filter Include="Structure\Objects">
       <UniqueIdentifier>{2d40643a-d300-46be-8e1a-ad0bb865dd8a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Core\World">
+      <UniqueIdentifier>{57af069c-4d64-437b-8dd7-ce1c5192363f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

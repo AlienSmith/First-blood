@@ -1,7 +1,7 @@
 #pragma once
 #include "SingleLinkedList.h"
 class Shader;
-struct ShaderParameters;
+const struct ShaderParameters;
 namespace GStar {
 	class ShaderManager {
 	public:

@@ -13,6 +13,9 @@ namespace GStar {
 		inline bool Update() const;
 		inline bool Terminate() { return true; }
 		MeshComponent():Component(MESH_WORD) {}
+		MeshComponent(const MeshParameters& parameters) :Component(MESH_WORD) {
+			this->Initialize(parameters);
+		}
 		inline GStar::Mesh GetMeshInfo() { return my_mesh; }
 	private:
 		GStar::Mesh my_mesh;

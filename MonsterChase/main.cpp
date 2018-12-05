@@ -7,7 +7,8 @@
 #include <iostream>
 #include "Debug.h"
 #include "HeapManager_UnitTest.cpp"
-#include "MainRenderLoop.cpp"
+//#include "MainRenderLoop.cpp"
+#include "Main_Entrance.cpp"
 #include "SingleLinkedDictionary.h"
 //#include "Matrix4.h"
 //#include "Vector2.h"

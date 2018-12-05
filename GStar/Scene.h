@@ -7,7 +7,7 @@
 //TODO use Single linked list to store multiple textures and Object;
 //TODO add Creat function to Shader class
 struct MeshParameters;
-struct TextureParameters;
+const struct TextureParameters;
 class GLFWwindow;
 class Scene {
 public:

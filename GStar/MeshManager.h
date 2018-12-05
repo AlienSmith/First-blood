@@ -22,7 +22,7 @@ namespace GStar {
 			return h % MeshPrimeC;
 		}
 		static MeshManager* Instance() {
-			if (instance = nullptr) {
+			if (instance == nullptr) {
 				GStar::MeshManager::instance = new GStar::MeshManager();
 			}
 			return instance;

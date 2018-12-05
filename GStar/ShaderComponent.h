@@ -14,7 +14,7 @@ namespace GStar {
 		inline bool Terminate() { return true; }
 		ShaderComponent():Component(SHADER_WORD),my_shader(nullptr) {}
 		ShaderComponent(const ShaderParameters& parameters) :Component(SHADER_WORD), my_shader(nullptr) {
-		
+			Initialize(parameters);
 		}
 	private:
 		Shader* my_shader;

@@ -4,18 +4,20 @@
 #include <crtdbg.h>
 #include "Debug.h"
 namespace GStar {
-	template <class T>
+	/*template <class T>
 	static void deleteIfPointer(const T& t)
 	{
 
-		//std::cout << "not pointer" << std::endl;
+		std::cout << "not pointer" << std::endl;
 
 	}
 
 	template <class T>
 	static void deleteIfPointer(T* t){
-		delete t;
-	}
+		if (t != nullptr) {
+			delete t;
+		}
+	}*/
 	template<class T>
 	class SingleLinkedList;
 	template<class T>
@@ -25,6 +27,7 @@ namespace GStar {
 		SingleLinkedListNode(T data);
 		SingleLinkedListNode();
 		~SingleLinkedListNode();
+		//This function will try to delete the data each nodes holds
 		void Delete(SingleLinkedListNode<T>* previous, SingleLinkedList<T>* end);
 		SingleLinkedListNode<T>* GetNext();
 		void SetNext(SingleLinkedListNode<T>* next);
@@ -39,11 +42,13 @@ namespace GStar {
 	class SingleLinkedList
 	{
 	public:
+		inline void DeleteContent();
 		SingleLinkedListNode<T> * GetHead();
 		void Reset();
 		void Push(T data);
-		inline T* GetEnd() {
-			return &(this->m_end->GetData());
+		
+		inline T GetEndT() {
+			return this->m_end->GetData();
 		}
 		SingleLinkedList();
 		~SingleLinkedList();
@@ -59,7 +64,7 @@ namespace GStar {
 			return m_current->GetNext();
 		}
 		inline bool HasNext() {
-			if (m_current->GetNext()) {
+			if (m_current->GetNext() != nullptr) {
 				return true;
 			}
 			return false;
@@ -77,6 +82,19 @@ namespace GStar {
 		SingleLinkedListNode<T>* m_end;
 		SingleLinkedListNode<T>* m_current;
 	};
+
+	template<class T>
+	inline void SingleLinkedList<T>::DeleteContent()
+	{
+		SingleLinkedListNode<T>* temp = m_pHead;
+		SingleLinkedListNode<T>* temp1;
+		while (temp != nullptr)
+		{
+			temp1 = temp->GetNext();
+			delete temp->GetData();
+			temp = temp1;
+		}
+	}
 
 	// this function will return a nullptr if nothing has been added to the list
 	template<class T>
@@ -148,7 +166,7 @@ namespace GStar {
 	template<class T>
 	inline SingleLinkedListNode<T>::~SingleLinkedListNode()
 	{
-		deleteIfPointer(this->GetData());
+		//deleteIfPointer(this->GetData());
 	}
 	//Delete my self
 	template<class T>

@@ -7,6 +7,7 @@ bool Object::Update()
 	while (my_components.HasNext()) {
 		temp = my_components.GetNextNode()->GetData();
 		temp->Update();
+		my_components.Move();
 	}
 	UpdateObject::OUT_Instance->Update();
 	UpdateObject::Swamp();

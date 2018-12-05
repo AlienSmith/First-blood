@@ -8,19 +8,19 @@ namespace GStar {
 			static World instance;
 			return instance;
 		}
-		World():ObjectsList(SingleLinkedList<Object>()){}
+		World():ObjectsList(SingleLinkedList<Object*>()){}
 		Object& AddObject() {
-			ObjectsList.Push(Object());
-			return *(ObjectsList.GetEnd());
+			ObjectsList.Push(new Object());
+			return *(ObjectsList.GetEndT());
 		}
 		void Update() {
 			ObjectsList.Resetcurrent();
 			while (ObjectsList.HasNext()) {
-				ObjectsList.GetNext().Update();
+				ObjectsList.GetNext()->Update();
 				ObjectsList.Move();
 			}
 		}
 	private:
-		SingleLinkedList<Object> ObjectsList;
+		SingleLinkedList<Object*> ObjectsList;
 	};
 }

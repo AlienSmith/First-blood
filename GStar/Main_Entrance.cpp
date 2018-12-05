@@ -33,7 +33,10 @@ void MainEntrance() {
 		
 		myScene->UpdateTime();
 		myController.Update();
-		world.Update();
+		myScene->Update();
+		myView.Update();
+		myScene->UpdateEnd();
+		//world.Update();
 	}
 	myScene->TerminateWindow();
 	delete myScene;

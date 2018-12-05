@@ -6,12 +6,15 @@ namespace GStar {
 	class ShaderManager {
 	public:
 		static ShaderManager* Instance() {
-			if (instance = nullptr) {
+			if (instance == nullptr) {
 				GStar::ShaderManager::instance = new GStar::ShaderManager();
 			}
 			return instance;
 		}
 		Shader* GetShader(const ShaderParameters& parameters);
+		~ShaderManager(){
+			ShaderSource.DeleteContent();
+		}
 	private:
 		ShaderManager():ShaderSource(GStar::SingleLinkedList<Shader*>()), size(0) {}
 		Shader* CreateShader(const ShaderParameters& parameters);

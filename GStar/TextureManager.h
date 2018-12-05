@@ -7,7 +7,7 @@ namespace GStar {
 	class TextureManager {
 	public:
 		static TextureManager* Instance() {
-			if (instance = nullptr) {
+			if (instance == nullptr) {
 				GStar::TextureManager::instance = new GStar::TextureManager();
 			}
 			return instance;

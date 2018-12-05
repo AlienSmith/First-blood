@@ -2,6 +2,7 @@
 #include "Scene.h"
 #include "MyString.h"
 #include "Data.h"
+GStar::TextureManager* GStar::TextureManager::instance = nullptr;
 unsigned int GStar::TextureManager::TextureGetId(const TextureParameters & parameters)
 {
 	return GStar::MyString::hash_str(parameters.textureroute);

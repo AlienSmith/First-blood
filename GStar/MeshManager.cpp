@@ -3,6 +3,7 @@
 #include "Scene.h"
 #include "Data.h"
 //Mesh is like a two unsinged int number would be a waste to use dynamic allocation
+GStar::MeshManager* GStar::MeshManager::instance = nullptr;
 GStar::Mesh GStar::MeshManager::GetMesh(const MeshParameters& parameters)
 {
 	unsigned int CurrentID = GStar::MeshManager::MeshGetId(parameters);

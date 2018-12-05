@@ -2,6 +2,7 @@
 #include "Data.h"
 #include "MyString.h"
 #include "Shader.h"
+GStar::ShaderManager* GStar::ShaderManager::instance = nullptr;
 Shader * GStar::ShaderManager::GetShader(const ShaderParameters & parameters)
 {
 	unsigned int currentId = GStar::MyString::hash_str(parameters.vs);

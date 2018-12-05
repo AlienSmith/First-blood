@@ -12,8 +12,8 @@ namespace GStar {
 		}
 		bool Initialize(const TextureParameters& parameters);
 		//Mesh do not have these functions
-		inline bool Update() ;
-		inline bool Terminate() { return true; }
+		bool Update() ;
+		bool Terminate() { return true; }
 		TextureComponent() :Component(TEXTURE_WORD),my_textures(SingleLinkedList<GStar::Texture>()) {}
 	private:
 		SingleLinkedList<GStar::Texture> my_textures;

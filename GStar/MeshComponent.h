@@ -10,8 +10,8 @@ namespace GStar {
 		}
 		bool Initialize(const MeshParameters& parameters);
 		//Mesh do not have these functions
-		inline bool Update() const;
-		inline bool Terminate() { return true; }
+		bool Update() const;
+		bool Terminate() { return true; }
 		MeshComponent():Component(MESH_WORD) {}
 		MeshComponent(const MeshParameters& parameters) :Component(MESH_WORD) {
 			this->Initialize(parameters);

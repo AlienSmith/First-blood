@@ -10,8 +10,8 @@ namespace GStar {
 		}
 		bool Initialize(const ShaderParameters& parameters);
 		//Mesh do not have these functions
-		inline bool Update() const{}
-		inline bool Terminate() {}
+		bool Update() const;
+		inline bool Terminate() { return true; }
 		ShaderComponent():Component(SHADER_WORD),my_shader(nullptr) {}
 	private:
 		Shader* my_shader;

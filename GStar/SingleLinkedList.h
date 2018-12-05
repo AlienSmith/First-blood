@@ -47,7 +47,7 @@ namespace GStar {
 		inline void Resetcurrent() {
 			m_current = m_pHead;
 		}
-		inline T& GetNext() {
+		inline T GetNext() {
 			if (m_current->GetNext()) {
 				return m_current->GetNext()->GetData();
 			}

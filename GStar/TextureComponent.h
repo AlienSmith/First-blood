@@ -1,8 +1,9 @@
 #pragma once
 #include"Component.h"
 #include"SingleLinkedList.h"
+#include "Texture.h"
+#include "Scene.h"
 namespace GStar {
-	class Texture;
 	class TextureParameters;
 	class TextureComponent :public Component {
 	public:
@@ -11,10 +12,10 @@ namespace GStar {
 		}
 		bool Initialize(const TextureParameters& parameters);
 		//Mesh do not have these functions
-		inline bool Update() const{} 
-		inline bool Terminate() {}
-		TextureComponent() :Component(TEXTURE_WORD),my_textures(SingleLinkedList<Texture>()) {}
+		inline bool Update() ;
+		inline bool Terminate() { return true; }
+		TextureComponent() :Component(TEXTURE_WORD),my_textures(SingleLinkedList<GStar::Texture>()) {}
 	private:
-		SingleLinkedList<Texture> my_textures;
+		SingleLinkedList<GStar::Texture> my_textures;
 	};
 }

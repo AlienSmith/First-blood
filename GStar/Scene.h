@@ -34,6 +34,8 @@ public:
 	virtual ~Scene() { delete my_shaders; }
 	unsigned int LoadMesh(const MeshParameters& parameters) const;
 	unsigned int LoadTexture(const TextureParameters& parameters) const;
+	const GStar::Matrix4& getProjection() const { return projection; }
+	const GStar::Matrix4& getview() const { return view; }
 	// This is wired 
 private:
 	static Scene* Instance;

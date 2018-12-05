@@ -156,6 +156,8 @@ bool Scene::SetPespective()
 {
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//set both front and back buffer to line mode
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+	projection = GStar::perspective(projection, 45, SCR_WIDTH / SCR_HEIGHT, .1f, 100.0f);
 	return true;
 }
 
@@ -170,8 +172,8 @@ bool Scene::CompileShader()
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, texture2);
 
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
-	projection = GStar::perspective(projection, 45, SCR_WIDTH / SCR_HEIGHT, .1f, 100.0f);
+	//glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);// set back
+	//projection = GStar::perspective(projection, 45, SCR_WIDTH / SCR_HEIGHT, .1f, 100.0f);
 
 	return true;
 }
@@ -188,5 +190,6 @@ Scene::Scene():
 	VAO(0),
 	VBO(0),
 	texture1(0),
-	texture2(0){}
+	texture2(0){
+}
 

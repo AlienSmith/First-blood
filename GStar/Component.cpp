@@ -14,5 +14,8 @@ bool Component::Update()
 	else if (this->type == TEXTURE_WORD) {
 		UpdateObject::IN_Instance->SetTexture(reinterpret_cast<GStar::TextureComponent*> (this));
 	}
+	else if (this->type == TRANSFORM_WORD) {
+		UpdateObject::IN_Instance->SetTransform(reinterpret_cast<GStar::TransformComponent*>(this));
+	}
 	return false;
 }

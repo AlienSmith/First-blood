@@ -182,6 +182,9 @@
     <ClInclude Include="UpdateObject.h">
       <Filter>Structure\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="TransformComponent.h">
+      <Filter>Structure\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">

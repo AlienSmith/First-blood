@@ -6,3 +6,9 @@ bool GStar::MeshComponent::Initialize(const MeshParameters& parameters)
 	//TODO add some kind of check for result;
 	return true;
 }
+
+inline bool GStar::MeshComponent::Update() const
+{
+	glBindVertexArray(my_mesh.myVAO());
+	return true;
+}

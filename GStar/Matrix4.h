@@ -28,6 +28,7 @@ namespace GStar {
 		void Copy(const array_ff & rdata);
 		//TODO do I need to make this nonconst
 		const array_ff& Get() const;
+		inline array_ff* GetReference() { return &data; }
 		void operator = (const Matrix4& A);
 		void operator += (const Matrix4& A);
 		void operator -= (const Matrix4& A);

@@ -2,6 +2,7 @@
 #include"MeshComponent.h"
 #include"TextureComponent.h"
 #include"ShaderComponent.h"
+#include"TransformComponent.h"
 //Two instance update one present one
 class UpdateObject {
 public:
@@ -21,13 +22,18 @@ public:
 		IN_Instance = temp;
 	}
 	void Update();
-	inline void SetMesh(const GStar::MeshComponent* mesh) { my_mesh = mesh;}
-	inline void SetTexture(const GStar::TextureComponent* textur) { my_texture = textur; }
-	inline void SetShader(const GStar::ShaderComponent* shader) { my_shader = shader; }
+	inline void SetMesh( GStar::MeshComponent* mesh) { my_mesh = mesh;}
+	inline void SetTexture( GStar::TextureComponent* textur) { my_texture = textur; }
+	inline void SetShader( GStar::ShaderComponent* shader) { my_shader = shader; }
+	inline void SetTransform(GStar::TransformComponent* transform) { my_transform = transform; }
 	inline void reset() { my_mesh = nullptr; my_shader = nullptr; my_texture = nullptr; }
-	UpdateObject() :my_mesh(nullptr), my_texture(nullptr), my_shader(nullptr) {}
+	UpdateObject() :my_mesh(nullptr), my_texture(nullptr), my_shader(nullptr),my_transform(nullptr) {}
+	GStar::ShaderComponent* GetShaderComponent() { return this->my_shader; }
+	GStar::TransformComponent* GetTransformComponent() { return my_transform; }
+	GStar::MeshComponent* GetMeshComponent() { return my_mesh; };
 private:
-	const GStar::MeshComponent* my_mesh;
-	const GStar::TextureComponent* my_texture;
-	const GStar::ShaderComponent* my_shader;
+	GStar::MeshComponent* my_mesh;
+	GStar::TextureComponent* my_texture;
+	GStar::ShaderComponent* my_shader;
+	GStar::TransformComponent* my_transform;
 };

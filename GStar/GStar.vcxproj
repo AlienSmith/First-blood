@@ -150,6 +150,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="UpdateObject.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />

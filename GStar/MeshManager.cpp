@@ -26,7 +26,6 @@ GStar::Mesh GStar::MeshManager::GetMesh(const MeshParameters& parameters)
 
 unsigned int GStar::MeshManager::LoadMesh(const MeshParameters& parameters)
 {
-	Scene::Create()->LoadMesh(parameters);
-	return 0;
+	return Scene::Create()->LoadMesh(parameters);
 }
 

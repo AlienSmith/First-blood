@@ -87,6 +87,7 @@
       <Filter>Structure\Component</Filter>
     </ClCompile>
     <ClCompile Include="Main_Entrance.cpp" />
+    <ClCompile Include="GLError.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -192,6 +193,9 @@
     <ClInclude Include="ComponentInclude.h">
       <Filter>Structure\Component</Filter>
     </ClInclude>
+    <ClInclude Include="GLError.h">
+      <Filter>OpenGl\Debug</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -290,6 +294,9 @@
     </Filter>
     <Filter Include="OpenGl\Core\World">
       <UniqueIdentifier>{57af069c-4d64-437b-8dd7-ce1c5192363f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Debug">
+      <UniqueIdentifier>{ed933325-52f7-4e71-bf63-086c79950a9d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

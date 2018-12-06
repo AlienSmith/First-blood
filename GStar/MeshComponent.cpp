@@ -1,5 +1,6 @@
 #include "MeshComponent.h"
 #include "MeshManager.h"
+#include "Scene.h"
 bool GStar::MeshComponent::Initialize(const MeshParameters& parameters)
 {
 	my_mesh = GStar::MeshManager::Instance()->GetMesh(parameters);

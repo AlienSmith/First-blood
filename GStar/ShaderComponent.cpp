@@ -24,5 +24,6 @@ bool GStar::ShaderComponent::Update() const
 	my_shader->setMat4("projection", Scene::Create()->getProjection(), GL_FALSE);	
 	my_shader->setMat4("model", UpdateObject::OUT_Instance->GetTransformComponent()->getModel(), GL_FALSE);
 	glDrawArrays(GL_TRIANGLES, 0, UpdateObject::OUT_Instance->GetMeshComponent()->GetMeshInfo().TriangleIndex());
+	
 	return true;
 }

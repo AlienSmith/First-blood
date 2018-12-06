@@ -363,7 +363,7 @@ bool HeapManager::_TryCut(rsize_t size, unsigned int alignment)
 
 void HeapManager::_addinfoblock(size_t size)
 {
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "The new block start at%p", _current);
+	//DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "The new block start at%p", _current);
 	INFOBLCOK* infoblock = reinterpret_cast<INFOBLCOK*>(_current);
 	memset(&(infoblock->start), HeapManager::fillguard, 4);
 	memset(&(infoblock->end), HeapManager::fillguard, 4);

@@ -5,11 +5,14 @@
 #include"UpdateObject.h"
 #include"ComponentInclude.h"
 #include"Data.h"
+#include"Assert.h"
+#include"GLError.h"
 Scene* myScene = Scene::Create();
 Controller myController(myScene);
 View myView(myScene);
 void mouse_call(GLFWwindow * window, double xpos, double ypos);
 void framebuffer_size_call(GLFWwindow * windwo, int width, int height);
+void CleanScreen();
 void MainEntrance() {
 	GStar::World& world = GStar::World::Instance();
 	//SetUp An Object
@@ -21,7 +24,7 @@ void MainEntrance() {
 	tempComponent->Initialize(Default_TextureFace);
 	tempObject.AddComponent(tempComponent);
 	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent();
-	TransformComponent->SetTransform(cubPosition[0]);
+	TransformComponent->Translate(cubPosition[2]);
 	tempObject.AddComponent(TransformComponent);
 	
 	//Set up 
@@ -30,13 +33,13 @@ void MainEntrance() {
 	glfwSetCursorPosCallback(myScene->Window(), mouse_call);
 	//RenderLoop
 	while (!glfwWindowShouldClose(myScene->Window())) {
-		
+		CleanScreen();
 		myScene->UpdateTime();
 		myController.Update();
-		myScene->Update();
-		myView.Update();
+		//myScene->Update();
+		//myView.Update();
+		world.Update();
 		myScene->UpdateEnd();
-		//world.Update();
 	}
 	myScene->TerminateWindow();
 	delete myScene;
@@ -48,4 +51,9 @@ void mouse_call(GLFWwindow * window, double xpos, double ypos)
 void framebuffer_size_call(GLFWwindow * windwo, int width, int height)
 {
 	myController.framebuffer_size_callback(windwo, width, height);
+}
+void CleanScreen() {
+	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);// set color
+	   //glClear(GL_COLOR_BUFFER_BIT); // only clean the color not depth and stencil
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//  clean the color and depth
 }

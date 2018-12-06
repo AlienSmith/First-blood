@@ -131,6 +131,7 @@
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Debug.h" />
+    <ClInclude Include="GLError.h" />
     <ClInclude Include="GLINCLUDE.h" />
     <ClInclude Include="GStar_init.h" />
     <ClInclude Include="HeapManager.h" />
@@ -164,6 +165,7 @@
     <ClCompile Include="ConsolePrint.cpp" />
     <ClCompile Include="Controller.cpp" />
     <ClCompile Include="GLAD\glad.c" />
+    <ClCompile Include="GLError.cpp" />
     <ClCompile Include="GStar_init.cpp" />
     <ClCompile Include="HeapManager.cpp" />
     <ClCompile Include="HeapManagerProxy.cpp" />

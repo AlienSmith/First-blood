@@ -13,15 +13,15 @@ Scene* Scene::Create()
 		if (!currentScene->SetupWindow()) {
 			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail set up window");
 			return nullptr;
-		}if (!currentScene->LoadObject()) {
+		}/*if (!currentScene->LoadObject()) {
 			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail load Object");
 			return nullptr;
 		}
-		currentScene->SetPespective();
 		if (!currentScene->CompileShader()) {
 			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail set Compile Shader");
 			return nullptr;
-		}
+		}*/
+		currentScene->SetPespective();
 		Scene::Instance = currentScene;
 	}
 	return Scene::Instance;

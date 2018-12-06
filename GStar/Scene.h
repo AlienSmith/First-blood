@@ -11,6 +11,7 @@ const struct TextureParameters;
 class GLFWwindow;
 class Scene {
 public:
+	unsigned int VA() { return VAO; }
 	static Scene* Create();
 	bool Update();
 	Scene(const Scene& other) = delete;

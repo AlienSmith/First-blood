@@ -20,13 +20,13 @@ GStar::Texture GStar::TextureManager::GetTexture(const TextureParameters & param
 		}
 		TextureSource.Move();
 	}
-	current.SetunID(LoadTexture(parameters));
-	current.SetTextureID(CurrentID);
+	current.SetunID(CurrentID);
+	current.SetTextureID(LoadTexture(parameters));
 	TextureSource.Push(current);
 	return current;
 }
 
 unsigned int GStar::TextureManager::LoadTexture(const TextureParameters & parameters)
 {
-	return 0;
+	return Scene::Create()->LoadTexture(parameters);
 }

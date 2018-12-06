@@ -61,7 +61,7 @@ void Shader::setMat4(const GStar::MyString &name, const GStar::Matrix4& value, u
 	glUniformMatrix4fv(transformloc, 1, Flip, temparray);
 }
 
-void * Shader::operator new(size_t i_size)
+/*void * Shader::operator new(size_t i_size)
 {
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Shader allocator called");
 	if (Shader::ShadersHeap) {
@@ -78,7 +78,7 @@ void Shader::operator delete(void * i_ptr)
 	HeapManager::Instance().free(i_ptr);
 	HeapManager::Instance().Collect();
 }
-
+*/
 
 unsigned int Shader::CompileShader(GStar::MyString & source, unsigned int type,bool& successful)
 {

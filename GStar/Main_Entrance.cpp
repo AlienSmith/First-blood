@@ -15,27 +15,39 @@ void framebuffer_size_call(GLFWwindow * windwo, int width, int height);
 void CleanScreen();
 void MainEntrance() {
 	GStar::World& world = GStar::World::Instance();
-	//SetUp An Object
+	//Game Code
 	Object& tempObject = world.AddObject();
-	tempObject.AddComponent(new GStar::MeshComponent(cubeparameters));
+	tempObject.AddComponent(new GStar::MeshComponent(spriteparameters));
 	tempObject.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 	GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 	tempComponent->Initialize(Default_Texture_BOX);
 	tempComponent->Initialize(Default_TextureFace);
 	tempObject.AddComponent(tempComponent);
 	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent();
-	TransformComponent->Translate(cubPosition[1]);
+	TransformComponent->SetTransform(cubPosition[0]);
 	tempObject.AddComponent(TransformComponent);
 	
+	/*Object& tempObject1 = world.AddObject();
+
+	tempObject1.AddComponent(new GStar::MeshComponent(cubeparameters));
+	tempObject1.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
+	tempComponent = new GStar::TextureComponent();
+	tempComponent->Initialize(Default_Texture_BOX);
+	tempComponent->Initialize(Default_TextureFace);
+	tempObject.AddComponent(tempComponent);
+	TransformComponent = new GStar::TransformComponent();
+	TransformComponent->SetTransform(cubPosition[1]);
+	tempObject.AddComponent(TransformComponent);*/
+
 	//Set up 
 	//Bind CallBack Function
 	glfwSetFramebufferSizeCallback(myScene->Window(), framebuffer_size_call);
 	glfwSetCursorPosCallback(myScene->Window(), mouse_call);
 	//RenderLoop
 	while (!glfwWindowShouldClose(myScene->Window())) {
-		CleanScreen();
 		myScene->UpdateTime();
 		myController.Update();
+		CleanScreen();
 		//myScene->Update();
 		//myView.Update();
 		world.Update();

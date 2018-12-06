@@ -22,6 +22,14 @@ const struct MeshParameters
 	const int TriangleIndex;
 	const float* data;
 };
+const static float sprite[] = {
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+};
 const static float cubevertexs[] = {
 	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -86,6 +94,7 @@ const static float texCoords[] = {
 
 const static char title[] = "GStar Test Scene";
 const static char WoodBox[] = "../GStar/woodcontainer.jpg";
+const static char Wall[] = "../GStar/wall.jpg";
 const static char SmileFace[] = "../GStar/awesomeface.png";
 const static char vs[] = "../GStar/VertexColor.ves";
 const static char fs[] = "../GStar/VertexColor.frs";
@@ -93,6 +102,8 @@ const static char fs[] = "../GStar/VertexColor.frs";
 const static size_t ShadersHeapSize = 1024;
 const static size_t SceneHeapSize = 32768;
 const static MeshParameters cubeparameters = { 180,3,2,36,cubevertexs };
+const static MeshParameters spriteparameters = { 30,3,2,6, sprite};
 const static ShaderParameters DefaultShader2T = { vs,fs };
 const static TextureParameters Default_Texture_BOX = { WoodBox,GL_RGB,GL_RGB };
 const static TextureParameters  Default_TextureFace = { SmileFace, GL_RGB,GL_RGBA };
+const static TextureParameters  Default_TextureWall = { Wall,GL_RGB,GL_RGB };

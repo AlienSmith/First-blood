@@ -28,7 +28,6 @@ namespace GStar {
 		void Copy(const array_ff & rdata);
 		//TODO do I need to make this nonconst
 		const array_ff& Get() const;
-		inline array_ff* GetReference() { return &data; }
 		void operator = (const Matrix4& A);
 		void operator += (const Matrix4& A);
 		void operator -= (const Matrix4& A);
@@ -39,6 +38,12 @@ namespace GStar {
 		void operator -= (float A);
 		void operator *= (float A);
 		void operator /= (float A);
+		inline float& Getreference(int x, int y) {
+			return data[x][y];
+		}
+		inline float GetData(int x, int y) const {
+			return data[x][y];
+		}
 		void Dot(const Matrix4& B, Matrix4& out result) const;
 		Matrix4& Dot(const Matrix4& B)const;
 		Matrix4& T() const;

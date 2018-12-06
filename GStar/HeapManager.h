@@ -1,6 +1,6 @@
 #pragma once
 #include <stdio.h>
-#define GENERALHEAPSIZE 268435456// 64 mb
+#define GENERALHEAPSIZE 3245342720
 #if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
 #define ACTIVITE true;
 // on this machine size_t takes 7 bytes

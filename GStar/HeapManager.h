@@ -24,7 +24,7 @@ public:
 
 	void InitializeWith(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy);
 	void SetPointerTo(void * _pHeapMemeoy);
-	static void* _movePointerForward(const void* const _pointer, int number) ;
+	static void* _movePointerForward(const void* const _pointer, int number);
 	static void* _movePointerBackward(const void* const _pointer, int number);
 	static size_t difference(void* one, void* two);
 	// the static to decide wheter a block is being used by client. e suggests end of the heap;
@@ -40,7 +40,7 @@ public:
 	//TODO implement a copy constructor and a assignement operator.
 	~HeapManager();
 	void* FindFirstFit(rsize_t size);
-	void* FindFirstFit(rsize_t size,unsigned int i_alignment);
+	void* FindFirstFit(rsize_t size, unsigned int i_alignment);
 	bool free(void* i_ptr);
 	//This function will jump three blocks backward to see if they are descriptor
 	bool contains(void* ipr) const;
@@ -56,7 +56,7 @@ private:
 	unsigned int _numDescriptors;
 	void* _pHeapMemory;
 	void* _current;
-	bool _Match(rsize_t size,unsigned int alignment);
+	bool _Match(rsize_t size, unsigned int alignment);
 	bool _isdebugactivited = ACTIVITE;
 	bool _TryCut(rsize_t size, unsigned int alignment);
 	void _addinfoblock(size_t size);
@@ -66,5 +66,5 @@ private:
 								//TODO add a descriptro as block + using + size for pervious + this padding size + size for next + block for debug and use using + size for pervious +size for next for release
 #endif
 };
-void* operator new(size_t i_size);
-void operator delete(void* i_ptr);
+/*void* operator new(size_t i_size);
+void operator delete(void* i_ptr);*/

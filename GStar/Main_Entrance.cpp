@@ -24,7 +24,7 @@ void MainEntrance() {
 	tempComponent->Initialize(Default_TextureFace);
 	tempObject.AddComponent(tempComponent);
 	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent();
-	TransformComponent->Translate(cubPosition[2]);
+	TransformComponent->Translate(cubPosition[1]);
 	tempObject.AddComponent(TransformComponent);
 	
 	//Set up 

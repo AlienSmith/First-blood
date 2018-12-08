@@ -110,7 +110,7 @@ GStar::MyString::~MyString()
 	}
 }
 
-void * GStar::MyString::operator new(size_t i_size)
+/*void * GStar::MyString::operator new(size_t i_size)
 {
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "string allocator called");
 	if (!MyString::StringHeap) {
@@ -127,7 +127,7 @@ void GStar::MyString::operator delete(void * i_ptr)
 	HeapManager::Instance().SetPointerTo(MyString::StringHeap);
 	HeapManager::Instance().free(i_ptr);
 	HeapManager::Instance().Collect();
-}
+}*/
 
 GStar::MyString GStar::operator+(const GStar::MyString & A, const GStar::MyString & B)
 {

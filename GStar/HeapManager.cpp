@@ -57,7 +57,7 @@ HeapManager::~HeapManager()
 
 void * HeapManager::FindFirstFit(rsize_t size)
 {
-	return FindFirstFit(size,4);
+	return FindFirstFit(size, 4);
 }
 
 void * HeapManager::FindFirstFit(rsize_t size, unsigned int i_alignment)
@@ -180,9 +180,9 @@ bool HeapManager::free(void * i_ptr)
 		_current = _TravelToNextDescriptor(temp);// move to the next dicriptor
 		if (((INFOBLCOK*)_current)->isusing != HeapManager::infoend) {
 			void* next = _TravelToNextDescriptor((INFOBLCOK*)_current);
-			/*if (_tryFastBackCollect()) {
+			if (_tryFastBackCollect()) {
 				temp->size = difference(i_ptr, next);;
-			}*/
+			}
 		}
 
 	}
@@ -225,7 +225,6 @@ bool HeapManager::contains(void * ipr) const
 	}
 	return result;
 }
-
 
 bool HeapManager::IsAllocated(void * ipr) const
 {
@@ -374,11 +373,11 @@ void HeapManager::_addinfoblock(size_t size)
 	memset(_current, HeapManager::fillinitialfilled, infoblock->size);
 }
 
-/*void * operator new(size_t i_size)
+void * operator new(size_t i_size)
 {
 	if (!HeapManager::GeneralHeap) {
-		HeapManager::GeneralHeap = malloc(1024*1024*1024);
-		HeapManager::Instance().InitializeWith(1024 * 1024 * 1024, 1024 * 1024 * 1024, HeapManager::GeneralHeap);
+		HeapManager::GeneralHeap = malloc(GENERALHEAPSIZE);
+		HeapManager::Instance().InitializeWith(GENERALHEAPSIZE, GENERALHEAPSIZE, HeapManager::GeneralHeap);
 	}
 	HeapManager::Instance().SetPointerTo(HeapManager::GeneralHeap);
 	return HeapManager::Instance().FindFirstFit(i_size);
@@ -386,13 +385,12 @@ void HeapManager::_addinfoblock(size_t size)
 
 void operator delete(void * i_ptr)
 {
-	if ((rand() % 10000) == 0) {
+	if ((rand() % 1000) == 0) {
 		HeapManager::Instance().SetPointerTo(HeapManager::GeneralHeap);
 		HeapManager::Instance().free(i_ptr);
-		//This Collection Function has some problem
 		HeapManager::Instance().Collect();
 	}
 	else {
 		HeapManager::Instance().free(i_ptr);
 	}
-}*/
+}

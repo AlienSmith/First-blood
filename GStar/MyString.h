@@ -44,8 +44,8 @@ namespace GStar {
 		const char* const GetString() const;
 		//Destructor
 		~MyString();
-		void* operator new(size_t i_size);
-		void operator delete(void* i_ptr);
+		/*void* operator new(size_t i_size);
+		void operator delete(void* i_ptr);*/
 	private:
 		char* my_string = nullptr;// always always intialize those that need to be delete check the prvious version for compiler constructor empty object without using default constructor.
 		size_t my_size = 0;

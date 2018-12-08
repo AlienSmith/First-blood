@@ -1,16 +1,17 @@
 #pragma once
 #include <stdio.h>
-#define GENERALHEAPSIZE 3245342720
+#define GENERALHEAPSIZE 268435456// 64 mb
 #if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
 #define ACTIVITE true;
 // on this machine size_t takes 7 bytes
+//TODO release mode / optimization?
 struct INFOBLCOK { char start[4]; char isusing; size_t size; char end[4]; };
 #else
 // This is one way we create a do nothing (NO OP) macro that doesn't
 // generate a compiler warning or error
 #define INFOSIZE 8
 #define ACTIVITE false;
-struct INFOBLCOK {  char isusing; size_t size };
+struct INFOBLCOK { char isusing; size_t size };
 #endif
 class HeapManager {
 public:
@@ -19,7 +20,7 @@ public:
 		static HeapManager instance;
 		return instance;
 	}
-	HeapManager(){}
+	HeapManager() {}
 	int jump = 0;
 
 	void InitializeWith(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy);
@@ -66,5 +67,5 @@ private:
 								//TODO add a descriptro as block + using + size for pervious + this padding size + size for next + block for debug and use using + size for pervious +size for next for release
 #endif
 };
-/*void* operator new(size_t i_size);
-void operator delete(void* i_ptr);*/
+void* operator new(size_t i_size);
+void operator delete(void* i_ptr);

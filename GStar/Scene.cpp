@@ -182,7 +182,7 @@ bool Scene::CompileShader()
 Scene::Scene():
 	projection(GStar::Matrix4(IDENTICAL_MATRIX)),
 	view(GStar::Matrix4(IDENTICAL_MATRIX)),
-	my_shaders(), //TODO add Creator To Shader
+	my_shaders(nullptr), //TODO add Creator To Shader
 	deltaTime(0.0f),
 	LastFrame(0.0f),
 	currentFrame(0.0f),

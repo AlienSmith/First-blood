@@ -17,14 +17,14 @@ void MainEntrance() {
 	GStar::World& world = GStar::World::Instance();
 	//Game Code
 	Object& tempObject = world.AddObject();
-	tempObject.AddComponent(new GStar::MeshComponent(spriteparameters));
+	tempObject.AddComponent(new GStar::MeshComponent(cubeparameters));
 	tempObject.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 	GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 	tempComponent->Initialize(Default_Texture_BOX);
 	tempComponent->Initialize(Default_TextureFace);
 	tempObject.AddComponent(tempComponent);
 	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent();
-	TransformComponent->SetTransform(cubPosition[0]);
+	TransformComponent->SetTransform(cubPosition[1]);
 	tempObject.AddComponent(TransformComponent);
 	
 	/*Object& tempObject1 = world.AddObject();

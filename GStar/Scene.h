@@ -32,7 +32,7 @@ public:
 	//Call UpdateTime first and only once 
 	inline const float Deltatime()const { return deltaTime; }
 	inline void UpdateView(){ my_shaders->setMat4("view", view, GL_FALSE); }
-	virtual ~Scene() { delete my_shaders; }
+	virtual ~Scene() { if (my_shaders != NULL) { delete my_shaders; } }
 	unsigned int LoadMesh(const MeshParameters& parameters) const;
 	unsigned int LoadTexture(const TextureParameters& parameters) const;
 	const GStar::Matrix4& getProjection() const { return projection; }

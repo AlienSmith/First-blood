@@ -27,17 +27,16 @@ void MainEntrance() {
 	TransformComponent->SetTransform(cubPosition[1]);
 	tempObject.AddComponent(TransformComponent);
 	
-	/*Object& tempObject1 = world.AddObject();
-
+	Object& tempObject1 = world.AddObject();
 	tempObject1.AddComponent(new GStar::MeshComponent(cubeparameters));
 	tempObject1.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 	tempComponent = new GStar::TextureComponent();
 	tempComponent->Initialize(Default_Texture_BOX);
 	tempComponent->Initialize(Default_TextureFace);
-	tempObject.AddComponent(tempComponent);
+	tempObject1.AddComponent(tempComponent);
 	TransformComponent = new GStar::TransformComponent();
 	TransformComponent->SetTransform(cubPosition[1]);
-	tempObject.AddComponent(TransformComponent);*/
+	tempObject1.AddComponent(TransformComponent);
 
 	//Set up 
 	//Bind CallBack Function

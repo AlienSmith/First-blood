@@ -5,6 +5,7 @@
 namespace GStar {
 	class TransformComponent:public Component {
 	public:
+		inline void Update() {};
 		TransformComponent() :Component(TRANSFORM_WORD),model(IDENTICAL_MATRIX) { }
 		inline void SetTransform(const GStar::Vector3& Tranform) {
 				model.Getreference(0,3) = Tranform.x();

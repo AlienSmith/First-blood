@@ -27,7 +27,7 @@ public:
 	inline void SetShader( GStar::ShaderComponent* shader) { my_shader = shader; }
 	inline void SetTransform(GStar::TransformComponent* transform) { my_transform = transform; }
 	inline void reset() { my_mesh = nullptr; my_shader = nullptr; my_texture = nullptr; }
-	UpdateObject() :my_mesh(nullptr), my_texture(nullptr), my_shader(nullptr),my_transform(nullptr) {}
+	//UpdateObject() :my_mesh(nullptr), my_texture(nullptr), my_shader(nullptr),my_transform(nullptr) {}
 	GStar::ShaderComponent* GetShaderComponent() { return this->my_shader; }
 	GStar::TransformComponent* GetTransformComponent() { return my_transform; }
 	GStar::MeshComponent* GetMeshComponent() { return my_mesh; };

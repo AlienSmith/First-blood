@@ -16,28 +16,30 @@ void CleanScreen();
 void MainEntrance() {
 	GStar::World& world = GStar::World::Instance();
 	//Game Code
-	Object& tempObject = world.AddObject();
-	tempObject.AddComponent(new GStar::MeshComponent(cubeparameters));
-	tempObject.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
+	UpdateObject tempObject;
+	tempObject.SetMesh(new GStar::MeshComponent(cubeparameters));
+	tempObject.SetShader(new GStar::ShaderComponent(DefaultShader2T));
 	GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 	tempComponent->Initialize(Default_Texture_BOX);
 	tempComponent->Initialize(Default_TextureFace);
-	tempObject.AddComponent(tempComponent);
+	tempObject.SetTexture(tempComponent);
 	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent();
-	TransformComponent->SetTransform(cubPosition[1]);
-	tempObject.AddComponent(TransformComponent);
+	TransformComponent->SetTransform(cubPosition[0]);
+	tempObject.SetTransform(TransformComponent);
 	
-	Object& tempObject1 = world.AddObject();
-	tempObject1.AddComponent(new GStar::MeshComponent(cubeparameters));
-	tempObject1.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
+	UpdateObject tempObject1;
+	tempObject1.SetMesh(new GStar::MeshComponent(cubeparameters));
+	tempObject1.SetShader(new GStar::ShaderComponent(DefaultShader2T));
 	tempComponent = new GStar::TextureComponent();
-	tempComponent->Initialize(Default_Texture_BOX);
+	tempComponent->Initialize(Default_TextureWall);
 	tempComponent->Initialize(Default_TextureFace);
-	tempObject1.AddComponent(tempComponent);
+	tempObject1.SetTexture(tempComponent);
 	TransformComponent = new GStar::TransformComponent();
 	TransformComponent->SetTransform(cubPosition[1]);
-	tempObject1.AddComponent(TransformComponent);
+	tempObject1.SetTransform(TransformComponent);
 
+	UpdateObject::OUT_Instance = &tempObject;
+	UpdateObject::IN_Instance = &tempObject1;
 	//Set up 
 	//Bind CallBack Function
 	glfwSetFramebufferSizeCallback(myScene->Window(), framebuffer_size_call);
@@ -49,7 +51,12 @@ void MainEntrance() {
 		CleanScreen();
 		//myScene->Update();
 		//myView.Update();
-		world.Update();
+		//world.Update();
+		UpdateObject::OUT_Instance->Update();
+		UpdateObject::Swamp();
+
+		UpdateObject::OUT_Instance->Update();
+		UpdateObject::Swamp();
 		myScene->UpdateEnd();
 	}
 	myScene->TerminateWindow();

@@ -11,11 +11,15 @@ namespace GStar {
 			my_Object->Update();
 			my_children.Resetcurrent();
 			while (my_children.HasNext()) {
+				my_children.GetNext()->ParentSetModel(getModel());
 				my_children.GetNext()->WorldUpdate();
 				my_children.Move();
 			}
 		}
-		TransformComponent(Object* object) :Component(TRANSFORM_WORD),model(IDENTICAL_MATRIX),my_Object(object) { }
+		inline void AddChildren(TransformComponent* component) {
+			my_children.Push(component);
+		}
+		TransformComponent(Object* object) :Component(TRANSFORM_WORD),model(IDENTICAL_MATRIX),my_Object(object),parent(IDENTICAL_MATRIX) { }
 		inline void SetTransform(const GStar::Vector3& Tranform) {
 				model.Getreference(0,3) = Tranform.x();
 				model.Getreference(1, 3) = Tranform.y();
@@ -50,13 +54,16 @@ namespace GStar {
 			return GStar::Vector3(rotate_X, rotate_Y, rotate_Z);
 		}
 		inline GStar::Matrix4 getModel() {
-			return GStar::Rotate(model, rotate_X, rotate_Y, rotate_Z);
-		
+			return GStar::Rotate(model.Dot(parent), rotate_X, rotate_Y, rotate_Z);
+		}
+		inline void ParentSetModel( const GStar::Matrix4& input) {
+			parent = input;
 		}
 	private:
 		SingleLinkedList<GStar::TransformComponent*> my_children;
 		Object* my_Object;
 		GStar::Matrix4 model;
+		GStar::Matrix4 parent;
 		float rotate_X;
 		float rotate_Y;
 		float rotate_Z;

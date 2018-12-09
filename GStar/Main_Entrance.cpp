@@ -37,11 +37,11 @@ void MainEntrance() {
 	tempComponent->Initialize(Default_TextureFace);
 	tempObject1->AddComponent(tempComponent);
 	GStar::TransformComponent* TransformComponent1 = new GStar::TransformComponent(tempObject1);
-	world.AddToRoot(TransformComponent1);
-	TransformComponent1->SetTransform(cubPosition[1]);
+	TransformComponent->AddChildren(TransformComponent1);
+	TransformComponent1->SetTransform(cubPosition[0]);
 	tempObject1->AddComponent(TransformComponent1);
 
-	TransformComponent = reinterpret_cast<GStar::TransformComponent*> (tempObject1->GetComponent(TRANSFORM_WORD));
+	TransformComponent1 = reinterpret_cast<GStar::TransformComponent*> (tempObject1->GetComponent(TRANSFORM_WORD));
 	
 	//Set up 
 	//Bind CallBack Function
@@ -54,7 +54,9 @@ void MainEntrance() {
 		CleanScreen();
 		//myScene->Update();
 		//myView.Update();
-		TransformComponent->SetTransform(GStar::Vector3(sin(Scene::Create()->TotalTime())*2, cos(Scene::Create()->TotalTime())*2, 0.0f ));
+		//TransformComponent->SetTransform(GStar::Vector3(sin(Scene::Create()->TotalTime())*2, cos(Scene::Create()->TotalTime())*2, 0.0f ));
+		TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
+		TransformComponent1->SetTransform(GStar::Vector3(cos(Scene::Create()->TotalTime()) * 2, 0.0f, sin(Scene::Create()->TotalTime()) * 2));
 		world.Update();
 		/*tempObject.Update();
 

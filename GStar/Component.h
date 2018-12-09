@@ -11,6 +11,7 @@ public:
 	bool Terminate() { return true; }
 	Component(char tpe) :type(tpe) {}
 	Component() {}
+	inline char GetType() const { return type; }
 protected:
 	char type;
 };

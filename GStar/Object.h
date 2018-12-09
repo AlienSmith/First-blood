@@ -5,6 +5,28 @@ class Object {
 public:
 	bool Update();
 	bool Terminate() {}
+	/*template<class T>
+	T* GetComponent() {
+		if (typeof(T).IsSubclassOf(typeof(Component)).Dump()) {
+			char word = T::TypeWord();
+			my_components.Resetcurrent();
+			while (my_components.HasNext) {
+				if (my_components.GetNext()->GetType() == word) {
+					return my_components.GetNext();
+				}
+			}
+		}
+		return nullptr;
+	}*/
+	Component* GetComponent(char type) {
+		my_components.Resetcurrent();
+		while (my_components.HasNext()) {
+			if (my_components.GetNext()->GetType() == type) {
+				return my_components.GetNext();
+			}
+		}
+		return nullptr;
+	}
 	void AddComponent(Component* component) {
 		my_components.Push(component);
 	}
@@ -12,7 +34,7 @@ public:
 	Object(const Object& instance) = delete;
 	const Object& operator = (const Object& instance) = delete;
 	~Object() {
-		//my_components.DeleteContent();
+		my_components.DeleteContent();
 	}
 private:
 	GStar::SingleLinkedList<Component*> my_components;

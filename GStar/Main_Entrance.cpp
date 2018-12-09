@@ -39,7 +39,8 @@ void MainEntrance() {
 	TransformComponent->SetTransform(cubPosition[1]);
 	tempObject1.AddComponent(TransformComponent);
 
-
+	//TransformComponent = reinterpret_cast<GStar::TransformComponent*> (tempObject.GetComponent(TRANSFORM_WORD));
+	
 	//Set up 
 	//Bind CallBack Function
 	glfwSetFramebufferSizeCallback(myScene->Window(), framebuffer_size_call);
@@ -51,6 +52,7 @@ void MainEntrance() {
 		CleanScreen();
 		//myScene->Update();
 		//myView.Update();
+		TransformComponent->SetTransform(GStar::Vector3(sin(Scene::Create()->TotalTime())*2, cos(Scene::Create()->TotalTime())*2, 0.0f ));
 		world.Update();
 		/*tempObject.Update();
 

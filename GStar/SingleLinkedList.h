@@ -91,7 +91,8 @@ namespace GStar {
 		while (temp != nullptr)
 		{
 			temp1 = temp->GetNext();
-			delete temp->GetData();
+			T data = temp->GetData();
+			delete data;
 			temp = temp1;
 		}
 	}

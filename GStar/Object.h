@@ -24,6 +24,7 @@ public:
 			if (my_components.GetNext()->GetType() == type) {
 				return my_components.GetNext();
 			}
+			my_components.Move();
 		}
 		return nullptr;
 	}

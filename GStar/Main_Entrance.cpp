@@ -39,7 +39,7 @@ void MainEntrance() {
 	TransformComponent->SetTransform(cubPosition[1]);
 	tempObject1.AddComponent(TransformComponent);
 
-	//TransformComponent = reinterpret_cast<GStar::TransformComponent*> (tempObject.GetComponent(TRANSFORM_WORD));
+	TransformComponent = reinterpret_cast<GStar::TransformComponent*> (tempObject1.GetComponent(TRANSFORM_WORD));
 	
 	//Set up 
 	//Bind CallBack Function

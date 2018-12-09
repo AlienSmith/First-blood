@@ -1,6 +1,7 @@
 #pragma once
 #include"SingleLinkedList.h"
 #include"Object.h"
+#include"TransformComponent.h"
 namespace GStar {
 	class World {
 	public:
@@ -9,18 +10,20 @@ namespace GStar {
 			return instance;
 		}
 		World():ObjectsList(SingleLinkedList<Object*>()){}
-		Object& AddObject() {
+		Object* AddObject() {
 			ObjectsList.Push(new Object());
-			return *(ObjectsList.GetEndT());
+			return ObjectsList.GetEndT();
 		}
 		void Update() {
-			ObjectsList.Resetcurrent();
-			while (ObjectsList.HasNext()) {
-				ObjectsList.GetNext()->Update();
-				ObjectsList.Move();
+			WorldRoot.Resetcurrent();
+			while (WorldRoot.HasNext()) {
+				WorldRoot.GetNext()->WorldUpdate();
+				WorldRoot.Move();
 			}
 		}
+		inline void AddToRoot(GStar::TransformComponent* transform) { WorldRoot.Push(transform); }
 	private:
 		SingleLinkedList<Object*> ObjectsList;
+		SingleLinkedList<GStar::TransformComponent*> WorldRoot;
 	};
 }

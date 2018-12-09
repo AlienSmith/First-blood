@@ -17,29 +17,31 @@ void MainEntrance() {
 	GStar::World& world = GStar::World::Instance();
 	//Game Code
 
-	Object& tempObject = world.AddObject();
-	tempObject.AddComponent(new GStar::MeshComponent(cubeparameters));
-	tempObject.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
+	Object* tempObject = world.AddObject();
+	tempObject->AddComponent(new GStar::MeshComponent(cubeparameters));
+	tempObject->AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 	GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 	tempComponent->Initialize(Default_Texture_BOX);
 	tempComponent->Initialize(Default_TextureFace);
-	tempObject.AddComponent(tempComponent);
-	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent();
+	tempObject->AddComponent(tempComponent);
+	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent(tempObject);
+	world.AddToRoot(TransformComponent);
 	TransformComponent->SetTransform(cubPosition[0]);
-	tempObject.AddComponent(TransformComponent);
+	tempObject->AddComponent(TransformComponent);
 
-	Object& tempObject1 = world.AddObject();
-	tempObject1.AddComponent(new GStar::MeshComponent(cubeparameters));
-	tempObject1.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
+	Object* tempObject1 = world.AddObject();
+	tempObject1->AddComponent(new GStar::MeshComponent(cubeparameters));
+	tempObject1->AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 	tempComponent = new GStar::TextureComponent();
 	tempComponent->Initialize(Default_TextureWall);
 	tempComponent->Initialize(Default_TextureFace);
-	tempObject1.AddComponent(tempComponent);
-	TransformComponent = new GStar::TransformComponent();
-	TransformComponent->SetTransform(cubPosition[1]);
-	tempObject1.AddComponent(TransformComponent);
+	tempObject1->AddComponent(tempComponent);
+	GStar::TransformComponent* TransformComponent1 = new GStar::TransformComponent(tempObject1);
+	world.AddToRoot(TransformComponent1);
+	TransformComponent1->SetTransform(cubPosition[1]);
+	tempObject1->AddComponent(TransformComponent1);
 
-	TransformComponent = reinterpret_cast<GStar::TransformComponent*> (tempObject1.GetComponent(TRANSFORM_WORD));
+	TransformComponent = reinterpret_cast<GStar::TransformComponent*> (tempObject1->GetComponent(TRANSFORM_WORD));
 	
 	//Set up 
 	//Bind CallBack Function

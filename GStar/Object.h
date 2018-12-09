@@ -12,7 +12,7 @@ public:
 	Object(const Object& instance) = delete;
 	const Object& operator = (const Object& instance) = delete;
 	~Object() {
-		my_components.DeleteContent();
+		//my_components.DeleteContent();
 	}
 private:
 	GStar::SingleLinkedList<Component*> my_components;

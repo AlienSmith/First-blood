@@ -196,6 +196,9 @@
     <ClInclude Include="GLError.h">
       <Filter>OpenGl\Debug</Filter>
     </ClInclude>
+    <ClInclude Include="InterfaceComponent.h">
+      <Filter>Structure\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">

@@ -3,6 +3,7 @@
 #define TEXTURE_WORD 't'
 #define SHADER_WORD 's'
 #define TRANSFORM_WORD 'a'
+#define INTERFACE_WORD 'i'
 class Component {
 public:
 	//TODO if more efficient I could have a convert component for next object and update this object

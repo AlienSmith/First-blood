@@ -11,6 +11,7 @@
 #include"Data.h"
 #include"Assert.h"
 #include"GLError.h"
+#include"SceneInterface.h"
 Scene* myScene = Scene::Create();
 Controller myController(myScene);
 View myView(myScene);
@@ -20,7 +21,9 @@ void CleanScreen();
 void MainEntrance() {
 	GStar::World& world = GStar::World::Instance();
 	//Game Code
-
+	if (GStar::SceneInterface::Instance) {
+		GStar::SceneInterface::Instance->Start();
+	}
 	Object* tempObject = world.AddObject();
 	tempObject->AddComponent(new GStar::MeshComponent(cubeparameters));
 	tempObject->AddComponent(new GStar::ShaderComponent(DefaultShader2T));
@@ -53,14 +56,17 @@ void MainEntrance() {
 	glfwSetCursorPosCallback(myScene->Window(), mouse_call);
 	//RenderLoop
 	while (!glfwWindowShouldClose(myScene->Window())) {
+		if (GStar::SceneInterface::Instance) {
+			GStar::SceneInterface::Instance->Update();
+		}
+		TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
+		TransformComponent1->SetRotation(GStar::Vector3(0.0f, Scene::Create()->TotalTime() * 100, 0.0f));
 		myScene->UpdateTime();
 		myController.Update();
 		CleanScreen();
 		//myScene->Update();
 		//myView.Update();
 		//TransformComponent->SetTransform(GStar::Vector3(sin(Scene::Create()->TotalTime())*2, cos(Scene::Create()->TotalTime())*2, 0.0f ));
-		TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
-		TransformComponent1->SetRotation(GStar::Vector3(0.0f, Scene::Create()->TotalTime() * 100, 0.0f));
 		//TransformComponent1->SetTransform(GStar::Vector3(cos(Scene::Create()->TotalTime()) * 2, 0.0f, sin(Scene::Create()->TotalTime()) * 2));
 		world.Update();
 		/*tempObject.Update();
@@ -70,6 +76,9 @@ void MainEntrance() {
 		myScene->UpdateEnd();
 	}
 	myScene->TerminateWindow();
+	if (GStar::SceneInterface::Instance) {
+		GStar::SceneInterface::Instance->Terminate();
+	}
 	delete myScene;
 }
 void mouse_call(GLFWwindow * window, double xpos, double ypos)

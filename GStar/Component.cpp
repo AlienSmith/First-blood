@@ -17,5 +17,8 @@ bool Component::Update()
 	else if (this->type == TRANSFORM_WORD) {
 		UpdateObject::IN_Instance->SetTransform(reinterpret_cast<GStar::TransformComponent*>(this));
 	}
+	else if (this->type == INTERFACE_WORD) {
+		UpdateObject::IN_Instance->SetInterface(reinterpret_cast<GStar::InterfaceComponent*>(this));
+	}
 	return false;
 }

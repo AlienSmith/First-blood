@@ -3,6 +3,10 @@ UpdateObject* UpdateObject::IN_Instance = nullptr;
 UpdateObject* UpdateObject::OUT_Instance = nullptr;
 void UpdateObject::Update()
 {
+	if (my_interface) {
+		my_interface->Update();
+		ASSERT(glGetError() == GL_NO_ERROR, "Opengl Error");
+	}
 	if (my_texture) {
 		my_texture->Update();
 		ASSERT(glGetError() == GL_NO_ERROR, "Opengl Error");
@@ -19,4 +23,5 @@ void UpdateObject::Update()
 		my_transform->Update();
 		ASSERT(glGetError() == GL_NO_ERROR, "Opengl Error");
 	}
+	reset();
 }

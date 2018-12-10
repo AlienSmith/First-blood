@@ -196,7 +196,7 @@ namespace GStar {
 		matrix3.Copy(temp);
 	}
 
-	//Mathmatic implementation of Dot
+	//implmentation of dot for column matrix Opengl use roll matrix,parameters on the left will be calculated later.
 	inline Matrix4& Matrix4::Dot(const Matrix4& B) const
 	{
 		array_ff temp = ZERO_MATRIX;
@@ -205,7 +205,7 @@ namespace GStar {
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
 				for (int m = 0; m < SIZE; m++) {
-					temp[i][j] += this->data[i][m] * TB[m][j];
+					temp[i][j] += data[i][m] * TB[m][j];
 				}
 			}
 		}

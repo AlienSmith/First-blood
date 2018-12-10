@@ -26,7 +26,7 @@ void MainEntrance() {
 	tempObject->AddComponent(tempComponent);
 	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent(tempObject);
 	world.AddToRoot(TransformComponent);
-	TransformComponent->SetTransform(cubPosition[0]);
+	TransformComponent->SetTransform(cubPosition[1]);
 	tempObject->AddComponent(TransformComponent);
 
 	Object* tempObject1 = world.AddObject();
@@ -38,7 +38,7 @@ void MainEntrance() {
 	tempObject1->AddComponent(tempComponent);
 	GStar::TransformComponent* TransformComponent1 = new GStar::TransformComponent(tempObject1);
 	TransformComponent->AddChildren(TransformComponent1);
-	TransformComponent1->SetTransform(cubPosition[0]);
+	TransformComponent1->SetTransform(GStar::Vector3(0.0f,0.0f,5.0f));
 	tempObject1->AddComponent(TransformComponent1);
 
 	TransformComponent1 = reinterpret_cast<GStar::TransformComponent*> (tempObject1->GetComponent(TRANSFORM_WORD));
@@ -56,7 +56,8 @@ void MainEntrance() {
 		//myView.Update();
 		//TransformComponent->SetTransform(GStar::Vector3(sin(Scene::Create()->TotalTime())*2, cos(Scene::Create()->TotalTime())*2, 0.0f ));
 		TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
-		TransformComponent1->SetTransform(GStar::Vector3(cos(Scene::Create()->TotalTime()) * 2, 0.0f, sin(Scene::Create()->TotalTime()) * 2));
+		TransformComponent1->SetRotation(GStar::Vector3(0.0f, Scene::Create()->TotalTime() * 100, 0.0f));
+		//TransformComponent1->SetTransform(GStar::Vector3(cos(Scene::Create()->TotalTime()) * 2, 0.0f, sin(Scene::Create()->TotalTime()) * 2));
 		world.Update();
 		/*tempObject.Update();
 

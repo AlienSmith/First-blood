@@ -54,7 +54,8 @@ namespace GStar {
 			return GStar::Vector3(rotate_X, rotate_Y, rotate_Z);
 		}
 		inline GStar::Matrix4 getModel() {
-			return GStar::Rotate(model.Dot(parent), rotate_X, rotate_Y, rotate_Z);
+			//TODO figure out why. this should be model * parent * vector Probably because OpenGl use Roll matrix
+			return GStar::Rotate(parent.Dot(model), rotate_X, rotate_Y, rotate_Z);
 		}
 		inline void ParentSetModel( const GStar::Matrix4& input) {
 			parent = input;

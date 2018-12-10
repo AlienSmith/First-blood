@@ -190,9 +190,6 @@
     <ClInclude Include="World.h">
       <Filter>OpenGl\Core\World</Filter>
     </ClInclude>
-    <ClInclude Include="ComponentInclude.h">
-      <Filter>Structure\Component</Filter>
-    </ClInclude>
     <ClInclude Include="GLError.h">
       <Filter>OpenGl\Debug</Filter>
     </ClInclude>

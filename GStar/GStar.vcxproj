@@ -125,7 +125,6 @@
     <ClInclude Include="Assert.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="Component.h" />
-    <ClInclude Include="ComponentInclude.h" />
     <ClInclude Include="ConsolePrint.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Coordinate.h" />

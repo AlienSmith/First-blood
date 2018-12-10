@@ -3,6 +3,7 @@
 #include"TextureComponent.h"
 #include"ShaderComponent.h"
 #include"TransformComponent.h"
+#include"InterfaceComponent.h"
 //Two instance update one present one
 class UpdateObject {
 public:
@@ -26,6 +27,7 @@ public:
 	inline void SetTexture( GStar::TextureComponent* textur) { my_texture = textur; }
 	inline void SetShader( GStar::ShaderComponent* shader) { my_shader = shader; }
 	inline void SetTransform(GStar::TransformComponent* transform) { my_transform = transform; }
+	inline void SetInterface(GStar::InterfaceComponent* component) { my_interface = component; }
 	inline void reset() { my_mesh = nullptr; my_shader = nullptr; my_texture = nullptr; }
 	//UpdateObject() :my_mesh(nullptr), my_texture(nullptr), my_shader(nullptr),my_transform(nullptr) {}
 	GStar::ShaderComponent* GetShaderComponent() { return this->my_shader; }
@@ -36,4 +38,5 @@ private:
 	GStar::TextureComponent* my_texture;
 	GStar::ShaderComponent* my_shader;
 	GStar::TransformComponent* my_transform;
+	GStar::InterfaceComponent* my_interface;
 };

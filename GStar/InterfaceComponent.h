@@ -7,6 +7,7 @@ namespace GStar {
 			return INTERFACE_WORD;
 		}
 		virtual void Initialize() = 0;
+		//This will work on the updateobject instead of the Object.
 		virtual void Update() = 0;
 		virtual void Terminate() = 0;
 		InterfaceComponent() :Component(INTERFACE_WORD) {}

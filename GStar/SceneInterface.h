@@ -1,4 +1,8 @@
 #pragma once
+/*To use the customization of GStar  
+1.inheritant this class for Secene setup and put and instance in SceneInterface::Instance;
+2.inheritant InterfaceComponent and add them to the Object for Control of indivisual Object;
+*/
 namespace GStar {
 	class SceneInterface {
 	public:

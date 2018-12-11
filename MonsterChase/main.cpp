@@ -23,7 +23,7 @@
 //void test3();
 int main() 
 	{
-	//SimpleScene scene;
+	SimpleScene scene;
 		MainEntrance();
 		int a = 0;
 		std::cin >> a;

@@ -195,14 +195,14 @@
     <ClInclude Include="GLError.h">
       <Filter>OpenGl\Debug</Filter>
     </ClInclude>
-    <ClInclude Include="InterfaceComponent.h">
-      <Filter>Structure\Component</Filter>
-    </ClInclude>
     <ClInclude Include="SceneInterface.h">
       <Filter>Entrance</Filter>
     </ClInclude>
     <ClInclude Include="SimpleRotationCopy.h">
       <Filter>SimpleInterface</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfaceComponent.h">
+      <Filter>Entrance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

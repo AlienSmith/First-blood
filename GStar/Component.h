@@ -4,6 +4,7 @@
 #define SHADER_WORD 's'
 #define TRANSFORM_WORD 'a'
 #define INTERFACE_WORD 'i'
+#define UNDEFINED_WORD 'u'
 class Component {
 public:
 	//TODO add deltaTime to the update
@@ -12,7 +13,7 @@ public:
 	bool Update();
 	bool Terminate() { return true; }
 	Component(char tpe) :type(tpe) {}
-	Component() {}
+	Component():type(UNDEFINED_WORD) {}
 	inline char GetType() const { return type; }
 protected:
 	char type;

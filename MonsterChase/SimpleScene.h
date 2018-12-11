@@ -32,7 +32,7 @@ public:
 		GStar::InterfaceComponent* component = new SimpleRotation();
 		tempObject->AddComponent(component);
 
-		/*Object* tempObject1 = world.AddObject();
+		Object* tempObject1 = world.AddObject();
 		tempObject1->AddComponent(new GStar::MeshComponent(cubeparameters));
 		tempObject1->AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 		tempComponent = new GStar::TextureComponent();
@@ -43,7 +43,7 @@ public:
 		TransformComponent->AddChildren(TransformComponent1);
 		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f));
 		tempObject1->AddComponent(TransformComponent1);
-		tempObject1->AddComponent(new SimpleRotation());*/
+		tempObject1->AddComponent(new SimpleRotation());
 	}
 	virtual void Update() {
 		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));

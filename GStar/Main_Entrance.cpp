@@ -25,18 +25,25 @@ void MainEntrance() {
 	if (GStar::SceneInterface::Instance) {
 		GStar::SceneInterface::Instance->Start();
 	}
-	UpdateObject* tempObject = new UpdateObject();
-	tempObject->SetMesh(new GStar::MeshComponent(cubeparameters));
-	tempObject->SetShader(new GStar::ShaderComponent(DefaultShader2T));
+	//this code is used for test indivisual component. Noteice the Component directly communicate with UpdateObject::OUT_Instance
+	//instead of holding a reference to the object it is attached to (which is always the UpdateObject::OUT_Instance)
+	//Add /*tempObject->Update();*/ to Update cercle to test it.
+
+	/*UpdateObject::IN_Instance;
+	UpdateObject::OUT_Instance;
+	Object* tempObject = new Object();
+	tempObject->AddComponent(new GStar::MeshComponent(cubeparameters));
+	tempObject->AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 	GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 	tempComponent->Initialize(Default_Texture_BOX);
 	tempComponent->Initialize(Default_TextureFace);
-	tempObject->SetTexture(tempComponent);
+	tempObject->AddComponent(tempComponent);
 	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent(world.AddObject());
 	TransformComponent->SetTransform(cubPosition[1]);
-	tempObject->SetTransform(TransformComponent);
-	SimpleRotationCopy* rotation = new SimpleRotationCopy();
-	tempObject->SetInterface(rotation);
+	tempObject->AddComponent(TransformComponent);
+	GStar::InterfaceComponent* rotation = new SimpleRotationCopy();
+	tempObject->AddComponent(rotation);
+	tempObject->Update();*/
 
 	//Set up 
 	//Bind CallBack Function
@@ -47,21 +54,10 @@ void MainEntrance() {
 		if (GStar::SceneInterface::Instance) {
 			GStar::SceneInterface::Instance->Update();
 		}
-		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
-		TransformComponent1->SetRotation(GStar::Vector3(0.0f, Scene::Create()->TotalTime() * 100, 0.0f));*/
 		myScene->UpdateTime();
 		myController.Update();
 		CleanScreen();
-		tempObject->Update();
-		//myScene->Update();
-		//myView.Update();
-		//TransformComponent->SetTransform(GStar::Vector3(sin(Scene::Create()->TotalTime())*2, cos(Scene::Create()->TotalTime())*2, 0.0f ));
-		//TransformComponent1->SetTransform(GStar::Vector3(cos(Scene::Create()->TotalTime()) * 2, 0.0f, sin(Scene::Create()->TotalTime()) * 2));
-		//world.Update();
-		/*tempObject.Update();
-
-		tempObject1.Update();*/
-
+		world.Update();
 		myScene->UpdateEnd();
 	}
 	myScene->TerminateWindow();

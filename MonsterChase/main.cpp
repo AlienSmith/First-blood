@@ -10,6 +10,7 @@
 //#include "MainRenderLoop.cpp"
 #include "Main_Entrance.cpp"
 #include "SingleLinkedDictionary.h"
+#include "SimpleScene.h"
 //#include "Matrix4.h"
 //#include "Vector2.h"
 //#include "Vector3.h"
@@ -22,6 +23,7 @@
 //void test3();
 int main() 
 	{
+	//SimpleScene scene;
 		MainEntrance();
 		int a = 0;
 		std::cin >> a;

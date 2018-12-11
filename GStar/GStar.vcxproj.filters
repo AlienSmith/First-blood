@@ -201,6 +201,9 @@
     <ClInclude Include="SceneInterface.h">
       <Filter>Entrance</Filter>
     </ClInclude>
+    <ClInclude Include="SimpleRotationCopy.h">
+      <Filter>SimpleInterface</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -305,6 +308,9 @@
     </Filter>
     <Filter Include="Entrance">
       <UniqueIdentifier>{f46391c3-48d6-442a-b872-95cc10627a74}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SimpleInterface">
+      <UniqueIdentifier>{5ef075d2-315a-4b70-9cc0-1772b59dd679}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

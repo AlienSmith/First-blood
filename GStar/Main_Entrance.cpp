@@ -8,6 +8,7 @@
 #include"ShaderComponent.h"
 #include"TransformComponent.h"
 #include"InterfaceComponent.h"
+#include"SimpleRotationCopy.h"
 #include"Data.h"
 #include"Assert.h"
 #include"GLError.h"
@@ -24,32 +25,19 @@ void MainEntrance() {
 	if (GStar::SceneInterface::Instance) {
 		GStar::SceneInterface::Instance->Start();
 	}
-	Object* tempObject = world.AddObject();
-	tempObject->AddComponent(new GStar::MeshComponent(cubeparameters));
-	tempObject->AddComponent(new GStar::ShaderComponent(DefaultShader2T));
+	UpdateObject* tempObject = new UpdateObject();
+	tempObject->SetMesh(new GStar::MeshComponent(cubeparameters));
+	tempObject->SetShader(new GStar::ShaderComponent(DefaultShader2T));
 	GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 	tempComponent->Initialize(Default_Texture_BOX);
 	tempComponent->Initialize(Default_TextureFace);
-	tempObject->AddComponent(tempComponent);
-	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent(tempObject);
-	world.AddToRoot(TransformComponent);
+	tempObject->SetTexture(tempComponent);
+	GStar::TransformComponent* TransformComponent = new GStar::TransformComponent(world.AddObject());
 	TransformComponent->SetTransform(cubPosition[1]);
-	tempObject->AddComponent(TransformComponent);
+	tempObject->SetTransform(TransformComponent);
+	SimpleRotationCopy* rotation = new SimpleRotationCopy();
+	tempObject->SetInterface(rotation);
 
-	Object* tempObject1 = world.AddObject();
-	tempObject1->AddComponent(new GStar::MeshComponent(cubeparameters));
-	tempObject1->AddComponent(new GStar::ShaderComponent(DefaultShader2T));
-	tempComponent = new GStar::TextureComponent();
-	tempComponent->Initialize(Default_TextureWall);
-	tempComponent->Initialize(Default_TextureFace);
-	tempObject1->AddComponent(tempComponent);
-	GStar::TransformComponent* TransformComponent1 = new GStar::TransformComponent(tempObject1);
-	TransformComponent->AddChildren(TransformComponent1);
-	TransformComponent1->SetTransform(GStar::Vector3(0.0f,0.0f,5.0f));
-	tempObject1->AddComponent(TransformComponent1);
-
-	TransformComponent1 = reinterpret_cast<GStar::TransformComponent*> (tempObject1->GetComponent(TRANSFORM_WORD));
-	
 	//Set up 
 	//Bind CallBack Function
 	glfwSetFramebufferSizeCallback(myScene->Window(), framebuffer_size_call);
@@ -59,16 +47,17 @@ void MainEntrance() {
 		if (GStar::SceneInterface::Instance) {
 			GStar::SceneInterface::Instance->Update();
 		}
-		TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
-		TransformComponent1->SetRotation(GStar::Vector3(0.0f, Scene::Create()->TotalTime() * 100, 0.0f));
+		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
+		TransformComponent1->SetRotation(GStar::Vector3(0.0f, Scene::Create()->TotalTime() * 100, 0.0f));*/
 		myScene->UpdateTime();
 		myController.Update();
 		CleanScreen();
+		tempObject->Update();
 		//myScene->Update();
 		//myView.Update();
 		//TransformComponent->SetTransform(GStar::Vector3(sin(Scene::Create()->TotalTime())*2, cos(Scene::Create()->TotalTime())*2, 0.0f ));
 		//TransformComponent1->SetTransform(GStar::Vector3(cos(Scene::Create()->TotalTime()) * 2, 0.0f, sin(Scene::Create()->TotalTime()) * 2));
-		world.Update();
+		//world.Update();
 		/*tempObject.Update();
 
 		tempObject1.Update();*/

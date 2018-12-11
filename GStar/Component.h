@@ -6,6 +6,7 @@
 #define INTERFACE_WORD 'i'
 class Component {
 public:
+	//TODO add deltaTime to the update
 	//TODO if more efficient I could have a convert component for next object and update this object
 	bool Initialize() { return true; }
 	bool Update();

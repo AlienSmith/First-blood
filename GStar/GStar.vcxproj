@@ -147,6 +147,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderComponent.h" />
     <ClInclude Include="ShaderManger.h" />
+    <ClInclude Include="SimpleRotationCopy.h" />
     <ClInclude Include="SingleLinkedDictionary.h" />
     <ClInclude Include="SingleLinkedList.h" />
     <ClInclude Include="MyString.h" />

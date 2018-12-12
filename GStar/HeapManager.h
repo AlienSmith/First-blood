@@ -1,17 +1,18 @@
 #pragma once
 #include <stdio.h>
 #define GENERALHEAPSIZE 268435456// 64 mb
-#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)
+#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER) && _WIN32
 #define ACTIVITE true;
-// on this machine size_t takes 7 bytes
-//TODO release mode / optimization?
-struct INFOBLCOK { char start[4]; char isusing; size_t size; char end[4]; };
-#else
-// This is one way we create a do nothing (NO OP) macro that doesn't
-// generate a compiler warning or error
-#define INFOSIZE 8
+struct INFOBLCOK { char start[4]; size_t isusing :3; size_t size:29; char end[4]; };
+#elif defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER) && _WIN64
+#define ACTIVITE true;
+struct INFOBLCOK { char start[4]; size_t isusing : 3; size_t size : 61; char end[4]; };
+#elif _WIN32
 #define ACTIVITE false;
-struct INFOBLCOK { char isusing; size_t size };
+struct INFOBLCOK { char size_t isusing : 3; size_t size : 29; };
+#elif _WIN64
+#define ACTIVITE false;
+struct INFOBLCOK { char size_t isusing : 3; size_t size : 61; };
 #endif
 class HeapManager {
 public:
@@ -29,9 +30,9 @@ public:
 	static void* _movePointerBackward(const void* const _pointer, int number);
 	static size_t difference(void* one, void* two);
 	// the static to decide wheter a block is being used by client. e suggests end of the heap;
-	static const char infoisusing = 'y';
-	static const char infoisnotusing = 'n';
-	static const char infoend = 'e';
+	static const size_t infoisusing = 0;
+	static const size_t infoisnotusing = 1;
+	static const size_t infoend = 2;
 	static const int guardsize = 4;
 	static const char fillguard = '\0';
 	static const char fillfreed = 'f';

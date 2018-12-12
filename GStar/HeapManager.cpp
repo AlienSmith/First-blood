@@ -6,6 +6,7 @@
 #include <stdlib.h>
 //TODO make a effecient version for realease
 void* HeapManager::GeneralHeap = nullptr;
+#if _DEBUGACTIVITE
 HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy)
 {
 	this->_sizeHeap = HeapSize;
@@ -49,7 +50,33 @@ HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _p
 	void* temp = reinterpret_cast<void*>(address);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", temp);*/
 }
+#else
+HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy)
+{
+	this->_sizeHeap = HeapSize;
+	this->_numDescriptors = numDescriptors;
+	this->_pHeapMemory = _pHeapMemeoy;
+	//memset(_pHeapMemeoy, '\0', HeapSize);
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "The memory block Start at%p", _pHeapMemeoy);
+	_current = _pHeapMemeoy;
+	INFOBLCOK* infoblock = reinterpret_cast<INFOBLCOK*>(_current);
+	infoblock->isusing = HeapManager::infoisnotusing;
+	infoblock->size = HeapSize - sizeof(INFOBLCOK) - 1; //no guard 1 byte for end
 
+	_current = _movePointerForward(_current, sizeof(INFOBLCOK));
+	memset(_current, HeapManager::fillinitialfilled, infoblock->size);
+	_current = _movePointerForward(_current, infoblock->size);
+	memset(_current, HeapManager::fillguard, guardsize);
+	_current = _movePointerForward(_current, guardsize);
+	char* end = reinterpret_cast<char*>(_current); // it could be uint_8 since only one byte for this info
+	*end = HeapManager::infoend;
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", _current);
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "my info block have size %i", sizeof(INFOBLCOK));
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "size_t have size %i", sizeof(size_t));
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "char have size %i", sizeof(char));
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "start is %s", infoblock->start);
+}
+#endif
 HeapManager::~HeapManager()
 {
 	//delete this->_pHeapMemory;

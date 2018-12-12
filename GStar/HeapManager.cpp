@@ -106,6 +106,7 @@ void HeapManager::InitializeWith(size_t HeapSize, unsigned int numDescriptors, v
 	*end = HeapManager::infoend;
 }
 #endif
+
 HeapManager::~HeapManager()
 {
 	if (_pHeapMemory) {
@@ -117,10 +118,10 @@ void * HeapManager::FindFirstFit(size_t size)
 {
 	return FindFirstFit(size, 4);
 }
-
+//????????
+#if _DEBUGACTIVITE
 void * HeapManager::FindFirstFit(size_t size, unsigned int i_alignment)
 {
-	jump = 0;
 	_current = _pHeapMemory;
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
 	while (!(this->_Match(size, i_alignment))) {
@@ -133,14 +134,14 @@ void * HeapManager::FindFirstFit(size_t size, unsigned int i_alignment)
 		else
 		{
 			_current = _TravelToNextDescriptor(current);
-			jump++;
 			current = reinterpret_cast<INFOBLCOK*>(_current);
 		}
 	}
 	DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Allocated Block  %p \n", _current);
 	return _current;
 }
-
+#else
+#endif
 INFOBLCOK * HeapManager::_TravelToNextDescriptor(const INFOBLCOK* const i_ptr) const
 {
 	char* start = (char*)_movePointerForward(i_ptr, i_ptr->size + sizeof(INFOBLCOK));// lead to place after the users data

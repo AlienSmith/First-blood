@@ -21,7 +21,6 @@ public:
 		static HeapManager instance;
 		return instance;
 	}
-	int jump = 0;
 	HeapManager() :_pHeapMemory(nullptr) {}
 	void InitializeWith(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy);
 	void SetPointerTo(void * _pHeapMemeoy);

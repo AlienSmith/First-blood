@@ -205,6 +205,10 @@ bool HeapManager::_TryCut(size_t size, unsigned int alignment)
 	if (realsize < size + padding + sizeof(INFOBLCOK)) {
 		return false;
 	}
+	/*This code could help with defragmentation and running speed
+	it is not inlcuded in debug mode cause If the use
+	filled place before the allocated pointer it won't report error
+
 	else if (realsize < (size + padding + sizeof(INFOBLCOK)) * 2) {
 		end -= padding;
 		_current = reinterpret_cast<void*>(end);
@@ -213,7 +217,7 @@ bool HeapManager::_TryCut(size_t size, unsigned int alignment)
 		memset(_current, HeapManager::fillinitialfilled, size);
 		current->size = realsize - padding;
 		_current = current;
-	}
+	}*/
 	else
 	{
 		end -= padding;

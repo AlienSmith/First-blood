@@ -19,7 +19,7 @@ HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _p
 	memset(&(infoblock->start), HeapManager::fillguard, 4);
 	memset(&(infoblock->end), HeapManager::fillguard, 4);
 	infoblock->isusing = HeapManager::infoisnotusing;
-	infoblock->size = HeapSize - sizeof(INFOBLCOK) - guardsize - 1; // start with infroblock end with guards
+	infoblock->size = HeapSize - sizeof(INFOBLCOK) - guardsize - 1; // start with info end with guards
 
 	_current = _movePointerForward(_current, sizeof(INFOBLCOK));
 	memset(_current, HeapManager::fillinitialfilled, infoblock->size);
@@ -33,22 +33,6 @@ HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _p
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "size_t have size %i", sizeof(size_t));
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "char have size %i", sizeof(char));
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "start is %s", infoblock->start);
-	/*this->_current = this->_pHeapMemory;
-	bool* used = reinterpret_cast<bool*>(_current);
-	*used = true;
-	_current = _movePointerForward(_current, 1);
-	size_t* size = reinterpret_cast<size_t*>(_current);
-	*size = HeapSize - INFOSIZE;
-	_current = _movePointerForward(_current, 4);
-
-
-
-	/*DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%i", sizeof(bool));
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%i", sizeof(size_t));
-	size_t address = reinterpret_cast<size_t>(_pHeapMemeoy);
-	address += 1;
-	void* temp = reinterpret_cast<void*>(address);
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%p", temp);*/
 }
 #else
 HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy)
@@ -79,15 +63,17 @@ HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _p
 #endif
 HeapManager::~HeapManager()
 {
-	//delete this->_pHeapMemory;
+	if (_pHeapMemory) {
+		delete _pHeapMemory;
+	}
 }
 
-void * HeapManager::FindFirstFit(rsize_t size)
+void * HeapManager::FindFirstFit(size_t size)
 {
 	return FindFirstFit(size, 4);
 }
 
-void * HeapManager::FindFirstFit(rsize_t size, unsigned int i_alignment)
+void * HeapManager::FindFirstFit(size_t size, unsigned int i_alignment)
 {
 	jump = 0;
 	_current = _pHeapMemory;
@@ -326,7 +312,7 @@ size_t HeapManager::difference(void * one, void * two)
 	}
 }
 
-bool HeapManager::_Match(rsize_t size, unsigned int alignment)
+bool HeapManager::_Match(size_t size, unsigned int alignment)
 {
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
 	if ((current->size > size + sizeof(INFOBLCOK)) && current->isusing == HeapManager::infoisnotusing) {
@@ -339,7 +325,7 @@ bool HeapManager::_Match(rsize_t size, unsigned int alignment)
 }
 
 
-bool HeapManager::_TryCut(rsize_t size, unsigned int alignment)
+bool HeapManager::_TryCut(size_t size, unsigned int alignment)
 {
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
 	INFOBLCOK* endinfo = _TravelToNextDescriptor(current);

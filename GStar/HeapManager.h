@@ -21,9 +21,8 @@ public:
 		static HeapManager instance;
 		return instance;
 	}
-	HeapManager() {}
 	int jump = 0;
-
+	HeapManager() :_pHeapMemory(nullptr) {}
 	void InitializeWith(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy);
 	void SetPointerTo(void * _pHeapMemeoy);
 	static void* _movePointerForward(const void* const _pointer, int number);
@@ -41,8 +40,8 @@ public:
 	HeapManager(size_t HeapSize, unsigned int numDescriptors, void* _pHeapMemeoy);
 	//TODO implement a copy constructor and a assignement operator.
 	~HeapManager();
-	void* FindFirstFit(rsize_t size);
-	void* FindFirstFit(rsize_t size, unsigned int i_alignment);
+	void* FindFirstFit(size_t size);
+	void* FindFirstFit(size_t size, unsigned int i_alignment);
 	bool free(void* i_ptr);
 	//This function will jump three blocks backward to see if they are descriptor
 	bool contains(void* ipr) const;
@@ -58,8 +57,8 @@ private:
 	unsigned int _numDescriptors;
 	void* _pHeapMemory;
 	void* _current;
-	bool _Match(rsize_t size, unsigned int alignment);
-	bool _TryCut(rsize_t size, unsigned int alignment);
+	bool _Match(size_t size, unsigned int alignment);
+	bool _TryCut(size_t size, unsigned int alignment);
 	void _addinfoblock(size_t size);
 	INFOBLCOK* _TravelToNextDescriptor(const INFOBLCOK* const i_ptr) const;// take the input pointer return the pointer to the next descriptor this will also check if write on the padding value under debug
 #if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER)

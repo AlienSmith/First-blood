@@ -205,7 +205,7 @@ bool HeapManager::_TryCut(size_t size, unsigned int alignment)
 	if (realsize < size + padding + sizeof(INFOBLCOK)) {
 		return false;
 	}
-	/*This code could help with defragmentation and running speed
+	/*This code could help with defragmentation
 	it is not inlcuded in debug mode cause If the use
 	filled place before the allocated pointer it won't report error
 

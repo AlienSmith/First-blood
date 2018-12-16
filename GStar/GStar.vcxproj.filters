@@ -90,6 +90,9 @@
     <ClCompile Include="Main_Entrance.cpp">
       <Filter>Entrance</Filter>
     </ClCompile>
+    <ClCompile Include="BitArray.cpp">
+      <Filter>HeapManager</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -203,6 +206,9 @@
     </ClInclude>
     <ClInclude Include="InterfaceComponent.h">
       <Filter>Entrance</Filter>
+    </ClInclude>
+    <ClInclude Include="BitArray.h">
+      <Filter>HeapManager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -4,7 +4,7 @@
 #include "ConsolePrint.h"
 #include <stdio.h>
 #include <stdlib.h>
-//TODO make a effecient version for realease
+//TODO make a effecient version for release
 void* HeapManager::GeneralHeap = nullptr;
 #if _DEBUGACTIVITE
 HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy)
@@ -16,8 +16,13 @@ HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _p
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "The memory block Start at%p", _pHeapMemeoy);
 	_current = _pHeapMemeoy;
 	INFOBLCOK* infoblock = reinterpret_cast<INFOBLCOK*>(_current);
+#if defined(ENVIRONMENT64)
+	memset(&(infoblock->start), HeapManager::fillguard, 8);
+	memset(&(infoblock->end), HeapManager::fillguard, 8);
+#elif defined(ENVIRONMENT32)
 	memset(&(infoblock->start), HeapManager::fillguard, 4);
 	memset(&(infoblock->end), HeapManager::fillguard, 4);
+#endif
 	infoblock->isusing = HeapManager::infoisnotusing;
 	infoblock->size = HeapSize - sizeof(INFOBLCOK) - guardsize - 1; // start with info end with guards
 
@@ -62,12 +67,19 @@ void HeapManager::InitializeWith(size_t HeapSize, unsigned int numDescriptors, v
 	this->_sizeHeap = HeapSize;
 	this->_numDescriptors = numDescriptors;
 	this->_pHeapMemory = _pHeapMemeoy;
+	size_t base = reinterpret_cast<size_t>(_pHeapMemeoy);
+	this->_debug = reinterpret_cast<void*>(base + 1001976);
 	//memset(_pHeapMemeoy, '\0', HeapSize);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "The memory block Start at%p", _pHeapMemeoy);
 	_current = _pHeapMemeoy;
 	INFOBLCOK* infoblock = reinterpret_cast<INFOBLCOK*>(_current);
+#if defined(ENVIRONMENT64)
+	memset(&(infoblock->start), HeapManager::fillguard, 8);
+	memset(&(infoblock->end), HeapManager::fillguard, 8);
+#elif defined(ENVIRONMENT32)
 	memset(&(infoblock->start), HeapManager::fillguard, 4);
 	memset(&(infoblock->end), HeapManager::fillguard, 4);
+#endif
 	infoblock->isusing = HeapManager::infoisnotusing;
 	infoblock->size = HeapSize - sizeof(INFOBLCOK) - guardsize - 1; // start with infroblock end with guards
 
@@ -109,9 +121,9 @@ void HeapManager::InitializeWith(size_t HeapSize, unsigned int numDescriptors, v
 
 HeapManager::~HeapManager()
 {
-	if (_pHeapMemory) {
+	/*if (_pHeapMemory) {
 		delete _pHeapMemory;
-	}
+	}*/
 }
 
 void * HeapManager::FindFirstFit(size_t size)
@@ -137,12 +149,16 @@ void * HeapManager::FindFirstFit(size_t size, unsigned int i_alignment)
 			current = reinterpret_cast<INFOBLCOK*>(_current);
 		}
 	}
-	DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Allocated Block  %p \n", _current);
+	DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, " Heap Manager Allocated Block  %p \n", _current);
+	if (_current == _debug) {
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, " error place allocated", _current);
+	}
 	return _current;
 }
 #else
 void * HeapManager::FindFirstFit(size_t size, unsigned int i_alignment)
 {
+	num_alloc++;
 	_current = _pHeapMemory;
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
 	while (!(this->_Match(size, i_alignment))) {
@@ -161,6 +177,10 @@ void * HeapManager::FindFirstFit(size_t size, unsigned int i_alignment)
 #if _DEBUGACTIVITE
 INFOBLCOK * HeapManager::_TravelToNextDescriptor(const INFOBLCOK* const i_ptr) const
 {
+	size_t difference = reinterpret_cast<size_t>(i_ptr);
+	size_t base = reinterpret_cast<size_t>(_pHeapMemory);
+	difference -= base;
+
 	char* start = (char*)_movePointerForward(i_ptr, i_ptr->size + sizeof(INFOBLCOK));// lead to place after the users data
 	int a = 0;
 	while (*start == HeapManager::fillpadding) {
@@ -239,8 +259,13 @@ void HeapManager::_addinfoblock(size_t size)
 {
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "The new block start at%p", _current);
 	INFOBLCOK* infoblock = reinterpret_cast<INFOBLCOK*>(_current);
+#if defined(ENVIRONMENT64)
+	memset(&(infoblock->start), HeapManager::fillguard, 8);
+	memset(&(infoblock->end), HeapManager::fillguard, 8);
+#elif defined(ENVIRONMENT32)
 	memset(&(infoblock->start), HeapManager::fillguard, 4);
 	memset(&(infoblock->end), HeapManager::fillguard, 4);
+#endif
 	infoblock->isusing = HeapManager::infoisusing;
 	infoblock->size = size; // start with infroblock end with guards
 	_current = _movePointerForward(_current, sizeof(INFOBLCOK));
@@ -267,7 +292,7 @@ bool HeapManager::_TryCut(size_t size, unsigned int alignment)
 		memset(temppointer, HeapManager::fillpadding, padding);
 		memset(_current, HeapManager::fillinitialfilled, size);
 		current->size = realsize;//realsize
-		_current = current;
+		_current = _movePointerForward(current,sizeof(INFOBLCOK));
 	}
 	else
 	{
@@ -351,6 +376,22 @@ void HeapManager::ShowOutstandingAllocations() const
 	}
 	return;
 }
+bool HeapManager::AreBlocksFree() const
+{
+	INFOBLCOK* current = (INFOBLCOK*)_pHeapMemory;
+	void* result = nullptr;
+	while (current->isusing != HeapManager::infoend) {
+		if (current->isusing == HeapManager::infoisusing) {
+			result = _movePointerForward(current, sizeof(INFOBLCOK));
+			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Block %p not freed", result);
+		}
+		current = _TravelToNextDescriptor(current);
+	}
+	if (result) {
+		return false;
+	}
+	return true;
+}
 #if _DEBUGACTIVITE
 void HeapManager::_FreeCheck(void* ipr)
 {
@@ -365,13 +406,14 @@ void HeapManager::_FreeCheck(void* ipr)
 #endif
 bool HeapManager::free(void * i_ptr)
 {
+	num_free++;
 	bool result = false;
 	if (IsAllocated(i_ptr)) {
 		_current = _movePointerBackward(i_ptr, sizeof(INFOBLCOK));
 		INFOBLCOK* temp = (INFOBLCOK*)_current;
 		temp->isusing = HeapManager::infoisnotusing;
 		result = true;
-		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Free Block %p \n", _current);
+		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Heap manager Free Block %p \n", _current);
 #if _DEBUGACTIVITE
 		_FreeCheck(i_ptr);
 #endif

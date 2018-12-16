@@ -1,18 +1,29 @@
 #pragma once
 #include <stdio.h>
 #define GENERALHEAPSIZE 268435456// 64 mb
-#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER) && _WIN32
+#if _WIN32 || _WIN64
+#if _WIN64
+#define ENVIRONMENT64
+#else
+#define ENVIRONMENT32
+#endif
+#endif
+#if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER) && defined(ENVIRONMENT32)
 #define _DEBUGACTIVITE true;
 struct INFOBLCOK { char start[4]; size_t isusing :2; size_t size:30; char end[4]; };
-#elif defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER) && _WIN64
+
+#elif defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER) && defined(ENVIRONMENT64)
 #define _DEBUGACTIVITE true;
-struct INFOBLCOK { char start[4]; size_t isusing : 2; size_t size : 62; char end[4]; };
-#elif _WIN32
+struct INFOBLCOK { char start[8]; size_t isusing : 2; size_t size : 62; char end[8]; };
+
+#elif defined(ENVIRONMENT32)
 #define _DEBUGACTIVITE false;
 struct INFOBLCOK { size_t isusing : 2; size_t size : 30; };
-#elif _WIN64
+
+#elif defined(ENVIRONMENT64)
 #define _DEBUGACTIVITE false;
 struct INFOBLCOK { size_t isusing : 2; size_t size : 30; };
+
 #endif
 class HeapManager {
 public:
@@ -30,9 +41,13 @@ public:
 	// the static to decide wheter a block is being used by client. e suggests end of the heap;
 	static const size_t infoisusing = 0;
 	static const size_t infoisnotusing = 1;
-	static const size_t infoend = 2;
+	static const size_t infoend = 3;
+#if defined(ENVIRONMENT64)
+	static const int guardsize = 8;
+#elif defined(ENVIRONMENT32)
 	static const int guardsize = 4;
-	static const char fillguard = '\0';
+#endif
+	static const char fillguard = 'g';
 	static const char fillfreed = 'f';
 	static const char fillinitialfilled = 'i';
 	static const char fillpadding = 'p';
@@ -48,6 +63,7 @@ public:
 	void Collect();
 	void ShowFreeBlocks() const;
 	void ShowOutstandingAllocations() const;
+	bool AreBlocksFree() const;
 	//Temp Function
 private:
 	bool _tryFastBackCollect();// Require the _current pointer set to the descriptor return blocksize + INFOSIZE -1 for false
@@ -56,6 +72,12 @@ private:
 	unsigned int _numDescriptors;
 	void* _pHeapMemory;
 	void* _current;
+
+	void* _debug;
+	size_t num_alloc = 0;
+	size_t num_free = 1;
+
+
 	bool _Match(size_t size, unsigned int alignment);
 	bool _TryCut(size_t size, unsigned int alignment);
 	void _addinfoblock(size_t size);

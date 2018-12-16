@@ -13,13 +13,16 @@
 #include"Assert.h"
 #include"GLError.h"
 #include"SceneInterface.h"
-Scene* myScene = Scene::Create();
-Controller myController(myScene);
-View myView(myScene);
+Scene* myScene = nullptr;
+Controller* myController = nullptr;
+View* myView = nullptr;
 void mouse_call(GLFWwindow * window, double xpos, double ypos);
 void framebuffer_size_call(GLFWwindow * windwo, int width, int height);
 void CleanScreen();
 void MainEntrance() {
+	myScene = Scene::Create();
+	myController = new Controller(myScene);
+	myView = new View(myScene);
 	GStar::World& world = GStar::World::Instance();
 	//Game Code
 	if (GStar::SceneInterface::Instance) {
@@ -55,7 +58,7 @@ void MainEntrance() {
 			GStar::SceneInterface::Instance->Update();
 		}
 		myScene->UpdateTime();
-		myController.Update();
+		myController->Update();
 		CleanScreen();
 		world.Update();
 		myScene->UpdateEnd();
@@ -65,14 +68,16 @@ void MainEntrance() {
 		GStar::SceneInterface::Instance->Terminate();
 	}
 	delete myScene;
+	delete myController;
+	delete myView;
 }
 void mouse_call(GLFWwindow * window, double xpos, double ypos)
 {
-	myController.mouse_callBack(window, xpos, ypos);
+	myController->mouse_callBack(window, xpos, ypos);
 }
 void framebuffer_size_call(GLFWwindow * windwo, int width, int height)
 {
-	myController.framebuffer_size_callback(windwo, width, height);
+	myController->framebuffer_size_callback(windwo, width, height);
 }
 void CleanScreen() {
 	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);// set color

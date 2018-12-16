@@ -26,9 +26,6 @@
     <ClCompile Include="OpenGL.cpp">
       <Filter>OpenGl</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL_Entrance.cpp">
-      <Filter>OpenGl</Filter>
-    </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>OpenGl\Core</Filter>
     </ClCompile>

@@ -5,7 +5,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 //TODO make a effecient version for release
-void* HeapManager::GeneralHeap = nullptr;
+//void* HeapManager::GeneralHeap = nullptr;
 #if _DEBUGACTIVITE
 HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy)
 {

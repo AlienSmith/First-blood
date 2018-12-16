@@ -2,10 +2,11 @@
 #include "FixiedSizeAllocator.h"
 //This is windows specific
 #include <Windows.h>
+void* generalHeap = nullptr;
 bool InitializeMemorySystem()
-{
-	HeapManager::GeneralHeap = HeapAlloc(GetProcessHeap(), 0,GENERALHEAPSIZE);
-	FixedSizeAllocator::Initialize(HeapManager::GeneralHeap, GENERALHEAPSIZE, GENERALHEAPSIZE);
+{ 
+	generalHeap = HeapAlloc(GetProcessHeap(), 0, GENERALHEAPSIZE);
+	FixedSizeAllocator::Initialize(generalHeap, GENERALHEAPSIZE, GENERALHEAPSIZE);
 	return true;
 }
 
@@ -17,6 +18,6 @@ void Collect()
 void DestroyMemorySystem()
 {
 	FixedSizeAllocator::Terminate();
-	HeapFree(GetProcessHeap(), 0, HeapManager::GeneralHeap);
+	HeapFree(GetProcessHeap(), 0, generalHeap);
 }
 

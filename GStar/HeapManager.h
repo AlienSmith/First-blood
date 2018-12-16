@@ -27,7 +27,7 @@ struct INFOBLCOK { size_t isusing : 2; size_t size : 30; };
 #endif
 class HeapManager {
 public:
-	static void* GeneralHeap;
+	//static void* GeneralHeap;
 	static HeapManager& Instance() {
 		static HeapManager instance;
 		return instance;

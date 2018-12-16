@@ -11,6 +11,7 @@
 #include "Main_Entrance.cpp"
 #include "SingleLinkedDictionary.h"
 #include "SimpleScene.h"
+#include "MemorySystem.h"
 //#include "Matrix4.h"
 //#include "Vector2.h"
 //#include "Vector3.h"
@@ -23,8 +24,10 @@
 //void test3();
 int main() 
 	{
+	InitializeMemorySystem();
 	SimpleScene scene;
 		MainEntrance();
+		DestroyMemorySystem();
 		int a = 0;
 		std::cin >> a;
 		return a;

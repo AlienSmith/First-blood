@@ -87,5 +87,5 @@ private:
 								//TODO add a descriptro as block + using + size for pervious + this padding size + size for next + block for debug and use using + size for pervious +size for next for release
 #endif
 };
-void* operator new(size_t i_size);
-void operator delete(void* i_ptr);
+/*void* operator new(size_t i_size);
+void operator delete(void* i_ptr);*/

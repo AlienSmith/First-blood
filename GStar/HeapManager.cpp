@@ -513,7 +513,7 @@ size_t HeapManager::difference(void * one, void * two)
 
 
 
-void * operator new(size_t i_size)
+/*void * operator new(size_t i_size)
 {
 	if (!HeapManager::GeneralHeap) {
 		HeapManager::GeneralHeap = malloc(GENERALHEAPSIZE);
@@ -533,4 +533,4 @@ void operator delete(void * i_ptr)
 	else {
 		HeapManager::Instance().free(i_ptr);
 	}
-}
+}*/

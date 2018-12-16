@@ -129,6 +129,8 @@
     <ClInclude Include="ConsolePrint.h" />
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Coordinate.h" />
+    <ClInclude Include="FixiedSizeAllocator.h" />
+    <ClInclude Include="MemorySystem.h" />
     <ClInclude Include="SceneInterface.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Debug.h" />
@@ -168,6 +170,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConsolePrint.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="FixiedSizeAllocator.cpp" />
     <ClCompile Include="GLAD\glad.c" />
     <ClCompile Include="GLError.cpp" />
     <ClCompile Include="GStar_init.cpp" />
@@ -177,6 +180,7 @@
     <ClCompile Include="MainRenderLoop.cpp" />
     <ClCompile Include="Main_Entrance.cpp" />
     <ClCompile Include="Matrix.cpp" />
+    <ClCompile Include="MemorySystem.cpp" />
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MeshManager.cpp" />

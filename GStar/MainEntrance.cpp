@@ -14,7 +14,7 @@
 MainEntrance* MainEntrance::instance = nullptr;
 void MainEntrance::SetUpAndRun()
 {
-	MainEntrance::instance;
+	MainEntrance::instance = new MainEntrance();
 	MainEntrance::instance->Run();
 }
 

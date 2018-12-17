@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Controller.h"
+#include "Camera.cpp"
 //For look into other direction
 void Controller::mouse_callBack(GLFWwindow * window, double xpos, double ypos)
 {

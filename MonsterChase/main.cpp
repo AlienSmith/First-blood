@@ -1,7 +1,5 @@
 #include "Game.h"
 #define _CRTDBG_MAP_ALLOC  
-#include <stdlib.h>  
-#include <crtdbg.h>
 #include "ConsolePrint.h"
 //#include <stdio.h>
 #include <iostream>
@@ -27,7 +25,6 @@ int main()
 	InitializeMemorySystem();
 	SimpleScene scene;
 	MainEntrance::SetUpAndRun();
-		DestroyMemorySystem();
 		DestroyMemorySystem();
 		int a = 0;
 		std::cin >> a;

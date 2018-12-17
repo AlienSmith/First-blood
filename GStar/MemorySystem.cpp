@@ -18,6 +18,7 @@ void Collect()
 void DestroyMemorySystem()
 {
 	FixedSizeAllocator::Terminate();
+	HeapManager::Instance().AreBlocksFree();
 	HeapFree(GetProcessHeap(), 0, generalHeap);
 }
 

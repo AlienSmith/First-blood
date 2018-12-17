@@ -9,9 +9,6 @@
 namespace GStar {
 	class MyString {
 	public:
-		const static size_t StringHeapSize;
-		static void* StringHeap;
-		static void Initialize();
 		static void swap(MyString& string,MyString& other);
 		static void swap(MyString& string, char*& other, size_t size);
 		static size_t stringlength(const char* other);
@@ -44,8 +41,6 @@ namespace GStar {
 		const char* const GetString() const;
 		//Destructor
 		~MyString();
-		/*void* operator new(size_t i_size);
-		void operator delete(void* i_ptr);*/
 	private:
 		char* my_string = nullptr;// always always intialize those that need to be delete check the prvious version for compiler constructor empty object without using default constructor.
 		size_t my_size = 0;

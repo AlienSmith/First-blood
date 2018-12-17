@@ -3,9 +3,6 @@ namespace GStar {
 	class Texture {
 	public:
 		//TODO override allocation if data grow
-		static void* TextureHeap;
-		static void InitializeHeap();
-		static void Terminate();
 
 		inline void	SetunID(unsigned int Id) { uniqueId = Id; }
 		inline void SetTextureID(unsigned int VAO) { my_TextureID = VAO; }

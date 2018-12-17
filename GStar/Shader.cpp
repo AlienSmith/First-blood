@@ -6,18 +6,9 @@
 #include "Matrix4.h"
 #include "HeapManager.h"
 #include "Data.h"
-void* Shader::ShadersHeap = nullptr;
-void Shader::InitalizeHeap()
-{
-	Shader::ShadersHeap = malloc(ShadersHeapSize);
-	HeapManager::Instance().InitializeWith(ShadersHeapSize, ShadersHeapSize, Shader::ShadersHeap);
-}
 //This will return nullptr as fail, dynamically allocated remember to delete it.
 Shader * Shader::Create(const GLchar * vertexPath, const GLchar * fragmentPath)
 {
-	if (!Shader::ShadersHeap) {
-		Shader::InitalizeHeap();
-	}
 	Shader* result = new Shader();
 	bool successful = true;
 	if (result->CreateShader(result->ReadShader(vertexPath, fragmentPath, successful), successful)) {
@@ -26,12 +17,6 @@ Shader * Shader::Create(const GLchar * vertexPath, const GLchar * fragmentPath)
 	return nullptr;
 }
 
-void Shader::Terminate()
-{
-		if (ShadersHeap) {
-			free(ShadersHeap);
-		}
-}
 
 void Shader::use()
 {
@@ -61,24 +46,6 @@ void Shader::setMat4(const GStar::MyString &name, const GStar::Matrix4& value, u
 	glUniformMatrix4fv(transformloc, 1, Flip, temparray);
 }
 
-/*void * Shader::operator new(size_t i_size)
-{
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Shader allocator called");
-	if (Shader::ShadersHeap) {
-		HeapManager::Instance().SetPointerTo(Shader::ShadersHeap);
-		return HeapManager::Instance().FindFirstFit(sizeof(Shader), 4);
-	}
-	return nullptr;
-}
-
-void Shader::operator delete(void * i_ptr)
-{
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "shader free called");
-	HeapManager::Instance().SetPointerTo(Shader::ShadersHeap);
-	HeapManager::Instance().free(i_ptr);
-	HeapManager::Instance().Collect();
-}
-*/
 
 unsigned int Shader::CompileShader(GStar::MyString & source, unsigned int type,bool& successful)
 {

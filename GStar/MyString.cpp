@@ -3,13 +3,6 @@
 #include "ConsolePrint.h"
 #include <stdio.h>
 #include "HeapManager.h"
-const size_t GStar::MyString::StringHeapSize = 2014 * 1024;
-void* GStar::MyString::StringHeap = nullptr;
-void GStar::MyString::Initialize()
-{
-	StringHeap = malloc(StringHeapSize);
-	HeapManager::Instance().InitializeWith(StringHeapSize, StringHeapSize, StringHeap);
-}
 // this is a swap using shallow opearation
 void GStar::MyString::swap(MyString & string, MyString & other)
 {
@@ -110,24 +103,6 @@ GStar::MyString::~MyString()
 	}
 }
 
-/*void * GStar::MyString::operator new(size_t i_size)
-{
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "string allocator called");
-	if (!MyString::StringHeap) {
-		MyString::Initialize();
-	}
-	HeapManager::Instance().SetPointerTo(MyString::StringHeap);
-	return HeapManager::Instance().FindFirstFit(i_size);
-}
-
-void GStar::MyString::operator delete(void * i_ptr)
-{
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "string free called");
-	//Do not need to set pointer if not collect
-	HeapManager::Instance().SetPointerTo(MyString::StringHeap);
-	HeapManager::Instance().free(i_ptr);
-	HeapManager::Instance().Collect();
-}*/
 
 GStar::MyString GStar::operator+(const GStar::MyString & A, const GStar::MyString & B)
 {

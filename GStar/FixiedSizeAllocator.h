@@ -19,11 +19,15 @@ public:
 
 	void* malloc(size_t i_size, size_t i_alignment);
 	void free(void* i_ptr);
-
-	~FixedSizeAllocator() {
+	bool AllCleared() {
 		if (!(_16ByteArray.AreAllClear() && _32ByteArray.AreAllClear() && _32ByteArray.AreAllClear())) {
 			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "static memory not all freed");
+			return false;
 		}
+		return true;
+	}
+	~FixedSizeAllocator() {
+		AllCleared();
 		HeapManager::Instance().free(_16ByteBlock);
 		HeapManager::Instance().free(_32ByteBlock);
 		HeapManager::Instance().free(_96ByteBlock);

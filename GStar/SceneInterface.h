@@ -14,4 +14,3 @@ namespace GStar {
 		virtual void Terminate() = 0;
 	};
 }
-GStar::SceneInterface* GStar::SceneInterface::Instance = nullptr;

@@ -30,6 +30,49 @@ const static float sprite[] = {
 	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
 	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 };
+const static float NT_cubevertexs[] = {
+		-0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f,  0.5f, -0.5f,
+		 0.5f,  0.5f, -0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+
+		-0.5f, -0.5f,  0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,
+
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f, -0.5f,
+		-0.5f, -0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+
+		 0.5f,  0.5f,  0.5f,
+		 0.5f,  0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+
+		-0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f, -0.5f,
+		 0.5f, -0.5f,  0.5f,
+		 0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f,  0.5f,
+		-0.5f, -0.5f, -0.5f,
+
+		-0.5f,  0.5f, -0.5f,
+		 0.5f,  0.5f, -0.5f,
+		 0.5f,  0.5f,  0.5f,
+		 0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f,  0.5f,
+		-0.5f,  0.5f, -0.5f,
+};
 const static float cubevertexs[] = {
 	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
@@ -96,12 +139,17 @@ const static char title[] = "GStar Test Scene";
 const static char WoodBox[] = "../GStar/woodcontainer.jpg";
 const static char Wall[] = "../GStar/wall.jpg";
 const static char SmileFace[] = "../GStar/awesomeface.png";
+//these are shaders for 2d texture coordinate
 const static char vs[] = "../GStar/VertexColor.ves";
 const static char fs[] = "../GStar/VertexColor.frs";
+//these shader do not support texture
+const static char NT_vs[] = "../GStar/NTexture.ves";
+
 // Shader
 const static size_t ShadersHeapSize = 1024;
 const static size_t SceneHeapSize = 32768;
 const static MeshParameters cubeparameters = { 180,3,2,36,cubevertexs };
+const static MeshParameters NT_cubeparameters = { 108,3,0,36,NT_cubevertexs };
 const static MeshParameters spriteparameters = { 30,3,2,6, sprite};
 const static ShaderParameters DefaultShader2T = { vs,fs };
 const static TextureParameters Default_Texture_BOX = { WoodBox,GL_RGB,GL_RGB };

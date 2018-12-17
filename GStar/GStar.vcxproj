@@ -209,6 +209,7 @@
     <None Include="FragmentShader1.2.shader" />
     <None Include="FragmentShader2.shader" />
     <None Include="Exercises1.4.ves" />
+    <None Include="NTexture.ves" />
     <None Include="VertexColor.frs" />
     <None Include="VertexColor.ves" />
     <None Include="VertexShader.shader" />

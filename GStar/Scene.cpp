@@ -70,9 +70,10 @@ unsigned int Scene::LoadMesh(const MeshParameters & parameters) const
 	//Link Vertex Attributes
 	glVertexAttribPointer(0, parameters.positionsize, GL_FLOAT, GL_FALSE,  entrysize* sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
-
-	glVertexAttribPointer(1, parameters.texturesize, GL_FLOAT, GL_FASTEST, entrysize * sizeof(float), (void*)(parameters.positionsize * sizeof(float)));
-	glEnableVertexAttribArray(1);
+	if (parameters.texturesize != 0) {
+		glVertexAttribPointer(1, parameters.texturesize, GL_FLOAT, GL_FASTEST, entrysize * sizeof(float), (void*)(parameters.positionsize * sizeof(float)));
+		glEnableVertexAttribArray(1);
+	}
 
 	return TempVAO;
 }

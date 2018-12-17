@@ -271,6 +271,9 @@
     <None Include="VertexShader2.shader">
       <Filter>OpenGl\Shaders</Filter>
     </None>
+    <None Include="NTexture.ves">
+      <Filter>OpenGl\Shaders\NewShaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -335,6 +338,9 @@
     </Filter>
     <Filter Include="SimpleInterface">
       <UniqueIdentifier>{5ef075d2-315a-4b70-9cc0-1772b59dd679}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Shaders\NewShaders">
+      <UniqueIdentifier>{7e098b22-1a44-49a4-b212-f2f2cb8a5afc}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

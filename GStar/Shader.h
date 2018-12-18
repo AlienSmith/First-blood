@@ -6,7 +6,7 @@
 //TODO use MyString Instead of std::string
 //TODO change ID to private
 //For release Use pointer to string and delete it after success compile
-namespace GStar { class Matrix4; };
+namespace GStar { class Matrix4; class Vector3; };
 class Shader {
 public:
 	static Shader* Create(const GLchar * vertexPath, const GLchar * fragmentPath);
@@ -21,6 +21,7 @@ public:
 	void setInt(const GStar::MyString &name, int value) const;
 	void setFloat(const GStar::MyString &name, float value) const;
 	void setMat4(const GStar::MyString &name, const GStar::Matrix4& value, unsigned int Flip) const;
+	void setVec3(const GStar::MyString& name, const GStar::Vector3& value) const;
 	//TODO after the demeo can run put the other ID into private section and write geters and seters.
 	inline unsigned int GetUnId() const { return uniqueid; }
 	void SetUnId(const unsigned int ID) { uniqueid = ID; }

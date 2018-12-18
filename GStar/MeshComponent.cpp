@@ -10,6 +10,7 @@ bool GStar::MeshComponent::Initialize(const MeshParameters& parameters)
 
  bool GStar::MeshComponent::Update() const
 {
+	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	glBindVertexArray(my_mesh.myVAO());
 	return true;
 }

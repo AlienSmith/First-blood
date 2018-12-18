@@ -274,6 +274,12 @@
     <None Include="NTexture.ves">
       <Filter>OpenGl\Shaders\NewShaders</Filter>
     </None>
+    <None Include="NTexture.frs">
+      <Filter>OpenGl\Shaders\NewShaders</Filter>
+    </None>
+    <None Include="TLVertexColor.frs">
+      <Filter>OpenGl\Shaders\NewShaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

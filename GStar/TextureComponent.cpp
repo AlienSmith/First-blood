@@ -17,6 +17,5 @@ bool GStar::TextureComponent::Update()
 	glActiveTexture(GL_TEXTURE1);
 	glBindTexture(GL_TEXTURE_2D, my_textures.GetNext().myTextureID());
 	//????
-	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
 	return true;
 }

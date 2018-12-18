@@ -12,11 +12,12 @@ namespace GStar {
 		//Mesh do not have these functions
 		bool Update() const;
 		inline bool Terminate() { return true; }
-		ShaderComponent():Component(SHADER_WORD),my_shader(nullptr) {}
-		ShaderComponent(const ShaderParameters& parameters) :Component(SHADER_WORD), my_shader(nullptr) {
-			Initialize(parameters);
-		}
+		ShaderComponent() :Component(SHADER_WORD), my_shader(nullptr) {}
+		ShaderComponent(const ShaderParameters& parameters);
 	private:
 		Shader* my_shader;
+		bool t1;
+		bool t2;
+		bool lighting;
 	};
 }

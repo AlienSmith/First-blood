@@ -20,7 +20,7 @@ public:
 		GStar::World& world = GStar::World::Instance();
 		Object* tempObject = world.AddObject();
 		tempObject->AddComponent(new GStar::MeshComponent(cubeparameters));
-		tempObject->AddComponent(new GStar::ShaderComponent(DefaultShader2T));
+		tempObject->AddComponent(new GStar::ShaderComponent(Shader2TL));
 		GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 		tempComponent->Initialize(Default_Texture_BOX);
 		tempComponent->Initialize(Default_TextureFace);
@@ -34,7 +34,7 @@ public:
 
 		Object* tempObject1 = world.AddObject();
 		tempObject1->AddComponent(new GStar::MeshComponent(cubeparameters));
-		tempObject1->AddComponent(new GStar::ShaderComponent(DefaultShader2T));
+		tempObject1->AddComponent(new GStar::ShaderComponent(Shader2TL));
 		tempComponent = new GStar::TextureComponent();
 		tempComponent->Initialize(Default_TextureWall);
 		tempComponent->Initialize(Default_TextureFace);
@@ -44,6 +44,17 @@ public:
 		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f));
 		tempObject1->AddComponent(TransformComponent1);
 		tempObject1->AddComponent(new SimpleRotation());
+
+		//Add Light Source
+		tempObject = world.AddObject();
+		tempObject->AddComponent(new GStar::MeshComponent(NT_cubeparameters));
+		tempObject->AddComponent(new GStar::ShaderComponent(NT_Shaders));
+		tempObject->AddComponent(tempComponent);
+		TransformComponent = new GStar::TransformComponent(tempObject);
+		world.AddToRoot(TransformComponent);
+		TransformComponent->SetTransform(cubPosition[0]);
+		tempObject->AddComponent(TransformComponent);
+		
 	}
 	virtual void Update() {
 		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));

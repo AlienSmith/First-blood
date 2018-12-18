@@ -49,7 +49,7 @@ namespace GStar
 		else {
 			printf(strOutput);
 		}
-		ASSERT(!(type == GStar::LOGType::Error), "ConcolePrint Error");
+		ASSERT(!(type == GStar::LOGType::Error), strOutput);
 		if (type == GStar::LOGType::Waring) {
 			DebugBreak();
 		}

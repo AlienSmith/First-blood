@@ -12,6 +12,9 @@ const struct TextureParameters {
 const struct ShaderParameters {
 	const char* vs;
 	const char* fs;
+	const bool texture1 : 1;
+	const bool texture2 : 1;
+	const bool lighting : 1;
 };
 //Postion and Texture position
 const struct MeshParameters
@@ -144,6 +147,9 @@ const static char vs[] = "../GStar/VertexColor.ves";
 const static char fs[] = "../GStar/VertexColor.frs";
 //these shader do not support texture
 const static char NT_vs[] = "../GStar/NTexture.ves";
+const static char NT_fs[] = "../GStar/NTexture.frs";
+//this is the fragment shader supports light;
+const static char TL_fs[] = "../GStar/TLVertexColor.frs";
 
 // Shader
 const static size_t ShadersHeapSize = 1024;
@@ -151,7 +157,9 @@ const static size_t SceneHeapSize = 32768;
 const static MeshParameters cubeparameters = { 180,3,2,36,cubevertexs };
 const static MeshParameters NT_cubeparameters = { 108,3,0,36,NT_cubevertexs };
 const static MeshParameters spriteparameters = { 30,3,2,6, sprite};
-const static ShaderParameters DefaultShader2T = { vs,fs };
+const static ShaderParameters DefaultShader2T = { vs,fs,true,true,true};
+const static ShaderParameters Shader2TL = { vs,TL_fs,true,true,true };
+const static ShaderParameters NT_Shaders = { NT_vs,NT_fs,false,false,false };
 const static TextureParameters Default_Texture_BOX = { WoodBox,GL_RGB,GL_RGB };
-const static TextureParameters  Default_TextureFace = { SmileFace, GL_RGB,GL_RGBA };
+const static TextureParameters  Default_TextureFace = { SmileFace, GL_RGB,GL_RGBA};
 const static TextureParameters  Default_TextureWall = { Wall,GL_RGB,GL_RGB };

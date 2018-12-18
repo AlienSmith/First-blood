@@ -6,6 +6,7 @@
 #include "Matrix4.h"
 #include "HeapManager.h"
 #include "Data.h"
+#include "Vector3.h"
 //This will return nullptr as fail, dynamically allocated remember to delete it.
 Shader * Shader::Create(const GLchar * vertexPath, const GLchar * fragmentPath)
 {
@@ -44,6 +45,11 @@ void Shader::setMat4(const GStar::MyString &name, const GStar::Matrix4& value, u
 	unsigned int transformloc = glGetUniformLocation(this->ID, name.GetString());
 	GStar::Matrix4::value_ptr(value, temparray);
 	glUniformMatrix4fv(transformloc, 1, Flip, temparray);
+}
+
+void Shader::setVec3(const GStar::MyString & name, const GStar::Vector3 & value) const
+{
+	glUniform3f(glGetUniformLocation(ID, name.GetString()), value.x(), value.y(), value.z());
 }
 
 

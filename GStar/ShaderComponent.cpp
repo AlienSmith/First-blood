@@ -4,6 +4,7 @@
 #include "Shader.h"
 #include "Scene.h"
 #include "UpdateObject.h"
+#include "Data.h"
 bool GStar::ShaderComponent::Initialize(const ShaderParameters & parameters)
 {
 	my_shader = ShaderManager::Instance()->GetShader(parameters);
@@ -17,9 +18,13 @@ bool GStar::ShaderComponent::Initialize(const ShaderParameters & parameters)
 bool GStar::ShaderComponent::Update() const
 {
 	my_shader->use();
-	my_shader->setFloat("offset", 0.1);
-	my_shader->setInt("texture1", 0);
-	my_shader->setInt("texture2", 1);
+	if (t1) {
+		my_shader->setInt("texture1", 0);
+	}if (t2) {
+		my_shader->setInt("texture2", 1);
+	}if (lighting) {
+		my_shader->setVec3("lightColor", GStar::Vector3(1.0f, 0.0f, 0.0f));
+	}
 	Matrix4 view = Scene::Create()->getview();
 	my_shader->setMat4("view", Scene::Create()->getview(), GL_FALSE);
 	Matrix4 projection = Scene::Create()->getProjection();
@@ -29,4 +34,14 @@ bool GStar::ShaderComponent::Update() const
 	glDrawArrays(GL_TRIANGLES, 0, UpdateObject::OUT_Instance->GetMeshComponent()->GetMeshInfo().TriangleIndex());
 	
 	return true;
+}
+
+GStar::ShaderComponent::ShaderComponent(const ShaderParameters & parameters):
+	Component(SHADER_WORD),
+	my_shader(nullptr),
+	t1(parameters.texture1),
+	t2(parameters.texture2),
+	lighting(parameters.lighting)
+{
+	Initialize(parameters);
 }

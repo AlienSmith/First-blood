@@ -158,7 +158,9 @@ bool Scene::SetPespective()
 
 	//glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);//set both front and back buffer to line mode
 	glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
-	projection = GStar::perspective(projection, 45, SCR_WIDTH / SCR_HEIGHT, .1f, 100.0f);
+	//Change the ratio between width and height to float will redering everything in right proportiong. 
+	//would need to change the value if the screen got resized.
+	projection = GStar::perspective(projection, 45, (float)SCR_WIDTH / SCR_HEIGHT, .1f, 100.0f);
 	return true;
 }
 

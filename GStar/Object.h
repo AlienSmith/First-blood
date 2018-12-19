@@ -5,9 +5,8 @@ class Object {
 public:
 	bool Update();
 	bool Terminate() {}
-	/*template<class T>
+	template<class T>
 	T* GetComponent() {
-		if (typeof(T).IsSubclassOf(typeof(Component)).Dump()) {
 			char word = T::TypeWord();
 			my_components.Resetcurrent();
 			while (my_components.HasNext) {
@@ -15,9 +14,8 @@ public:
 					return my_components.GetNext();
 				}
 			}
-		}
 		return nullptr;
-	}*/
+	}
 	Component* GetComponent(char type) {
 		my_components.Resetcurrent();
 		while (my_components.HasNext()) {

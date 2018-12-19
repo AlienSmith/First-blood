@@ -122,6 +122,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Assert.h" />
     <ClInclude Include="BitArray.h" />
     <ClInclude Include="Camera.h" />

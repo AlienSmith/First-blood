@@ -23,7 +23,7 @@ bool GStar::ShaderComponent::Update() const
 	}if (t2) {
 		my_shader->setInt("texture2", 1);
 	}if (lighting) {
-		my_shader->setVec3("lightColor", GStar::Vector3(1.0f, 0.0f, 0.0f));
+		my_shader->setVec3("lightColor", GStar::Vector3(0.3f, 0.3f, 1.0f));
 	}
 	Matrix4 view = Scene::Create()->getview();
 	my_shader->setMat4("view", Scene::Create()->getview(), GL_FALSE);

@@ -102,6 +102,7 @@
     <ClCompile Include="SceneInterface.cpp">
       <Filter>Entrance</Filter>
     </ClCompile>
+    <ClCompile Include="LightManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -227,6 +228,9 @@
     </ClInclude>
     <ClInclude Include="MainEntrance.h">
       <Filter>Entrance</Filter>
+    </ClInclude>
+    <ClInclude Include="LightManager.h">
+      <Filter>Structure\Manager</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

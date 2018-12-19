@@ -5,6 +5,7 @@
 #include "Scene.h"
 #include "UpdateObject.h"
 #include "Data.h"
+#include "LightManager.h"
 bool GStar::ShaderComponent::Initialize(const ShaderParameters & parameters)
 {
 	my_shader = ShaderManager::Instance()->GetShader(parameters);
@@ -23,7 +24,7 @@ bool GStar::ShaderComponent::Update() const
 	}if (t2) {
 		my_shader->setInt("texture2", 1);
 	}if (lighting) {
-		my_shader->setVec3("lightColor", GStar::Vector3(0.3f, 0.3f, 1.0f));
+		my_shader->setVec3("lightColor", LightManager::Instance()->GetLight());
 	}
 	Matrix4 view = Scene::Create()->getview();
 	my_shader->setMat4("view", Scene::Create()->getview(), GL_FALSE);

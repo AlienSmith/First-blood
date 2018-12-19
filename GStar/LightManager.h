@@ -1,21 +1,28 @@
 #pragma once
-#include "TransformComponent.h"
+#include "Vector3.h"
 #include "SingleLinkedList.h"
+class Object;
 namespace GStar {
-	class LightManager {
+	class LightManager
+	{
 	public:
 		static LightManager* Instance() {
 			if (!instance) {
-				LightManager::instance = new LightManager();
+				instance = new LightManager();
 			}
+			return instance;
 		}
+		Vector3 GetLight();
 		static void Terminate() {
 			if (instance) {
 				delete instance;
 			}
 		}
+		void Register(Object* lightsource);
+		static const float AmbientStrength;
 	private:
 		static LightManager* instance;
-
+		SingleLinkedList<Object*> LightList;
 	};
+
 }

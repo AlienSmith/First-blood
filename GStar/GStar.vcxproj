@@ -130,6 +130,7 @@
     <ClInclude Include="Controller.h" />
     <ClInclude Include="Coordinate.h" />
     <ClInclude Include="FixiedSizeAllocator.h" />
+    <ClInclude Include="LightManager.h" />
     <ClInclude Include="MainEntrance.h" />
     <ClInclude Include="MemorySystem.h" />
     <ClInclude Include="SceneInterface.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="HeapManager.cpp" />
     <ClCompile Include="HeapManagerProxy.cpp" />
     <ClCompile Include="HeapManager_UnitTest.cpp" />
+    <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="MainEntrance.cpp" />
     <ClCompile Include="MainRenderLoop.cpp" />
     <ClCompile Include="Main_Entrance.cpp" />

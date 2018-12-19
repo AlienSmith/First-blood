@@ -81,7 +81,7 @@ void MainEntrance::framebuffer_size_call(GLFWwindow * window, int width, int hei
 
 void MainEntrance::CleanScreen()
 {
-	glClearColor(0.2f, 0.3f, 0.3f, 1.0f);// set color
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);// set color
 	   //glClear(GL_COLOR_BUFFER_BIT); // only clean the color not depth and stencil
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);//  clean the color and depth
 }

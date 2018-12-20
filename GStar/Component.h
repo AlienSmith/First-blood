@@ -5,6 +5,7 @@
 #define TRANSFORM_WORD 'a'
 #define INTERFACE_WORD 'i'
 #define UNDEFINED_WORD 'u'
+#define LIGHT_WORD 'l'
 class Component {
 public:
 	//TODO add deltaTime to the update

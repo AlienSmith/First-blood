@@ -122,6 +122,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Delegate.h" />
+    <ClInclude Include="Event.h" />
+    <ClInclude Include="EventManager.h" />
+    <ClInclude Include="EventUnite.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Assert.h" />
     <ClInclude Include="BitArray.h" />

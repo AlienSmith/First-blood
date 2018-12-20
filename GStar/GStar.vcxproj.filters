@@ -235,6 +235,18 @@
     <ClInclude Include="LightComponent.h">
       <Filter>Structure\Component</Filter>
     </ClInclude>
+    <ClInclude Include="EventManager.h">
+      <Filter>OpenGl\EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Delegate.h">
+      <Filter>OpenGl\EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="EventUnite.h">
+      <Filter>OpenGl\EventSystem</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>OpenGl\EventSystem</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -354,6 +366,9 @@
     </Filter>
     <Filter Include="OpenGl\Shaders\NewShaders">
       <UniqueIdentifier>{7e098b22-1a44-49a4-b212-f2f2cb8a5afc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\EventSystem">
+      <UniqueIdentifier>{ad7c4843-74ad-464f-b874-f7b7ac841571}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

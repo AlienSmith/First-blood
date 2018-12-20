@@ -2,11 +2,12 @@
 #include "Delegate.h"
 #include "SingleLinkedList.h"
 #include "MyString.h"
+#include "ConsolePrint.h"
 namespace GStar {
 	class EventUnite {
 	public:
-		EventUnite* Create(MyString& name) {
-			EventUnite(MyString::hash_str(name.GetString()));
+		static EventUnite* Create(MyString& name) {
+			return new EventUnite(MyString::hash_str(name.GetString()));
 		}
 		//Bind a free function
 		template<void(*Function)(Event*)>
@@ -35,6 +36,9 @@ namespace GStar {
 			//use new to for an event, delete it when calling all functions.
 			delete ARG0;
 			return;
+		}
+		inline size_t Getid() {
+			return my_id;
 		}
 	private:
 		//Pointer to function do not need to be deleted?

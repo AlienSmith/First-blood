@@ -1,8 +1,8 @@
 #pragma once
-#include "Delegate.h"
-#include "SingleLinkedList.h"
+#include "EventUnite.h"
 namespace GStar {
 	class EventManager {
+		//All the EventUnites die with the manager;
 	public:
 		static EventManager* Instance() {
 			if (!instance) {
@@ -10,8 +10,34 @@ namespace GStar {
 			}
 			return instance;
 		}
+		EventUnite& RegisterEvent(MyString& string) {
+			EventUnite& temp = *EventUnite::Create(string);
+			my_eventlist.Push(&temp);
+			return temp;
+		}
+		EventUnite& GetEventUnite(MyString& string) {
+			size_t tempid = MyString::hash_str(string.GetString());
+			my_eventlist.Resetcurrent();
+			while (my_eventlist.HasNext()) {
+				if (my_eventlist.GetNext()->Getid() == tempid) {
+					return *my_eventlist.GetNext();
+				}
+			}
+			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Error, "Try to access eventunit %s has not been registered",string);
+		}
+		~EventManager() {
+			my_eventlist.DeleteContent();
+		}
+		static void Terminate() {
+			if (instance) {
+				delete instance;
+			}
+		}
 	private:
 		EventManager() {}
+		EventManager(const EventManager& other) = delete;
+		EventManager& operator = (const EventManager& other) = delete;
 		static EventManager* instance;
+		SingleLinkedList<EventUnite*> my_eventlist;
 	};
 }

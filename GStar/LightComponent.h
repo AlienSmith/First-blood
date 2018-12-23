@@ -13,6 +13,7 @@ namespace GStar {
 		bool Initialize();
 		bool Update();
 		bool Terminate();
+		LightComponent() :Component(LIGHT_WORD) {}
 	private:
 		Vector3 direction;
 		Vector3 LightColor;

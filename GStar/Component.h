@@ -6,6 +6,7 @@
 #define INTERFACE_WORD 'i'
 #define UNDEFINED_WORD 'u'
 #define LIGHT_WORD 'l'
+#define CAMERA_WORD 'c'
 class Component {
 public:
 	//TODO add deltaTime to the update

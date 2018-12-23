@@ -3,6 +3,7 @@
 #include "SingleLinkedList.h"
 class Object;
 namespace GStar {
+	//TODO use the light Component
 	class LightManager
 	{
 	public:

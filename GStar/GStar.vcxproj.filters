@@ -247,6 +247,9 @@
     <ClInclude Include="Event.h">
       <Filter>OpenGl\EventSystem</Filter>
     </ClInclude>
+    <ClInclude Include="CameraComponent.h">
+      <Filter>Structure\Component</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">

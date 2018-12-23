@@ -122,6 +122,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="Delegate.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventManager.h" />

@@ -14,7 +14,7 @@ namespace GStar {
 				my_children.GetNext()->ParentSetModel(getModel());
 				my_children.GetNext()->WorldUpdate();
 				my_children.Move();
-			}
+			} 
 		}
 		inline void AddChildren(TransformComponent* component) {
 			my_children.Push(component);

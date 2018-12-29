@@ -53,7 +53,8 @@ GStar::Camera::Camera()
 	CameraFront.Normalize();
 	Update();
 }
-
+//Since we do not need to rotate round the z axies 
+//The matrix get the inverse of the matrix transform camera to its location hence
 GStar::Matrix4 GStar::Camera::Lookat(const GStar::Vector3& worldup, const GStar::Vector3& reverseDirection, const GStar::Vector3& position)
 {
 	GStar::Vector3 right = GStar::Vector3::Cross(worldup, reverseDirection);

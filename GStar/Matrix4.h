@@ -166,7 +166,7 @@ namespace GStar {
 		}
 	}
 	// multiply a matrix with a vector3
-	inline Vector3 operator* (Matrix4& trans, Vector3& ve) {
+	inline Vector3 operator* (const Matrix4& trans, const Vector3& ve) {
 		const array_ff& temp = trans.Get();
 		float tempvector[4] = {0,0,0,0};
 		tempvector[0] = ve.x();

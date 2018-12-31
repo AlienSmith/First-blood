@@ -21,7 +21,9 @@ namespace GStar {
 				WorldRoot.Move();
 			}
 		}
-		inline void AddToRoot(GStar::TransformComponent* transform) { WorldRoot.Push(transform); }
+		inline void AddToRoot(GStar::TransformComponent* transform) {
+			WorldRoot.Push(transform); 
+		}
 	private:
 		SingleLinkedList<Object*> ObjectsList;
 		SingleLinkedList<GStar::TransformComponent*> WorldRoot;

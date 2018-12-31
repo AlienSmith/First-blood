@@ -7,19 +7,14 @@ namespace GStar {
 	//Version 2.0 Check OLDCODE Folder for previous version
 	struct TransformData
 	{
-		Vector3 f;//forward vector
-		Vector3 u;//upward vector
-		Vector3 r;//right vector
-		Vector3 c;//position
-		Vector3 s;//scale
-		inline void Initialize() {
-			f = Vector3(0, 0, 1);
-			u = Vector3(0, 1, 0);
-			r = Vector3(1, 0, 0);
-			c = Vector3(0, 0, 0);
-			s = Vector3(1, 1, 1);
-		}
+		Vector3 r;//rotation x
+		Vector3 c;//total offset
+		Vector3 cp;//offset based on parent 
+		Vector3 cs;//offset based on self
+		Vector3 cw;//offset based on world
+		Vector3 s;//scale z
 	};
+	enum Base { WORLD = 0, PARENT = 1, SELF=2 };
 	class TransformComponent:public Component {
 	public:
 		inline void Update() {};
@@ -27,7 +22,7 @@ namespace GStar {
 			my_Object->Update();
 			my_children.Resetcurrent();
 			while (my_children.HasNext()) {
-				my_children.GetNext()->ParentSetModel(my_model);
+				//my_children.GetNext()->ParentSetModel(my_model);
 				my_children.GetNext()->WorldUpdate();
 				my_children.Move();
 			} 
@@ -36,40 +31,104 @@ namespace GStar {
 			my_children.Push(component);
 			component->SetParent(this);
 		}
+		//TODO do initialize in initialize list
 		TransformComponent(Object* object) :
+			my_model{ Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0),Vector3(0, 0, 0), Vector3(0, 0, 0),Vector3(1, 1, 1) },
 			Component(TRANSFORM_WORD),
 			my_parent(nullptr),
-			my_Object(object) { }
-
-		inline void SetTransform(const GStar::Vector3& Tranform) {
+			my_Object(object) {
+			
 		}
-		inline void Translate(const GStar::Vector3& translate) {
+		inline void SetTransform(const GStar::Vector3& transform,Base base) {
+			if (my_parent&& base == Base::PARENT) {
+				my_model.cp = transform;
+			}
+			else if (base == Base::SELF) {
+				my_model.cs = transform;
+			}
+			my_model.cw = transform;
+
+		}
+		inline void Translate(GStar::Vector3& translate, Base base) {
+			if (my_parent&& base == Base::PARENT) {
+				my_model.cp += translate;
+			}
+			else if (base == Base::SELF) {
+				my_model.cs += translate;
+			}
+			my_model.cw += translate;
 		}
 		inline const GStar::Vector3 GetTransform() const { 
+			return my_model.c;
 		}
 		inline void SetScale(const GStar::Vector3& Scale) {
+			my_model.s = Scale;
 		}
 		inline const GStar::Vector3 getScale() const {
+			return my_model.s;
 		}
 		inline void SetRotation(const GStar::Vector3& Scale) {
+			my_model.r = Scale;
 		}
 		inline const GStar::Vector3 GetRoatation() {
+			return my_model.r;
 		}
-		inline TransformData getModel() {
-			return my_model;
+		inline GStar::Matrix4 GetBaseMatrix() {
+			//Apply parent rotation to it
+			GStar::Vector3 temprotation = my_model.r;
+			if (my_parent) {
+				temprotation += my_parent->GetRoatation();
+			}
+			array_ff temp = IDENTICAL_MATRIX;
+			float sx = sin(temprotation.x()*PI / 180);
+			float sy = sin(temprotation.y()*PI / 180);
+			float sz = sin(temprotation.z()*PI / 180);
+			float cx = cos(temprotation.x()*PI / 180);
+			float cy = cos(temprotation.y()*PI / 180);
+			float cz = cos(temprotation.z()*PI / 180);
+			//Rotate z x y
+			temp[0][0] = cz * cy - sz * sx*sy;
+			temp[0][1] = -sz * cx;
+			temp[0][2] = sy * cz + sz * sx*cy;
+			temp[1][0] = sz * cy + cz * sx*sy;
+			temp[1][1] = cz * cx;
+			temp[1][2] = sz * sy - cz * sx*cy;
+			temp[2][0] = -cx * sy;
+			temp[2][1] = sx;
+			temp[2][2] = cx * cy;
+			return GStar::Matrix4(temp);
+		}
+		inline GStar::Matrix4 getModel() {
+			GStar::Matrix4 temp = GetBaseMatrix();
+			GStar::Vector3 tempPosition = my_model.cw;
+			GStar::Vector3 tempScale = my_model.s;
+			if (my_parent) {
+				tempPosition += my_parent->GetTransform();
+				tempPosition += my_parent->GetBaseMatrix() *my_model.cp;
+				tempScale *= my_parent->getScale();
+			}
+			tempPosition += GetBaseMatrix() *my_model.cs;
+			my_model.c = tempPosition;
+			//Scaling 
+			temp.Getreference(0,0) *= tempScale.x();
+			temp.Getreference(1,1) *= tempScale.y();
+			temp.Getreference(2,2) *= tempScale.z();
+			//Transform
+			temp.Getreference(0, 3) += tempPosition.x();
+			temp.Getreference(1, 3) += tempPosition.y();
+			temp.Getreference(2, 3) += tempPosition.z();
+			return GStar::Matrix4(temp);
 		}
 		inline GStar::Matrix4 getModelI() {
+			return GStar::Matrix4(IDENTICAL_MATRIX);
 		}
 		inline void SetParent(TransformComponent* component) {
 			my_parent = component;
 		}
-		inline void ParentSetModel( const TransformData& data) {
-			my_model = data;
-		}
 	private:
+		TransformData my_model;
 		SingleLinkedList<GStar::TransformComponent*> my_children;
 		GStar::TransformComponent* my_parent;
 		Object* my_Object;
-		TransformData my_model;
 	};
 }

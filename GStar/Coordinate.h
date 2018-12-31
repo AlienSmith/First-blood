@@ -121,6 +121,7 @@ namespace GStar {
 	}
 	inline GStar::Matrix4 Rotate(Matrix4& offset,float roll, float pitch, float yaw)
 	{
+		//This implementation follows the order of zxy
 		array_ff temp = IDENTICAL_MATRIX;
 		float sx = sin(roll*PI / 180);
 		float sy = sin(pitch*PI / 180);

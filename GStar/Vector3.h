@@ -26,6 +26,11 @@ namespace GStar {
 		static Vector3 PerpAtoB(const Vector3& A, const Vector3& B);
 		static Vector3 Cross(const Vector3& A, const Vector3& B);
 		static float Volume(const Vector3& A, const Vector3& B,const Vector3& C);
+		//is the data guaranteed to be continues ?
+		inline float& operator[] (int index) {
+			float* x = &m_x;
+			return *(x + index);
+		}
 		void operator = (const Vector3& B) {
 			this->m_x = B.x();
 			this->m_y = B.y();
@@ -203,6 +208,5 @@ namespace GStar {
 	inline float GStar::Vector3::Volume(const Vector3& A, const Vector3& B,const Vector3& C) {
 		return (Vector3::Cross(A, B).Dot(C));
 	}
-
 }
 #endif // !Vector3_H

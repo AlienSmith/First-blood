@@ -27,7 +27,7 @@ public:
 		tempObject->AddComponent(tempComponent);
 		TransformComponent = new GStar::TransformComponent(tempObject);
 		world.AddToRoot(TransformComponent);
-		TransformComponent->SetTransform(cubPosition[1]);
+		TransformComponent->SetTransform(cubPosition[1],GStar::Base::WORLD);
 		tempObject->AddComponent(TransformComponent);
 		GStar::InterfaceComponent* component = new SimpleRotation();
 		tempObject->AddComponent(component);
@@ -41,7 +41,9 @@ public:
 		tempObject1->AddComponent(tempComponent);
 		TransformComponent1 = new GStar::TransformComponent(tempObject1);
 		TransformComponent->AddChildren(TransformComponent1);
-		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f));
+		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f),GStar::Base::PARENT);
+		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f), GStar::Base::SELF);
+		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f), GStar::Base::WORLD);
 		tempObject1->AddComponent(TransformComponent1);
 		tempObject1->AddComponent(new SimpleRotation());
 
@@ -52,7 +54,7 @@ public:
 		tempObject->AddComponent(tempComponent);
 		TransformComponent = new GStar::TransformComponent(tempObject);
 		world.AddToRoot(TransformComponent);
-		TransformComponent->SetTransform(cubPosition[0]);
+		TransformComponent->SetTransform(cubPosition[0], GStar::Base::WORLD);
 		tempObject->AddComponent(TransformComponent);
 		
 	}

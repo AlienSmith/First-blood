@@ -13,6 +13,8 @@
 #include"Assert.h"
 #include"GLError.h"
 #include"SceneInterface.h"
+#include"EventManager.h"
+#include"KeyInputEvent.h"
 Scene* myScene = nullptr;
 Controller* myController = nullptr;
 View* myView = nullptr;

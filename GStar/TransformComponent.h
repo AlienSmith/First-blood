@@ -5,6 +5,7 @@
 #include "Object.h"
 namespace GStar {
 	//Version 2.0 Check OLDCODE Folder for previous version
+	//Support default transform based on world, parent and self coordinate
 	struct TransformData
 	{
 		Vector3 r;//rotation x
@@ -49,7 +50,7 @@ namespace GStar {
 			my_model.cw = transform;
 
 		}
-		inline void Translate(GStar::Vector3& translate, Base base) {
+		inline void Translate(const GStar::Vector3& translate, Base base) {
 			if (my_parent&& base == Base::PARENT) {
 				my_model.cp += translate;
 			}

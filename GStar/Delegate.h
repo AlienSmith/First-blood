@@ -4,6 +4,7 @@
 namespace GStar {
 	//The base Class For All Events
 	class Delegate {
+	public:
 		typedef void* InstancePtr;
 		typedef void(*InternalFunction)(InstancePtr, Event*);
 		typedef std::pair<InstancePtr, InternalFunction> Stub;
@@ -15,7 +16,6 @@ namespace GStar {
 		static void ClassMethodStub(InstancePtr instance, Event* ARG0) {
 			return (static_cast<C*>(instance)->*Function)(ARG0);
 		}
-	public:
 		Stub m_stub;
 		Delegate(void) :m_stub(nullptr, nullptr) {}
 	};

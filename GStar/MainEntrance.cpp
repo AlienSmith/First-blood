@@ -11,6 +11,7 @@
 #include"Assert.h"
 #include"GLError.h"
 #include"SceneInterface.h"
+#include"KeyInputEvent.h"
 MainEntrance* MainEntrance::instance = nullptr;
 void MainEntrance::SetUpAndRun()
 {
@@ -50,6 +51,7 @@ void MainEntrance::Run()
 	//Bind CallBack Function
 	glfwSetFramebufferSizeCallback(myScene->Window(), framebuffer_size_call);
 	glfwSetCursorPosCallback(myScene->Window(), MainEntrance::mouse_call);
+	glfwSetKeyCallback(myScene->Window(), MainEntrance::keyboard_call);
 	//RenderLoop
 	while (!glfwWindowShouldClose(myScene->Window())) {
 		if (GStar::SceneInterface::Instance) {
@@ -77,6 +79,11 @@ void MainEntrance::mouse_call(GLFWwindow * window, double xpos, double ypos)
 void MainEntrance::framebuffer_size_call(GLFWwindow * window, int width, int height)
 {
 	MainEntrance::instance->myController->framebuffer_size_callback(window, width, height);
+}
+//The keyinputevent object will die with the function
+void MainEntrance::keyboard_call(GLFWwindow * window, int key, int scancode, int action, int mods)
+{
+	MainEntrance::instance->KeyBoardInput.Invoke(new GStar::KeyInputEvent(key,action));
 }
 
 void MainEntrance::CleanScreen()

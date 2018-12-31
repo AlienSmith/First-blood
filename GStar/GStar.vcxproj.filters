@@ -103,6 +103,9 @@
       <Filter>Entrance</Filter>
     </ClCompile>
     <ClCompile Include="LightManager.cpp" />
+    <ClCompile Include="EventManager.cpp">
+      <Filter>OpenGl\EventSystem</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -249,6 +252,9 @@
     </ClInclude>
     <ClInclude Include="CameraComponent.h">
       <Filter>Structure\Component</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyInputEvent.h">
+      <Filter>Entrance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

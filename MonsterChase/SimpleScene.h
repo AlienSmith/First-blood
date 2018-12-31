@@ -9,6 +9,7 @@
 #include"InterfaceComponent.h"
 #include"Data.h"
 #include"SimpleRotation.h"
+#include"KeyControlComponent.h"
 class SimpleScene : public GStar::SceneInterface {
 public:
 	SimpleScene():GStar::SceneInterface(),TransformComponent(nullptr),TransformComponent1(nullptr) {
@@ -52,11 +53,12 @@ public:
 		tempObject->AddComponent(new GStar::MeshComponent(NT_cubeparameters));
 		tempObject->AddComponent(new GStar::ShaderComponent(NT_Shaders));
 		tempObject->AddComponent(tempComponent);
-		TransformComponent = new GStar::TransformComponent(tempObject);
-		world.AddToRoot(TransformComponent);
-		TransformComponent->SetTransform(cubPosition[0], GStar::Base::WORLD);
-		tempObject->AddComponent(TransformComponent);
-		
+		TransformComponent2 = new GStar::TransformComponent(tempObject);
+		world.AddToRoot(TransformComponent2);
+		TransformComponent2->SetTransform(cubPosition[0], GStar::Base::WORLD);
+		tempObject->AddComponent(TransformComponent2);
+		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransformComponent2, 1.0f);
+		tempObject->AddComponent(controllerComponent);
 	}
 	virtual void Update() {
 		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
@@ -66,4 +68,6 @@ public:
 private:
 	GStar::TransformComponent* TransformComponent;
 	GStar::TransformComponent* TransformComponent1;
+	GStar::TransformComponent* TransformComponent2;
+	KeyControlCompoenent* controllerComponent;
 };

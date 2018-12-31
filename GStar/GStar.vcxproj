@@ -127,6 +127,7 @@
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="EventUnite.h" />
+    <ClInclude Include="KeyInputEvent.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Assert.h" />
     <ClInclude Include="BitArray.h" />
@@ -178,6 +179,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConsolePrint.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="FixiedSizeAllocator.cpp" />
     <ClCompile Include="GLAD\glad.c" />
     <ClCompile Include="GLError.cpp" />

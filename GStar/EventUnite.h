@@ -6,7 +6,7 @@
 namespace GStar {
 	class EventUnite {
 	public:
-		static EventUnite* Create(MyString& name) {
+		static EventUnite* Create(const MyString& name) {
 			return new EventUnite(MyString::hash_str(name.GetString()));
 		}
 		//Bind a free function
@@ -14,7 +14,7 @@ namespace GStar {
 		void Bind(void) {
 			Delegate temp;
 			temp.m_stub.first = nullptr;
-			temp.m_stub.second = &FunctionStub<Function>;
+			temp.m_stub.second = &Delegate::FunctionStub<Function>;
 			my_functionlist.Push(temp);
 		}
 		//Bind a class method
@@ -22,7 +22,7 @@ namespace GStar {
 		void Bind(C* instance) {
 			Delegate temp;
 			temp.m_stub.first = instance;
-			temp.m_stub.second = &ClassMethodStub<C, Function>;
+			temp.m_stub.second = &Delegate::ClassMethodStub<C, Function>;
 			my_functionlist.Push(temp);
 		}
 		//Invokes the delegate

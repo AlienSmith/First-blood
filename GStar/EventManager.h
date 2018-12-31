@@ -10,12 +10,12 @@ namespace GStar {
 			}
 			return instance;
 		}
-		EventUnite& RegisterEvent(MyString& string) {
+		EventUnite& RegisterEvent(const MyString& string) {
 			EventUnite& temp = *EventUnite::Create(string);
 			my_eventlist.Push(&temp);
 			return temp;
 		}
-		EventUnite& GetEventUnite(MyString& string) {
+		EventUnite& GetEventUnite(const MyString& string) {
 			size_t tempid = MyString::hash_str(string.GetString());
 			my_eventlist.Resetcurrent();
 			while (my_eventlist.HasNext()) {

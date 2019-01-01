@@ -317,6 +317,7 @@ namespace GStar {
 		}
 		return GStar::AddPool(temp);
 	}
+	//Notice this is the element vise multiplication not the matrix product use Dot function instead
 	inline const Matrix4& operator* (const Matrix4& A, const Matrix4& B) {
 		array_ff temp;
 		const array_ff& TA = A.Get();

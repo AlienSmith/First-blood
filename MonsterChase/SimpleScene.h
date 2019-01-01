@@ -29,6 +29,7 @@ public:
 		TransformComponent = new GStar::TransformComponent(tempObject);
 		world.AddToRoot(TransformComponent);
 		TransformComponent->SetTransform(cubPosition[1],GStar::Base::WORLD);
+		TransformComponent->SetScale(GStar::Vector3(2.0f,.5f,3.0f));
 		tempObject->AddComponent(TransformComponent);
 		GStar::InterfaceComponent* component = new SimpleRotation();
 		tempObject->AddComponent(component);

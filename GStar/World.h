@@ -14,10 +14,10 @@ namespace GStar {
 			ObjectsList.Push(new Object());
 			return ObjectsList.GetEndT();
 		}
-		void Update() {
+		void Update(float deltatime) {
 			WorldRoot.Resetcurrent();
 			while (WorldRoot.HasNext()) {
-				WorldRoot.GetNext()->WorldUpdate();
+				WorldRoot.GetNext()->WorldUpdate(deltatime);
 				WorldRoot.Move();
 			}
 		}

@@ -1,15 +1,15 @@
 #include "Object.h"
 #include "UpdateObject.h"
-bool Object::Update()
+bool Object::Update(float deltatime)
 {
 	Component* temp;
 	my_components.Resetcurrent();
 	while (my_components.HasNext()) {
 		temp = my_components.GetNextNode()->GetData();
-		temp->Update();
+		temp->Update(deltatime);
 		my_components.Move();
 	}
-	UpdateObject::OUT_Instance->Update();
+	UpdateObject::OUT_Instance->Update(deltatime);
 	UpdateObject::Swamp();
 	return true;
 }

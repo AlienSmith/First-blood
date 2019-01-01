@@ -7,7 +7,7 @@ bool GStar::TextureComponent::Initialize(const TextureParameters & parameters)
 	return true;
 }
 
-bool GStar::TextureComponent::Update() 
+bool GStar::TextureComponent::Update(float deltatime)
 {
 	//need to include everything in the header to use glActivateTexture
 	my_textures.Resetcurrent();

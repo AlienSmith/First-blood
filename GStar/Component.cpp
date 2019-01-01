@@ -1,6 +1,6 @@
 #include "Component.h"
 #include "UpdateObject.h"
-bool Component::Update()
+bool Component::Update(float deltatime)
 {
 	if (!UpdateObject::OUT_Instance && !UpdateObject::IN_Instance) {
 		UpdateObject::Initialize();

@@ -3,7 +3,7 @@
 #include "Component.h"
 class Object {
 public:
-	bool Update();
+	bool Update(float deltatime);
 	bool Terminate() {}
 	template<class T>
 	T* GetComponent() {

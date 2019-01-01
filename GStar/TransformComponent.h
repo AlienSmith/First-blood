@@ -18,13 +18,13 @@ namespace GStar {
 	enum Base { WORLD = 0, PARENT = 1, SELF=2 };
 	class TransformComponent:public Component {
 	public:
-		inline void Update() {}
-		inline void WorldUpdate() {
-			my_Object->Update();
+		inline void Update(float deltatime) {}
+		inline void WorldUpdate(float deltatime) {
+			my_Object->Update( deltatime);
 			my_children.Resetcurrent();
 			while (my_children.HasNext()) {
 				//my_children.GetNext()->ParentSetModel(my_model);
-				my_children.GetNext()->WorldUpdate();
+				my_children.GetNext()->WorldUpdate(deltatime);
 				my_children.Move();
 			} 
 		}

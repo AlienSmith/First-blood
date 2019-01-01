@@ -22,7 +22,7 @@ public:
 		OUT_Instance = IN_Instance;
 		IN_Instance = temp;
 	}
-	void Update();
+	void Update(float deltatime);
 	inline void SetMesh( GStar::MeshComponent* mesh) { my_mesh = mesh;}
 	inline void SetTexture( GStar::TextureComponent* textur) { my_texture = textur; }
 	inline void SetShader( GStar::ShaderComponent* shader) { my_shader = shader; }

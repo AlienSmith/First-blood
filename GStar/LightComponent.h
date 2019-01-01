@@ -11,7 +11,7 @@ namespace GStar {
 			return LIGHT_WORD;
 		}
 		bool Initialize();
-		bool Update();
+		bool Update(float deltatime);
 		bool Terminate();
 		LightComponent() :Component(LIGHT_WORD) {}
 	private:

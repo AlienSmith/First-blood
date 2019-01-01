@@ -16,7 +16,7 @@ bool GStar::ShaderComponent::Initialize(const ShaderParameters & parameters)
 	return false;
 }
 
-bool GStar::ShaderComponent::Update() const
+bool GStar::ShaderComponent::Update(float deltatime) const
 {
 	my_shader->use();
 	if (t1) {

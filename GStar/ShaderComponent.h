@@ -10,7 +10,7 @@ namespace GStar {
 		}
 		bool Initialize(const ShaderParameters& parameters);
 		//Mesh do not have these functions
-		bool Update() const;
+		bool Update(float deltatime) const;
 		inline bool Terminate() { return true; }
 		ShaderComponent() :Component(SHADER_WORD), my_shader(nullptr) {}
 		ShaderComponent(const ShaderParameters& parameters);

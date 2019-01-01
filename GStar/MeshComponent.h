@@ -10,7 +10,7 @@ namespace GStar {
 		}
 		bool Initialize(const MeshParameters& parameters);
 		//Mesh do not have these functions
-		bool Update() const;
+		bool Update(float deltatime) const;
 		bool Terminate() { return true; }
 		MeshComponent():Component(MESH_WORD) {}
 		MeshComponent(const MeshParameters& parameters) :Component(MESH_WORD) {

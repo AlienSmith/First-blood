@@ -140,6 +140,7 @@
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="MainEntrance.h" />
     <ClInclude Include="MemorySystem.h" />
+    <ClInclude Include="MouseInputEvent.h" />
     <ClInclude Include="SceneInterface.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Debug.h" />

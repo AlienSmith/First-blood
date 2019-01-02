@@ -2,6 +2,7 @@
 #include"InterfaceComponent.h"
 #include"GLFW/glfw3.h"
 #include"KeyInputEvent.h"
+#include"MouseInputEvent.h"
 #include"EventManager.h"
 #include"TransformComponent.h"
 //TODO add delatetime to each update function
@@ -12,9 +13,17 @@ public:
 	virtual void Initialize() override {
 		//This is how to use a Class specified function
 		GStar::EventManager::Instance()->GetEventUnite("KeyBoardInput").Bind<KeyControlCompoenent,&KeyControlCompoenent::OnKeyControl>(this);
+		GStar::EventManager::Instance()->GetEventUnite("MouseInput").Bind<KeyControlCompoenent, &KeyControlCompoenent::OnMouseControl>(this);
 	}
 	virtual void Update(float deltatime) override {
 		my_transform->Translate(delta*deltatime, GStar::Base::SELF);
+	}
+	void OnMouseControl(GStar::Event* input) {
+		GStar::MouseInputEvent* event = static_cast<GStar::MouseInputEvent*>(input);
+		GStar::Vector3 rotation = my_transform->GetRoatation();
+		rotation[1] -= event->xpos;
+		rotation[0] -= event->ypos;
+		my_transform->SetRotation(rotation);
 	}
 	void OnKeyControl(GStar::Event* input) {
 		GStar::KeyInputEvent* event = static_cast<GStar::KeyInputEvent*>(input);

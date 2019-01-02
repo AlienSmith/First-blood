@@ -256,6 +256,9 @@
     <ClInclude Include="KeyInputEvent.h">
       <Filter>Entrance</Filter>
     </ClInclude>
+    <ClInclude Include="MouseInputEvent.h">
+      <Filter>Entrance</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">

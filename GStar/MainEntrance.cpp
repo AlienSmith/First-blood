@@ -12,7 +12,9 @@
 #include"GLError.h"
 #include"SceneInterface.h"
 #include"KeyInputEvent.h"
+#include"MouseInputEvent.h"
 MainEntrance* MainEntrance::instance = nullptr;
+const float MainEntrance::MouseSensitivity = 0.05f;
 void MainEntrance::SetUpAndRun()
 {
 	MainEntrance::instance = new MainEntrance();
@@ -73,7 +75,12 @@ void MainEntrance::Run()
 
 void MainEntrance::mouse_call(GLFWwindow * window, double xpos, double ypos)
 {
-	MainEntrance::instance->myController->mouse_callBack(window, xpos, ypos);
+	//MainEntrance::instance->myController->mouse_callBack(window, xpos, ypos);
+	MainEntrance::instance->MouseInput.Invoke(
+		new GStar::MouseInputEvent((xpos - MainEntrance::instance->lastX)*MainEntrance::MouseSensitivity,
+		(ypos - MainEntrance::instance->lastY)*MainEntrance::MouseSensitivity));
+	MainEntrance::instance->lastX = xpos;
+	MainEntrance::instance->lastY = ypos;
 }
 
 void MainEntrance::framebuffer_size_call(GLFWwindow * window, int width, int height)

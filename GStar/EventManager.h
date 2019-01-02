@@ -22,6 +22,7 @@ namespace GStar {
 				if (my_eventlist.GetNext()->Getid() == tempid) {
 					return *my_eventlist.GetNext();
 				}
+				my_eventlist.Move();
 			}
 			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Error, "Try to access eventunit %s has not been registered",string);
 		}

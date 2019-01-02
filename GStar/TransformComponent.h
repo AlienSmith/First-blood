@@ -3,6 +3,7 @@
 #include "Component.h"
 #include "View.h"
 #include "Object.h"
+#include "MyString.h"
 namespace GStar {
 	//Version 2.0 Check OLDCODE Folder for previous version
 	//Support default transform based on world, parent and self coordinate
@@ -16,6 +17,7 @@ namespace GStar {
 		Vector3 s;//scale z
 	};
 	enum Base { WORLD = 0, PARENT = 1, SELF=2 };
+	enum Layer { DEFAULT = 0, CAMERA = 1, LIGHT = 2 };
 	class TransformComponent:public Component {
 	public:
 		inline void Update(float deltatime) {}
@@ -33,13 +35,13 @@ namespace GStar {
 			component->SetParent(this);
 		}
 		//TODO do initialize in initialize list
-		TransformComponent(Object* object) :
+		TransformComponent(Object* object,const GStar::MyString& name) :
 			my_model{ Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0),Vector3(0, 0, 0), Vector3(0, 0, 0),Vector3(1, 1, 1) },
 			Component(TRANSFORM_WORD),
 			my_parent(nullptr),
-			my_Object(object) {
-			
-		}
+			my_Object(object),
+			my_layer(Layer::DEFAULT),
+			my_name(GStar::MyString::hash_str(name.GetString())){}
 		inline void SetTransform(const GStar::Vector3& transform,Base base) {
 			if (my_parent&& base == Base::PARENT) {
 				my_model.cp = transform;
@@ -74,7 +76,7 @@ namespace GStar {
 		inline const GStar::Vector3 GetRoatation() {
 			return my_model.r;
 		}
-		inline GStar::Matrix4 GetBaseMatrix() {
+		inline GStar::Matrix4 GetBaseMatrix() const {
 			//Apply parent rotation to it
 			GStar::Vector3 temprotation = my_model.r;
 			if (my_parent) {
@@ -164,16 +166,24 @@ namespace GStar {
 			temp.Getreference(2, 3) = tempPosition.z();	
 			return temp;
 		}
-		inline GStar::Matrix4 getModelI() {
-			return GStar::Matrix4(IDENTICAL_MATRIX);
-		}
 		inline void SetParent(TransformComponent* component) {
 			my_parent = component;
+		}inline Layer getLayer() const {
+			return my_layer;
+		}inline void SetLayer(GStar::Layer layer) {
+			my_layer = layer;
+		}
+		inline unsigned int GetName() const {
+			return my_name;
+		}inline void SetName(const GStar::MyString& name) {
+			my_name = GStar::MyString::hash_str(name.GetString());
 		}
 	private:
 		TransformData my_model;
 		SingleLinkedList<GStar::TransformComponent*> my_children;
 		GStar::TransformComponent* my_parent;
 		Object* my_Object;
+		Layer my_layer;
+		unsigned int my_name;
 	};
 }

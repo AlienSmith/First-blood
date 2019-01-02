@@ -6,6 +6,7 @@
 #include "UpdateObject.h"
 #include "Data.h"
 #include "LightManager.h"
+#include "CameraManager.h"
 bool GStar::ShaderComponent::Initialize(const ShaderParameters & parameters)
 {
 	my_shader = ShaderManager::Instance()->GetShader(parameters);
@@ -27,7 +28,7 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 		my_shader->setVec3("lightColor", LightManager::Instance()->GetLight());
 	}
 	Matrix4 view = Scene::Create()->getview();
-	my_shader->setMat4("view", Scene::Create()->getview(), GL_FALSE);
+	my_shader->setMat4("view",GStar::CameraManager::Instance()->GetInverseTransform(), GL_FALSE);
 	Matrix4 projection = Scene::Create()->getProjection();
 	my_shader->setMat4("projection", Scene::Create()->getProjection(), GL_FALSE);	
 	Matrix4 model = UpdateObject::OUT_Instance->GetTransformComponent()->getModel();

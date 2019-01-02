@@ -1,4 +1,5 @@
 #pragma once
+#include "Camera.h"
 class Scene;
 class GLFWwindow;
 //Manange call back event and FPS camera
@@ -18,7 +19,7 @@ public:
 	Controller(const Controller& other) = delete;
 	const Controller& operator = (const Controller& other) = delete;
 private:
-	GStar::Camera my_camera; //Generate camera Matrix
+	GStar::Camera my_camera;
 	Scene* my_Scene;
 	float xoffset;
 	float yoffset;

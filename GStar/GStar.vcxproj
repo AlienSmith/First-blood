@@ -123,6 +123,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CameraComponent.h" />
+    <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Delegate.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventManager.h" />
@@ -177,6 +178,7 @@
   <ItemGroup>
     <ClCompile Include="BitArray.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConsolePrint.cpp" />
     <ClCompile Include="Controller.cpp" />

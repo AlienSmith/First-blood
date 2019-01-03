@@ -110,7 +110,9 @@ namespace GStar {
 			temp[2][0] = -cx * sy;
 			temp[2][1] = sx;
 			temp[2][2] = cx * cy;
-			my_model.CR = GStar::Matrix4(temp).Dot(my_model.CR);
+			//Why should I mulitply it in this way?
+			//Why is it correct?
+			my_model.CR = my_model.CR.Dot(GStar::Matrix4(temp));
 			my_model.RotationUpdate = true;
 			return;
 		}inline void SetScale(float x, float y, float z) {

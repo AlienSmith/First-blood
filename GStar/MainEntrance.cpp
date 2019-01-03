@@ -75,7 +75,7 @@ void MainEntrance::Run()
 
 void MainEntrance::mouse_call(GLFWwindow * window, double xpos, double ypos)
 {
-	MainEntrance::instance->myController->mouse_callBack(window, xpos, ypos);
+	//MainEntrance::instance->myController->mouse_callBack(window, xpos, ypos);
 	MainEntrance::instance->MouseInput.Invoke(
 		new GStar::MouseInputEvent((xpos - MainEntrance::instance->lastX)*MainEntrance::MouseSensitivity,
 		(ypos - MainEntrance::instance->lastY)*MainEntrance::MouseSensitivity));

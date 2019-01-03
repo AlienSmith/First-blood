@@ -21,8 +21,8 @@ public:
 	void OnMouseControl(GStar::Event* input) {
 		GStar::MouseInputEvent* event = static_cast<GStar::MouseInputEvent*>(input);
 		GStar::Vector3 rotation = GStar::Vector3();
-		rotation[1] -= event->xpos;
-		rotation[0] -= event->ypos;
+		rotation[1] = -event->xpos;
+		rotation[0] = -event->ypos;
 		rotation[2] = 0;
 		my_transform->Rotate(rotation);
 	}

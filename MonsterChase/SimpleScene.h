@@ -31,11 +31,16 @@ public:
 		world.AddToRoot(TransformComponent);
 		TransformComponent->SetTransform(GStar::Vector3(1,2,3),GStar::Base::WORLD);
 		TransformComponent->SetScale(GStar::Vector3(1.0f,1.0f,1.0f));
+		TransformComponent->Rotate(60, 0, 0);
 		tempObject->AddComponent(TransformComponent);
-		GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
-		tempObject->AddComponent(component);
+
+		/*GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
+		tempObject->AddComponent(component);*/
+
+		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransformComponent, 2.0f);
+		tempObject->AddComponent(controllerComponent);
 		
-		Object* tempObject1 = world.AddObject();
+		/*Object* tempObject1 = world.AddObject();
 		tempObject1->AddComponent(new GStar::MeshComponent(cubeparameters));
 		tempObject1->AddComponent(new GStar::ShaderComponent(Shader2TL));
 		tempComponent = new GStar::TextureComponent();
@@ -45,12 +50,10 @@ public:
 		TransformComponent1 = new GStar::TransformComponent(tempObject1,"RotationCube2");
 		TransformComponent->AddChildren(TransformComponent1);
 		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f),GStar::Base::PARENT);
-		//TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f), GStar::Base::SELF);
-		//TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f), GStar::Base::WORLD);
 		tempObject1->AddComponent(TransformComponent1);
-		/*tempObject1->AddComponent(new SimpleRotation(TransformComponent1));*/
+		tempObject1->AddComponent(new SimpleRotation(TransformComponent1));
 
-		/*//Add Light Source
+		//Add Light Source
 		tempObject = world.AddObject();
 		tempObject->AddComponent(new GStar::MeshComponent(NT_cubeparameters));
 		tempObject->AddComponent(new GStar::ShaderComponent(NT_Shaders));
@@ -61,7 +64,7 @@ public:
 		tempObject->AddComponent(TransformComponent2);
 		//Add Camera
 
-		tempObject = world.AddObject();
+		/*tempObject = world.AddObject();
 		TransfomrComponent3 = new GStar::TransformComponent(tempObject, "Camera1");
 		world.AddToRoot(TransfomrComponent3);
 		TransfomrComponent3->SetTransform(GStar::Vector3(0.0f, 0.0f, 0.0f), GStar::Base::WORLD);

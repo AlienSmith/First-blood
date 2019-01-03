@@ -33,6 +33,7 @@ namespace GStar {
 					temp.Getreference(j, i) /= my_model.So.getValue(i);
 				}
 			}
+			LeftApplyingTransform(temp, Vector3(0, 0, 0));
 			return temp;
 		}
 		inline GStar::Matrix4 GetBaseMatrixInverse() const {
@@ -43,6 +44,7 @@ namespace GStar {
 					temp.Getreference(i, j) *= my_model.So.getValue(i);
 				}
 			}
+			LeftApplyingTransform(temp, Vector3(0, 0, 0));
 			return temp;
 		}
 		inline GStar::Vector3 GetTransform() const {
@@ -73,6 +75,7 @@ namespace GStar {
 			if (my_parent) {
 				delta = my_parent->GetBaseMatrixInverse()*my_model.Ca;
 			}
+			my_model.Ca += delta;
 			my_model.TransformUpdate = true;
 		}
 		inline void Rotate(const GStar::Vector3& rotation) {
@@ -175,11 +178,12 @@ namespace GStar {
 				LeftApplyingScale(my_model.MI, 1.0f / Scale);
 				GStar::Vector3 InverseOffset = -1.0f*(my_model.MI*offset);
 				LeftApplyingTransform(my_model.MI, InverseOffset);
+				float a = 0;
 			}
 		}
 		/*same with generating a 3*3 diagnoal matrix by the vector and use the up-left 3*3 part of the matrix to multiply it.
 		does not concern other parts of the matrix*/
-		inline void RightApplyingScale(GStar::Matrix4& matrix, const GStar::Vector3& Scale) {
+		inline void RightApplyingScale(GStar::Matrix4& matrix, const GStar::Vector3& Scale) const{
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 3; j++) {
 					matrix.Getreference(j, i) *= Scale.getValue(i);
@@ -188,14 +192,14 @@ namespace GStar {
 		}
 		/*same with generating a 3*3 diagnoal matrix by the vector,multiply it with the up-left 3*3 part of the matrix.
 		does not concern other parts of the matrix*/
-		inline void LeftApplyingScale(GStar::Matrix4& matrix, const GStar::Vector3& Scale) {
+		inline void LeftApplyingScale(GStar::Matrix4& matrix, const GStar::Vector3& Scale) const{
 			for (int i = 0; i < 3; i++) {
 				for (int j = 0; j < 3; j++) {
 					matrix.Getreference(i, j) *= Scale.getValue(i);
 				}
 			}
 		}
-		inline void LeftApplyingTransform(GStar::Matrix4& matrix, const GStar::Vector3& Scale) {
+		inline void LeftApplyingTransform(GStar::Matrix4& matrix, const GStar::Vector3& Scale) const{
 			for (int j = 0; j < 3; j++) {
 				matrix.Getreference(j, 3) = Scale.getValue(j);
 			}

@@ -5,8 +5,8 @@
 #include "Object.h"
 #include "MyString.h"
 namespace GStar {
-	//Version 2.0 Check OLDCODE Folder for previous version
-	//Support default transform based on world, parent and self coordinate
+	//Version 3.0 Check OLDCODE Folder for previous version
+	//transform must update after initialize, parent must be setted and updated before children transform can be used.
 	struct TransformData
 	{
 		GStar::Matrix4 M;

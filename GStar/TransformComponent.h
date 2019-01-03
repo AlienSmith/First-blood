@@ -50,7 +50,7 @@ namespace GStar {
 			return temp;
 		}
 		inline GStar::Vector3 GetTransform() const {
-			return Vector3(my_model.M.GetData(0, 3), my_model.M.GetData(1, 3), my_model.M.GetData(1, 3));
+			return Vector3(my_model.M.GetData(0, 3), my_model.M.GetData(1, 3), my_model.M.GetData(2, 3));
 		}
 		inline void SetTransform(const GStar::Vector3& transform, Base base) {
 			if (base == Base::PARENT) {
@@ -148,47 +148,48 @@ namespace GStar {
 				my_children.GetNext()->SetUpdate(RotateUpdate, TransformUpdate, false);
 				my_children.Move();
 			}
+		}inline void UpdateTransform() {
+			GStar::Matrix4 temp;//R2
+			if (my_model.RotationUpdate) {
+				temp = my_model.CR;// deltaR * R2
+				if (my_parent) {
+					temp = my_parent->GetBaseMatrix().Dot(temp);// deltar* R2 * R1
+				}
+				my_model.RotationUpdate = false;
+			}
+			else {
+				temp = GetBaseMatrix();
+			}
+			GStar::Vector3 offset = GetTransform();
+			if (my_model.TransformUpdate) {
+				if (my_parent) {
+					offset = my_parent->GetBaseMatrix()* my_model.Ca + my_parent->GetTransform();
+				}
+				else {
+					offset = my_model.Ca;
+				}
+				my_model.TransformUpdate = false;
+			}
+			if (my_model.ScaleUpdate) {
+				// Here set So to Sn invoke GetBaseMatix or Inverse will lead to
+				//mistake before set up the new M and MI
+				my_model.So = my_model.Sn;
+
+				my_model.ScaleUpdate = false;
+			}
+			GStar::Vector3 Scale = my_model.So;
+			my_model.M = temp;
+			my_model.MI = temp.T();
+			RightApplyingScale(my_model.M, Scale);
+			LeftApplyingScale(my_model.MI, 1.0f / Scale);
+			LeftApplyingTransform(my_model.M, offset);
+			GStar::Vector3 InverseOffset = -1.0f*(my_model.MI*offset);
+			LeftApplyingTransform(my_model.MI, InverseOffset);
 		}
 		inline void Update(float deltatime) {
 			if (my_model.RotationUpdate || my_model.TransformUpdate || my_model.ScaleUpdate) {
 				UpdateChildrenFlags();
-				GStar::Matrix4 temp;//R2
-				if (my_model.RotationUpdate) {
-					temp = my_model.CR;// deltaR * R2
-					if (my_parent) {
-						temp = temp.Dot(my_parent->GetBaseMatrix());// deltar* R2 * R1
-					}
-					my_model.RotationUpdate = false;
-				}
-				else {
-					temp = GetBaseMatrix();
-				}
-				GStar::Vector3 offset = GetTransform();
-				if (my_model.TransformUpdate) {
-					if (my_parent) {
-						offset = my_parent->GetBaseMatrix()* my_model.Ca;
-					}
-					else {
-						offset = my_model.Ca;
-					}
-					my_model.TransformUpdate = false;
-				}
-				if (my_model.ScaleUpdate) {
-					// Here set So to Sn invoke GetBaseMatix or Inverse will lead to
-					//mistake before set up the new M and MI
-					my_model.So = my_model.Sn;
-
-					my_model.ScaleUpdate = false;
-				}
-				GStar::Vector3 Scale = my_model.So;
-				my_model.M = temp;
-				my_model.MI = temp.T();
-				RightApplyingScale(my_model.M, Scale);
-				LeftApplyingScale(my_model.MI, 1.0f / Scale);
-				LeftApplyingTransform(my_model.M, offset);
-				GStar::Vector3 InverseOffset = -1.0f*(my_model.MI*offset);
-				LeftApplyingTransform(my_model.MI, InverseOffset);
-				float a = 0;
+				UpdateTransform();
 			}
 		}
 		/*same with generating a 3*3 diagnoal matrix by the vector and use the up-left 3*3 part of the matrix to multiply it.

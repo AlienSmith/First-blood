@@ -22,7 +22,7 @@ public:
 		GStar::World& world = GStar::World::Instance();
 		Object* tempObject = world.AddObject();
 
-		tempObject->AddComponent(new GStar::MeshComponent(cubeparameters));
+		tempObject->AddComponent(new GStar::MeshComponent(texturenormalcubeparameters));
 		tempObject->AddComponent(new GStar::ShaderComponent(Shader2TL));
 		GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 		tempComponent->Initialize(Default_Texture_BOX);
@@ -42,7 +42,7 @@ public:
 		tempObject->AddComponent(component);
 		tempObject = world.AddObject();
 
-		tempObject->AddComponent(new GStar::MeshComponent(cubeparameters));
+		tempObject->AddComponent(new GStar::MeshComponent(texturenormalcubeparameters));
 		tempObject->AddComponent(new GStar::ShaderComponent(Shader2TL));
 		GStar::TextureComponent* tempC = new GStar::TextureComponent();
 		tempC->Initialize(Default_TextureWall);

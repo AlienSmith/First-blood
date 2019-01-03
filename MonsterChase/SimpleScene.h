@@ -29,12 +29,12 @@ public:
 		tempObject->AddComponent(tempComponent);
 		TransformComponent = new GStar::TransformComponent(tempObject,"RotationCube1");
 		world.AddToRoot(TransformComponent);
-		TransformComponent->SetTransform(cubPosition[3],GStar::Base::WORLD);
-		TransformComponent->SetScale(GStar::Vector3(2.0f,.5f,3.0f));
+		TransformComponent->SetTransform(GStar::Vector3(1,2,3),GStar::Base::WORLD);
+		TransformComponent->SetScale(GStar::Vector3(1.0f,1.0f,1.0f));
 		tempObject->AddComponent(TransformComponent);
-		GStar::InterfaceComponent* component = new SimpleRotation();
-		tempObject->AddComponent(component);
-
+		//GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
+		//tempObject->AddComponent(component);
+		
 		Object* tempObject1 = world.AddObject();
 		tempObject1->AddComponent(new GStar::MeshComponent(cubeparameters));
 		tempObject1->AddComponent(new GStar::ShaderComponent(Shader2TL));
@@ -44,13 +44,13 @@ public:
 		tempObject1->AddComponent(tempComponent);
 		TransformComponent1 = new GStar::TransformComponent(tempObject1,"RotationCube2");
 		TransformComponent->AddChildren(TransformComponent1);
-		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f),GStar::Base::PARENT);
-		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f), GStar::Base::SELF);
-		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f), GStar::Base::WORLD);
+		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f),GStar::Base::PARENT);
+		//TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f), GStar::Base::SELF);
+		//TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 5.0f), GStar::Base::WORLD);
 		tempObject1->AddComponent(TransformComponent1);
-		tempObject1->AddComponent(new SimpleRotation());
+		/*tempObject1->AddComponent(new SimpleRotation(TransformComponent1));*/
 
-		//Add Light Source
+		/*//Add Light Source
 		tempObject = world.AddObject();
 		tempObject->AddComponent(new GStar::MeshComponent(NT_cubeparameters));
 		tempObject->AddComponent(new GStar::ShaderComponent(NT_Shaders));
@@ -67,7 +67,8 @@ public:
 		TransfomrComponent3->SetTransform(GStar::Vector3(0.0f, 0.0f, 0.0f), GStar::Base::WORLD);
 		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);
 		tempObject->AddComponent(controllerComponent);
-		GStar::CameraManager::Instance()->SetCurrentCamera(TransfomrComponent3);
+		GStar::CameraManager::Instance()->SetCurrentCamera(TransfomrComponent3);*/
+		
 	}
 	virtual void Update() {
 		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));

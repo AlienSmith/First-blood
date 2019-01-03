@@ -9,86 +9,84 @@ namespace GStar {
 	//Support default transform based on world, parent and self coordinate
 	struct TransformData
 	{
-		Vector3 r;//rotation x
-		Vector3 c;//total offset
-		Vector3 cp;//offset based on parent 
-		Vector3 cs;//offset based on self
-		Vector3 cw;//offset based on world
-		Vector3 s;//scale z
+		GStar::Matrix4 M;
+		GStar::Matrix4 MI;
+		GStar::Matrix4 DeltaR;
+		GStar::Vector3 Ca;
+		GStar::Vector3 So;
+		GStar::Vector3 Sn;
+		bool RotationUpdate;
+		bool TransformUpdate;
+		bool ScaleUpdate;
 	};
 	enum Base { WORLD = 0, PARENT = 1, SELF=2 };
 	enum Layer { DEFAULT = 0, CAMERA = 1, LIGHT = 2 };
-	class TransformComponent:public Component {
+	class TransformComponent :public Component {
 	public:
-		inline void Update(float deltatime) {}
-		inline void WorldUpdate(float deltatime) {
-			my_Object->Update( deltatime);
-			my_children.Resetcurrent();
-			while (my_children.HasNext()) {
-				//my_children.GetNext()->ParentSetModel(my_model);
-				my_children.GetNext()->WorldUpdate(deltatime);
-				my_children.Move();
-			} 
+		inline GStar::Matrix4 getModel() const { return my_model.M; }
+		inline GStar::Matrix4 getInverseModel() const { return my_model.MI; }
+		inline GStar::Matrix4 GetBaseMatrix() const {
+			//R = M * So^-1
+			GStar::Matrix4 temp = my_model.M;
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					temp.Getreference(j, i) /= my_model.So.getValue(i);
+				}
+			}
+			return temp;
 		}
-		inline void AddChildren(TransformComponent* component) {
-			my_children.Push(component);
-			component->SetParent(this);
+		inline GStar::Matrix4 GetBaseMatrixInverse() const {
+			//R^(-1) = So*M^-1, R^(-1) = Rt
+			GStar::Matrix4 temp = my_model.MI;
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					temp.Getreference(i, j) *= my_model.So.getValue(i);
+				}
+			}
+			return temp;
 		}
-		//TODO do initialize in initialize list
-		TransformComponent(Object* object,const GStar::MyString& name) :
-			my_model{ Vector3(0, 0, 0), Vector3(0, 0, 0), Vector3(0, 0, 0),Vector3(0, 0, 0), Vector3(0, 0, 0),Vector3(1, 1, 1) },
-			Component(TRANSFORM_WORD),
-			my_parent(nullptr),
-			my_Object(object),
-			my_layer(Layer::DEFAULT),
-			my_name(GStar::MyString::hash_str(name.GetString())){}
-		inline void SetTransform(const GStar::Vector3& transform,Base base) {
-			if (my_parent&& base == Base::PARENT) {
-				my_model.cp = transform;
+		inline GStar::Vector3 GetTransform() const {
+			return Vector3(my_model.M.GetData(0, 3), my_model.M.GetData(1, 3), my_model.M.GetData(1, 3));
+		}
+		inline void SetTransform(const GStar::Vector3& transform, Base base) {
+			if (base == Base::PARENT) {
+				my_model.Ca = transform;
 			}
 			else if (base == Base::SELF) {
-				my_model.cs = transform;
+				my_model.Ca = GetBaseMatrix()*transform;
 			}
-			my_model.cw = transform;
-
+			my_model.Ca = transform;
+			if (my_parent) {
+				my_model.Ca = my_parent->GetBaseMatrixInverse()*my_model.Ca;
+			}
+			my_model.TransformUpdate = true;
 		}
 		inline void Translate(const GStar::Vector3& translate, Base base) {
-			if (my_parent&& base == Base::PARENT) {
-				my_model.cp += translate;
+			Vector3 delta;
+			if (base == Base::PARENT) {
+				delta = translate;
 			}
 			else if (base == Base::SELF) {
-				my_model.cs += translate;
+				delta = GetBaseMatrix()*translate;
 			}
-			my_model.cw += translate;
-		}
-		inline const GStar::Vector3 GetTransform() const { 
-			return my_model.c;
-		}
-		inline void SetScale(const GStar::Vector3& Scale) {
-			my_model.s = Scale;
-		}
-		inline const GStar::Vector3 getScale() const {
-			return my_model.s;
-		}
-		inline void SetRotation(const GStar::Vector3& Scale) {
-			my_model.r = Scale;
-		}
-		inline const GStar::Vector3 GetRoatation() {
-			return my_model.r;
-		}
-		inline GStar::Matrix4 GetBaseMatrix() const {
-			//Apply parent rotation to it
-			GStar::Vector3 temprotation = my_model.r;
+			delta = translate;
 			if (my_parent) {
-				temprotation += my_parent->GetRoatation();
+				delta = my_parent->GetBaseMatrixInverse()*my_model.Ca;
 			}
+			my_model.TransformUpdate = true;
+		}
+		inline void Rotate(const GStar::Vector3& rotation) {
+			Rotate(rotation.x(), rotation.y(), rotation.z());
+			return;
+		}
+		inline void Rotate(float x, float y, float z) {
 			array_ff temp = IDENTICAL_MATRIX;
-			float sx = sin(temprotation.x()*PI / 180);
-			float sy = sin(temprotation.y()*PI / 180);
-			float sz = sin(temprotation.z()*PI / 180);
-			float cx = cos(temprotation.x()*PI / 180);
-			float cy = cos(temprotation.y()*PI / 180);
-			float cz = cos(temprotation.z()*PI / 180);
+			float sx = sin(x*PI / 180);
+			float sy = sin(y*PI / 180);
+			float sz = sin(z*PI / 180);
+			float cx = cos(x*PI / 180);
+			float cy = cos(y*PI / 180);
+			float cz = cos(z*PI / 180);
 			//Rotate z x y
 			temp[0][0] = cz * cy - sz * sx*sy;
 			temp[0][1] = -sz * cx;
@@ -99,72 +97,126 @@ namespace GStar {
 			temp[2][0] = -cx * sy;
 			temp[2][1] = sx;
 			temp[2][2] = cx * cy;
-			return GStar::Matrix4(temp);
+			my_model.DeltaR = GStar::Matrix4(temp);
+			my_model.RotationUpdate = true;
+			return;
+		}inline void SetScale(float x, float y, float z) {
+			my_model.Sn[0] = x;
+			my_model.Sn[1] = y;
+			my_model.Sn[2] = z;
+			my_model.ScaleUpdate = true;
+			return;
+		} inline void SetScale(const GStar::Vector3& scale) {
+			my_model.Sn = scale;
+			my_model.ScaleUpdate = true;
+			return;
 		}
-		inline GStar::Matrix4 getModel() {
-			// Pw = M*Pc, Pw = E*Pc + T, Pw = R*S*Pc + T
-			GStar::Matrix4 temp = GetBaseMatrix();
-			GStar::Vector3 tempPosition = my_model.cw;
-			GStar::Vector3 tempScale = my_model.s;
-			if (my_parent) {
-				tempPosition += my_parent->GetTransform();
-				tempPosition += my_parent->GetBaseMatrix() *my_model.cp;
-				tempScale *= my_parent->getScale();
-			}
-			tempPosition += temp *my_model.cs;
-			my_model.c = tempPosition;
-			//Scaling multiply by a diagnal matrix 
-			temp.Getreference(0, 0) *= tempScale.x();// multiply by a diagnal matrix inverse scaling
-			temp.Getreference(1, 0) *= tempScale.x();
-			temp.Getreference(2, 0) *= tempScale.x();
-
-			temp.Getreference(0, 1) *= tempScale.y();
-			temp.Getreference(1, 1) *= tempScale.y();
-			temp.Getreference(2, 1) *= tempScale.y();
-
-			temp.Getreference(0, 2) *= tempScale.z();
-			temp.Getreference(1, 2) *= tempScale.z();
-			temp.Getreference(2, 2) *= tempScale.z();
-			//Transform
-			temp.Getreference(0, 3) = tempPosition.x();
-			temp.Getreference(1, 3) = tempPosition.y();
-			temp.Getreference(2, 3) = tempPosition.z();
-			return GStar::Matrix4(temp);
+		inline bool TransformUpdate() const{ return my_model.TransformUpdate; }
+		inline bool RotationUpdate() const{ return  my_model.RotationUpdate; }
+		inline bool ScaleUpdate() const{ return my_model.ScaleUpdate; }
+		inline void SetUpdate(bool trans, bool rotate, bool scale) {
+			my_model.TransformUpdate |= trans;
+			my_model.RotationUpdate |= rotate;
+			my_model.ScaleUpdate |= scale;
+			return;
 		}
-		//Take Advantages of the calculation process make calculating inverse faster.
-		//TODO setting my_model.c before calling this function could reduce calculation.
-		inline GStar::Matrix4 getInverseModel() {
-			// Pc = Mi*Pw, Pc = Ei*P - Ei*T, Pc = Si*Rt*Pw - Si*Rt*T: Mi for inverse of M, Rt for transpose of R
-			GStar::Matrix4 temp = GetBaseMatrix();
-			GStar::Vector3 tempPosition = my_model.cw;
-			GStar::Vector3 tempScale = my_model.s;
-			if (my_parent) {
-				tempPosition += my_parent->GetTransform();
-				tempPosition += my_parent->GetBaseMatrix() *my_model.cp;
-				tempScale *= my_parent->getScale();
+		inline void Update(float deltatime) {
+			if (my_model.RotationUpdate || my_model.TransformUpdate || my_model.ScaleUpdate) {
+				GStar::Matrix4 temp = GetBaseMatrix();//R2
+				if (my_model.RotationUpdate) {
+					temp = my_model.DeltaR.Dot(temp);// deltaR * R2
+					if (my_parent) {
+						temp = temp.Dot(my_parent->GetBaseMatrix());// deltar* R2 * R1
+					}
+					my_model.RotationUpdate = false;
+				}
+				GStar::Vector3 offset = GetTransform();
+				if (my_model.TransformUpdate) {
+					if (my_parent) {
+						offset = my_parent->GetBaseMatrix()* my_model.Ca;
+					}
+					else {
+						offset = my_model.Ca;
+					}
+					my_model.TransformUpdate = false;
+				}
+				if (my_model.ScaleUpdate) {
+					// Here set So to Sn invoke GetBaseMatix or Inverse will lead to
+					//mistake before set up the new M and MI
+					my_model.So = my_model.Sn;
+
+					my_model.ScaleUpdate = false;
+				}
+				GStar::Vector3 Scale = my_model.So;
+				my_model.M = temp;
+				RightApplyingScale(my_model.M, Scale);
+				LeftApplyingTransform(my_model.M, offset);
+				my_model.MI = temp.T();
+				LeftApplyingScale(my_model.MI, 1.0f / Scale);
+				GStar::Vector3 InverseOffset = -1.0f*(my_model.MI*offset);
+				LeftApplyingTransform(my_model.MI, InverseOffset);
 			}
-			tempPosition += temp * my_model.cs;
-			my_model.c = tempPosition;
-			// Calculate the inverse matrix temp = R my_model.s = S my_model.c = T
-			temp = temp.T(); // get inverse of rotation matrix
-			temp.Getreference(0, 0) /= tempScale.x();
-			temp.Getreference(0, 1) /= tempScale.x();
-			temp.Getreference(0, 2) /= tempScale.x();
-
-			temp.Getreference(1, 0) /= tempScale.y();
-			temp.Getreference(1, 1) /= tempScale.y();
-			temp.Getreference(1, 2) /= tempScale.y();
-
-			temp.Getreference(2, 0) /= tempScale.z();
-			temp.Getreference(2, 1) /= tempScale.z();
-			temp.Getreference(2, 2) /= tempScale.z();
-
-
-			tempPosition = -1* temp * tempPosition;// Inverse of the position matrix
-			temp.Getreference(0, 3) = tempPosition.x();// apply position changes to the matrix
-			temp.Getreference(1, 3) = tempPosition.y();
-			temp.Getreference(2, 3) = tempPosition.z();	
-			return temp;
+		}
+		/*same with generating a 3*3 diagnoal matrix by the vector and use the up-left 3*3 part of the matrix to multiply it.
+		does not concern other parts of the matrix*/
+		inline void RightApplyingScale(GStar::Matrix4& matrix, const GStar::Vector3& Scale) {
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					matrix.Getreference(j, i) *= Scale.getValue(i);
+				}
+			}
+		}
+		/*same with generating a 3*3 diagnoal matrix by the vector,multiply it with the up-left 3*3 part of the matrix.
+		does not concern other parts of the matrix*/
+		inline void LeftApplyingScale(GStar::Matrix4& matrix, const GStar::Vector3& Scale) {
+			for (int i = 0; i < 3; i++) {
+				for (int j = 0; j < 3; j++) {
+					matrix.Getreference(i, j) *= Scale.getValue(i);
+				}
+			}
+		}
+		inline void LeftApplyingTransform(GStar::Matrix4& matrix, const GStar::Vector3& Scale) {
+			for (int j = 0; j < 3; j++) {
+				matrix.Getreference(j, 3) = Scale.getValue(j);
+			}
+		}
+		TransformComponent(Object* object, const GStar::MyString& name) :
+			my_model{ GStar::Matrix4(IDENTICAL_MATRIX),//M
+			GStar::Matrix4(IDENTICAL_MATRIX),//MI
+			GStar::Matrix4(IDENTICAL_MATRIX),//DeltaR
+			GStar::Vector3(0,0,0),//Ca
+			GStar::Vector3(1,1,1),//So
+			GStar::Vector3(1,1,1),//Sn
+			false,
+			false,
+			false,
+			},
+			Component(TRANSFORM_WORD),
+			my_parent(nullptr),
+			my_Object(object),
+			my_layer(Layer::DEFAULT),
+			my_name(GStar::MyString::hash_str(name.GetString())){}
+		inline void WorldUpdate(float deltatime) {
+			bool RotateUpdate = false;
+			bool TransformUpdate = false;
+			if (my_model.RotationUpdate) {
+				RotateUpdate = true;
+				TransformUpdate = true;
+			}
+			else if(my_model.TransformUpdate) {
+				TransformUpdate = true;
+			}
+			my_Object->Update(deltatime);
+			my_children.Resetcurrent();
+			while (my_children.HasNext()) {
+				my_children.GetNext()->SetUpdate(RotateUpdate,TransformUpdate,false);
+				my_children.GetNext()->WorldUpdate(deltatime);
+				my_children.Move();
+			} 
+		}
+		inline void AddChildren(TransformComponent* component) {
+			my_children.Push(component);
+			component->SetParent(this);
 		}
 		inline void SetParent(TransformComponent* component) {
 			my_parent = component;

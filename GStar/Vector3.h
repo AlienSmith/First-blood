@@ -27,6 +27,10 @@ namespace GStar {
 		static Vector3 Cross(const Vector3& A, const Vector3& B);
 		static float Volume(const Vector3& A, const Vector3& B,const Vector3& C);
 		//is the data guaranteed to be continues ?
+		inline float getValue(int index) const {
+			const float* x = &m_x;
+			return *(x + index);
+		}
 		inline float& operator[] (int index) {
 			float* x = &m_x;
 			return *(x + index);

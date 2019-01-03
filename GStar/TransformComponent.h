@@ -24,10 +24,8 @@ namespace GStar {
 	class TransformComponent :public Component {
 	public:
 		inline GStar::Matrix4 getModel() const { return my_model.M; }
-		inline GStar::Matrix4 getInverseModel() const { 
-			float a = 0.0f;
+		inline GStar::Matrix4 getInverseModel() const {
 			return my_model.MI; 
-		
 		}
 		inline GStar::Matrix4 GetBaseMatrix() const {
 			//R = M * So^-1

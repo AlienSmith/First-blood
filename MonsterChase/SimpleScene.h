@@ -34,6 +34,9 @@ public:
 		TransformComponent->SetScale(GStar::Vector3(1.0f,1.0f,1.0f));
 		TransformComponent->Rotate(60, 0, 0);
 		tempObject->AddComponent(TransformComponent);
+		KeyControlCompoenent* controller = new KeyControlCompoenent(TransformComponent,2.0f);
+		tempObject->AddComponent(controller);
+
 		//GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
 		//tempObject->AddComponent(component);
 
@@ -42,8 +45,8 @@ public:
 		world.AddToRoot(TransformComponent1);
 		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f),GStar::Base::WORLD);
 		tempObject1->AddComponent(TransformComponent1);
-		controllerComponent = new KeyControlCompoenent(TransformComponent1, 2.0f);
-		tempObject1->AddComponent(controllerComponent);
+		//controllerComponent = new KeyControlCompoenent(TransformComponent1, 2.0f);
+		//tempObject1->AddComponent(controllerComponent);
 		GStar::CameraManager::Instance()->SetCurrentCamera(TransformComponent1);
 
 		/*GStar::InterfaceComponent* component1 = new SimpleRotation(TransformComponent1);

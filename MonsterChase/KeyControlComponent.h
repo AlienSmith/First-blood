@@ -16,8 +16,7 @@ public:
 		GStar::EventManager::Instance()->GetEventUnite("MouseInput").Bind<KeyControlCompoenent, &KeyControlCompoenent::OnMouseControl>(this);
 	}
 	virtual void Update(float deltatime) override {
-		my_transform->Translate(delta, GStar::Base::SELF);
-		float a = 0;
+		my_transform->Translate(delta*deltatime, GStar::Base::SELF);
 	}
 	void OnMouseControl(GStar::Event* input) {
 		GStar::MouseInputEvent* event = static_cast<GStar::MouseInputEvent*>(input);
@@ -60,7 +59,6 @@ public:
 				delta[0] = speed;
 			}
 		}
-		my_transform->Translate(delta, GStar::Base::SELF);
 	}
 	virtual void Terminate() override {}
 	~KeyControlCompoenent() {}

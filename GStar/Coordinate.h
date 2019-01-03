@@ -75,7 +75,7 @@ namespace GStar {
 		this->worldTothis = tempmatrix;
 	}
 
-	inline void Coordinate::move(float x, float y, float z)
+	/*inline void Coordinate::move(float x, float y, float z)
 	{
 		array_ff temp = IDENTICAL_MATRIX;
 		temp[0][3] = x;
@@ -84,9 +84,9 @@ namespace GStar {
 		Matrix4 tempmatrix = this->worldTothis.Dot(Matrix4(temp));
 		this->worldTothis = tempmatrix;
 
-	}
+	}*/
 
-	inline Vector3 Coordinate::Apply(Vector3 & object)
+	/*inline Vector3 Coordinate::Apply(Vector3 & object)
 	{
 
 		return this->worldTothis*object;
@@ -95,7 +95,7 @@ namespace GStar {
 	inline Vector3 Coordinate::Reverse(Vector3 & object)
 	{
 		return this->worldTothis.I()*object;
-	}
+	}*/
 
 	//TODO add a move constructor and operator for Matrix4
 	//TODO add rotation arround a Axies

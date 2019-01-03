@@ -377,12 +377,10 @@ namespace GStar {
 
 	inline void Matrix4::value_ptr(const Matrix4 & matrix,array_f & temparray)
 	{   // Since OpenGL use column major order so we need to transpose ower matrix
-		Matrix4 tempmatrix;
-		tempmatrix = matrix.T();
-		const array_ff& TA = tempmatrix.Get();
+		const array_ff& TA = matrix.Get();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
-				temparray[i*SIZE + j] = TA[i][j];
+				temparray[i*SIZE + j] = TA[j][i];
 			}
 		}
 	}

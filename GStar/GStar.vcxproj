@@ -225,6 +225,7 @@
     <None Include="NTexture.frs" />
     <None Include="NTexture.ves" />
     <None Include="TLVertexColor.frs" />
+    <None Include="TLVertexColor.ves" />
     <None Include="VertexColor.frs" />
     <None Include="VertexColor.ves" />
     <None Include="VertexShader.shader" />

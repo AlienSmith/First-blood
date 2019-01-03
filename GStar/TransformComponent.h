@@ -15,9 +15,9 @@ namespace GStar {
 		GStar::Vector3 Ca;
 		GStar::Vector3 So;
 		GStar::Vector3 Sn;
-		bool RotationUpdate;
-		bool TransformUpdate;
-		bool ScaleUpdate;
+		bool RotationUpdate : 1;
+		bool TransformUpdate : 1;
+		bool ScaleUpdate : 1;
 	};
 	enum Base { WORLD = 0, PARENT = 1, SELF=2 };
 	enum Layer { DEFAULT = 0, CAMERA = 1, LIGHT = 2 };

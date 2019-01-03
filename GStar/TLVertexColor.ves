@@ -1,0 +1,17 @@
+#version 330 core
+layout(location = 0) in vec3 aPos; // the position variable has attribute position 0
+layout(location = 1) in vec2 aTextCoord;// the color at attribute 1
+layout(location = 2) in vec3 aNromal;
+
+out vec2 TextCoord;
+
+uniform mat4 model;
+uniform mat4 view;
+uniform mat4 projection;
+void main()
+{
+	vec4 temp = projection*view*model*vec4(aPos, 1.0f); // see how we directly give a vec3 to vec4's constructor
+	gl_Position = temp;
+	//gl_Position = vec4(temp.x/temp.w,temp.y/temp.w,temp.z/temp.w,1.0f);
+	TextCoord = aTextCoord;
+}

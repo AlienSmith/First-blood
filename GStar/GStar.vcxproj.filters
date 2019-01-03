@@ -317,6 +317,9 @@
     <None Include="TLVertexColor.frs">
       <Filter>OpenGl\Shaders\NewShaders</Filter>
     </None>
+    <None Include="TLVertexColor.ves">
+      <Filter>OpenGl\Shaders\NewShaders</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

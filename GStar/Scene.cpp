@@ -51,7 +51,7 @@ void Scene::UpdateTime()
 
 unsigned int Scene::LoadMesh(const MeshParameters & parameters) const
 {
-	int entrysize = parameters.positionsize + parameters.texturesize;
+	int entrysize = parameters.positionsize + parameters.texturesize + parameters.normalsize;
 	unsigned int TempVAO;
 	glGenVertexArrays(1, &TempVAO);//claim a name different function from VBO
 	glBindVertexArray(TempVAO);
@@ -73,6 +73,9 @@ unsigned int Scene::LoadMesh(const MeshParameters & parameters) const
 	if (parameters.texturesize != 0) {
 		glVertexAttribPointer(1, parameters.texturesize, GL_FLOAT, GL_FASTEST, entrysize * sizeof(float), (void*)(parameters.positionsize * sizeof(float)));
 		glEnableVertexAttribArray(1);
+	}if (parameters.normalsize != 0) {
+		glVertexAttribPointer(2, parameters.normalsize, GL_FLOAT, GL_FASTEST, entrysize * sizeof(float), (void*)((parameters.positionsize+parameters.texturesize) * sizeof(float)));
+		glEnableVertexAttribArray(2);
 	}
 
 	return TempVAO;

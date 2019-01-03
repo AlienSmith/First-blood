@@ -21,6 +21,7 @@ public:
 	virtual void Start() {
 		GStar::World& world = GStar::World::Instance();
 		Object* tempObject = world.AddObject();
+
 		tempObject->AddComponent(new GStar::MeshComponent(cubeparameters));
 		tempObject->AddComponent(new GStar::ShaderComponent(Shader2TL));
 		GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
@@ -29,30 +30,24 @@ public:
 		tempObject->AddComponent(tempComponent);
 		TransformComponent = new GStar::TransformComponent(tempObject,"RotationCube1");
 		world.AddToRoot(TransformComponent);
-		TransformComponent->SetTransform(GStar::Vector3(1,2,3),GStar::Base::WORLD);
+		TransformComponent->SetTransform(GStar::Vector3(0,0,-2),GStar::Base::WORLD);
 		TransformComponent->SetScale(GStar::Vector3(1.0f,1.0f,1.0f));
 		TransformComponent->Rotate(60, 0, 0);
 		tempObject->AddComponent(TransformComponent);
 
-		/*GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
-		tempObject->AddComponent(component);*/
+		//GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
+		//tempObject->AddComponent(component);
 
-		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransformComponent, 2.0f);
-		tempObject->AddComponent(controllerComponent);
-		
-		/*Object* tempObject1 = world.AddObject();
-		tempObject1->AddComponent(new GStar::MeshComponent(cubeparameters));
-		tempObject1->AddComponent(new GStar::ShaderComponent(Shader2TL));
-		tempComponent = new GStar::TextureComponent();
-		tempComponent->Initialize(Default_TextureWall);
-		tempComponent->Initialize(Default_TextureFace);
-		tempObject1->AddComponent(tempComponent);
+		Object* tempObject1 = world.AddObject();
 		TransformComponent1 = new GStar::TransformComponent(tempObject1,"RotationCube2");
-		TransformComponent->AddChildren(TransformComponent1);
-		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f),GStar::Base::PARENT);
+		world.AddToRoot(TransformComponent1);
+		TransformComponent1->SetTransform(GStar::Vector3(0.0f, 0.0f, 0.0f),GStar::Base::PARENT);
 		tempObject1->AddComponent(TransformComponent1);
-		tempObject1->AddComponent(new SimpleRotation(TransformComponent1));
+		GStar::CameraManager::Instance()->SetCurrentCamera(TransformComponent1);
 
+		GStar::InterfaceComponent* component1 = new SimpleRotation(TransformComponent1);
+		tempObject1->AddComponent(component1);
+		/*
 		//Add Light Source
 		tempObject = world.AddObject();
 		tempObject->AddComponent(new GStar::MeshComponent(NT_cubeparameters));
@@ -63,15 +58,13 @@ public:
 		TransformComponent2->SetTransform(cubPosition[4], GStar::Base::WORLD);
 		tempObject->AddComponent(TransformComponent2);
 		//Add Camera
-
-		/*tempObject = world.AddObject();
+		tempObject = world.AddObject();
 		TransfomrComponent3 = new GStar::TransformComponent(tempObject, "Camera1");
 		world.AddToRoot(TransfomrComponent3);
 		TransfomrComponent3->SetTransform(GStar::Vector3(0.0f, 0.0f, 0.0f), GStar::Base::WORLD);
 		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);
 		tempObject->AddComponent(controllerComponent);
 		GStar::CameraManager::Instance()->SetCurrentCamera(TransfomrComponent3);*/
-		
 	}
 	virtual void Update() {
 		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));

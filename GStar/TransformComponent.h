@@ -24,7 +24,11 @@ namespace GStar {
 	class TransformComponent :public Component {
 	public:
 		inline GStar::Matrix4 getModel() const { return my_model.M; }
-		inline GStar::Matrix4 getInverseModel() const { return my_model.MI; }
+		inline GStar::Matrix4 getInverseModel() const { 
+			float a = 0.0f;
+			return my_model.MI; 
+		
+		}
 		inline GStar::Matrix4 GetBaseMatrix() const {
 			//R = M * So^-1
 			GStar::Matrix4 temp = my_model.M;
@@ -69,9 +73,12 @@ namespace GStar {
 				delta = translate;
 			}
 			else if (base == Base::SELF) {
-				delta = GetBaseMatrix()*translate;
+				GStar::Matrix4 matrix = GetBaseMatrix();
+				delta = matrix*translate;
 			}
-			delta = translate;
+			else {
+				delta = translate;
+			}
 			if (my_parent) {
 				delta = my_parent->GetBaseMatrixInverse()*my_model.Ca;
 			}

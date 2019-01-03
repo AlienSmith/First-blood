@@ -28,6 +28,7 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 		my_shader->setVec3("lightColor", LightManager::Instance()->GetLight());
 	}
 	Matrix4 view = Scene::Create()->getview();
+	//Matrix4 view = CameraManager::Instance()->GetInverseTransform();
 	//my_shader->setMat4("view",CameraManager::Instance()->GetInverseTransform(), GL_FALSE);
 	my_shader->setMat4("view", view, GL_FALSE);
 	Matrix4 projection = Scene::Create()->getProjection();

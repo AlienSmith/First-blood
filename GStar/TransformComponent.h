@@ -61,7 +61,10 @@ namespace GStar {
 			else if (base == Base::SELF) {
 				my_model.Ca = GetBaseMatrix()*transform;
 			}
-			my_model.Ca = transform;
+			else
+			{
+				my_model.Ca = transform;
+			}
 			if (my_parent) {
 				my_model.Ca = my_parent->GetBaseMatrixInverse()*my_model.Ca;
 			}
@@ -179,10 +182,10 @@ namespace GStar {
 				}
 				GStar::Vector3 Scale = my_model.So;
 				my_model.M = temp;
-				RightApplyingScale(my_model.M, Scale);
-				LeftApplyingTransform(my_model.M, offset);
 				my_model.MI = temp.T();
+				RightApplyingScale(my_model.M, Scale);
 				LeftApplyingScale(my_model.MI, 1.0f / Scale);
+				LeftApplyingTransform(my_model.M, offset);
 				GStar::Vector3 InverseOffset = -1.0f*(my_model.MI*offset);
 				LeftApplyingTransform(my_model.MI, InverseOffset);
 				float a = 0;

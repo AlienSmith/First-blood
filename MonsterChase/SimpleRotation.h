@@ -7,8 +7,7 @@ public:
 	virtual void Initialize() override {}
 	virtual void Update(float deltatime) override {
 		//my_transform->Rotate(GStar::Vector3(1.0f, 0.0f, 0.0f));
-		deltatime;
-		my_transform->Translate(GStar::Vector3(0.0f, 0.0f, -1.0f*deltatime),GStar::Base::SELF);
+		my_transform->Translate(GStar::Vector3(0.0f, 0.0f, -0.01f),GStar::Base::SELF);
 	}
 	virtual void Terminate() override {}
 	~SimpleRotation() {}

@@ -11,7 +11,7 @@ namespace GStar {
 	{
 		GStar::Matrix4 M;
 		GStar::Matrix4 MI;
-		GStar::Matrix4 DeltaR;
+		GStar::Matrix4 CR;
 		GStar::Vector3 Ca;
 		GStar::Vector3 So;
 		GStar::Vector3 Sn;
@@ -97,7 +97,7 @@ namespace GStar {
 			temp[2][0] = -cx * sy;
 			temp[2][1] = sx;
 			temp[2][2] = cx * cy;
-			my_model.DeltaR = GStar::Matrix4(temp);
+			my_model.CR = GStar::Matrix4(temp).Dot(my_model.CR);
 			my_model.RotationUpdate = true;
 			return;
 		}inline void SetScale(float x, float y, float z) {
@@ -120,15 +120,35 @@ namespace GStar {
 			my_model.ScaleUpdate |= scale;
 			return;
 		}
+		inline void UpdateChildrenFlags(){
+			bool RotateUpdate = false;
+			bool TransformUpdate = false;
+			if (my_model.RotationUpdate) {
+				RotateUpdate = true;
+				TransformUpdate = true;
+			}
+			else if (my_model.TransformUpdate) {
+				TransformUpdate = true;
+			}
+			my_children.Resetcurrent();
+			while (my_children.HasNext()) {
+				my_children.GetNext()->SetUpdate(RotateUpdate, TransformUpdate, false);
+				my_children.Move();
+			}
+		}
 		inline void Update(float deltatime) {
 			if (my_model.RotationUpdate || my_model.TransformUpdate || my_model.ScaleUpdate) {
-				GStar::Matrix4 temp = GetBaseMatrix();//R2
+				UpdateChildrenFlags();
+				GStar::Matrix4 temp;//R2
 				if (my_model.RotationUpdate) {
-					temp = my_model.DeltaR.Dot(temp);// deltaR * R2
+					temp = my_model.CR;// deltaR * R2
 					if (my_parent) {
 						temp = temp.Dot(my_parent->GetBaseMatrix());// deltar* R2 * R1
 					}
 					my_model.RotationUpdate = false;
+				}
+				else {
+					temp = GetBaseMatrix();
 				}
 				GStar::Vector3 offset = GetTransform();
 				if (my_model.TransformUpdate) {
@@ -197,19 +217,9 @@ namespace GStar {
 			my_layer(Layer::DEFAULT),
 			my_name(GStar::MyString::hash_str(name.GetString())){}
 		inline void WorldUpdate(float deltatime) {
-			bool RotateUpdate = false;
-			bool TransformUpdate = false;
-			if (my_model.RotationUpdate) {
-				RotateUpdate = true;
-				TransformUpdate = true;
-			}
-			else if(my_model.TransformUpdate) {
-				TransformUpdate = true;
-			}
 			my_Object->Update(deltatime);
 			my_children.Resetcurrent();
 			while (my_children.HasNext()) {
-				my_children.GetNext()->SetUpdate(RotateUpdate,TransformUpdate,false);
 				my_children.GetNext()->WorldUpdate(deltatime);
 				my_children.Move();
 			} 

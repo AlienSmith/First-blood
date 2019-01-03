@@ -32,8 +32,8 @@ public:
 		TransformComponent->SetTransform(GStar::Vector3(1,2,3),GStar::Base::WORLD);
 		TransformComponent->SetScale(GStar::Vector3(1.0f,1.0f,1.0f));
 		tempObject->AddComponent(TransformComponent);
-		//GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
-		//tempObject->AddComponent(component);
+		GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
+		tempObject->AddComponent(component);
 		
 		Object* tempObject1 = world.AddObject();
 		tempObject1->AddComponent(new GStar::MeshComponent(cubeparameters));

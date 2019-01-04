@@ -29,6 +29,7 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 		my_shader->setVec3("lightColor", Vector3(1,1,1));
 		my_shader->setVec3("lightPos", LightManager::Instance()->GetLight());
 		my_shader->setMat4("BaseMatrix", UpdateObject::OUT_Instance->GetTransformComponent()->GetBaseMatrix(),GL_FALSE);
+		my_shader->setVec3("viewPos", CameraManager::Instance()->GetTransform());
 	}
 	//Matrix4 view = Scene::Create()->getview();
 	my_shader->setMat4("view",CameraManager::Instance()->GetInverseTransform(), GL_FALSE);

@@ -84,6 +84,9 @@ namespace GStar {
 		inline GStar::Matrix4 GetInverseTransform() {
 			return currentComponent->getInverseModel();
 		}
+		inline GStar::Vector3 GetTransform() {
+			return currentComponent->GetTransform();
+		}
 	private:
 		static CameraManager* instance;
 		SingleLinkedList<TransformComponent*> cameracomponents;

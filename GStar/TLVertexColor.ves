@@ -4,28 +4,18 @@ layout(location = 1) in vec2 aTextCoord;// the color at attribute 1
 layout(location = 2) in vec3 aNormal;
 
 out vec2 TextCoord;
-out vec3 diffuse;
+out vec3 fragPos;
+out vec3 Normal;
+
+uniform mat4 BaseMatrix;
 
 uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
-
-uniform vec3 viewPos;
-uniform vec3 ambientLight;
-uniform vec3 lightColor;
-uniform mat4 BaseMatrix;
-uniform vec3 lightPos;
 void main()
 {
 	gl_Position = projection*view*model*vec4(aPos, 1.0f);
 	TextCoord = aTextCoord;
-	vec3 Normal = vec3(BaseMatrix*vec4(aNormal, 1.0f));
-	vec3 fragPos = vec3(model*vec4(aPos, 1.0f));
-	vec3 lightDir = normalize(lightPos - fragPos);
-	vec3 viewDir = normalize(viewPos-fragPos);
-	// should use normal direction vector diveded by length to represent the decrease of light strength as distance increase
-	vec3 reflectDir = reflect(-lightDir,Normal);
-	float spec = pow(max(dot(viewDir,reflectDir),0.0),32);
-	float diff = max(dot(lightDir,Normal),0.0);
-	diffuse = lightColor*(diff*0.5 + spec*0.5 + ambientLight);
+	Normal = vec3(BaseMatrix*vec4(aNormal, 1.0f));
+	fragPos = vec3(model*vec4(aPos, 1.0f));
 }

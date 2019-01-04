@@ -10,6 +10,7 @@ uniform mat4 model;
 uniform mat4 view;
 uniform mat4 projection;
 
+uniform vec3 ambientLight;
 uniform vec3 lightColor;
 uniform mat4 BaseMatrix;
 uniform vec3 lightPos;
@@ -21,5 +22,5 @@ void main()
 	vec3 fragPos = vec3(model*vec4(aPos, 1.0f));
 	vec3 lightDir = normalize(lightPos - fragPos);
 	float diff = max(dot(lightDir,Normal),0.0);
-	diffuse = lightColor*diff;
+	diffuse = lightColor*diff + ambientLight;
 }

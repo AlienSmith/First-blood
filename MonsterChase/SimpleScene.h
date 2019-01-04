@@ -11,6 +11,7 @@
 #include"SimpleRotation.h"
 #include"KeyControlComponent.h"
 #include"CameraManager.h"
+#include"LightManager.h"
 class SimpleScene : public GStar::SceneInterface {
 public:
 	SimpleScene():GStar::SceneInterface(),TransformComponent(nullptr),TransformComponent1(nullptr) {
@@ -62,8 +63,8 @@ public:
 		TransformComponent2->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f),GStar::Base::WORLD);
 		tempObject1->AddComponent(TransformComponent2);
 		TransformComponent2->UpdateTransform();
-		controllerComponent = new KeyControlCompoenent(TransformComponent2, 2.0f);
-		tempObject1->AddComponent(controllerComponent);
+		//controllerComponent = new KeyControlCompoenent(TransformComponent2, 2.0f);
+		//tempObject1->AddComponent(controllerComponent);
 		GStar::CameraManager::Instance()->SetCurrentCamera(TransformComponent2);
 
 		tempObject = world.AddObject();
@@ -73,21 +74,13 @@ public:
 		TransfomrComponent3 = new GStar::TransformComponent(tempObject, "Light1");
 		world.AddToRoot(TransfomrComponent3);
 		TransfomrComponent3->SetTransform(cubPosition[4], GStar::Base::WORLD);
+		TransfomrComponent3->SetScale(.1, .1, .1);
 		tempObject->AddComponent(TransfomrComponent3);
 		TransfomrComponent3->UpdateTransform();
-
-		/*GStar::InterfaceComponent* component1 = new SimpleRotation(TransformComponent1);
-		tempObject1->AddComponent(component1);*/
-		/*
-		//Add Light Source
-		//Add Camera
-		tempObject = world.AddObject();
-		TransfomrComponent3 = new GStar::TransformComponent(tempObject, "Camera1");
-		world.AddToRoot(TransfomrComponent3);
-		TransfomrComponent3->SetTransform(GStar::Vector3(0.0f, 0.0f, 0.0f), GStar::Base::WORLD);
+		GStar::LightManager::Instance()->SetCurrentLight(TransfomrComponent3);
 		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);
 		tempObject->AddComponent(controllerComponent);
-		GStar::CameraManager::Instance()->SetCurrentCamera(TransfomrComponent3);*/
+		
 	}
 	virtual void Update() {
 		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));

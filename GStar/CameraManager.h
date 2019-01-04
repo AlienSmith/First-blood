@@ -41,7 +41,7 @@ namespace GStar {
 			}
 			return result;
 		}
-		inline bool hasThisCamera(GStar::TransformComponent* component) {
+		inline bool hasThisCamera(const GStar::TransformComponent* component) {
 			cameracomponents.Resetcurrent();
 			while (cameracomponents.HasNext()) {
 				if (cameracomponents.GetNext() == component) {
@@ -64,7 +64,7 @@ namespace GStar {
 			}
 			return false;
 		}
-		inline bool SetCurrentCamera(GStar::MyString string) {
+		inline bool SetCurrentCamera(const GStar::MyString& string) {
 			unsigned int id = GStar::MyString::hash_str(string.GetString());
 			cameracomponents.Resetcurrent();
 			while (cameracomponents.HasNext()) {

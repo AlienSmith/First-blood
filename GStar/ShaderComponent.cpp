@@ -30,6 +30,12 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 		my_shader->setVec3("lightPos", LightManager::Instance()->GetLight());
 		my_shader->setMat4("BaseMatrix", UpdateObject::OUT_Instance->GetTransformComponent()->GetBaseMatrix(),GL_FALSE);
 		my_shader->setVec3("viewPos", CameraManager::Instance()->GetTransform());
+		
+		my_shader->setVec3("material.ambient", GStar::Vector3(0.1f,	0.1f,	0.1f));
+		my_shader->setVec3("material.diffuse", GStar::Vector3(0.5f,	0.5f,	0.5f));
+		my_shader->setVec3("material.specular", GStar::Vector3(0.7f,	0.7f,	0.7));
+		my_shader->setFloat("matrial.shininess", 32.0f);
+
 	}
 	//Matrix4 view = Scene::Create()->getview();
 	my_shader->setMat4("view",CameraManager::Instance()->GetInverseTransform(), GL_FALSE);

@@ -224,6 +224,8 @@
     <None Include="Exercises1.4.ves" />
     <None Include="NTexture.frs" />
     <None Include="NTexture.ves" />
+    <None Include="TextureMap.frs" />
+    <None Include="TextureMap.ves" />
     <None Include="TLVertexColor.frs" />
     <None Include="TLVertexColor.ves" />
     <None Include="VertexColor.frs" />
@@ -233,6 +235,8 @@
   </ItemGroup>
   <ItemGroup>
     <Image Include="awesomeface.png" />
+    <Image Include="IronBox_specular.png" />
+    <Image Include="IronBox.png" />
     <Image Include="wall.jpg" />
     <Image Include="woodcontainer.jpg" />
   </ItemGroup>

@@ -24,18 +24,22 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 		my_shader->setInt("texture1", 0);
 	}if (t2) {
 		my_shader->setInt("texture2", 1);
-	}if (lighting) {
-		my_shader->setVec3("ambientLight", LightManager::Instance()->GetambientLight());
-		my_shader->setVec3("lightColor", Vector3(1,1,1));
+	}if (lighting || lightmapping) {
 		my_shader->setVec3("lightPos", LightManager::Instance()->GetLight());
 		my_shader->setMat4("BaseMatrix", UpdateObject::OUT_Instance->GetTransformComponent()->GetBaseMatrix(),GL_FALSE);
 		my_shader->setVec3("viewPos", CameraManager::Instance()->GetTransform());
 		
-		my_shader->setVec3("material.ambient", GStar::Vector3(0.1f,	0.1f,	0.1f));
-		my_shader->setVec3("material.diffuse", GStar::Vector3(0.5f,	0.5f,	0.5f));
-		my_shader->setVec3("material.specular", GStar::Vector3(0.7f,	0.7f,	0.7));
 		my_shader->setFloat("matrial.shininess", 32.0f);
 
+	}if (lightmapping) {
+	
+	}
+	else if(lighting) {
+		my_shader->setVec3("ambientLight", LightManager::Instance()->GetambientLight());
+		my_shader->setVec3("lightColor", Vector3(1, 1, 1));
+		my_shader->setVec3("material.ambient", GStar::Vector3(0.1f, 0.1f, 0.1f));
+		my_shader->setVec3("material.diffuse", GStar::Vector3(0.5f, 0.5f, 0.5f));
+		my_shader->setVec3("material.specular", GStar::Vector3(0.7f, 0.7f, 0.7));
 	}
 	//Matrix4 view = Scene::Create()->getview();
 	my_shader->setMat4("view",CameraManager::Instance()->GetInverseTransform(), GL_FALSE);
@@ -54,7 +58,8 @@ GStar::ShaderComponent::ShaderComponent(const ShaderParameters & parameters):
 	my_shader(nullptr),
 	t1(parameters.texture1),
 	t2(parameters.texture2),
-	lighting(parameters.lighting)
+	lighting(parameters.lighting),
+	lightmapping(parameters.lightmapping)
 {
 	Initialize(parameters);
 }

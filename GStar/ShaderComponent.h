@@ -16,8 +16,9 @@ namespace GStar {
 		ShaderComponent(const ShaderParameters& parameters);
 	private:
 		Shader* my_shader;
-		bool t1;
-		bool t2;
-		bool lighting;
+		bool t1:1;
+		bool t2:1;
+		bool lighting:1;
+		bool lightmapping:1;
 	};
 }

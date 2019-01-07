@@ -276,6 +276,12 @@
     <Image Include="awesomeface.png">
       <Filter>OpenGl\Texture</Filter>
     </Image>
+    <Image Include="IronBox.png">
+      <Filter>OpenGl\Texture</Filter>
+    </Image>
+    <Image Include="IronBox_specular.png">
+      <Filter>OpenGl\Texture</Filter>
+    </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Excercise1.6.ves">
@@ -318,6 +324,12 @@
       <Filter>OpenGl\Shaders\NewShaders</Filter>
     </None>
     <None Include="TLVertexColor.ves">
+      <Filter>OpenGl\Shaders\NewShaders</Filter>
+    </None>
+    <None Include="TextureMap.frs">
+      <Filter>OpenGl\Shaders\NewShaders</Filter>
+    </None>
+    <None Include="TextureMap.ves">
       <Filter>OpenGl\Shaders\NewShaders</Filter>
     </None>
   </ItemGroup>

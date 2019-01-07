@@ -46,7 +46,7 @@ public:
 		tempObject->AddComponent(new GStar::MeshComponent(texturenormalcubeparameters));
 		tempObject->AddComponent(new GStar::ShaderComponent(Shader2TL));
 		GStar::TextureComponent* tempC = new GStar::TextureComponent();
-		tempC->Initialize(Default_TextureWall);
+		tempC->Initialize(Default_Texture_Iron_Box);
 		tempC->Initialize(Default_TextureFace);
 		tempObject->AddComponent(tempC);
 		TransformComponent1 = new GStar::TransformComponent(tempObject, "RotationCube2");

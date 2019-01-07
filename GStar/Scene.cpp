@@ -132,8 +132,8 @@ unsigned int Scene::LoadTexture(const TextureParameters& parameters) const
 {
 	//load texture
 	//stbi_set_flip_vertically_on_load(true);// Flip the picture by x axies
-	int width, height, nrChannels; //out parameter
-	unsigned char *data = stbi_load(parameters.textureroute, &width, &height, &nrChannels, 0);
+	int width, height, nrComponents; //out parameter
+	unsigned char *data = stbi_load(parameters.textureroute, &width, &height, &nrComponents, 0);
 
 	unsigned int texture;// the texture object
 	glGenTextures(1, &texture); // claim a name 1 texture out parameter name.
@@ -145,7 +145,14 @@ unsigned int Scene::LoadTexture(const TextureParameters& parameters) const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	///load texture data into graphic card
 	if (data) {
-		glTexImage2D(GL_TEXTURE_2D, 0, parameters.inchannel, width, height, 0, parameters.outchannel, GL_UNSIGNED_BYTE, data);
+		GLenum format;
+		if (nrComponents == 1)
+			format = GL_RED;
+		else if (nrComponents == 3)
+			format = GL_RGB;
+		else if (nrComponents == 4)
+			format = GL_RGBA;
+		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}
 	else

@@ -44,10 +44,10 @@ public:
 		tempObject = world.AddObject();
 
 		tempObject->AddComponent(new GStar::MeshComponent(texturenormalcubeparameters));
-		tempObject->AddComponent(new GStar::ShaderComponent(Shader2TL));
+		tempObject->AddComponent(new GStar::ShaderComponent(LM_Shaders));
 		GStar::TextureComponent* tempC = new GStar::TextureComponent();
-		tempC->Initialize(Default_Texture_Iron_Box);
-		tempC->Initialize(Default_TextureFace);
+		tempC->Initialize(Default_Diffuse_IronBox);
+		tempC->Initialize(Default_Specular_IronBox);
 		tempObject->AddComponent(tempC);
 		TransformComponent1 = new GStar::TransformComponent(tempObject, "RotationCube2");
 		TransformComponent->AddChildren(TransformComponent1);

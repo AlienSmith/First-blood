@@ -32,7 +32,11 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 		my_shader->setFloat("matrial.shininess", 32.0f);
 
 	}if (lightmapping) {
-	
+		my_shader->setInt("material.diffuse", 0);
+		my_shader->setInt("material.specular", 1);
+		my_shader->setVec3("light.ambient", Vector3(0.2f, 0.2f, 0.2f));
+		my_shader->setVec3("light.diffuse", Vector3(0.5f, 0.5f, 0.5f));
+		my_shader->setVec3("light.specular", Vector3(0.7f, 0.7f, 0.7f));
 	}
 	else if(lighting) {
 		my_shader->setVec3("ambientLight", LightManager::Instance()->GetambientLight());

@@ -8,7 +8,7 @@ struct Light{
 vec3 ambient;
 vec3 diffuse;
 vec3 specular;
-}
+};
 
 out vec4 FragColor;
 
@@ -17,8 +17,8 @@ in vec3 fragPos;
 in vec3 Normal;
 
 uniform Material material;
+uniform Light light;
 uniform vec3 viewPos;
-uniform vec3 lightColor;
 uniform vec3 lightPos;
 
 uniform sampler2D texture1; // this will be filled automatically by Opengl

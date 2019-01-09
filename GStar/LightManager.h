@@ -3,6 +3,7 @@
 #include "SingleLinkedList.h"
 #include"TransformComponent.h"
 #include"MyString.h"
+#include"LightComponent.h"
 class Object;
 namespace GStar {
 	//TODO use the light Component
@@ -20,76 +21,53 @@ namespace GStar {
 				delete instance;
 			}
 		}
-		inline void addLight(GStar::TransformComponent* component) {
-			if (!hasThisLight(component)) {
-				LightList.Push(component);
-				component->SetLayer(GStar::Layer::LIGHT);
-			}
-			else {
-				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "try to add light already exists");
-			}
+		~LightManager() {
+			Lights.DeleteContent();
 		}
-		inline bool hasThisLight(GStar::TransformComponent* component) {
-			LightList.Resetcurrent();
-			while (LightList.HasNext()) {
-				if (LightList.GetNext() == component) {
-					return true;
+		inline LightComponent* GenerateLight(GStar::TransformComponent* component, Lighttype type) {
+			LightComponent* temp = new LightComponent(type, component);
+			Lights.Push(temp);
+			return temp;
+		}
+		inline LightComponent* GetLight(const GStar::MyString& string) {
+			unsigned int id = GStar::MyString::hash_str(string.GetString());
+			Lights.Resetcurrent();
+			while (Lights.HasNext()) {
+				if (Lights.GetNext()->Getlightinfo().my_transform->GetName() == id) {
+					return Lights.GetNext();
 				}
-				LightList.Move();
+				Lights.Move();
 			}
-			return false;
+			return nullptr;
 		}
 		//remove the pointer from the least will not delete the pointer
 		inline bool removeLight(GStar::TransformComponent* component) {
 			bool result = false;
-			LightList.Resetcurrent();
-			while (LightList.HasNext()) {
-				if (LightList.GetNext() == component) {
-					LightList.DeleteNext();
+			Lights.Resetcurrent();
+			while (Lights.HasNext()) {
+				if (Lights.GetNext()->Getlightinfo().my_transform == component) {
+					delete Lights.GetNext();
+					Lights.DeleteNext();
 					component->SetLayer(GStar::Layer::DEFAULT);
 					result = true;
 					break;
 				}
-				LightList.Move();
+				Lights.Move();
 			}
 			return result;
 		}
-		inline void SetCurrentLight(GStar::TransformComponent* component) {
-			CurrentLight = component;
-			addLight(component);
-		}
-		inline bool SetCurrentLight(int index) {
-			int count = 0;
-			LightList.Resetcurrent();
-			while (count < index, LightList.HasNext()) {
-				LightList.Move();
-				count++;
-			}
-			if (count == index) {
-				CurrentLight = LightList.GetNext();
-				return true;
-			}
-			return false;
-		}inline bool SetCurrentLight(const GStar::MyString& string) {
-			unsigned int id = GStar::MyString::hash_str(string.GetString());
-			LightList.Resetcurrent();
-			while (LightList.HasNext()) {
-				if (LightList.GetNext()->GetName() == id) {
-					CurrentLight = LightList.GetNext();
-					return true;
-				}
-				LightList.Move();
-			}
-			return false;
-		}
-		inline Vector3 GetLight() { return CurrentLight->GetTransform(); }
-		inline Vector3 GetambientLight() { return Vector3(AmbientStrength, AmbientStrength, AmbientStrength); }
-		void Register(Object* lightsource);
-		static const float AmbientStrength;
+		inline Vector3 GetLightPosition() {
+			Lights.Resetcurrent();
+			return Lights.GetNext()->Getlightinfo().my_transform->GetTransform(); }
+		inline Vector3 GetambientLight() { 
+			Lights.Resetcurrent();
+			return Lights.GetNext()->Getlightinfo().ambient;}
+		inline LightInfo GetLightInfo() { 
+			Lights.Resetcurrent();
+			return Lights.GetNext()->Getlightinfo();}
 	private:
 		static LightManager* instance;
-		SingleLinkedList<TransformComponent*> LightList;
-		TransformComponent* CurrentLight;
+		SingleLinkedList<LightComponent*> Lights;
 	};
 
 }

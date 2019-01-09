@@ -25,7 +25,7 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 	}if (t2) {
 		my_shader->setInt("texture2", 1);
 	}if (lighting || lightmapping) {
-		my_shader->setVec3("lightPos", LightManager::Instance()->GetLight());
+		my_shader->setVec3("lightPos", LightManager::Instance()->GetLightPosition());
 		my_shader->setMat4("BaseMatrix", UpdateObject::OUT_Instance->GetTransformComponent()->GetBaseMatrix(),GL_FALSE);
 		my_shader->setVec3("viewPos", CameraManager::Instance()->GetTransform());
 		
@@ -34,9 +34,9 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 	}if (lightmapping) {
 		my_shader->setInt("material.diffuse", 0);
 		my_shader->setInt("material.specular", 1);
-		my_shader->setVec3("light.ambient", Vector3(0.2f, 0.2f, 0.2f));
-		my_shader->setVec3("light.diffuse", Vector3(0.5f, 0.5f, 0.5f));
-		my_shader->setVec3("light.specular", Vector3(0.7f, 0.7f, 0.7f));
+		my_shader->setVec3("light.ambient", LightManager::Instance()->GetLightInfo().ambient);
+		my_shader->setVec3("light.diffuse", LightManager::Instance()->GetLightInfo().diffuse);
+		my_shader->setVec3("light.specular", LightManager::Instance()->GetLightInfo().specular);
 	}
 	else if(lighting) {
 		my_shader->setVec3("ambientLight", LightManager::Instance()->GetambientLight());

@@ -74,6 +74,7 @@ namespace GStar {
 				m_current = m_current->GetNext();
 			}
 		}
+		//This function will only remove the node from the list, if the data stored in it is pointer, the pointer will not get deleted.
 		inline void DeleteNext() {
 			m_current->GetNext()->Delete(m_current, this);
 		}
@@ -82,7 +83,7 @@ namespace GStar {
 		SingleLinkedListNode<T>* m_end;
 		SingleLinkedListNode<T>* m_current;
 	};
-
+	//This function will delete the pointer stored in the list, make sure the stored data is pointers
 	template<class T>
 	inline void SingleLinkedList<T>::DeleteContent()
 	{
@@ -169,7 +170,7 @@ namespace GStar {
 	{
 		//deleteIfPointer(this->GetData());
 	}
-	//Delete my self
+	//This function will only delete the node not the info stored 
 	template<class T>
 	inline void SingleLinkedListNode<T>::Delete(SingleLinkedListNode<T>* previous, SingleLinkedList<T>* List)
 	{

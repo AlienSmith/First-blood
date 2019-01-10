@@ -53,7 +53,7 @@ void main()
 		light.quadratic*distance*distance);
 	}
 	if(light.lighttype == 2){
-		theta = dot(lightDir,light.lightDirection);
+		theta = dot(lightDir,-light.lightDirection);
 		if(theta< light.anglecutoff){
 			outrange = true;
 		}

@@ -36,13 +36,14 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 		my_shader->setVec3("light.diffuse", LightManager::Instance()->GetLightInfo().diffuse);
 		my_shader->setVec3("light.specular", LightManager::Instance()->GetLightInfo().specular);
 		my_shader->setInt("light.lighttype", LightManager::Instance()->GetLightInfo().my_type);
-		if (LightManager::Instance()->GetLightInfo().my_type == Lighttype::DIRECTIONAL) {
+		//Point out to light
+		if (LightManager::Instance()->GetLightInfo().my_type != Lighttype::POINT) {
 			GStar::Vector3 temp = LightManager::Instance()->GetLightInfo().my_transform->GetForWardVector();
 			temp.Normalize();
 			temp *= -1.0f;
 			my_shader->setVec3("light.lightDirection", temp);
 		}
-		else {
+		if(LightManager::Instance()->GetLightInfo().my_type != Lighttype::DIRECTIONAL) {
 			my_shader->setFloat("light.constant", LightManager::Instance()->GetLightInfo().constant);
 			my_shader->setFloat("light.linear", LightManager::Instance()->GetLightInfo().linear);
 			my_shader->setFloat("light.quadratic", LightManager::Instance()->GetLightInfo().quadratic);

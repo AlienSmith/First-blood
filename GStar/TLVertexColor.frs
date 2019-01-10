@@ -51,8 +51,9 @@ void main()
 		attenuation = 1.0/(light.constant+
 		light.linear*distance+
 		light.quadratic*distance*distance);
-	}if(light.lighttype == 2){
-		theta = dot(lightDir,-light.lightDirection);
+	}
+	if(light.lighttype == 2){
+		theta = dot(lightDir,light.lightDirection);
 		if(theta< light.anglecutoff){
 			outrange = true;
 		}

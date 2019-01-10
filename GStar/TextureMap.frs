@@ -9,7 +9,7 @@ vec3 ambient;
 vec3 diffuse;
 vec3 specular;
 
-
+//Point out of the light
 vec3 lightDirection;
 int lighttype;
 
@@ -42,6 +42,7 @@ void main()
 	if(light.lighttype == 0){
 	lightDir = light.lightDirection;
 	}else{
+	//Point to the light
 	lightDir = normalize(lightPos - fragPos);
 	float distance = length(lightPos - fragPos);
 	//if bigger that distance only the ambient light

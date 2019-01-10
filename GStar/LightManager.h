@@ -1,10 +1,8 @@
 #pragma once
-#include "Vector3.h"
 #include "SingleLinkedList.h"
-#include"TransformComponent.h"
-#include"MyString.h"
-#include"LightComponent.h"
-class Object;
+#include "TransformComponent.h"
+#include "MyString.h"
+#include "LightComponent.h"
 namespace GStar {
 	//TODO use the light Component
 	class LightManager

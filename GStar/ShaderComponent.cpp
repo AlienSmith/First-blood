@@ -25,25 +25,40 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 	}if (t2) {
 		my_shader->setInt("texture2", 1);
 	}if (lighting || lightmapping) {
+
 		my_shader->setVec3("lightPos", LightManager::Instance()->GetLightPosition());
 		my_shader->setMat4("BaseMatrix", UpdateObject::OUT_Instance->GetTransformComponent()->GetBaseMatrix(),GL_FALSE);
 		my_shader->setVec3("viewPos", CameraManager::Instance()->GetTransform());
 		
 		my_shader->setFloat("matrial.shininess", 32.0f);
 
-	}if (lightmapping) {
-		my_shader->setInt("material.diffuse", 0);
-		my_shader->setInt("material.specular", 1);
 		my_shader->setVec3("light.ambient", LightManager::Instance()->GetLightInfo().ambient);
 		my_shader->setVec3("light.diffuse", LightManager::Instance()->GetLightInfo().diffuse);
 		my_shader->setVec3("light.specular", LightManager::Instance()->GetLightInfo().specular);
+		my_shader->setInt("light.lighttype", LightManager::Instance()->GetLightInfo().my_type);
+		if (LightManager::Instance()->GetLightInfo().my_type == Lighttype::DIRECTIONAL) {
+			GStar::Vector3 temp = LightManager::Instance()->GetLightInfo().my_transform->GetForWardVector();
+			temp.Normalize();
+			temp *= -1.0f;
+			my_shader->setVec3("light.lightDirection", temp);
+		}
+		else {
+			my_shader->setFloat("light.constant", LightManager::Instance()->GetLightInfo().constant);
+			my_shader->setFloat("light.linear", LightManager::Instance()->GetLightInfo().linear);
+			my_shader->setFloat("light.quadratic", LightManager::Instance()->GetLightInfo().quadratic);
+			my_shader->setFloat("light.distancecutoff", LightManager::Instance()->GetLightInfo().distancecutoff);
+			if (LightManager::Instance()->GetLightInfo().my_type == Lighttype::SPOT) {
+				my_shader->setFloat("light.anglecutoff", LightManager::Instance()->GetLightInfo().anglecutOff);
+			}
+		}
+	}if (lightmapping) {
+		my_shader->setInt("material.diffuse", 0);
+		my_shader->setInt("material.specular", 1);
 	}
 	else if(lighting) {
-		my_shader->setVec3("ambientLight", LightManager::Instance()->GetambientLight());
-		my_shader->setVec3("lightColor", Vector3(1, 1, 1));
-		my_shader->setVec3("material.ambient", GStar::Vector3(0.1f, 0.1f, 0.1f));
-		my_shader->setVec3("material.diffuse", GStar::Vector3(0.5f, 0.5f, 0.5f));
-		my_shader->setVec3("material.specular", GStar::Vector3(0.7f, 0.7f, 0.7));
+		my_shader->setVec3("material.ambient", GStar::Vector3(.7f, .7f, .7f));
+		my_shader->setVec3("material.diffuse", GStar::Vector3(.7f, .7f, .7f));
+		my_shader->setVec3("material.specular", GStar::Vector3(.7f, .7f, .7f));
 	}
 	//Matrix4 view = Scene::Create()->getview();
 	my_shader->setMat4("view",CameraManager::Instance()->GetInverseTransform(), GL_FALSE);

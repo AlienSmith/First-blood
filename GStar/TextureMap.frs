@@ -8,6 +8,17 @@ struct Light{
 vec3 ambient;
 vec3 diffuse;
 vec3 specular;
+
+
+vec3 lightDirection;
+int lighttype;
+
+float constant;
+float linear;
+float quadratic;
+
+float anglecutoff;
+float distancecutoff;
 };
 
 out vec4 FragColor;
@@ -21,11 +32,14 @@ uniform Light light;
 uniform vec3 viewPos;
 uniform vec3 lightPos;
 
-uniform sampler2D texture1; // this will be filled automatically by Opengl
-uniform sampler2D texture2;
 void main() 
 {
-	vec3 lightDir = normalize(lightPos - fragPos);
+	vec3 lightDir;
+	if(light.lighttype == 0){
+	lightDir = light.lightDirection;
+	}else{
+	lightDir = normalize(lightPos - fragPos);
+	}
 	vec3 viewDir = normalize(viewPos-fragPos);
 	vec3 reflectDir = reflect(-lightDir,Normal);
 	float spec = pow(max(dot(viewDir,reflectDir),0.0),32);

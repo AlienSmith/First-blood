@@ -23,8 +23,8 @@ public:
 		GStar::World& world = GStar::World::Instance();
 		Object* tempObject = world.AddObject();
 
-		tempObject->AddComponent(new GStar::MeshComponent(texturenormalcubeparameters));
-		tempObject->AddComponent(new GStar::ShaderComponent(Shader2TL));
+		tempObject->AddComponent(new GStar::MeshComponent(normalcubeparameters));
+		tempObject->AddComponent(new GStar::ShaderComponent(Shader2L));
 		GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 		tempComponent->Initialize(Default_Texture_BOX);
 		tempComponent->Initialize(Default_TextureFace);
@@ -77,7 +77,7 @@ public:
 		TransfomrComponent3->SetScale(.1, .1, .1);
 		tempObject->AddComponent(TransfomrComponent3);
 		TransfomrComponent3->UpdateTransform();
-		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::POINT);
+		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::DIRECTIONAL);
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));
 		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);
 		tempObject->AddComponent(controllerComponent);

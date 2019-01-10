@@ -164,6 +164,49 @@ const static float cubevertexsn[] = {
 	-0.5f,  0.5f,  0.5f,  0.0f, 0.0f, 0.0f,  1.0f,  0.0f,
 	-0.5f,  0.5f, -0.5f,  0.0f, 1.0f, 0.0f,  1.0f,  0.0f,
 };
+const static float cubenormal[] = {
+	-0.5f, -0.5f, -0.5f,   0.0f,0.0f,-1.0f,
+	 0.5f, -0.5f, -0.5f,   0.0f,0.0f,-1.0f,
+	 0.5f,  0.5f, -0.5f,   0.0f,0.0f,-1.0f,
+	 0.5f,  0.5f, -0.5f,   0.0f,0.0f,-1.0f,
+	-0.5f,  0.5f, -0.5f,   0.0f,0.0f,-1.0f,
+	-0.5f, -0.5f, -0.5f,   0.0f,0.0f,-1.0f,
+
+	-0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 1.0f,
+	 0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 1.0f,
+	 0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 1.0f,
+	-0.5f,  0.5f,  0.5f,   0.0f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.5f,   0.0f,  0.0f, 1.0f,
+
+	-0.5f,  0.5f,  0.5f,   -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f,   -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,   -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,   -1.0f,  0.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f,   -1.0f,  0.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f,   -1.0f,  0.0f,  0.0f,
+
+	 0.5f,  0.5f,  0.5f,   1.0f,  0.0f,  0.0f,
+	 0.5f,  0.5f, -0.5f,   1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,   1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,   1.0f,  0.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,   1.0f,  0.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,   1.0f,  0.0f,  0.0f,
+
+	-0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,
+	 0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f,  0.5f,   0.0f, -1.0f,  0.0f,
+	-0.5f, -0.5f, -0.5f,   0.0f, -1.0f,  0.0f,
+
+	-0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,
+	 0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f,  0.5f,   0.0f,  1.0f,  0.0f,
+	-0.5f,  0.5f, -0.5f,   0.0f,  1.0f,  0.0f,
+};
 const static GStar::Vector3 cubPosition[] = {
 	GStar::Vector3(0.0f,0.0f,0.0f),
 	GStar::Vector3(2.0f,5.0f,-15.0f),
@@ -209,8 +252,9 @@ const static MeshParameters cubeparameters = { 180,3,2,0,36,cubevertexs };
 const static MeshParameters NT_cubeparameters = { 108,3,0,0,36,NT_cubevertexs };
 const static MeshParameters spriteparameters = { 30,3,2,0,6,sprite};
 const static MeshParameters texturenormalcubeparameters = {288,3,2,3,36,cubevertexsn};//??
+const static MeshParameters normalcubeparameters = {216,3,3,0,36,cubenormal};
 const static ShaderParameters DefaultShader2T = { vs,fs,true,true,false,false};
-const static ShaderParameters Shader2TL = { TL_vs,TL_fs,true,true,true,false};
+const static ShaderParameters Shader2L = { TL_vs,TL_fs,false,false,true,false};
 const static ShaderParameters NT_Shaders = { NT_vs,NT_fs,false,false,false,false };
 const static ShaderParameters LM_Shaders = { LM_vs,LM_fs,false,false,false,true};
 const static TextureParameters Default_Texture_BOX = { WoodBox };

@@ -38,6 +38,25 @@ namespace GStar {
 			LeftApplyingTransform(temp, Vector3(0, 0, 0));
 			return temp;
 		}
+		inline GStar::Vector3 GetForWardVector() const {
+			GStar::Matrix4 temp = my_model.M;
+			return GStar::Vector3(
+				temp.Getreference(0, 2) /= my_model.So.getValue(2),
+				temp.Getreference(1, 2) /= my_model.So.getValue(2),
+				temp.Getreference(2, 2) /= my_model.So.getValue(2));
+		}inline GStar::Vector3 GetUpWardVector() const {
+			GStar::Matrix4 temp = my_model.M;
+			return GStar::Vector3(
+				temp.Getreference(0, 1) /= my_model.So.getValue(1),
+				temp.Getreference(1, 1) /= my_model.So.getValue(1),
+				temp.Getreference(2, 1) /= my_model.So.getValue(1));
+		}inline GStar::Vector3 GetRightVector() const {
+			GStar::Matrix4 temp = my_model.M;
+			return GStar::Vector3(
+				temp.Getreference(0, 0) /= my_model.So.getValue(0),
+				temp.Getreference(1, 0) /= my_model.So.getValue(0),
+				temp.Getreference(2, 0) /= my_model.So.getValue(0));
+		}
 		inline GStar::Matrix4 GetBaseMatrixInverse() const {
 			//R^(-1) = So*M^-1, R^(-1) = Rt
 			GStar::Matrix4 temp = my_model.MI;

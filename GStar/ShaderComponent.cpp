@@ -25,32 +25,32 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 	}if (t2) {
 		my_shader->setInt("texture2", 1);
 	}if (lighting || lightmapping) {
-
+		my_shader->setInt("numlights", 1);
 		my_shader->setVec3("lightPos", LightManager::Instance()->GetLightPosition());
 		my_shader->setMat4("BaseMatrix", UpdateObject::OUT_Instance->GetTransformComponent()->GetBaseMatrix(),GL_FALSE);
 		my_shader->setVec3("viewPos", CameraManager::Instance()->GetTransform());
 		
 		my_shader->setFloat("matrial.shininess", 32.0f);
 
-		my_shader->setVec3("light.ambient", LightManager::Instance()->GetLightInfo().ambient);
-		my_shader->setVec3("light.diffuse", LightManager::Instance()->GetLightInfo().diffuse);
-		my_shader->setVec3("light.specular", LightManager::Instance()->GetLightInfo().specular);
-		my_shader->setInt("light.lighttype", LightManager::Instance()->GetLightInfo().my_type);
+		my_shader->setVec3("light[0].ambient", LightManager::Instance()->GetLightInfo().ambient);
+		my_shader->setVec3("light[0].diffuse", LightManager::Instance()->GetLightInfo().diffuse);
+		my_shader->setVec3("light[0].specular", LightManager::Instance()->GetLightInfo().specular);
+		my_shader->setInt("light[0].lighttype", LightManager::Instance()->GetLightInfo().my_type);
 		//Point out to light
 		if (LightManager::Instance()->GetLightInfo().my_type != Lighttype::POINT) {
 			GStar::Vector3 temp = LightManager::Instance()->GetLightInfo().my_transform->GetForWardVector();
 			temp.Normalize();
 			temp *= -1.0f;
-			my_shader->setVec3("light.lightDirection", temp);
+			my_shader->setVec3("light[0].lightDirection", temp);
 		}
 		if(LightManager::Instance()->GetLightInfo().my_type != Lighttype::DIRECTIONAL) {
-			my_shader->setFloat("light.constant", LightManager::Instance()->GetLightInfo().constant);
-			my_shader->setFloat("light.linear", LightManager::Instance()->GetLightInfo().linear);
-			my_shader->setFloat("light.quadratic", LightManager::Instance()->GetLightInfo().quadratic);
-			my_shader->setFloat("light.distancecutoff", LightManager::Instance()->GetLightInfo().distancecutoff);
+			my_shader->setFloat("light[0].constant", LightManager::Instance()->GetLightInfo().constant);
+			my_shader->setFloat("light[0].linear", LightManager::Instance()->GetLightInfo().linear);
+			my_shader->setFloat("light[0].quadratic", LightManager::Instance()->GetLightInfo().quadratic);
+			my_shader->setFloat("light[0].distancecutoff", LightManager::Instance()->GetLightInfo().distancecutoff);
 			if (LightManager::Instance()->GetLightInfo().my_type == Lighttype::SPOT) {
-				my_shader->setFloat("light.anglecutoff", LightManager::Instance()->GetLightInfo().anglecutOff);
-				my_shader->setFloat("light.inneranglecutoff", LightManager::Instance()->GetLightInfo().inneranglecutOff);
+				my_shader->setFloat("light[0].anglecutoff", LightManager::Instance()->GetLightInfo().anglecutOff);
+				my_shader->setFloat("light[0].inneranglecutoff", LightManager::Instance()->GetLightInfo().inneranglecutOff);
 			}
 		}
 	}if (lightmapping) {

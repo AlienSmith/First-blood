@@ -29,54 +29,62 @@ in vec3 fragPos;
 in vec3 Normal;
 
 uniform Material material;
-uniform Light light;
+
+uniform Light light[5];
+uniform int numlights;
+
 uniform vec3 viewPos;
 uniform vec3 lightPos;
 
-void main() 
-{
+
+vec3 calculateLight(int index,vec3 viewDir){
 	vec3 lightDir;
 	vec3 result;
 	bool outrange = false;
 	float attenuation = 0.0f;
 	float intensity = 0.0f;
-	if(light.lighttype == 0){
-	lightDir = light.lightDirection;
+	if(light[index].lighttype == 0){
+	lightDir = light[index].lightDirection;
 	}else{
 	//Point to the light
 	lightDir = normalize(lightPos - fragPos);
 	float distance = length(lightPos - fragPos);
 	//if bigger that distance only the ambient light
-	if(distance > light.distancecutoff){
+	if(distance > light[index].distancecutoff){
 		outrange = true;
 	}else{
-		attenuation = 1.0/(light.constant+
-		light.linear*distance+
-		light.quadratic*distance*distance);
-	}if(light.lighttype == 2){
-		float theta = dot(lightDir,-light.lightDirection);
-		if(theta< light.anglecutoff){
+		attenuation = 1.0/(light[index].constant+
+		light[index].linear*distance+
+		light[index].quadratic*distance*distance);
+	}if(light[index].lighttype == 2){
+		float theta = dot(lightDir,-light[index].lightDirection);
+		if(theta< light[index].anglecutoff){
 			outrange = true;
 		}else{
-			float epsilon = light.inneranglecutoff - light.anglecutoff;
-			intensity = clamp((theta - light.anglecutoff)/epsilon,0.0f,1.0f);
+			float epsilon = light[index].inneranglecutoff - light[index].anglecutoff;
+			intensity = clamp((theta - light[index].anglecutoff)/epsilon,0.0f,1.0f);
 		}
 	}
 	}
 	if(outrange){
-		result = light.ambient*material.ambient;
+		result = light[index].ambient*material.ambient;
 	}else{
-		vec3 viewDir = normalize(viewPos-fragPos);
 		vec3 reflectDir = reflect(-lightDir,Normal);
 		float spec = pow(max(dot(viewDir,reflectDir),0.0),32);
 		float diff = max(dot(Normal,lightDir),0.0);
-		if(light.lighttype == 0){
-			result = light.specular*material.specular*spec + light.diffuse*material.diffuse*diff + light.ambient*material.ambient;
-		}else if(light.lighttype == 1){
-			result = attenuation*(light.specular*material.specular*spec + light.diffuse*material.diffuse*diff)+light.ambient*material.ambient;
+		if(light[index].lighttype == 0){
+			result = light[index].specular*material.specular*spec + light[index].diffuse*material.diffuse*diff + light[index].ambient*material.ambient;
+		}else if(light[index].lighttype == 1){
+			result = attenuation*(light[index].specular*material.specular*spec + light[index].diffuse*material.diffuse*diff)+light[index].ambient*material.ambient;
 		}else{
-			result = attenuation*intensity*(light.specular*material.specular*spec + light.diffuse*material.diffuse*diff)+light.ambient*material.ambient;
+			result = attenuation*intensity*(light[index].specular*material.specular*spec + light[index].diffuse*material.diffuse*diff)+light[index].ambient*material.ambient;
 		}
 	}
-	FragColor = vec4(result,1.0); // texture sampler, correspoding texture coordinate
+	return result;
+}
+void main() 
+{
+	vec3 viewDir = normalize(viewPos-fragPos);
+	vec3 result = calculateLight(0,viewDir);
+	FragColor = vec4(result,1.0f); // texture sampler, correspoding texture coordinate
 }

@@ -76,9 +76,9 @@ void main()
 		if(light.lighttype == 0){
 			result = ambient+diffuse+specular;
 		}else if(light.lighttype == 1){
-			result = attenuation*(ambient+diffuse+specular);
+			result = attenuation*(diffuse+specular)+ambient;
 		}else{
-			result = attenuation*intensity*(ambient+diffuse+specular);
+			result = attenuation*intensity*(diffuse+specular)+ambient;
 		}
 	}
 	FragColor = vec4(result,1.0);

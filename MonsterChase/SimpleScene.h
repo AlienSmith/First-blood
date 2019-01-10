@@ -87,7 +87,7 @@ public:
 		temp->SetcutOff(3.5f, 0.0f);*/
 		//Spot Light;
 		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::SPOT);
-		temp->SetIntensity(GStar::Vector3(0.0f, 0.0F, 0.0F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));
+		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));
 		temp->SetActivateConsts(1.0f, 0.09f, 0.032f);
 		temp->SetcutOff(20.0f, 0.5f, 0.707f);
 		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);

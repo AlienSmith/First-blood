@@ -50,6 +50,7 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 			my_shader->setFloat("light.distancecutoff", LightManager::Instance()->GetLightInfo().distancecutoff);
 			if (LightManager::Instance()->GetLightInfo().my_type == Lighttype::SPOT) {
 				my_shader->setFloat("light.anglecutoff", LightManager::Instance()->GetLightInfo().anglecutOff);
+				my_shader->setFloat("light.inneranglecutoff", LightManager::Instance()->GetLightInfo().inneranglecutOff);
 			}
 		}
 	}if (lightmapping) {

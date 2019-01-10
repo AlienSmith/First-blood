@@ -18,6 +18,7 @@ float linear;
 float quadratic;
 
 float anglecutoff;
+float inneranglecutoff;
 float distancecutoff;
 };
 
@@ -38,7 +39,7 @@ void main()
 	vec3 result;
 	bool outrange = false;
 	float attenuation = 0.0f;
-	float theta = 0.0f;
+	float intensity = 0.0f;
 	if(light.lighttype == 0){
 	lightDir = light.lightDirection;
 	}else{
@@ -53,9 +54,12 @@ void main()
 		light.linear*distance+
 		light.quadratic*distance*distance);
 	}if(light.lighttype == 2){
-		theta = dot(lightDir,-light.lightDirection);
+		float theta = dot(lightDir,-light.lightDirection);
 		if(theta< light.anglecutoff){
 			outrange = true;
+		}else{
+			float epsilon = light.inneranglecutoff - light.anglecutoff;
+			intensity = clamp((theta - light.anglecutoff)/epsilon,0.0f,1.0f);
 		}
 	}
 	}
@@ -74,7 +78,7 @@ void main()
 		}else if(light.lighttype == 1){
 			result = attenuation*(ambient+diffuse+specular);
 		}else{
-			result = attenuation*(ambient+diffuse+specular);
+			result = attenuation*intensity*(ambient+diffuse+specular);
 		}
 	}
 	FragColor = vec4(result,1.0);

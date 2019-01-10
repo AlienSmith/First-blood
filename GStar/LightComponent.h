@@ -16,8 +16,10 @@ namespace GStar {
 		float constant;
 		float linear;
 		float quadratic;
+		//This value suggests the concentration level of the spot light
 
 		float anglecutOff;
+		float inneranglecutOff;
 		float distancecutoff;
 		LightInfo(Lighttype type, TransformComponent* component) :my_transform(component), my_type(type) {}
 	};
@@ -48,13 +50,17 @@ namespace GStar {
 			my_info.diffuse = diffuse;
 			my_info.specular = specular;
 		}
-		inline void SetcutOff(float distancecutoff, float anglecutoff) {
+		//Both angle cutoff is for spot light set them to 0.0f if it is not a spot light
+		inline void SetcutOff(float distancecutoff, float anglecutoff,float inneranglecutoff) {
 			my_info.distancecutoff = distancecutoff;
 			my_info.anglecutOff = anglecutoff;
+			my_info.inneranglecutOff = inneranglecutoff;
 		}
 		inline void SetTransform( TransformComponent* component) {
 			my_info.my_transform = component;
-		}inline void SetActivateConsts(float constant, float linear, float qudratic) {
+		}
+		//concnetration is for the focus of the spot light leave it as 0.0f if it is not a spot light
+		inline void SetActivateConsts(float constant, float linear, float qudratic) {
 			my_info.linear = linear;
 			my_info.constant = constant;
 			my_info.quadratic = qudratic;
@@ -73,6 +79,7 @@ namespace GStar {
 			return my_info;
 		}
 		inline void CleananglecutOff() {
+			my_info.inneranglecutOff = 0.0f;
 			my_info.anglecutOff = 0.0f;
 		}inline void Cleanconstance() {
 			my_info.distancecutoff = 0.0f;

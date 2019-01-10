@@ -20,6 +20,7 @@ float linear;
 float quadratic;
 
 float anglecutoff;
+float inneranglecutoff;
 float distancecutoff;
 };
 out vec4 FragColor;
@@ -38,7 +39,7 @@ void main()
 	vec3 result;
 	bool outrange = false;
 	float attenuation = 0.0f;
-	float theta = 0.0f;
+	float intensity = 0.0f;
 	if(light.lighttype == 0){
 	lightDir = light.lightDirection;
 	}else{
@@ -53,9 +54,10 @@ void main()
 		light.quadratic*distance*distance);
 	}
 	if(light.lighttype == 2){
-		theta = dot(lightDir,-light.lightDirection);
+		float theta = dot(lightDir,-light.lightDirection);
 		if(theta< light.anglecutoff){
-			outrange = true;
+			float epsilon = light.inneranglecutoff - light.anglecutoff;
+			intensity = clamp((theta - light.anglecutoff)/epsilon,0.0f,1.0f);
 		}
 	}
 	}
@@ -71,7 +73,7 @@ void main()
 		}else if(light.lighttype == 1){
 			result = attenuation*(light.specular*material.specular*spec + light.diffuse*material.diffuse*diff + light.ambient*material.ambient);
 		}else{
-			result = attenuation*(light.specular*material.specular*spec + light.diffuse*material.diffuse*diff + light.ambient*material.ambient);
+			result = attenuation*intensity*(light.specular*material.specular*spec + light.diffuse*material.diffuse*diff + light.ambient*material.ambient);
 		}
 	}
 	FragColor = vec4(result,1.0); // texture sampler, correspoding texture coordinate

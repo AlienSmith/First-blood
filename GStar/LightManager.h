@@ -9,7 +9,7 @@ namespace GStar {
 	class LightManager
 	{
 	public:
-		void LoadShader(const Shader* const shader);
+		void WriteToShader(const Shader* const shader) const;
 		static LightManager* Instance() {
 			if (!instance) {
 				instance = new LightManager();
@@ -66,6 +66,7 @@ namespace GStar {
 			Lights.Resetcurrent();
 			return Lights.GetNext()->Getlightinfo();}
 	private:
+		void _writeToShader(const Shader* const shader, const LightComponent* const light) const;
 		static LightManager* instance;
 		SingleLinkedList<LightComponent*> Lights;
 	};

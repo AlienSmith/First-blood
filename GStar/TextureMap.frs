@@ -5,6 +5,7 @@ sampler2D specular;
 float shininess;
 };
 struct Light{
+vec3 position;
 vec3 ambient;
 vec3 diffuse;
 vec3 specular;
@@ -34,7 +35,6 @@ uniform Light light[5];
 uniform int numlights;
 
 uniform vec3 viewPos;
-uniform vec3 lightPos;
 
 vec3 calculateLight(int index, vec3 viewDir){
 	vec3 lightDir;
@@ -46,8 +46,8 @@ vec3 calculateLight(int index, vec3 viewDir){
 	lightDir = light[index].lightDirection;
 	}else{
 	//Point to the light
-	lightDir = normalize(lightPos - fragPos);
-	float distance = length(lightPos - fragPos);
+	lightDir = normalize(light[index].position - fragPos);
+	float distance = length(light[index].position - fragPos);
 	//if bigger that distance only the ambient light
 	if(distance > light[index].distancecutoff){
 		outrange = true;

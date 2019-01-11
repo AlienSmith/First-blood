@@ -3,8 +3,9 @@
 #include "LightManager.h"
 namespace GStar {
 	LightManager* LightManager::instance = nullptr;
-	void LightManager::LoadShader(const Shader * const shader)
-	{
+	void LightManager::WriteToShader(const Shader * const shader) const
+	{	
+		shader->setVec3("light[0].position", LightManager::Instance()->GetLightPosition());
 		shader->setVec3("light[0].ambient", LightManager::Instance()->GetLightInfo().ambient);
 		shader->setVec3("light[0].diffuse", LightManager::Instance()->GetLightInfo().diffuse);
 		shader->setVec3("light[0].specular", LightManager::Instance()->GetLightInfo().specular);
@@ -27,4 +28,5 @@ namespace GStar {
 			}
 		}
 	}
+	
 }

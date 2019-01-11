@@ -26,12 +26,11 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 		my_shader->setInt("texture2", 1);
 	}if (lighting || lightmapping) {
 		my_shader->setInt("numlights", 1);
-		my_shader->setVec3("lightPos", LightManager::Instance()->GetLightPosition());
 		my_shader->setMat4("BaseMatrix", UpdateObject::OUT_Instance->GetTransformComponent()->GetBaseMatrix(),GL_FALSE);
 		my_shader->setVec3("viewPos", CameraManager::Instance()->GetTransform());
 		
 		my_shader->setFloat("matrial.shininess", 32.0f);
-		LightManager::Instance()->LoadShader(my_shader);
+		LightManager::Instance()->WriteToShader(my_shader);
 	}if (lightmapping) {
 		my_shader->setInt("material.diffuse", 0);
 		my_shader->setInt("material.specular", 1);

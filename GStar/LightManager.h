@@ -66,7 +66,7 @@ namespace GStar {
 			Lights.Resetcurrent();
 			return Lights.GetNext()->Getlightinfo();}
 	private:
-		void _writeToShader(const Shader* const shader, const LightComponent* const light) const;
+		void _writeToShader(const Shader* const shader, const GStar::LightInfo& info, int index) const;
 		static LightManager* instance;
 		SingleLinkedList<LightComponent*> Lights;
 	};

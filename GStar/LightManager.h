@@ -3,11 +3,13 @@
 #include "TransformComponent.h"
 #include "MyString.h"
 #include "LightComponent.h"
+class Shader;
 namespace GStar {
 	//TODO use the light Component
 	class LightManager
 	{
 	public:
+		void LoadShader(const Shader* const shader);
 		static LightManager* Instance() {
 			if (!instance) {
 				instance = new LightManager();

@@ -25,7 +25,6 @@ bool GStar::ShaderComponent::Update(float deltatime) const
 	}if (t2) {
 		my_shader->setInt("texture2", 1);
 	}if (lighting || lightmapping) {
-		my_shader->setInt("numlights", 1);
 		my_shader->setMat4("BaseMatrix", UpdateObject::OUT_Instance->GetTransformComponent()->GetBaseMatrix(),GL_FALSE);
 		my_shader->setVec3("viewPos", CameraManager::Instance()->GetTransform());
 		

@@ -8,7 +8,15 @@ namespace GStar {
 	MyString LightManager::afterPhix[12];
 	void LightManager::WriteToShader(const Shader * const shader)
 	{	
-		_writeToShader(shader, GetLightInfo(), 0);
+		int count = 0;
+		this->Lights.Resetcurrent();
+		while (Lights.HasNext()) {
+			_writeToShader(shader, Lights.GetNext()->Getlightinfo(), count);
+			count++;
+			Lights.Move();
+		}
+		float a = 0;
+		shader->setInt("numlights", count);
 	}
 
 	void LightManager::Initialize()

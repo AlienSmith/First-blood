@@ -73,7 +73,7 @@ public:
 		tempObject->AddComponent(tempComponent);
 		TransfomrComponent3 = new GStar::TransformComponent(tempObject, "Light1");
 		world.AddToRoot(TransfomrComponent3);
-		TransfomrComponent3->SetTransform(GStar::Vector3(0, 0, -9), GStar::Base::WORLD);
+		TransfomrComponent3->SetTransform(GStar::Vector3(0.0f, 0.0f, -9.7f), GStar::Base::WORLD);
 		TransfomrComponent3->SetScale(.1, .1, .1);
 		tempObject->AddComponent(TransfomrComponent3);
 		TransfomrComponent3->UpdateTransform();
@@ -82,9 +82,9 @@ public:
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));*/
 		//Point Light;
 		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::POINT);
-		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(1.0f, 1.0F, 1.0F), GStar::Vector3(0.9f, 0.9F, 0.9F));
-		temp->SetActivateConsts(0.0f, 0.0f, 24.0f);
-		temp->SetcutOff(1.4f, 0.0f,0.0f);
+		temp->SetIntensity(GStar::Vector3(0.0f, 0.0F, 0.0F), GStar::Vector3(0.0f, 0.0F, 1.0F), GStar::Vector3(0.0f, 0.0F, 0.0F));
+		temp->SetActivateConsts(.2f, 30.0f, 30.0f);
+		temp->SetcutOff(1.05f, 0.0f,0.0f);
 		//Spot Light;
 		/*GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::SPOT);
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));
@@ -93,6 +93,37 @@ public:
 		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);
 		tempObject->AddComponent(controllerComponent);
 
+		//Red Light
+		tempObject = world.AddObject();
+		tempObject->AddComponent(new GStar::MeshComponent(NT_cubeparameters));
+		tempObject->AddComponent(new GStar::ShaderComponent(NT_Shaders));
+		tempObject->AddComponent(tempComponent);
+		TransfomrComponent4 = new GStar::TransformComponent(tempObject, "Light2");
+		world.AddToRoot(TransfomrComponent4);
+		TransfomrComponent4->SetTransform(GStar::Vector3(.5f, .5f, -9.7f), GStar::Base::WORLD);
+		TransfomrComponent4->SetScale(.1, .1, .1);
+		tempObject->AddComponent(TransfomrComponent4);
+		TransfomrComponent4->UpdateTransform();
+		temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent4, GStar::Lighttype::POINT);
+		temp->SetIntensity(GStar::Vector3(0.0f, 0.0F, 0.0F), GStar::Vector3(1.0f, 0.0F, 0.0F), GStar::Vector3(0.0f, 0.0F, 0.0F));
+		temp->SetActivateConsts(.2f, 0.0f, 6.0f);
+		temp->SetcutOff(1.05f, 0.0f, 0.0f);
+
+		//Green Light
+		tempObject = world.AddObject();
+		tempObject->AddComponent(new GStar::MeshComponent(NT_cubeparameters));
+		tempObject->AddComponent(new GStar::ShaderComponent(NT_Shaders));
+		tempObject->AddComponent(tempComponent);
+		TransfomrComponent5 = new GStar::TransformComponent(tempObject, "Light2");
+		world.AddToRoot(TransfomrComponent5);
+		TransfomrComponent5->SetTransform(GStar::Vector3(-.5f, -.5f, -9.7f), GStar::Base::WORLD);
+		TransfomrComponent5->SetScale(.1, .1, .1);
+		tempObject->AddComponent(TransfomrComponent5);
+		TransfomrComponent5->UpdateTransform();
+		temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent5, GStar::Lighttype::POINT);
+		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.0f, 1.0F, 0.0F), GStar::Vector3(0.0f, 0.0F, 0.0F));
+		temp->SetActivateConsts(.2f, 0.0f, 6.0f);
+		temp->SetcutOff(1.05f, 0.0f, 0.0f);
 		
 	}
 	virtual void Update() {
@@ -105,5 +136,7 @@ private:
 	GStar::TransformComponent* TransformComponent1;
 	GStar::TransformComponent* TransformComponent2;
 	GStar::TransformComponent* TransfomrComponent3;
+	GStar::TransformComponent* TransfomrComponent4;
+	GStar::TransformComponent* TransfomrComponent5;
 	KeyControlCompoenent* controllerComponent;
 };

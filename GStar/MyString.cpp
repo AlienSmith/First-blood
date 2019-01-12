@@ -3,6 +3,36 @@
 #include "ConsolePrint.h"
 #include <stdio.h>
 #include "HeapManager.h"
+GStar::MyString GStar::MyString::inttostring(int index)
+{	
+	char array[256];
+	int digits = 0;
+	bool negative = false;
+	if (index < 0) {
+		negative = true;
+		array[0] = '-';
+		digits++;
+		index *= -1;
+	}
+	array[digits] = static_cast<char>((index % 10) + 48);
+	digits++;
+	index /= 10;
+	while (index > 0) {
+		array[digits] = static_cast<char>((index % 10) + 48);
+		digits++;
+		index /= 10;
+	}
+	array[digits] = '\0';
+	int base;
+	negative ? base = 1 : base = 0;
+	int top = digits - 1;
+	for (int i = 0; i < (top+base) / 2; i++) {
+		char temp = array[base+i];
+		array[base + i] = array[top - i];
+		array[top - i] = temp;
+	}
+	return GStar::MyString(array);
+}
 // this is a swap using shallow opearation
 void GStar::MyString::swap(MyString & string, MyString & other)
 {
@@ -103,7 +133,7 @@ GStar::MyString::~MyString()
 	}
 }
 
-
+//TODO figure out why I put delet[] here before
 GStar::MyString GStar::operator+(const GStar::MyString & A, const GStar::MyString & B)
 {
 	rsize_t temp_size = A.GetSize() + B.GetSize() -1;
@@ -117,6 +147,6 @@ GStar::MyString GStar::operator+(const GStar::MyString & A, const GStar::MyStrin
 	//Saved one copy time
 	MyString tempString = MyString();
 	GStar::MyString::swap(tempString, temp, temp_size);
-	delete[] temp;
+//	delete[] temp;
 	return tempString;
 }

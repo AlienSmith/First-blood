@@ -9,10 +9,12 @@ namespace GStar {
 	class LightManager
 	{
 	public:
-		void WriteToShader(const Shader* const shader) const;
+		void WriteToShader(const Shader* const shader);
+		static void Initialize();
 		static LightManager* Instance() {
 			if (!instance) {
 				instance = new LightManager();
+				Initialize();
 			}
 			return instance;
 		}
@@ -66,9 +68,11 @@ namespace GStar {
 			Lights.Resetcurrent();
 			return Lights.GetNext()->Getlightinfo();}
 	private:
-		void _writeToShader(const Shader* const shader, const GStar::LightInfo& info, int index) const;
+		void _writeToShader(const Shader* const shader, const GStar::LightInfo& info, int index);
 		static LightManager* instance;
 		SingleLinkedList<LightComponent*> Lights;
+		 static MyString afterPhix[12];
+		 static MyString prePhix;
 	};
 
 }

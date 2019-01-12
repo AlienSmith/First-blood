@@ -9,6 +9,7 @@
 namespace GStar {
 	class MyString {
 	public:
+		static GStar::MyString inttostring(int index);
 		static void swap(MyString& string,MyString& other);
 		static void swap(MyString& string, char*& other, size_t size);
 		static size_t stringlength(const char* other);

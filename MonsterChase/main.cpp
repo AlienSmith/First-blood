@@ -10,6 +10,7 @@
 #include "SimpleScene.h"
 #include "MemorySystem.h"
 #include "MainEntrance.h"
+#include "MyString.h"
 //#include "Matrix4.h"
 //#include "Vector2.h"
 //#include "Vector3.h"
@@ -23,6 +24,10 @@
 int main() 
 	{
 	InitializeMemorySystem();
+	GStar::MyString one = "one ";
+	GStar::MyString two = "two";
+	GStar::MyString three;
+	three = one + two;
 	SimpleScene scene;
 	MainEntrance::SetUpAndRun();
 		DestroyMemorySystem();

@@ -22,21 +22,8 @@ public:
 	virtual void Start() {
 		GStar::World& world = GStar::World::Instance();
 		Object* tempObject = world.AddObject();
+
 		tempObject->AddComponent(new GStar::MeshComponent(spriteNparameters));
-		tempObject->AddComponent(new GStar::ShaderComponent(Shader2L));
-		GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
-		tempComponent->Initialize(Default_Texture_BOX);
-		tempComponent->Initialize(Default_TextureFace);
-		tempObject->AddComponent(tempComponent);
-		TransformComponent = new GStar::TransformComponent(tempObject, "RotationCube1");
-		world.AddToRoot(TransformComponent);
-		TransformComponent->SetTransform(GStar::Vector3(0, 0, -5), GStar::Base::WORLD);
-		TransformComponent->SetScale(GStar::Vector3(2.0f, 2.0f, 2.0f));
-		TransformComponent->UpdateTransform();
-		tempObject->AddComponent(TransformComponent);
-
-
-		/*tempObject->AddComponent(new GStar::MeshComponent(normalcubeparameters));
 		tempObject->AddComponent(new GStar::ShaderComponent(Shader2L));
 		GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 		tempComponent->Initialize(Default_Texture_BOX);
@@ -46,13 +33,13 @@ public:
 		world.AddToRoot(TransformComponent);
 		TransformComponent->SetTransform(GStar::Vector3(0,0,-5),GStar::Base::WORLD);
 		TransformComponent->SetScale(GStar::Vector3(1.0f,1.0f,1.0f));
-		TransformComponent->Rotate(60, 0, 0);
+		//TransformComponent->Rotate(60, 0, 0);
 		TransformComponent->UpdateTransform();
 		tempObject->AddComponent(TransformComponent);
 		//KeyControlCompoenent* controller = new KeyControlCompoenent(TransformComponent,2.0f);
 		//tempObject->AddComponent(controller);
 
-		GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
+		/*GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
 		tempObject->AddComponent(component);
 		tempObject = world.AddObject();
 

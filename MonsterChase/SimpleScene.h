@@ -81,18 +81,17 @@ public:
 		/*GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::DIRECTIONAL);
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));*/
 		//Point Light;
-		/*GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::POINT);
-		temp->SetIntensity(GStar::Vector3(0.0f, 0.0F, 0.0F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));
+		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::POINT);
+		temp->SetIntensity(GStar::Vector3(0.1f, 0.1F, 0.1F), GStar::Vector3(0.9f, 0.9F, 0.9F), GStar::Vector3(0.9f, 0.9F, 0.9F));
 		temp->SetActivateConsts(1.0f, 0.7f, 1.8f);
-		temp->SetcutOff(3.5f, 0.0f);*/
+		temp->SetcutOff(3.5f, 0.0f,0.0f);
 		//Spot Light;
-		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::SPOT);
+		/*GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::SPOT);
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));
 		temp->SetActivateConsts(1.0f, 0.09f, 0.032f);
-		temp->SetcutOff(20.0f, 0.5f, 0.707f);
+		temp->SetcutOff(20.0f, 0.5f, 0.707f);*/
 		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);
 		tempObject->AddComponent(controllerComponent);
-		//Spot Light;
 
 		
 	}

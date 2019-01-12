@@ -1,8 +1,8 @@
 #pragma once
 #include"Vector3.h"
 #include"GLINCLUDE.h"
-const static unsigned int SCR_WIDTH = 800;
-const static unsigned int SCR_HEIGHT = 600;
+const static unsigned int SCR_WIDTH = 1600;
+const static unsigned int SCR_HEIGHT = 1024;
 //TODO Could add more details
 const struct TextureParameters {
 	const char* textureroute;

@@ -31,8 +31,8 @@ public:
 		tempObject->AddComponent(tempComponent);
 		TransformComponent = new GStar::TransformComponent(tempObject,"RotationCube1");
 		world.AddToRoot(TransformComponent);
-		TransformComponent->SetTransform(GStar::Vector3(0,0,-5),GStar::Base::WORLD);
-		TransformComponent->SetScale(GStar::Vector3(1.0f,1.0f,1.0f));
+		TransformComponent->SetTransform(GStar::Vector3(0,0,-10),GStar::Base::WORLD);
+		TransformComponent->SetScale(GStar::Vector3(2.0f,2.0f,2.0f));
 		//TransformComponent->Rotate(60, 0, 0);
 		TransformComponent->UpdateTransform();
 		tempObject->AddComponent(TransformComponent);
@@ -73,7 +73,7 @@ public:
 		tempObject->AddComponent(tempComponent);
 		TransfomrComponent3 = new GStar::TransformComponent(tempObject, "Light1");
 		world.AddToRoot(TransfomrComponent3);
-		TransfomrComponent3->SetTransform(cubPosition[4], GStar::Base::WORLD);
+		TransfomrComponent3->SetTransform(GStar::Vector3(0, 0, -9), GStar::Base::WORLD);
 		TransfomrComponent3->SetScale(.1, .1, .1);
 		tempObject->AddComponent(TransfomrComponent3);
 		TransfomrComponent3->UpdateTransform();
@@ -82,9 +82,9 @@ public:
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));*/
 		//Point Light;
 		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::POINT);
-		temp->SetIntensity(GStar::Vector3(0.1f, 0.1F, 0.1F), GStar::Vector3(0.9f, 0.9F, 0.9F), GStar::Vector3(0.9f, 0.9F, 0.9F));
-		temp->SetActivateConsts(1.0f, 0.7f, 1.8f);
-		temp->SetcutOff(3.5f, 0.0f,0.0f);
+		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(1.0f, 1.0F, 1.0F), GStar::Vector3(0.9f, 0.9F, 0.9F));
+		temp->SetActivateConsts(0.0f, 0.0f, 24.0f);
+		temp->SetcutOff(1.4f, 0.0f,0.0f);
 		//Spot Light;
 		/*GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent3, GStar::Lighttype::SPOT);
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));

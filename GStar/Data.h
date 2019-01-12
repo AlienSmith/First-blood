@@ -27,12 +27,36 @@ const struct MeshParameters
 	const float* data;
 };
 const static float sprite[] = {
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
-	 0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	 0.5f,  0.5f,  0.5f,  1.0f, 1.0f,
-	-0.5f,  0.5f,  0.5f,  0.0f, 1.0f,
-	-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, 0.0f,
+		 0.5f, -0.5f, 0.0f,
+		 0.5f,  0.5f, 0.0f,
+		 0.5f,  0.5f, 0.0f,
+		-0.5f,  0.5f, 0.0f,
+		-0.5f, -0.5f, 0.0f,
+};
+const static float spriteT[] = {
+	-0.5f, -0.5f,  0.0f,  0.0f, 0.0f,
+	 0.5f, -0.5f,  0.0f,  1.0f, 0.0f,
+	 0.5f,  0.5f,  0.0f,  1.0f, 1.0f,
+	 0.5f,  0.5f,  0.0f,  1.0f, 1.0f,
+	-0.5f,  0.5f,  0.0f,  0.0f, 1.0f,
+	-0.5f, -0.5f,  0.0f,  0.0f, 0.0f,
+};
+const static float spriteN[] = {
+	-0.5f, -0.5f, 0.0f,   0.0f,0.0f,1.0f,
+	 0.5f, -0.5f, 0.0f,   0.0f,0.0f,1.0f,
+	 0.5f,  0.5f, 0.0f,   0.0f,0.0f,1.0f,
+	 0.5f,  0.5f, 0.0f,   0.0f,0.0f,1.0f,
+	-0.5f,  0.5f, 0.0f,   0.0f,0.0f,1.0f,
+	-0.5f, -0.5f, 0.0f,   0.0f,0.0f,1.0f,
+};
+const static float spriteTN[] = {
+	-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 0.0f,0.0f,1.0f,
+	 0.5f, -0.5f, 0.0f,  1.0f, 0.0f, 0.0f,0.0f,1.0f,
+	 0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 0.0f,0.0f,1.0f,
+	 0.5f,  0.5f, 0.0f,  1.0f, 1.0f, 0.0f,0.0f,-1.0f,
+	-0.5f,  0.5f, 0.0f,  0.0f, 1.0f, 0.0f,0.0f,1.0f,
+	-0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 0.0f,0.0f,1.0f,
 };
 const static float NT_cubevertexs[] = {
 		-0.5f, -0.5f, -0.5f,
@@ -78,7 +102,7 @@ const static float NT_cubevertexs[] = {
 		-0.5f,  0.5f, -0.5f,
 };
 const static float cubevertexs[] = {
--0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
+		-0.5f, -0.5f, -0.5f,  0.0f, 0.0f,
 		 0.5f, -0.5f, -0.5f,  1.0f, 0.0f,
 		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
 		 0.5f,  0.5f, -0.5f,  1.0f, 1.0f,
@@ -248,9 +272,12 @@ const static char LM_vs[] = "../GStar/TextureMap.ves";
 // Shader
 const static size_t ShadersHeapSize = 1024;
 const static size_t SceneHeapSize = 32768;
+const static MeshParameters spriteparameters = { 18,3,0,0,6,sprite };
+const static MeshParameters spriteTparameters = { 30,3,2,0,6,spriteT };
+const static MeshParameters spriteNparameters = { 36,3,0,3,6,spriteN };
+const static MeshParameters spriteTNparameters = { 48,3,2,3,6,spriteTN };
 const static MeshParameters cubeparameters = { 180,3,2,0,36,cubevertexs };
 const static MeshParameters NT_cubeparameters = { 108,3,0,0,36,NT_cubevertexs };
-const static MeshParameters spriteparameters = { 30,3,2,0,6,sprite};
 const static MeshParameters texturenormalcubeparameters = {288,3,2,3,36,cubevertexsn};//??
 const static MeshParameters normalcubeparameters = {216,3,3,0,36,cubenormal};
 const static ShaderParameters DefaultShader2T = { vs,fs,true,true,false,false};

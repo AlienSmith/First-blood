@@ -12,6 +12,7 @@
 #include"KeyControlComponent.h"
 #include"CameraManager.h"
 #include"LightManager.h"
+#include"ConsolePrint.h"
 class LightScene : public GStar::SceneInterface {
 public:
 	LightScene() :GStar::SceneInterface(), TransformComponent(nullptr) {
@@ -20,10 +21,10 @@ public:
 	virtual ~LightScene() {
 	}
 	virtual void Start() {
+		Modulecount = 0;
 		LightShader = new GStar::ShaderComponent(NT_Shaders);
 		LightMesh = new GStar::MeshComponent(NT_cubeparameters);
 		SpriteMesh = new GStar::MeshComponent(spriteNparameters);
-		CommonShader = new GStar::ShaderComponent(Shader2L);
 		GStar::World& world = GStar::World::Instance();
 		Object* tempObject = world.AddObject();
 
@@ -46,9 +47,13 @@ public:
 		AddModule(2.1f, 2.1f, GStar::MyString("Module4"));
 	}
 	virtual void Update() {
+		for (int i = 0; i < Modulecount; i++) {
+			CommonShader[i]->GetShader()->use();
+			if(!GStar::LightManager::Instance()->WriteToShaderFrom(CommonShader[i]->GetShader(), StartLight[i], 4,true))
+				DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail TO InitializeShader %d",i);
+		}
+		check_gl_error();
 		//TODO Figure OUT WHY Can not I do this
-		CommonShader->GetShader()->use();
-		GStar::LightManager::Instance()->WriteToShader(CommonShader->GetShader());
 		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
 		TransformComponent1->SetRotation(GStar::Vector3(0.0f, Scene::Create()->TotalTime() * 100, 0.0f));*/
 	}
@@ -56,24 +61,24 @@ public:
 	inline void AddModule(float x, float y, const GStar::MyString& Name) {
 		GStar::World& world = GStar::World::Instance();
 		Object* tempObject = world.AddObject();
-		tempObject->AddComponent(SpriteMesh);
-		tempObject->AddComponent(CommonShader);
 		GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
-		tempComponent->Initialize(Default_Texture_BOX);
-		tempComponent->Initialize(Default_TextureFace);
-		tempObject->AddComponent(tempComponent);
+		tempObject->AddComponent(SpriteMesh);
+		CommonShader[Modulecount] = new GStar::ShaderComponent(Shader2L);
+		tempObject->AddComponent(CommonShader[Modulecount]);
 		TransformComponent = new GStar::TransformComponent(tempObject, Name);
 		world.AddToRoot(TransformComponent);
 		TransformComponent->SetTransform(GStar::Vector3(x, y, -10.0f), GStar::Base::WORLD);
 		TransformComponent->SetScale(GStar::Vector3(2.0f, 2.0f, 2.0f));
 		TransformComponent->UpdateTransform();
 		tempObject->AddComponent(TransformComponent);
-		AddLight(0.5+x, 0.5+y, GStar::Vector3(1.0f, 1.0f, 0.0f));
-		AddLight(-0.5+x, -0.5+y, GStar::Vector3(0.0f, 1.0f, 1.0f));
-		AddLight(0.5+x, -0.5+y, GStar::Vector3(0.0f, 1.0f, 0.0f));
-		AddLight(-0.5+x, 0.5+y, GStar::Vector3(1.0f, 0.0f, 0.0f));
+
+		StartLight[Modulecount] = AddLight(0.5+x, 0.5+y, GStar::Vector3(1.0f, 1.0f, 0.0f));
+		 AddLight(-0.5+x, -0.5+y, GStar::Vector3(0.0f, 1.0f, 1.0f));
+		 AddLight(0.5+x, -0.5+y, GStar::Vector3(0.0f, 1.0f, 0.0f));
+		 AddLight(-0.5+x, 0.5+y, GStar::Vector3(1.0f, 0.0f, 0.0f));
+		 Modulecount++;
 	}
-	inline void AddLight(float x, float y, const GStar::Vector3& color) {
+	inline GStar::LightComponent* AddLight(float x, float y, const GStar::Vector3& color) {
 		GStar::World& world = GStar::World::Instance();
 		Object* tempObject = world.AddObject();
 		tempObject->AddComponent(LightMesh);
@@ -87,7 +92,8 @@ public:
 		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent5, GStar::Lighttype::POINT);
 		temp->SetIntensity(GStar::Vector3(0.0f, 0.0F, 0.0F), color, GStar::Vector3(0.0f, 0.0F, 0.0F));
 		temp->SetActivateConsts(.2f, 0.0f, 6.0f);
-		temp->SetcutOff(0.5f, 0.0f, 0.0f);
+		temp->SetcutOff(1.05f, 0.0f, 0.0f);
+		return temp;
 	}
 private:
 	GStar::TransformComponent* TransformComponent;
@@ -97,5 +103,7 @@ private:
 	GStar::ShaderComponent* LightShader;
 	GStar::MeshComponent* LightMesh;
 	GStar::MeshComponent* SpriteMesh;
-	GStar::ShaderComponent* CommonShader;
+	GStar::ShaderComponent* CommonShader[4];
+	GStar::LightComponent* StartLight[4];
+	int Modulecount;
 };

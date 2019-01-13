@@ -47,15 +47,10 @@ namespace GStar {
 	{
 		MyString sindex = MyString::inttostring(index);
 		shader->setVec3(prePhix+ sindex +afterPhix[0], info.my_transform->GetTransform());
-		check_gl_error();
 		shader->setVec3(prePhix + sindex + afterPhix[1], info.ambient);
-		check_gl_error();
 		shader->setVec3(prePhix + sindex + afterPhix[2], info.diffuse);
-		check_gl_error();
 		shader->setVec3(prePhix + sindex + afterPhix[3], info.specular);
-		check_gl_error();
 		shader->setInt(prePhix + sindex + afterPhix[4], info.my_type);
-		check_gl_error();
 		//Point out to light
 		if (info.my_type != Lighttype::POINT) {
 			GStar::Vector3 temp = info.my_transform->GetForWardVector();

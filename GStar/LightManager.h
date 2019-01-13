@@ -31,6 +31,100 @@ namespace GStar {
 			Lights.Push(temp);
 			return temp;
 		}
+		inline int GetIndex(const LightComponent* const component) {
+			Lights.Resetcurrent();
+			int count = 0;
+			while (Lights.HasNext()) {
+				if (component == Lights.GetNext()) {
+					return count;
+				}
+				count++;
+				Lights.Move();
+			}
+			return -1;
+		}
+		inline LightComponent* GetLight(int index) {
+			Lights.Resetcurrent();
+			int count = 0;
+			while (Lights.HasNext()) {
+				if (index == count) {
+					return Lights.GetNext();
+				}
+				count++;
+				Lights.Move();
+			}
+			return nullptr;
+		}
+		inline bool WriteToShaderFrom(const Shader* const shader, int lightsindex, int count,bool addfirstLight) {
+			Lights.Resetcurrent();
+			int index = 0;
+			bool exists;
+			while (Lights.HasNext()) {
+				if (index == lightsindex) {
+					exists = true;
+					break;
+				}
+				index++;
+				Lights.Move();
+			}
+			if (exists) {
+				_writeToShader(shader, Lights.GetNext()->Getlightinfo(), 0);
+				for (int i = 1; i < count; i++) {
+					Lights.Move();
+					if (!Lights.HasNext()) {
+						exists = false;
+						break;
+					}
+					_writeToShader(shader, Lights.GetNext()->Getlightinfo(), i);
+				}
+			}
+			if (exists) {
+				if (addfirstLight) {
+					Lights.Resetcurrent();
+					_writeToShader(shader,Lights.GetNext()->Getlightinfo(), count);
+					shader->setInt("numlights", count+1);
+				}
+				else {
+					shader->setInt("numlights", count);
+				}
+			}
+			return exists;
+		}
+		inline bool WriteToShaderFrom(const Shader* const shader, const LightComponent* const component, int count, bool addfirstLight) {
+			Lights.Resetcurrent();
+			int index = 0;
+			bool exists;
+			while (Lights.HasNext()) {
+				if (component == Lights.GetNext()) {
+					exists = true;
+					break;
+				}
+				index++;
+				Lights.Move();
+			}
+			if (exists) {
+				_writeToShader(shader, Lights.GetNext()->Getlightinfo(), 0);
+				for (int i = 1; i < count; i++) {
+					Lights.Move();
+					if (!Lights.HasNext()) {
+						exists = false;
+						break;
+					}
+					_writeToShader(shader, Lights.GetNext()->Getlightinfo(), i);
+				}
+			}
+			if (exists) {
+				if (addfirstLight) {
+					Lights.Resetcurrent();
+					_writeToShader(shader, Lights.GetNext()->Getlightinfo(), count);
+					shader->setInt("numlights", count + 1);
+				}
+				else {
+					shader->setInt("numlights", count);
+				}
+			}
+			return exists;
+		}
 		inline LightComponent* GetLight(const GStar::MyString& string) {
 			unsigned int id = GStar::MyString::hash_str(string.GetString());
 			Lights.Resetcurrent();
@@ -68,7 +162,7 @@ namespace GStar {
 			Lights.Resetcurrent();
 			return Lights.GetNext()->Getlightinfo();}
 	private:
-		void _writeToShader(const Shader* const shader, const GStar::LightInfo& info, int index);
+		static void _writeToShader(const Shader* const shader, const GStar::LightInfo& info, int index);
 		static LightManager* instance;
 		SingleLinkedList<LightComponent*> Lights;
 		 static MyString afterPhix[12];

@@ -1,4 +1,5 @@
 #pragma once
+#include<stdlib.h>
 #include"SceneInterface.h"
 #include"World.h"
 #include"UpdateObject.h"
@@ -31,7 +32,7 @@ public:
 		Object* tempObject1 = world.AddObject();
 		TransformComponent2 = new GStar::TransformComponent(tempObject1, "Camera1");
 		world.AddToRoot(TransformComponent2);
-		TransformComponent2->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f), GStar::Base::WORLD);
+		TransformComponent2->SetTransform(GStar::Vector3(1.0f, 0.0f, 1.0f), GStar::Base::WORLD);
 		tempObject1->AddComponent(TransformComponent2);
 		TransformComponent2->UpdateTransform();
 		controllerComponent = new KeyControlCompoenent(TransformComponent2, 2.0f);
@@ -81,10 +82,10 @@ public:
 		TransformComponent->UpdateTransform();
 		tempObject->AddComponent(TransformComponent);
 
-		StartLight[Modulecount] = AddLight(0.5+x, 0.5+y, GStar::Vector3(1.0f, 1.0f, 0.0f));
-		 AddLight(-0.5+x, -0.5+y, GStar::Vector3(0.0f, 1.0f, 1.0f));
-		 AddLight(0.5+x, -0.5+y, GStar::Vector3(0.0f, 1.0f, 0.0f));
-		 AddLight(-0.5+x, 0.5+y, GStar::Vector3(1.0f, 0.0f, 0.0f));
+		StartLight[Modulecount] = AddLight(0.5+(-0.5 + (std::rand() % (10)) / 10.0f) +x, 0.5+ (-0.5 + (std::rand() % (10)) / 10.0f) +y, GStar::Vector3(1.0f, float(rand()%2), 0.0f));
+		 AddLight(-0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + x, -0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + y, GStar::Vector3(0.0f, 1.0f, float(rand() % 2)));
+		 AddLight(-0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + x, 0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + y, GStar::Vector3(float(rand() % 2), 1.0f, 0.0f));
+		 AddLight(0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + x, -0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + y, GStar::Vector3(1.0f, 0.0f, float(rand() % 2)));
 		 Modulecount++;
 	}
 	inline GStar::LightComponent* AddLight(float x, float y, const GStar::Vector3& color) {

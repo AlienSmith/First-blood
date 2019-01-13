@@ -2,6 +2,7 @@
 #include "Shader.h"
 #include "LightManager.h"
 #include <string>
+#include "GLError.h"
 namespace GStar {
 	LightManager* LightManager::instance = nullptr;
 	MyString LightManager::prePhix;
@@ -12,6 +13,7 @@ namespace GStar {
 		this->Lights.Resetcurrent();
 		while (Lights.HasNext()) {
 			_writeToShader(shader, Lights.GetNext()->Getlightinfo(), count);
+			check_gl_error();
 			count++;
 			Lights.Move();
 		}
@@ -21,6 +23,7 @@ namespace GStar {
 
 	void LightManager::Initialize()
 	{
+		check_gl_error();
 		LightManager::prePhix = MyString("light[");
 		LightManager::afterPhix[0] = MyString("].position");
 		LightManager::afterPhix[1] = MyString("].ambient");
@@ -44,10 +47,15 @@ namespace GStar {
 	{
 		MyString sindex = MyString::inttostring(index);
 		shader->setVec3(prePhix+ sindex +afterPhix[0], info.my_transform->GetTransform());
+		check_gl_error();
 		shader->setVec3(prePhix + sindex + afterPhix[1], info.ambient);
+		check_gl_error();
 		shader->setVec3(prePhix + sindex + afterPhix[2], info.diffuse);
+		check_gl_error();
 		shader->setVec3(prePhix + sindex + afterPhix[3], info.specular);
+		check_gl_error();
 		shader->setInt(prePhix + sindex + afterPhix[4], info.my_type);
+		check_gl_error();
 		//Point out to light
 		if (info.my_type != Lighttype::POINT) {
 			GStar::Vector3 temp = info.my_transform->GetForWardVector();

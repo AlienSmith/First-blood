@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="KeyControlComponent.h" />
+    <ClInclude Include="LightScene.h" />
     <ClInclude Include="SimpleRotation.h" />
     <ClInclude Include="SimpleScene.h" />
     <ClInclude Include="Monster.h" />

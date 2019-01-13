@@ -87,6 +87,9 @@ vec3 calculateLight(int index, vec3 viewDir){
 void main() 
 {
 	vec3 viewDir = normalize(viewPos-fragPos);
-	vec3 result = calculateLight(0,viewDir);
+	vec3 result = vec3(0,0,0);
+	for(int i = 0; i < numlights; i++){
+		result += calculateLight(i,viewDir);
+	}
 	FragColor = vec4(result,1.0f);
 }

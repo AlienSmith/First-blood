@@ -16,7 +16,7 @@ void _check_gl_error(const char *file, int line) {
 		case GL_OUT_OF_MEMORY:          error = "OUT_OF_MEMORY";          break;
 		case GL_INVALID_FRAMEBUFFER_OPERATION:  error = "INVALID_FRAMEBUFFER_OPERATION";  break;
 		}
-		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "%s", error.GetString());
+		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "%s at %s line %d\n", error.GetString(),file,line);
 		
 		err = glGetError();
 	}

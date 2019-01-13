@@ -13,6 +13,7 @@
 #include"SceneInterface.h"
 #include"KeyInputEvent.h"
 #include"MouseInputEvent.h"
+#include "GLError.h"
 MainEntrance* MainEntrance::instance = nullptr;
 const float MainEntrance::MouseSensitivity = 0.05f;
 void MainEntrance::SetUpAndRun()
@@ -54,10 +55,12 @@ void MainEntrance::Run()
 	glfwSetFramebufferSizeCallback(myScene->Window(), framebuffer_size_call);
 	glfwSetCursorPosCallback(myScene->Window(), MainEntrance::mouse_call);
 	glfwSetKeyCallback(myScene->Window(), MainEntrance::keyboard_call);
+	check_gl_error();
 	//RenderLoop
 	while (!glfwWindowShouldClose(myScene->Window())) {
 		if (GStar::SceneInterface::Instance) {
 			GStar::SceneInterface::Instance->Update();
+			check_gl_error();
 		}
 		myScene->UpdateTime();
 		myController->Update();

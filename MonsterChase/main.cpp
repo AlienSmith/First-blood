@@ -8,6 +8,7 @@
 //#include "MainRenderLoop.cpp"
 #include "SingleLinkedDictionary.h"
 #include "SimpleScene.h"
+#include "LightScene.h"
 #include "MemorySystem.h"
 #include "MainEntrance.h"
 #include "MyString.h"
@@ -24,11 +25,7 @@
 int main() 
 	{
 	InitializeMemorySystem();
-	GStar::MyString one = "one ";
-	GStar::MyString two = "two";
-	GStar::MyString three;
-	three = one + two;
-	SimpleScene scene;
+	LightScene scene;
 	MainEntrance::SetUpAndRun();
 		DestroyMemorySystem();
 		int a = 0;

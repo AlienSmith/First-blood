@@ -32,7 +32,7 @@ in vec3 Normal;
 
 uniform Material material;
 
-uniform Light light[5];
+uniform Light light[30];
 uniform int numlights;
 
 uniform vec3 viewPos;

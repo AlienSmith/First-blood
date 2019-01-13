@@ -2,6 +2,7 @@
 #include"SingleLinkedList.h"
 #include"Object.h"
 #include"TransformComponent.h"
+#include"GLError.h"
 namespace GStar {
 	class World {
 	public:
@@ -19,6 +20,7 @@ namespace GStar {
 			while (WorldRoot.HasNext()) {
 				WorldRoot.GetNext()->WorldUpdate(deltatime);
 				WorldRoot.Move();
+				check_gl_error();
 			}
 		}
 		inline void AddToRoot(GStar::TransformComponent* transform) {

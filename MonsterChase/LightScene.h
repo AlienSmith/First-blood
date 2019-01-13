@@ -42,9 +42,18 @@ public:
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.0f, 0.0F, 0.0F), GStar::Vector3(0.0f, 0.0F, 0.0F));
 		
 		AddModule(0.0f, 0.0f, GStar::MyString("Module1"));
-		AddModule(2.1f, 0.0f, GStar::MyString("Module2"));
-		AddModule(0.0f, 2.1f, GStar::MyString("Module3"));
-		AddModule(2.1f, 2.1f, GStar::MyString("Module4"));
+		AddModule(2.05f, 0.0f, GStar::MyString("Module2"));
+		AddModule(0.0f, 2.05f, GStar::MyString("Module3"));
+		AddModule(2.05f, 2.05f, GStar::MyString("Module4"));
+		
+		AddModule(-2.05f, 0.0f, GStar::MyString("Module5"));
+		AddModule(4.1f, 0.0f, GStar::MyString("Module6"));
+		AddModule(4.1f, 2.05f, GStar::MyString("Module7"));
+		AddModule(4.1f, -2.05f, GStar::MyString("Module8"));
+		AddModule(-2.05f, -2.05f, GStar::MyString("Module9"));
+		AddModule(-2.05f, 2.05f, GStar::MyString("Module10"));
+		AddModule(0.0f, -2.05f, GStar::MyString("Module11"));
+		AddModule(2.05f, -2.05f, GStar::MyString("Module12"));
 	}
 	virtual void Update() {
 		for (int i = 0; i < Modulecount; i++) {
@@ -103,7 +112,7 @@ private:
 	GStar::ShaderComponent* LightShader;
 	GStar::MeshComponent* LightMesh;
 	GStar::MeshComponent* SpriteMesh;
-	GStar::ShaderComponent* CommonShader[4];
-	GStar::LightComponent* StartLight[4];
+	GStar::ShaderComponent* CommonShader[12];
+	GStar::LightComponent* StartLight[12];
 	int Modulecount;
 };

@@ -274,6 +274,10 @@ namespace GStar {
 		}inline void SetName(const GStar::MyString& name) {
 			my_name = GStar::MyString::hash_str(name.GetString());
 		}
+		static float distance(const GStar::TransformComponent& component1, const GStar::TransformComponent& component2) {
+			Vector3 temp = component1.GetTransform() - component2.GetTransform();
+			return temp.Length();
+		}
 	private:
 		TransformData my_model;
 		SingleLinkedList<GStar::TransformComponent*> my_children;

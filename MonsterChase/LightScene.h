@@ -22,13 +22,14 @@ public:
 	virtual ~LightScene() {
 	}
 	virtual void Start() {
+		//SetUp
 		Modulecount = 0;
 		LightShader = new GStar::ShaderComponent(NT_Shaders);
 		LightMesh = new GStar::MeshComponent(NT_cubeparameters);
 		SpriteMesh = new GStar::MeshComponent(spriteNparameters);
 		GStar::World& world = GStar::World::Instance();
 		Object* tempObject = world.AddObject();
-
+		//Camera
 		Object* tempObject1 = world.AddObject();
 		TransformComponent2 = new GStar::TransformComponent(tempObject1, "Camera1");
 		world.AddToRoot(TransformComponent2);
@@ -46,7 +47,6 @@ public:
 		AddModule(2.05f, 0.0f, GStar::MyString("Module2"));
 		AddModule(0.0f, 2.05f, GStar::MyString("Module3"));
 		AddModule(2.05f, 2.05f, GStar::MyString("Module4"));
-		
 		AddModule(-2.05f, 0.0f, GStar::MyString("Module5"));
 		AddModule(4.1f, 0.0f, GStar::MyString("Module6"));
 		AddModule(4.1f, 2.05f, GStar::MyString("Module7"));

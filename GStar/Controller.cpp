@@ -4,10 +4,10 @@
 //For look into other direction
 void Controller::mouse_callBack(GLFWwindow * window, double xpos, double ypos)
 {
-	xoffset = (xpos - lastX)*sensitivity;
-	yoffset = (lastY - ypos)*sensitivity;
-	lastX = xpos;
-	lastY = ypos;
+	xoffset = ((float)xpos - lastX)*sensitivity;
+	yoffset = (lastY - (float)ypos)*sensitivity;
+	lastX = (float)xpos;
+	lastY = (float)ypos;
 	my_camera.setroll(my_camera.getroll() - yoffset);
 	my_camera.setpitch(my_camera.getpitch() - xoffset);
 	my_camera.RotateUpdate();
@@ -22,7 +22,7 @@ void Controller::processInput(GLFWwindow * window)
 	my_camera.processInput(window, my_Scene->Deltatime());
 }
 
-void Controller::framebuffer_size_callback(GLFWwindow * windwo, int width, int height)
+void Controller::framebuffer_size_callback(GLFWwindow * window, int width, int height)
 {
 	glViewport(0, 0, width, height);// Viewport and window are different.
 }

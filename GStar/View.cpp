@@ -9,7 +9,6 @@ void View::Update()
 	for (unsigned int i = 0; i < 10; i++) {
 		GStar::Matrix4 model = GStar::Matrix4(IDENTICAL_MATRIX);
 		model = GStar::Transform(model, cubPosition[i].x(), cubPosition[i].y(), cubPosition[i].z());
-		float angle = 20.0f*i;
 		model = GStar::Rotate(model, (float)glfwGetTime() * 100, cubPosition[i]);
 		my_scene->Shaders().setMat4("model", model, GL_FALSE);
 		glDrawArrays(GL_TRIANGLES, 0, 36);

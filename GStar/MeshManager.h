@@ -16,7 +16,7 @@ namespace GStar {
 			unsigned int h = MeshFIRSTH;
 			int count = 0;
 			while (count < parameters.numelements) {
-				h = (h * MeshPrimeA) + ((parameters.data[0] + MeshOffset) * MeshPrimeB);
+				h = (h * MeshPrimeA) + (((unsigned int)parameters.data[0] + MeshOffset) * MeshPrimeB);
 				count++;
 			}
 			return h % MeshPrimeC;

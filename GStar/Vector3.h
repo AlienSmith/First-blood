@@ -122,9 +122,9 @@ namespace GStar {
 
 	inline GStar::Vector3::Vector3(int x, int y, int z)
 	{
-		this->m_x = x;
-		this->m_y = y;
-		this->m_z = z;
+		this->m_x = (float)x;
+		this->m_y = (float)y;
+		this->m_z = (float)z;
 	}
 
 	inline GStar::Vector3::Vector3(float x, float y,float z)
@@ -151,16 +151,16 @@ namespace GStar {
 
 	inline void GStar::Vector3::x(int x)
 	{
-		this->m_x = x;
+		this->m_x = (float)x;
 	}
 
 	inline void GStar::Vector3::y(int y)
 	{
-		this->m_y = y;
+		this->m_y = (float)y;
 	}
 	inline void GStar::Vector3::z(int z)
 	{
-		this->m_z = z;
+		this->m_z = (float)z;
 	}
 
 	inline void GStar::Vector3::x(float x)
@@ -183,7 +183,7 @@ namespace GStar {
 	}
 	// this length of the vector
 	inline float GStar::Vector3::Length() const {
-		return sqrt(this->m_x*this->m_x + this->m_y*this->m_y+this->m_z*this->m_z);
+		return (float)sqrt(this->m_x*this->m_x + this->m_y*this->m_y+this->m_z*this->m_z);
 	}
 	//this will normalize the vector
 	inline void GStar::Vector3::Normalize() {

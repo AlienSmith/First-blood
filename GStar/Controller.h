@@ -1,7 +1,7 @@
 #pragma once
 #include "Camera.h"
 class Scene;
-class GLFWwindow;
+struct GLFWwindow;
 //Manange call back event and FPS camera
 class Controller {
 public:

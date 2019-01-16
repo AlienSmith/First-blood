@@ -17,7 +17,6 @@ namespace GStar {
 			count++;
 			Lights.Move();
 		}
-		float a = 0;
 		shader->setInt("numlights", count);
 	}
 

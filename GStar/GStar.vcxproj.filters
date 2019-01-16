@@ -35,9 +35,6 @@
     <ClCompile Include="stb_activate.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="Vector2.cpp">
-      <Filter>Math</Filter>
-    </ClCompile>
     <ClCompile Include="View.cpp">
       <Filter>OpenGl\Core</Filter>
     </ClCompile>
@@ -64,9 +61,6 @@
     </ClCompile>
     <ClCompile Include="TextureManager.cpp">
       <Filter>Structure\Manager</Filter>
-    </ClCompile>
-    <ClCompile Include="Texture.cpp">
-      <Filter>OpenGl\Core\Texture</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
       <Filter>OpenGl\Core\Mesh</Filter>

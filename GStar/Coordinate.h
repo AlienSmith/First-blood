@@ -4,10 +4,10 @@
 #include "Matrix4.h"
 #include "math.h"
 #include "Vector3.h"
-#define PI 3.14159265
+#define PI 3.14159265f
 #include "ConsolePrint.h"
 namespace GStar {
-	inline static float radians(float angle) { return angle * PI / 180.0; };
+	inline static float radians(float angle) { return angle * PI / 180.0f; };
 	static GStar::Matrix4 Transform(Matrix4& offset,float x, float y, float z);
 	static GStar::Matrix4 Scale(Matrix4& offset, float x, float y, float z);
 	static GStar::Matrix4 Rotate(Matrix4& offset,float roll, float pitch, float yaw);
@@ -41,12 +41,6 @@ namespace GStar {
 		worldTothis = Matrix4(IDENTICAL_MATRIX);
 	}
 
-	inline Coordinate::Coordinate(TYPE objecttype, Matrix4& offset)
-	{
-		this->mytype = objecttype;
-		this->worldTothis = Matrix4(IDENTICAL_MATRIX);
-	}
-
 	inline Coordinate::~Coordinate()
 	{
 	}
@@ -54,12 +48,12 @@ namespace GStar {
 	inline void Coordinate::Rotate(float roll, float pitch, float yaw)
 	{
 		array_ff temp = IDENTICAL_MATRIX;
-		float sx = sin(roll*PI/180);
-		float sy = sin(pitch*PI / 180);
-		float sz = sin(yaw*PI / 180);
-		float cx = cos(roll*PI / 180);
-		float cy = cos(pitch*PI / 180);
-		float cz = cos(yaw*PI / 180);
+		float sx = sin(roll*PI/180.0f);
+		float sy = sin(pitch*PI / 180.0f);
+		float sz = sin(yaw*PI / 180.0f);
+		float cx = cos(roll*PI / 180.0f);
+		float cy = cos(pitch*PI / 180.0f);
+		float cz = cos(yaw*PI / 180.0f);
 
 		temp[0][0] = cz * cy - sz * sx*sy;
 		temp[0][1] = -sz*cx;
@@ -123,12 +117,12 @@ namespace GStar {
 	{
 		//This implementation follows the order of zxy
 		array_ff temp = IDENTICAL_MATRIX;
-		float sx = sin(roll*PI / 180);
-		float sy = sin(pitch*PI / 180);
-		float sz = sin(yaw*PI / 180);
-		float cx = cos(roll*PI / 180);
-		float cy = cos(pitch*PI / 180);
-		float cz = cos(yaw*PI / 180);
+		float sx = sin(roll*PI / 180.0f);
+		float sy = sin(pitch*PI / 180.0f);
+		float sz = sin(yaw*PI / 180.0f);
+		float cx = cos(roll*PI / 180.0f);
+		float cy = cos(pitch*PI / 180.0f);
+		float cz = cos(yaw*PI / 180.0f);
 		//DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "sx %f, sy %f, sz %f", sx, sy, sz);
 		temp[0][0] = cz * cy - sz * sx*sy;
 		temp[0][1] = -sz * cx;
@@ -146,8 +140,8 @@ namespace GStar {
 	GStar::Matrix4 Rotate(Matrix4 & offset, float degree, GStar::Vector3 direction)
 	{
 		direction.Normalize();
-		float s = sin(degree*PI / 180);
-		float c = cos(degree*PI / 180);
+		float s = sin(degree*PI / 180.0f);
+		float c = cos(degree*PI / 180.0f);
 		float x = direction.x();
 		float y = direction.y();
 		float z = direction.z();
@@ -167,7 +161,7 @@ namespace GStar {
 	}
 	inline GStar::Matrix4 perspective(Matrix4& offset, float horangle, float widthbyheight, float nsize, float fsize)
 	{
-		float value = tan(horangle*PI / 360);
+		float value = tan(horangle*PI / 360.0f);
 		float width = 2*nsize*value;
 		float height = width / widthbyheight;
 
@@ -187,7 +181,7 @@ namespace GStar {
 
 	GStar::Matrix4 orthogrphic(Matrix4 & offset, float horangle, float widthbyheight, float nsize, float fsize)
 	{
-		float value = tan(horangle*PI / 360);
+		float value = tan(horangle*PI / 360.0f);
 		float width = 2 * nsize*value;
 		float height = width / widthbyheight;
 

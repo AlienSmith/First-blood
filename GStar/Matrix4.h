@@ -52,7 +52,7 @@ namespace GStar {
 		float determinantc() const;
 	private:
 		array_ff data = ZERO_MATRIX;
-		float C(float x, float y) const;
+		float C(int x, int y) const;
 	};
 	inline GStar::Matrix4& GStar::AddPool(array_ff& rdata) {
 		if (GStar::tempresultpool == nullptr) {
@@ -200,7 +200,6 @@ namespace GStar {
 	inline Matrix4& Matrix4::Dot(const Matrix4& B) const
 	{
 		array_ff temp = ZERO_MATRIX;
-		array_ff& temp1 = temp;
 		const array_ff& TB = B.Get();
 		for (int i = 0; i < SIZE; i++) {
 			for (int j = 0; j < SIZE; j++) {
@@ -240,7 +239,7 @@ namespace GStar {
 			return GStar::AddPool(temp);
 	}
 	//Mathmatic determinant of a 3*3 matrix cut from the original matirx
-	inline float Matrix4::C(float x, float y) const
+	inline float Matrix4::C(int x, int y) const
 	{
 		int tempflag = x + y;
 		if (tempflag % 2 == 0) {

@@ -44,14 +44,14 @@ bool Scene::Update()
 
 void Scene::UpdateTime()
 {
-	currentFrame = glfwGetTime();
+	currentFrame = (float)glfwGetTime();
 	deltaTime = currentFrame - LastFrame;
 	LastFrame = currentFrame;
 }
 
 unsigned int Scene::LoadMesh(const MeshParameters & parameters) const
 {
-	int entrysize = parameters.positionsize + parameters.texturesize + parameters.normalsize;
+	GLsizei entrysize = parameters.positionsize + parameters.texturesize + parameters.normalsize;
 	unsigned int TempVAO;
 	glGenVertexArrays(1, &TempVAO);//claim a name different function from VBO
 	glBindVertexArray(TempVAO);
@@ -71,10 +71,10 @@ unsigned int Scene::LoadMesh(const MeshParameters & parameters) const
 	glVertexAttribPointer(0, parameters.positionsize, GL_FLOAT, GL_FALSE,  entrysize* sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 	if (parameters.texturesize != 0) {
-		glVertexAttribPointer(1, parameters.texturesize, GL_FLOAT, GL_FASTEST, entrysize * sizeof(float), (void*)(parameters.positionsize * sizeof(float)));
+		glVertexAttribPointer(1, parameters.texturesize, GL_FLOAT, GL_FALSE, entrysize * sizeof(float), (void*)(parameters.positionsize * sizeof(float)));
 		glEnableVertexAttribArray(1);
 	}if (parameters.normalsize != 0) {
-		glVertexAttribPointer(2, parameters.normalsize, GL_FLOAT, GL_FASTEST, entrysize * sizeof(float), (void*)((parameters.positionsize+parameters.texturesize) * sizeof(float)));
+		glVertexAttribPointer(2, parameters.normalsize, GL_FLOAT, GL_FALSE, entrysize * sizeof(float), (void*)((parameters.positionsize+parameters.texturesize) * sizeof(float)));
 		glEnableVertexAttribArray(2);
 	}
 
@@ -123,7 +123,7 @@ bool Scene::LoadObject()
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)0);
 	glEnableVertexAttribArray(0);
 
-	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FASTEST, 5 * sizeof(float), (void*)(3 * sizeof(float)));
+	glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, 5 * sizeof(float), (void*)(3 * sizeof(float)));
 	glEnableVertexAttribArray(1);
 	return true;
 }
@@ -152,6 +152,8 @@ unsigned int Scene::LoadTexture(const TextureParameters& parameters) const
 			format = GL_RGB;
 		else if (nrComponents == 4)
 			format = GL_RGBA;
+		else
+			format = GL_RGB;
 		glTexImage2D(GL_TEXTURE_2D, 0, format, width, height, 0, format, GL_UNSIGNED_BYTE, data);
 		glGenerateMipmap(GL_TEXTURE_2D);
 	}

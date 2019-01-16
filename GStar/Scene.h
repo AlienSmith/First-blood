@@ -8,7 +8,7 @@
 //TODO add Creat function to Shader class
 struct MeshParameters;
 const struct TextureParameters;
-class GLFWwindow;
+struct GLFWwindow;
 class Scene {
 public:
 	unsigned int VA() { return VAO; }

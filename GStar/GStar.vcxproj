@@ -213,11 +213,9 @@
     <ClCompile Include="ShaderManger.cpp" />
     <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="MyString.cpp" />
-    <ClCompile Include="Texture.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="UpdateObject.cpp" />
-    <ClCompile Include="Vector2.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>

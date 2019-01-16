@@ -1,7 +1,7 @@
 #pragma once
 #include "Vector3.h"
 #include "Matrix4.h"
-class GLFWwindow;
+struct GLFWwindow;
 namespace GStar {
 	static const float CameraMoveSpeed = 25;
 	class Camera {

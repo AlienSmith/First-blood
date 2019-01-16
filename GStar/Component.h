@@ -12,7 +12,7 @@ public:
 	//TODO add deltaTime to the update
 	//TODO if more efficient I could have a convert component for next object and update this object
 	bool Initialize() { return true; }
-	bool Update(float deltatime);
+	bool Update();
 	bool Terminate() { return true; }
 	Component(char tpe) :type(tpe) {}
 	Component():type(UNDEFINED_WORD) {}

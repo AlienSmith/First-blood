@@ -132,7 +132,7 @@ bool HeapManager_UnitTest()
 
 		if (!AllocatedAddresses.empty() && ((rand() % freeAboutEvery) == 0))
 		{
-			void * pPtr = AllocatedAddresses.back();
+			pPtr = AllocatedAddresses.back();
 			AllocatedAddresses.pop_back();
 
 			bool success = Contains(pHeapManager, pPtr) && IsAllocated(pHeapManager, pPtr);

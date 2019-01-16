@@ -15,10 +15,10 @@ namespace GStar {
 			ObjectsList.Push(new Object());
 			return ObjectsList.GetEndT();
 		}
-		void Update(float deltatime) {
+		void Update() {
 			WorldRoot.Resetcurrent();
 			while (WorldRoot.HasNext()) {
-				WorldRoot.GetNext()->WorldUpdate(deltatime);
+				WorldRoot.GetNext()->WorldUpdate();
 				WorldRoot.Move();
 				check_gl_error();
 			}

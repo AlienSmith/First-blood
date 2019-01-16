@@ -32,7 +32,7 @@ namespace GStar {
 			return LIGHT_WORD;
 		}
 		bool Initialize();
-		bool Update(float deltatime);
+		bool Update();
 		bool Terminate();
 		LightComponent(Lighttype type, TransformComponent* component) :
 		Component(LIGHT_WORD),
@@ -64,13 +64,13 @@ namespace GStar {
 			my_info.linear = linear;
 			my_info.constant = constant;
 			my_info.quadratic = qudratic;
-		}inline void SetType(Lighttype type) {
-			my_info.my_type = type;
-			if (type == Lighttype::DIRECTIONAL) {
+		}inline void SetType(Lighttype ltype) {
+			my_info.my_type = ltype;
+			if (ltype == Lighttype::DIRECTIONAL) {
 				CleananglecutOff();
 				Cleanconstance();
 			}
-			else if (type == Lighttype::POINT) {
+			else if (ltype == Lighttype::POINT) {
 				CleananglecutOff();
 			}
 		}

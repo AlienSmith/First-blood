@@ -17,7 +17,5 @@ void _check_gl_error(const char *file, int line) {
 		case GL_INVALID_FRAMEBUFFER_OPERATION:  error = "INVALID_FRAMEBUFFER_OPERATION";  break;
 		}
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "%s at %s line %d\n", error.GetString(),file,line);
-		
-		err = glGetError();
 	}
 }

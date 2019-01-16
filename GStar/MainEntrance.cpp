@@ -65,8 +65,7 @@ void MainEntrance::Run()
 		myScene->UpdateTime();
 		myController->Update();
 		CleanScreen();
-		float time = myScene->Deltatime();
-		world.Update(time);
+		world.Update();
 		myScene->UpdateEnd();
 	}
 	myScene->TerminateWindow();
@@ -94,7 +93,9 @@ void MainEntrance::framebuffer_size_call(GLFWwindow * window, int width, int hei
 //The keyinputevent object will die with the function
 void MainEntrance::keyboard_call(GLFWwindow * window, int key, int scancode, int action, int mods)
 {
-	MainEntrance::instance->KeyBoardInput.Invoke(new GStar::KeyInputEvent(key,action));
+	if (window) {
+		MainEntrance::instance->KeyBoardInput.Invoke(new GStar::KeyInputEvent(key, action));
+	}
 }
 
 void MainEntrance::CleanScreen()

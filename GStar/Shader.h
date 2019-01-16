@@ -20,7 +20,7 @@ public:
 	void setBool(const GStar::MyString &name, bool value) const;
 	void setInt(const GStar::MyString &name, int value) const;
 	void setFloat(const GStar::MyString &name, float value) const;
-	void setMat4(const GStar::MyString &name, const GStar::Matrix4& value, unsigned int Flip) const;
+	void setMat4(const GStar::MyString &name, const GStar::Matrix4& value, bool Flip) const;
 	void setVec3(const GStar::MyString& name, const GStar::Vector3& value) const;
 	//TODO after the demeo can run put the other ID into private section and write geters and seters.
 	inline unsigned int GetUnId() const { return uniqueid; }

@@ -98,14 +98,14 @@ namespace GStar {
 
 	inline GStar::Vector2::Vector2(int x, int y)
 	{
-		this->m_x = x;
-		this->m_y = y;
+		this->m_x = (float)x;
+		this->m_y = (float)y;
 	}
 
 	inline GStar::Vector2::Vector2(float x, float y)
 	{
-		this->m_x = x;
-		this->m_y = y;
+		this->m_x = (float)x;
+		this->m_y = (float)y;
 	}
 
 	inline float GStar::Vector2::x() const
@@ -120,12 +120,12 @@ namespace GStar {
 
 	inline void GStar::Vector2::x(int x)
 	{
-		this->m_x = x;
+		this->m_x = (float)x;
 	}
 
 	inline void GStar::Vector2::y(int y)
 	{
-		this->m_y = y;
+		this->m_y = (float)y;
 	}
 
 	inline void GStar::Vector2::x(float x)

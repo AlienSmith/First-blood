@@ -25,6 +25,7 @@ namespace GStar {
 				my_eventlist.Move();
 			}
 			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Error, "Try to access eventunit %s has not been registered",string.GetString());
+			return *my_eventlist.GetEndT();
 		}
 		~EventManager() {
 			my_eventlist.DeleteContent();

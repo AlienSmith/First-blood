@@ -1,16 +1,18 @@
 #include "Scene.h"
 #include "Controller.h"
-#include "Camera.cpp"
+#include "Camera.h"
 //For look into other direction
 void Controller::mouse_callBack(GLFWwindow * window, double xpos, double ypos)
 {
-	xoffset = ((float)xpos - lastX)*sensitivity;
-	yoffset = (lastY - (float)ypos)*sensitivity;
-	lastX = (float)xpos;
-	lastY = (float)ypos;
-	my_camera.setroll(my_camera.getroll() - yoffset);
-	my_camera.setpitch(my_camera.getpitch() - xoffset);
-	my_camera.RotateUpdate();
+	if (window) {
+		xoffset = ((float)xpos - lastX)*sensitivity;
+		yoffset = (lastY - (float)ypos)*sensitivity;
+		lastX = (float)xpos;
+		lastY = (float)ypos;
+		my_camera.setroll(my_camera.getroll() - yoffset);
+		my_camera.setpitch(my_camera.getpitch() - xoffset);
+		my_camera.RotateUpdate();
+	}
 }
 
 void Controller::processInput(GLFWwindow * window)
@@ -24,7 +26,9 @@ void Controller::processInput(GLFWwindow * window)
 
 void Controller::framebuffer_size_callback(GLFWwindow * window, int width, int height)
 {
-	glViewport(0, 0, width, height);// Viewport and window are different.
+	if (window) {
+		glViewport(0, 0, width, height);// Viewport and window are different.
+	}
 }
 
 void Controller::Update()

@@ -10,7 +10,7 @@ namespace GStar {
 			return CAMERA_WORD;
 		}
 		bool Initialize();
-		bool Update(float deltatime);
+		bool Update();
 		bool Terminate;
 		CameraComponent(TransformComponent* transform ) 
 			:Component(CAMERA_WORD)

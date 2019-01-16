@@ -9,19 +9,17 @@
 #endif
 #endif
 #if defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER) && defined(ENVIRONMENT32)
-#define _DEBUGACTIVITE true;
+#define _DEBUGACTIVITE
 struct INFOBLCOK { char start[4]; size_t isusing :2; size_t size:30; char end[4]; };
 
 #elif defined(_DEBUG)  &&  !defined(DISABLE_DEBUG_HEAPMANAGER) && defined(ENVIRONMENT64)
-#define _DEBUGACTIVITE true;
+#define _DEBUGACTIVITE
 struct INFOBLCOK { char start[8]; size_t isusing : 2; size_t size : 62; char end[8]; };
 
 #elif defined(ENVIRONMENT32)
-#define _DEBUGACTIVITE false;
 struct INFOBLCOK { size_t isusing : 2; size_t size : 30; };
 
 #elif defined(ENVIRONMENT64)
-#define _DEBUGACTIVITE false;
 struct INFOBLCOK { size_t isusing : 2; size_t size : 30; };
 
 #endif
@@ -35,8 +33,8 @@ public:
 	HeapManager() :_pHeapMemory(nullptr) {}
 	void InitializeWith(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy);
 	void SetPointerTo(void * _pHeapMemeoy);
-	static void* _movePointerForward(const void* const _pointer, int number);
-	static void* _movePointerBackward(const void* const _pointer, int number);
+	static void* _movePointerForward(const void* const _pointer, size_t number);
+	static void* _movePointerBackward(const void* const _pointer, size_t number);
 	static size_t difference(void* one, void* two);
 	// the static to decide wheter a block is being used by client. e suggests end of the heap;
 	static const size_t infoisusing = 0;

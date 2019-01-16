@@ -72,7 +72,7 @@ void Monster::Print()
 
 void Monster::GetName()
 {
-	printf("Please enter name for monster %i end with \".\" , this->mynumber" );
+	printf("Please enter name for monster %i end with \".\" ", this->mynumber );
 	char next;
 	std::cin >> next;
 	while (next != '.') {

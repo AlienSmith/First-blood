@@ -74,7 +74,7 @@ public:
 		TransfomrComponent3 = new GStar::TransformComponent(tempObject, "Light1");
 		world.AddToRoot(TransfomrComponent3);
 		TransfomrComponent3->SetTransform(GStar::Vector3(0.0f, 0.0f, 0.0f), GStar::Base::WORLD);
-		TransfomrComponent3->SetScale(.1, .1, .1);
+		TransfomrComponent3->SetScale(.1f, .1f, .1f);
 		tempObject->AddComponent(TransfomrComponent3);
 		TransfomrComponent3->UpdateTransform();
 		//Directional Light;
@@ -90,7 +90,7 @@ public:
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));
 		temp->SetActivateConsts(1.0f, 0.09f, 0.032f);
 		temp->SetcutOff(20.0f, 0.5f, 0.707f);
-		KeyControlCompoenent* controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);
+		controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);
 		tempObject->AddComponent(controllerComponent);
 
 	}

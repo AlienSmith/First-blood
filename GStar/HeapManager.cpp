@@ -6,7 +6,7 @@
 #include <stdlib.h>
 //TODO make a effecient version for release
 //void* HeapManager::GeneralHeap = nullptr;
-#if _DEBUGACTIVITE
+#if defined(_DEBUGACTIVITE)
 HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy)
 {
 	this->_sizeHeap = HeapSize;
@@ -61,7 +61,7 @@ HeapManager::HeapManager(size_t HeapSize, unsigned int numDescriptors, void * _p
 	*end = HeapManager::infoend;
 }
 #endif
-#if _DEBUGACTIVITE
+#if defined(_DEBUGACTIVITE)
 void HeapManager::InitializeWith(size_t HeapSize, unsigned int numDescriptors, void * _pHeapMemeoy)
 {
 	this->_sizeHeap = HeapSize;
@@ -130,7 +130,7 @@ void * HeapManager::FindFirstFit(size_t size)
 	return FindFirstFit(size, 4);
 }
 //????????
-#if _DEBUGACTIVITE
+#if defined(_DEBUGACTIVITE)
 void * HeapManager::FindFirstFit(size_t size, unsigned int i_alignment)
 {
 	_current = _pHeapMemory;
@@ -173,7 +173,7 @@ void * HeapManager::FindFirstFit(size_t size, unsigned int i_alignment)
 	return _current;
 }
 #endif
-#if _DEBUGACTIVITE
+#if defined(_DEBUGACTIVITE)
 INFOBLCOK * HeapManager::_TravelToNextDescriptor(const INFOBLCOK* const i_ptr) const
 {
 	size_t difference = reinterpret_cast<size_t>(i_ptr);
@@ -181,7 +181,6 @@ INFOBLCOK * HeapManager::_TravelToNextDescriptor(const INFOBLCOK* const i_ptr) c
 	difference -= base;
 
 	char* start = (char*)_movePointerForward(i_ptr, i_ptr->size + sizeof(INFOBLCOK));// lead to place after the users data
-	int a = 0;
 	while (*start == HeapManager::fillpadding) {
 		start = (char*)_movePointerForward(start, 1);
 	}
@@ -210,7 +209,7 @@ bool HeapManager::_Match(size_t size, unsigned int alignment)
 
 }
 
-#if _DEBUGACTIVITE
+#if defined(_DEBUGACTIVITE)
 bool HeapManager::_TryCut(size_t size, unsigned int alignment)
 {
 	INFOBLCOK* current = reinterpret_cast<INFOBLCOK*>(_current);
@@ -391,7 +390,7 @@ bool HeapManager::AreBlocksFree() const
 	}
 	return true;
 }
-#if _DEBUGACTIVITE
+#if defined(_DEBUGACTIVITE)
 void HeapManager::_FreeCheck(void* ipr)
 {
 	INFOBLCOK* temp = (INFOBLCOK*)_movePointerBackward(ipr, sizeof(INFOBLCOK));
@@ -413,7 +412,7 @@ bool HeapManager::free(void * i_ptr)
 		temp->isusing = HeapManager::infoisnotusing;
 		result = true;
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Heap manager Free Block %p \n", _current);
-#if _DEBUGACTIVITE
+#if defined(_DEBUGACTIVITE)
 		_FreeCheck(i_ptr);
 #endif
 		_current = _TravelToNextDescriptor(temp);// move to the next dicriptor
@@ -440,14 +439,13 @@ bool HeapManager::_tryFastBackCollect()
 
 void HeapManager::_deletHead()
 {
-	INFOBLCOK* temp = (INFOBLCOK*)_current;
 	memset(_current, HeapManager::fillinitialfilled, sizeof(INFOBLCOK));
 }
 bool HeapManager::contains(void * ipr) const
 {
 	bool result = true;
-	void* _current = _movePointerBackward(ipr, sizeof(INFOBLCOK));
-	INFOBLCOK* temp = (INFOBLCOK*)_current;
+	void* temp_ptr = _movePointerBackward(ipr, sizeof(INFOBLCOK));
+	INFOBLCOK* temp = (INFOBLCOK*)temp_ptr;
 	int count = 0;
 	if (temp->isusing != HeapManager::infoisusing &&temp->isusing != HeapManager::infoisnotusing) {
 		return false;
@@ -468,8 +466,8 @@ bool HeapManager::contains(void * ipr) const
 bool HeapManager::IsAllocated(void * ipr) const
 {
 	if (contains(ipr)) {
-		void* _current = _movePointerBackward(ipr, sizeof(INFOBLCOK));
-		INFOBLCOK* temp = (INFOBLCOK*)_current;
+		void* temp_ptr = _movePointerBackward(ipr, sizeof(INFOBLCOK));
+		INFOBLCOK* temp = (INFOBLCOK*)temp_ptr;
 		if (temp->isusing == HeapManager::infoisusing) {
 			return true;
 		}
@@ -485,13 +483,13 @@ void HeapManager::SetPointerTo(void * _pHeapMemeoy)
 	this->_pHeapMemory = _pHeapMemeoy;
 }
 
-void* HeapManager::_movePointerForward(const void const * _pointer, int number)
+void* HeapManager::_movePointerForward(const void * const _pointer, size_t number)
 {
 	size_t address = reinterpret_cast<size_t>(_pointer);
 	address += number;
 	return reinterpret_cast<void*>(address);
 }
-void* HeapManager::_movePointerBackward(const void const * _pointer, int number)
+void* HeapManager::_movePointerBackward(const void * const _pointer, size_t number)
 {
 	size_t address = reinterpret_cast<size_t>(_pointer);
 	address -= number;

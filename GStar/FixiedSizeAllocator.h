@@ -14,7 +14,7 @@ public:
 	const static size_t Block96UP;
 
 	static FixedSizeAllocator* Instance() { return instance; }
-	static void Initialize(void * i_pHeapMemory, size_t i_sizeHeapMemory, unsigned int i_OptionalNumDescriptors);
+	static void Initialize(void * i_pHeapMemory, size_t i_sizeHeapMemory);
 	static void Terminate() { if (instance) { delete instance; } }
 
 	void* malloc(size_t i_size, size_t i_alignment);
@@ -35,7 +35,7 @@ public:
 private:
 	static FixedSizeAllocator* instance;
 
-	FixedSizeAllocator(void * i_pHeapMemory, size_t i_sizeHeapMemory, unsigned int i_OptionalNumDescriptors);
+	FixedSizeAllocator();
 
 	bool Isin16ByteBlock(void* i_ptr, size_t& index) const;
 	bool Isin32ByteBlock(void* i_ptr, size_t& index) const;

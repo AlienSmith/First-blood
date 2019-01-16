@@ -93,7 +93,7 @@ namespace GStar {
 		inline bool WriteToShaderFrom(const Shader* const shader, const LightComponent* const component, int count, bool addfirstLight) {
 			Lights.Resetcurrent();
 			int index = 0;
-			bool exists;
+			bool exists = false;
 			while (Lights.HasNext()) {
 				if (component == Lights.GetNext()) {
 					exists = true;

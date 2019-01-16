@@ -182,7 +182,6 @@
     <ClInclude Include="World.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="BitArray.cpp" />
     <ClCompile Include="Camera.cpp" />
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="Component.cpp" />
@@ -198,7 +197,6 @@
     <ClCompile Include="HeapManager_UnitTest.cpp" />
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="MainEntrance.cpp" />
-    <ClCompile Include="MainRenderLoop.cpp" />
     <ClCompile Include="Main_Entrance.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MemorySystem.cpp" />

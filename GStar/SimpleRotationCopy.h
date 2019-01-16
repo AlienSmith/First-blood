@@ -4,7 +4,7 @@
 class SimpleRotationCopy : public GStar::InterfaceComponent {
 public:
 	virtual void Initialize() override {}
-	virtual void Update(float deltatime) override {
+	virtual void Update() override {
 		UpdateObject::OUT_Instance->GetTransformComponent()->Rotate(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
 	}
 	virtual void Terminate() override {}

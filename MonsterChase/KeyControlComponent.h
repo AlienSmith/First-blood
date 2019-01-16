@@ -15,14 +15,14 @@ public:
 		GStar::EventManager::Instance()->GetEventUnite("KeyBoardInput").Bind<KeyControlCompoenent,&KeyControlCompoenent::OnKeyControl>(this);
 		GStar::EventManager::Instance()->GetEventUnite("MouseInput").Bind<KeyControlCompoenent, &KeyControlCompoenent::OnMouseControl>(this);
 	}
-	virtual void Update(float deltatime) override {
-		my_transform->Translate(delta*deltatime, GStar::Base::SELF);
+	virtual void Update() override {
+		my_transform->Translate(delta*Scene::Create()->Deltatime(), GStar::Base::SELF);
 	}
 	void OnMouseControl(GStar::Event* input) {
 		GStar::MouseInputEvent* event = static_cast<GStar::MouseInputEvent*>(input);
 		GStar::Vector3 rotation = GStar::Vector3();
-		rotation[1] = -event->xpos;
-		rotation[0] = -event->ypos;
+		rotation[1] = (float)-event->xpos;
+		rotation[0] = (float)-event->ypos;
 		rotation[2] = 0;
 		my_transform->Rotate(rotation);
 	}

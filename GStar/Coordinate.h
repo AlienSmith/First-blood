@@ -11,7 +11,7 @@ namespace GStar {
 	static GStar::Matrix4 Transform(Matrix4& offset,float x, float y, float z);
 	static GStar::Matrix4 Scale(Matrix4& offset, float x, float y, float z);
 	static GStar::Matrix4 Rotate(Matrix4& offset,float roll, float pitch, float yaw);
-	static GStar::Matrix4 Rotate(Matrix4 & offset, float degree, GStar::Vector3 direction);
+	static GStar::Matrix4 Rotate(Matrix4 & offset, float degree, const GStar::Vector3& dir);
 	static GStar::Matrix4 perspective(Matrix4& offset, float horangle, float widthbyheight, float nsize, float fsize);
 	inline GStar::Matrix4 orthogrphic(Matrix4& offset, float horangle, float widthbyheight, float nsize, float fsize);
 	class Coordinate
@@ -24,12 +24,7 @@ namespace GStar {
 			OBJECT
 		};
 		Coordinate(TYPE objecttype);
-		Coordinate(TYPE objecttype,Matrix4& offset);
 		~Coordinate();
-		void Rotate(float roll, float pitch, float yaw);
-		void move(float x, float y, float z);
-		Vector3 Apply(Vector3& object);
-		Vector3 Reverse(Vector3& object);
 	private:
 		TYPE mytype;
 		Matrix4 worldTothis;
@@ -45,7 +40,7 @@ namespace GStar {
 	{
 	}
 	// rotate counterclock wise with the axis point to you
-	inline void Coordinate::Rotate(float roll, float pitch, float yaw)
+	/*inline void Coordinate::Rotate(float roll, float pitch, float yaw)
 	{
 		array_ff temp = IDENTICAL_MATRIX;
 		float sx = sin(roll*PI/180.0f);
@@ -67,7 +62,7 @@ namespace GStar {
 		Matrix4 tempmatrix = this->worldTothis.Dot(Matrix4(temp));
 
 		this->worldTothis = tempmatrix;
-	}
+	}*/
 
 	/*inline void Coordinate::move(float x, float y, float z)
 	{
@@ -137,8 +132,9 @@ namespace GStar {
 		tempmatrix = offset.Dot(tempmatrix);
 		return tempmatrix;
 	}
-	GStar::Matrix4 Rotate(Matrix4 & offset, float degree, GStar::Vector3 direction)
+	inline GStar::Matrix4 Rotate(Matrix4 & offset, float degree, const GStar::Vector3& dir)
 	{
+		GStar::Vector3 direction = dir;
 		direction.Normalize();
 		float s = sin(degree*PI / 180.0f);
 		float c = cos(degree*PI / 180.0f);

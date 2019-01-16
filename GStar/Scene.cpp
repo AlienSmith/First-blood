@@ -31,7 +31,7 @@ bool Scene::Update()
 {
 	glBindVertexArray(VAO);
 	my_shaders->use();
-	my_shaders->setFloat("offset", 0.1);
+	my_shaders->setFloat("offset", 0.1f);
 	my_shaders->setInt("texture1", 0);
 	my_shaders->setInt("texture2", 1);
 	my_shaders->setMat4("view", view, GL_FALSE);

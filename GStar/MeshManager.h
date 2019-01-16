@@ -12,11 +12,13 @@ namespace GStar {
 	class MyString;
 	class MeshManager {
 	public:
+		//TODO rewrite this function
 		static unsigned int MeshGetId(const MeshParameters& parameters) {
 			unsigned int h = MeshFIRSTH;
 			int count = 0;
+			int token = parameters.TriangleIndex * 100 + parameters.normalsize * 1000;
 			while (count < parameters.numelements) {
-				h = (h * MeshPrimeA) + (((unsigned int)parameters.data[0] + MeshOffset) * MeshPrimeB);
+				h = (h * MeshPrimeA) + (unsigned int)(token + MeshOffset)* MeshPrimeB;
 				count++;
 			}
 			return h % MeshPrimeC;

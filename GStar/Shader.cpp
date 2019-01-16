@@ -39,7 +39,7 @@ void Shader::setFloat(const GStar::MyString & name, float value) const
 	glUniform1f(glGetUniformLocation(ID, name.GetString()), value);
 }
 
-void Shader::setMat4(const GStar::MyString &name, const GStar::Matrix4& value, unsigned int Flip) const
+void Shader::setMat4(const GStar::MyString &name, const GStar::Matrix4& value, bool Flip) const
 {
 	float temparray[16];
 	unsigned int transformloc = glGetUniformLocation(this->ID, name.GetString());

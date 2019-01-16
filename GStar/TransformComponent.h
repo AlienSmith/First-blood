@@ -111,12 +111,12 @@ namespace GStar {
 		}
 		inline void Rotate(float x, float y, float z) {
 			array_ff temp = IDENTICAL_MATRIX;
-			float sx = sin(x*PI / 180);
-			float sy = sin(y*PI / 180);
-			float sz = sin(z*PI / 180);
-			float cx = cos(x*PI / 180);
-			float cy = cos(y*PI / 180);
-			float cz = cos(z*PI / 180);
+			float sx = sin(x*PI / 180.0f);
+			float sy = sin(y*PI / 180.0f);
+			float sz = sin(z*PI / 180.0f);
+			float cx = cos(x*PI / 180.0f);
+			float cy = cos(y*PI / 180.0f);
+			float cz = cos(z*PI / 180.0f);
 			//Rotate z x y
 			temp[0][0] = cz * cy - sz * sx*sy;
 			temp[0][1] = -sz * cx;
@@ -205,7 +205,7 @@ namespace GStar {
 			GStar::Vector3 InverseOffset = -1.0f*(my_model.MI*offset);
 			LeftApplyingTransform(my_model.MI, InverseOffset);
 		}
-		inline void Update(float deltatime) {
+		inline void Update() {
 			if (my_model.RotationUpdate || my_model.TransformUpdate || my_model.ScaleUpdate) {
 				UpdateChildrenFlags();
 				UpdateTransform();
@@ -250,11 +250,11 @@ namespace GStar {
 			my_Object(object),
 			my_layer(Layer::DEFAULT),
 			my_name(GStar::MyString::hash_str(name.GetString())){}
-		inline void WorldUpdate(float deltatime) {
-			my_Object->Update(deltatime);
+		inline void WorldUpdate() {
+			my_Object->Update();
 			my_children.Resetcurrent();
 			while (my_children.HasNext()) {
-				my_children.GetNext()->WorldUpdate(deltatime);
+				my_children.GetNext()->WorldUpdate();
 				my_children.Move();
 			} 
 		}

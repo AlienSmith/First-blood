@@ -3,7 +3,7 @@
 #include "Component.h"
 class Object {
 public:
-	bool Update(float deltatime);
+	bool Update();
 	bool Terminate() {}
 	template<class T>
 	T* GetComponent() {
@@ -37,5 +37,4 @@ public:
 	}
 private:
 	GStar::SingleLinkedList<Component*> my_components;
-	bool ComponentUpdate(Component* temp) const;
 };

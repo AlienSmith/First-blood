@@ -16,11 +16,11 @@ const size_t FixedSizeAllocator::Block32Down = 17;
 const size_t FixedSizeAllocator::Block96UP = 96;
 const size_t FixedSizeAllocator::Block96Down = 33;
 
-void FixedSizeAllocator::Initialize(void * i_pHeapMemory, size_t i_sizeHeapMemory, unsigned int i_OptionalNumDescriptors)
+void FixedSizeAllocator::Initialize(void * i_pHeapMemory, size_t i_sizeHeapMemory)
 {
 	if (!FixedSizeAllocator::instance) {
-		HeapManager::Instance().InitializeWith(i_sizeHeapMemory, i_sizeHeapMemory, i_pHeapMemory);
-		FixedSizeAllocator::instance = new FixedSizeAllocator(i_pHeapMemory, i_sizeHeapMemory, i_OptionalNumDescriptors);
+		HeapManager::Instance().InitializeWith(i_sizeHeapMemory, (unsigned int)i_sizeHeapMemory, i_pHeapMemory);
+		FixedSizeAllocator::instance = new FixedSizeAllocator();
 	}
 }
 
@@ -117,7 +117,7 @@ void * FixedSizeAllocator::malloc(size_t i_size, size_t i_alignment)
 			return head;
 		}
 	}
-	return HeapManager::Instance().FindFirstFit(i_size, i_alignment);
+	return HeapManager::Instance().FindFirstFit(i_size, (unsigned int)i_alignment);
 }
 
 void FixedSizeAllocator::free(void * i_ptr)
@@ -160,7 +160,7 @@ void FixedSizeAllocator::free(void * i_ptr)
 	}
 }
 
-FixedSizeAllocator::FixedSizeAllocator(void * i_pHeapMemory, size_t i_sizeHeapMemory, unsigned int i_OptionalNumDescriptors) :
+FixedSizeAllocator::FixedSizeAllocator() :
 	_16ByteArray(GStar::BitArray(FixedSizeAllocator::ByteBlock16COUNT, HeapManager::Instance().FindFirstFit((FixedSizeAllocator::ByteBlock16COUNT + 7) / 8), true)),
 	_32ByteArray(GStar::BitArray(FixedSizeAllocator::ByteBlock32COUNT, HeapManager::Instance().FindFirstFit((FixedSizeAllocator::ByteBlock32COUNT + 7) / 8), true)),
 	_96ByteArray(GStar::BitArray(FixedSizeAllocator::ByteBlock96COUNT, HeapManager::Instance().FindFirstFit((FixedSizeAllocator::ByteBlock96COUNT + 7) / 8), true)),

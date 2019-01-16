@@ -26,9 +26,6 @@
     <ClCompile Include="Controller.cpp">
       <Filter>OpenGl\Core</Filter>
     </ClCompile>
-    <ClCompile Include="MainRenderLoop.cpp">
-      <Filter>OpenGl\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Scene.cpp">
       <Filter>OpenGl\Core</Filter>
     </ClCompile>
@@ -77,9 +74,6 @@
     <ClCompile Include="GLError.cpp" />
     <ClCompile Include="Main_Entrance.cpp">
       <Filter>Entrance</Filter>
-    </ClCompile>
-    <ClCompile Include="BitArray.cpp">
-      <Filter>HeapManager</Filter>
     </ClCompile>
     <ClCompile Include="MemorySystem.cpp">
       <Filter>HeapManager</Filter>

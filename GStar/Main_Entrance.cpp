@@ -62,7 +62,7 @@ void MainEntrance() {
 		myScene->UpdateTime();
 		myController->Update();
 		CleanScreen();
-		world.Update(myScene->Deltatime());
+		world.Update();
 		myScene->UpdateEnd();
 	}
 	myScene->TerminateWindow();

@@ -12,7 +12,7 @@ namespace GStar {
 		}
 		bool Initialize(const TextureParameters& parameters);
 		//Mesh do not have these functions
-		bool Update(float deltatime) ;
+		bool Update() ;
 		bool Terminate() { return true; }
 		TextureComponent() :Component(TEXTURE_WORD),my_textures(SingleLinkedList<GStar::Texture>()) {}
 	private:

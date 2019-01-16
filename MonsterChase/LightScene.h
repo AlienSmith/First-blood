@@ -71,7 +71,6 @@ public:
 	inline void AddModule(float x, float y, const GStar::MyString& Name) {
 		GStar::World& world = GStar::World::Instance();
 		Object* tempObject = world.AddObject();
-		GStar::TextureComponent* tempComponent = new GStar::TextureComponent();
 		tempObject->AddComponent(SpriteMesh);
 		CommonShader[Modulecount] = new GStar::ShaderComponent(Shader2L);
 		tempObject->AddComponent(CommonShader[Modulecount]);
@@ -82,10 +81,10 @@ public:
 		TransformComponent->UpdateTransform();
 		tempObject->AddComponent(TransformComponent);
 
-		StartLight[Modulecount] = AddLight(0.5+(-0.5 + (std::rand() % (10)) / 10.0f) +x, 0.5+ (-0.5 + (std::rand() % (10)) / 10.0f) +y, GStar::Vector3(1.0f, float(rand()%2), 0.0f));
-		 AddLight(-0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + x, -0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + y, GStar::Vector3(0.0f, 1.0f, float(rand() % 2)));
-		 AddLight(-0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + x, 0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + y, GStar::Vector3(float(rand() % 2), 1.0f, 0.0f));
-		 AddLight(0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + x, -0.5 + (-0.5 + (std::rand() % (10)) / 10.0f) + y, GStar::Vector3(1.0f, 0.0f, float(rand() % 2)));
+		StartLight[Modulecount] = AddLight(0.5f+(-0.5f + (std::rand() % (10)) / 10.0f) +x, 0.5f+ (-0.5f + (std::rand() % (10)) / 10.0f) +y, GStar::Vector3(1.0f, float(rand()%2), 0.0f));
+		 AddLight(-0.5f + (-0.5f + (std::rand() % (10)) / 10.0f) + x, -0.5f + (-0.5f + (std::rand() % (10)) / 10.0f) + y, GStar::Vector3(0.0f, 1.0f, float(rand() % 2)));
+		 AddLight(-0.5f + (-0.5f + (std::rand() % (10)) / 10.0f) + x, 0.5f + (-0.5f + (std::rand() % (10)) / 10.0f) + y, GStar::Vector3(float(rand() % 2), 1.0f, 0.0f));
+		 AddLight(0.5f + (-0.5f + (std::rand() % (10)) / 10.0f) + x, -0.5f + (-0.5f + (std::rand() % (10)) / 10.0f) + y, GStar::Vector3(1.0f, 0.0f, float(rand() % 2)));
 		 Modulecount++;
 	}
 	inline GStar::LightComponent* AddLight(float x, float y, const GStar::Vector3& color) {
@@ -96,7 +95,7 @@ public:
 		TransfomrComponent5 = new GStar::TransformComponent(tempObject, "Lights");
 		world.AddToRoot(TransfomrComponent5);
 		TransfomrComponent5->SetTransform(GStar::Vector3(x, y, -9.7f), GStar::Base::WORLD);
-		TransfomrComponent5->SetScale(.1, .1, .1);
+		TransfomrComponent5->SetScale(.1f, .1f, .1f);
 		tempObject->AddComponent(TransfomrComponent5);
 		TransfomrComponent5->UpdateTransform();
 		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent5, GStar::Lighttype::POINT);

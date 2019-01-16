@@ -3,6 +3,7 @@
 #include"GLINCLUDE.h"
 #include"MyString.h"
 #include"ConsolePrint.h"
+#if defined(_DEBUG)
 void _check_gl_error(const char *file, int line) {
 	GLenum err(glGetError());
 
@@ -19,3 +20,4 @@ void _check_gl_error(const char *file, int line) {
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "%s at %s line %d\n", error.GetString(),file,line);
 	}
 }
+#endif

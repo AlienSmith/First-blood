@@ -255,7 +255,6 @@ bool HeapManager::_TryCut(size_t size, unsigned int alignment)
 }
 void HeapManager::_addinfoblock(size_t size)
 {
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "The new block start at%p", _current);
 	INFOBLCOK* infoblock = reinterpret_cast<INFOBLCOK*>(_current);
 #if defined(ENVIRONMENT64)
 	memset(&(infoblock->start), HeapManager::fillguard, 8);

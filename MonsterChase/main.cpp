@@ -23,12 +23,15 @@
 //void test2();
 //void test3();
 int main() 
+{
 	{
-	InitializeMemorySystem();
-	LightScene scene;
-	MainEntrance::SetUpAndRun();
+		InitializeMemorySystem();
+		LightScene scene;
+		MainEntrance::SetUpAndRun();
 		DestroyMemorySystem();
 		int a = 0;
 		std::cin >> a;
-		return a;
+		return a; };
+	_CrtDumpMemoryLeaks();
+
 	}

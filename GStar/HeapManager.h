@@ -68,6 +68,7 @@ public:
 private:
 	bool _tryFastBackCollect();// Require the _current pointer set to the descriptor return blocksize + INFOSIZE -1 for false
 	void _deletHead();// Require the _current pointer set to the descriptor return blocksize + INFOSIZE
+	
 	size_t _sizeHeap;
 	unsigned int _numDescriptors;
 	void* _pHeapMemory;

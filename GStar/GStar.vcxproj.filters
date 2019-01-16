@@ -23,9 +23,6 @@
     <ClCompile Include="MyString.cpp">
       <Filter>MyString</Filter>
     </ClCompile>
-    <ClCompile Include="OpenGL.cpp">
-      <Filter>OpenGl</Filter>
-    </ClCompile>
     <ClCompile Include="Controller.cpp">
       <Filter>OpenGl\Core</Filter>
     </ClCompile>

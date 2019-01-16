@@ -32,6 +32,7 @@ namespace GStar {
 		~BitArray() {
 			HeapManager::Instance().free(_Phead);
 		}
+		BitArray& operator = (const BitArray&) = delete;
 	private:
 		const size_t _numbits;
 		uint8_t* const _Phead;
@@ -118,7 +119,7 @@ namespace GStar {
 #else
 	inline bool BitArray::GetFirstClearBit(size_t &out o_bitNumber) const
 	{
-		int count = 0;
+		size_t count = 0;
 		uint32_t* current = reinterpret_cast<uint32_t*> (_Phead);
 		uint32_t other = ~(*current);
 		bool NoneZero;
@@ -139,7 +140,7 @@ namespace GStar {
 	}
 	inline bool BitArray::GetFirstSetBit(size_t &out o_bitNumber) const
 	{
-		int count = 0;
+		size_t count = 0;
 		uint32_t* current = reinterpret_cast<uint32_t*> (_Phead);
 		bool NoneZero;
 		unsigned long index;
@@ -158,7 +159,7 @@ namespace GStar {
 	}
 	inline bool BitArray::AreAllClear() const
 	{
-		int count = 0;
+		size_t count = 0;
 		uint32_t* current = reinterpret_cast<uint32_t*> (_Phead);
 		bool NoneZero;
 		unsigned long index;
@@ -176,7 +177,7 @@ namespace GStar {
 	}
 	inline bool BitArray::AreAllSet() const
 	{
-		int count = 0;
+		size_t count = 0;
 		uint32_t* current = reinterpret_cast<uint32_t*> (_Phead);
 		uint32_t other = ~(*current);
 		bool NoneZero;
@@ -197,62 +198,62 @@ namespace GStar {
 #endif
 	inline bool BitArray::isBitSet(size_t i_bitNumber) const
 	{
-		if (i_bitNumber < 0 || i_bitNumber >= _numbits) {
+		if (i_bitNumber >= _numbits) {
 			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "try to access memeory out side of array");
 			return false;
 		}
 		bool result;
 		uint8_t* current = reinterpret_cast<uint8_t*>(_Phead);
-		int count = ((i_bitNumber) / 8);
-		int mod = ((i_bitNumber) % 8);
+		size_t count = ((i_bitNumber) / 8);
+		size_t mod = ((i_bitNumber) % 8);
 		current += count;
 		result = (*current >> mod) & 1U;
 		return result;
 	}
 	inline bool BitArray::isBitFree(size_t i_bitNumber) const
 	{
-		if (i_bitNumber < 0 || i_bitNumber >= _numbits) {
+		if ( i_bitNumber >= _numbits) {
 			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "try to access memeory out side of array");
 			return false;
 		}
 		bool result;
 		uint8_t* current = reinterpret_cast<uint8_t*>(_Phead);
-		int count = ((i_bitNumber) / 8);
-		int mod = ((i_bitNumber) % 8);
+		size_t count = ((i_bitNumber) / 8);
+		size_t mod = ((i_bitNumber) % 8);
 		current += count;
 		result = (*current >> mod) & 1U;
 		return !result;
 	}
 	inline void BitArray::SetBit(size_t i_bitNumber) {
-		if (i_bitNumber < 0 || i_bitNumber >= _numbits) {
+		if (i_bitNumber >= _numbits) {
 			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "try to access memeory out side of array");
 		}
 		uint8_t* current = reinterpret_cast<uint8_t*>(_Phead);
-		int count = ((i_bitNumber) / 8);
-		int mod = ((i_bitNumber) % 8);
+		size_t count = ((i_bitNumber) / 8);
+		size_t mod = ((i_bitNumber) % 8);
 		current += count;
 		*current|= 1UL << mod;
 	}
 	inline void BitArray::ClearBit(size_t i_bitNumber)
 	{
-		if (i_bitNumber < 0 || i_bitNumber >= _numbits) {
+		if ( i_bitNumber >= _numbits) {
 			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "try to access memeory out side of array");
 		}
 		uint8_t* current = reinterpret_cast<uint8_t*>(_Phead);
-		int count = ((i_bitNumber) / 8);
-		int mod = ((i_bitNumber) % 8);
+		size_t count = ((i_bitNumber) / 8);
+		size_t mod = ((i_bitNumber) % 8);
 		current += count;
 		*current &= ~(1UL << mod);
 	}
 	inline bool BitArray::operator[](size_t i_index) const
 	{
-		if (i_index < 0 || i_index >= _numbits) {
+		if ( i_index >= _numbits) {
 			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "try to access memeory out side of array");
 		}
 		bool result;
 		uint8_t* current = reinterpret_cast<uint8_t*>(_Phead);
-		int count = ((i_index) / 8);
-		int mod = ((i_index) % 8);
+		size_t count = ((i_index) / 8);
+		size_t mod = ((i_index) % 8);
 		current += count;
 		result = (*current >> mod) & 1U;
 		return result;

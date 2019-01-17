@@ -1,5 +1,6 @@
 #pragma once
 #include <math.h>
+#include "Compare.h"
 #ifndef Vector3_H
 #define Vector3_H
 namespace GStar {
@@ -26,6 +27,7 @@ namespace GStar {
 		static Vector3 PerpAtoB(const Vector3& A, const Vector3& B);
 		static Vector3 Cross(const Vector3& A, const Vector3& B);
 		static float Volume(const Vector3& A, const Vector3& B,const Vector3& C);
+		static short parallel(const Vector3& A, const Vector3&B);
 		//is the data guaranteed to be continues ?
 		inline float getValue(int index) const {
 			const float* x = &m_x;
@@ -212,5 +214,22 @@ namespace GStar {
 	inline float GStar::Vector3::Volume(const Vector3& A, const Vector3& B,const Vector3& C) {
 		return (Vector3::Cross(A, B).Dot(C));
 	}
+	//this return 0 for not paralel 1 for same direction -1 for opposite directions
+	inline short int Vector3::parallel(const Vector3 & A, const Vector3 & B)
+	{
+		Vector3 tempA = A;
+		Vector3 tempB = B;
+		tempA.Normalize();
+		tempB.Normalize();
+		if (Equals(tempA.m_x,tempB.m_x)&& Equals(tempA.m_y, tempB.m_y)&& Equals(tempA.m_z, tempB.m_z)) {
+			return 1;
+		}
+		else if (EqualsZero(tempA.m_x + tempB.m_x) && EqualsZero(tempA.m_y + tempB.m_y) && EqualsZero(tempA.m_z + tempB.m_z)) {
+			return -1;
+		}
+		return 0;
+	}
+	//this return if the two vector parellel with each other
+	
 }
 #endif // !Vector3_H

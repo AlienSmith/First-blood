@@ -130,10 +130,12 @@
   <ItemGroup>
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CameraManager.h" />
+    <ClInclude Include="Compare.h" />
     <ClInclude Include="Delegate.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="EventUnite.h" />
+    <ClInclude Include="GeometryOperations.h" />
     <ClInclude Include="KeyInputEvent.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Assert.h" />
@@ -148,6 +150,7 @@
     <ClInclude Include="MainEntrance.h" />
     <ClInclude Include="MemorySystem.h" />
     <ClInclude Include="MouseInputEvent.h" />
+    <ClInclude Include="Rectangle.h" />
     <ClInclude Include="SceneInterface.h" />
     <ClInclude Include="Data.h" />
     <ClInclude Include="Debug.h" />
@@ -174,6 +177,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="Trace.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="UpdateObject.h" />
     <ClInclude Include="Vector2.h" />

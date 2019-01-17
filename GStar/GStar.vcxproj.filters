@@ -250,6 +250,18 @@
     <ClInclude Include="CameraManager.h">
       <Filter>Structure\Manager</Filter>
     </ClInclude>
+    <ClInclude Include="Trace.h">
+      <Filter>Physics\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Rectangle.h">
+      <Filter>Physics\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="GeometryOperations.h">
+      <Filter>Physics\Geometry</Filter>
+    </ClInclude>
+    <ClInclude Include="Compare.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -387,6 +399,12 @@
     </Filter>
     <Filter Include="OpenGl\EventSystem">
       <UniqueIdentifier>{ad7c4843-74ad-464f-b874-f7b7ac841571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics">
+      <UniqueIdentifier>{a374dca5-d572-4cf1-bcde-bc762a76fbe5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Physics\Geometry">
+      <UniqueIdentifier>{a06bf765-af84-4035-81ab-15ecdffbf843}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

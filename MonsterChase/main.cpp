@@ -26,7 +26,7 @@ int main()
 {
 	{
 		InitializeMemorySystem();
-		LightScene scene;
+		SimpleScene scene;
 		MainEntrance::SetUpAndRun();
 		DestroyMemorySystem();
 		int a = 0;

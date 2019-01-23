@@ -36,8 +36,8 @@ public:
 		TransformComponent->Rotate(60, 0, 0);
 		TransformComponent->UpdateTransform();
 		tempObject->AddComponent(TransformComponent);
-		KeyControlCompoenent* controller = new KeyControlCompoenent(TransformComponent,2.0f);
-		tempObject->AddComponent(controller);
+		//KeyControlCompoenent* controller = new KeyControlCompoenent(TransformComponent,2.0f);
+		//tempObject->AddComponent(controller);
 
 		GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
 		tempObject->AddComponent(component);

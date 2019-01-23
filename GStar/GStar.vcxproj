@@ -202,7 +202,6 @@
     <ClCompile Include="GStar_init.cpp" />
     <ClCompile Include="HeapManager.cpp" />
     <ClCompile Include="HeapManagerProxy.cpp" />
-    <ClCompile Include="HeapManager_UnitTest.cpp" />
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="MainEntrance.cpp" />
     <ClCompile Include="Main_Entrance.cpp" />

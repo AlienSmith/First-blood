@@ -2,6 +2,7 @@
 #include "Rectangle.h"
 #include <algorithm>
 #include "ConsolePrint.h"
+#include "TransformComponent.h"
 namespace GStar {
 	//Return the distance between an infinite line and an infinite plane return 0 if the line intersect with the plane
 	inline float DistanceBetween(const GStar::Trace& lineA, const GStar::Rectangle& Plane) {
@@ -76,6 +77,71 @@ namespace GStar {
 			else {
 				return false;
 			}
+		}
+	}
+	//TODO add the plane size thing into account
+	//return the intersection point between line and plane
+	inline bool Intersect(const GStar::Trace& Line, const GStar::Rectangle& Plane, GStar::Vector3 IntersectPoint) {
+		//if the line is perpendicular to the normal vector, the line could either on the plane or parallel to the plane
+		if (EqualsZero(Line.GetDirection().Dot(Plane.GetDirection()))) {
+			float temp = Plane.GetDirection().Dot(Line.GetBase() - Plane.GetCenter());
+			if (EqualsZero(temp)) {
+				IntersectPoint = Line.GetBase();
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+		//if they are not parallel there will be a contact point, detect whether the contact point is on the plane and the line
+		else {
+			float t = Plane.GetDirection().Dot(Plane.GetCenter()) - Plane.GetDirection().Dot(Line.GetBase());
+			t /= Plane.GetDirection().Dot(Plane.GetDirection());
+			if (BigerThan(t, 0.0f) && SmallerThan(t, 1.0f)) {
+				IntersectPoint = Line.GetBase() + t * Line.GetDirection();
+				return true;
+			}
+			else {
+				return false;
+			}
+		}
+	}
+	//This function used to generate contact point between triangles and an ray
+
+	//This function used to generate contact point between built in cube box and an ray
+	inline bool Intersect(const GStar::Trace& Line, const TransformComponent& Box, GStar::Vector3 IntersectPoint) {
+		//Transfer the Ray to the Box object space
+		GStar::Vector3 Base = Box.getInverseModel()*Line.GetBase();
+		GStar::Vector3 Direction = Box.getInverseModel()* Line.GetDirection();
+		//If the Start Point is Within the box Return Flase
+		if (Base.x()> -.5f && Base.x()< .5f && Base.y()> -.5f && Base.y()<.5f && Base.z()> -.5f && Base.z()< .5f) {
+			return false;
+		}
+		else
+		{
+			float t[3];
+			for (int i = 0; i < 3; i++) {
+				if (Direction.getValue(i)> 0.0f) {
+					t[i] = (-.5 - Base.getValue(i)) / Direction.getValue(i);
+				}
+				else if (Direction.x()< 0.0f) {
+					t[i] = (.5 - Base.getValue(i)) / Direction.getValue(i);
+				}
+				else {
+					//Assume The distance will not be bigger that this amount
+					t[i] = 1000000.0f;
+				}
+			}
+			int index = (std::abs(t[0]) <= std::abs(t[1])) ? 0:1 ;
+			index = (std::abs(t[index]) <= std::abs(t[2])) ? index : 2;
+			if (Line.IsLine()) {
+				if (t[index] > 1.0f) {
+					return false;
+				}
+			}
+			//The InterSection Point in the model space
+			IntersectPoint = Base + t[index]*Direction ;
+			return true;
 		}
 	}
 }

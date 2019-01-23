@@ -168,7 +168,7 @@ bool HeapManager_UnitTest()
 	if (!AllocatedAddresses.empty())
 	{
 		// randomize the addresses
-		std::random_shuffle(AllocatedAddresses.begin(), AllocatedAddresses.end());
+		//std::random_shuffle(AllocatedAddresses.begin(), AllocatedAddresses.end());
 
 		// return them back to the heap manager
 		while (!AllocatedAddresses.empty())

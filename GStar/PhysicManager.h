@@ -7,7 +7,7 @@ namespace GStar {
 	{
 	public:
 		~PhysicManager() {}
-		const static Vector3* const Gravity;
+		static const Vector3 Gravity;
 		static PhysicManager* Instance() {
 			if (!instance) {
 				instance = new PhysicManager();
@@ -25,7 +25,7 @@ namespace GStar {
 			while (PhysicsList.HasNext()) {
 				PhysicComponent* temp = PhysicsList.GetNext();
 				if (temp->useGravity()) {
-					temp->AddFource(*PhysicManager::Gravity * temp->getMass());
+					temp->AddFource(PhysicManager::Gravity * temp->getMass());
 				}
 				temp->Update();
 				PhysicsList.Move();

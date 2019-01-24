@@ -1,11 +1,9 @@
 #pragma once
 #include"InterfaceComponent.h"
-#include"GLFW/glfw3.h"
 #include"KeyInputEvent.h"
 #include"MouseInputEvent.h"
 #include"EventManager.h"
 #include"TransformComponent.h"
-#include"GSTime.h"
 //TODO add delatetime to each update function
 class KeyControlCompoenent : public GStar::InterfaceComponent {
 public:
@@ -16,9 +14,7 @@ public:
 		GStar::EventManager::Instance()->GetEventUnite("KeyBoardInput").Bind<KeyControlCompoenent,&KeyControlCompoenent::OnKeyControl>(this);
 		GStar::EventManager::Instance()->GetEventUnite("MouseInput").Bind<KeyControlCompoenent, &KeyControlCompoenent::OnMouseControl>(this);
 	}
-	virtual void Update() override {
-		my_transform->Translate(delta * GStar::GSTime::Instance().GetdeltaTime(), GStar::Base::SELF);
-	}
+	virtual void Update() override;
 	void OnMouseControl(GStar::Event* input) {
 		GStar::MouseInputEvent* event = static_cast<GStar::MouseInputEvent*>(input);
 		GStar::Vector3 rotation = GStar::Vector3();
@@ -27,40 +23,7 @@ public:
 		rotation[2] = 0;
 		my_transform->Rotate(rotation);
 	}
-	void OnKeyControl(GStar::Event* input) {
-		GStar::KeyInputEvent* event = static_cast<GStar::KeyInputEvent*>(input);
-		if (event->SingleKey == GLFW_KEY_T) {
-			if (event->action == GLFW_RELEASE) {
-				delta[2] = 0;
-			}
-			else {
-				delta[2] = -speed;
-			}
-		}else if (event->SingleKey == GLFW_KEY_F) {
-			if (event->action == GLFW_RELEASE) {
-				delta[0] = 0;
-			}
-			else
-			{
-				delta[0] = -speed;
-			}
-		}else if (event->SingleKey == GLFW_KEY_G) {
-			if (event->action == GLFW_RELEASE) {
-				delta[2] = 0;
-			}
-			else {
-				delta[2] = speed;
-			}
-		}else if (event->SingleKey == GLFW_KEY_H ) {
-			if (event->action == GLFW_RELEASE) {
-				delta[0] = 0;
-			}
-			else
-			{
-				delta[0] = speed;
-			}
-		}
-	}
+	void OnKeyControl(GStar::Event* input);
 	virtual void Terminate() override {}
 	~KeyControlCompoenent() {}
 private:

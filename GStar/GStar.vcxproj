@@ -214,12 +214,14 @@
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PhysicComponent.cpp" />
     <ClCompile Include="PhysicManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneInterface.cpp" />
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderComponent.cpp" />
     <ClCompile Include="ShaderManger.cpp" />
+    <ClCompile Include="SimpleRotationCopy.cpp" />
     <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="TextureComponent.cpp" />

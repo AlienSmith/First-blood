@@ -97,6 +97,10 @@
     <ClCompile Include="GSTime.cpp">
       <Filter>Time</Filter>
     </ClCompile>
+    <ClCompile Include="PhysicComponent.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleRotationCopy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />

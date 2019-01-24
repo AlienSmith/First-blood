@@ -3,11 +3,11 @@
 //use GLFW for non windows application
 //This feels like the delta time for the last frame instead of this one
 namespace GStar {
-	class Time {
+	class GSTime{
 	public:
-		static Time& Instance() {
+		static GSTime& Instance() {
 			if (!instance) {
-				instance = new Time();
+				instance = new GSTime();
 			}
 			return *instance;
 		}
@@ -16,7 +16,7 @@ namespace GStar {
 				delete instance;
 			}
 		}
-		Time() :_lasttime(0.0f) {}
+		GSTime() :_lasttime(0.0f) {}
 		//Call this function after the GLFW window got setup and in every update()
 		inline void Tick() {
 			_lasttime = _totaltime;
@@ -30,7 +30,7 @@ namespace GStar {
 			return _totaltime;
 		}
 	private:
-		static Time* instance;
+		static GSTime* instance;
 		double _deltatime;
 		double _lasttime;
 		double _totaltime;

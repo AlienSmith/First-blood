@@ -183,7 +183,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="TextureManager.h" />
-    <ClInclude Include="Time.h" />
+    <ClInclude Include="GSTime.h" />
     <ClInclude Include="Trace.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="UpdateObject.h" />
@@ -224,7 +224,7 @@
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="TextureManager.cpp" />
-    <ClCompile Include="Time.cpp" />
+    <ClCompile Include="GSTime.cpp" />
     <ClCompile Include="UpdateObject.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>

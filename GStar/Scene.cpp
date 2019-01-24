@@ -3,7 +3,7 @@
 #include"ConsolePrint.h"
 #include"stb_image.h"
 #include "Coordinate.h"
-#include "Time.h"
+#include "GSTime.h"
 Scene* Scene::Instance = nullptr;
 // return nullptr as fail, Remeber to delete this pointer
 Scene* Scene::Create()
@@ -38,7 +38,7 @@ bool Scene::Update()
 
 void Scene::UpdateTime()
 {
-	GStar::Time::Instance().Tick();
+	GStar::GSTime::Instance().Tick();
 }
 
 unsigned int Scene::LoadMesh(const MeshParameters & parameters) const

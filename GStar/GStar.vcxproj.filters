@@ -91,11 +91,11 @@
     <ClCompile Include="CameraManager.cpp">
       <Filter>Structure\Manager</Filter>
     </ClCompile>
-    <ClCompile Include="Time.cpp">
-      <Filter>Time</Filter>
-    </ClCompile>
     <ClCompile Include="PhysicManager.cpp">
       <Filter>Physics</Filter>
+    </ClCompile>
+    <ClCompile Include="GSTime.cpp">
+      <Filter>Time</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -268,11 +268,11 @@
     <ClInclude Include="PhysicComponent.h">
       <Filter>Physics</Filter>
     </ClInclude>
-    <ClInclude Include="Time.h">
-      <Filter>Time</Filter>
-    </ClInclude>
     <ClInclude Include="PhysicManager.h">
       <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="GSTime.h">
+      <Filter>Time</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

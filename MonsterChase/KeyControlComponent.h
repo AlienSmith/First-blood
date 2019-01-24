@@ -5,7 +5,7 @@
 #include"MouseInputEvent.h"
 #include"EventManager.h"
 #include"TransformComponent.h"
-#include"Time.h"
+#include"GSTime.h"
 //TODO add delatetime to each update function
 class KeyControlCompoenent : public GStar::InterfaceComponent {
 public:
@@ -17,7 +17,7 @@ public:
 		GStar::EventManager::Instance()->GetEventUnite("MouseInput").Bind<KeyControlCompoenent, &KeyControlCompoenent::OnMouseControl>(this);
 	}
 	virtual void Update() override {
-		my_transform->Translate(delta * GStar::Time::Instance().GetdeltaTime(), GStar::Base::SELF);
+		my_transform->Translate(delta * GStar::GSTime::Instance().GetdeltaTime(), GStar::Base::SELF);
 	}
 	void OnMouseControl(GStar::Event* input) {
 		GStar::MouseInputEvent* event = static_cast<GStar::MouseInputEvent*>(input);

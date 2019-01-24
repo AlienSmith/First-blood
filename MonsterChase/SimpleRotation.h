@@ -7,7 +7,10 @@ public:
 	SimpleRotation(GStar::TransformComponent* transform) :InterfaceComponent(),my_transform(transform) {}
 	virtual void Initialize() override {}
 	virtual void Update() override {
-		my_transform->Rotate(GStar::Vector3(10.0f, 0.0f, 0.0f));
+		{
+			using namespace GStar;
+			my_transform->Rotate(GStar::Vector3(GSTime::Instance().GetTotalTime()*10.0f, 0.0f, 0.0f));
+		}
 		//my_transform->Translate(GStar::Vector3(0.0f, 0.0f, -0.01f),GStar::Base::SELF);
 	}
 	virtual void Terminate() override {}

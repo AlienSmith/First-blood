@@ -1,6 +1,6 @@
 #pragma once
 #include"TransformComponent.h"
-#include"Time.h"
+#include"GSTime.h"
 //Another Component that would not be attached to the gameobject
 namespace GStar {
 	class PhysicComponent
@@ -34,7 +34,7 @@ namespace GStar {
 		float _mass;//kg
 		float _roughness;
 	};
-	PhysicComponent:: PhysicComponent(TransformComponent* const transform):
+	inline PhysicComponent:: PhysicComponent(TransformComponent* const transform):
 	_totalforce(0.0f,0.0f,0.0f),
 	_speed(0.0f, 0.0f, 0.0f),
 	_delta(0.0f, 0.0f, 0.0f),
@@ -50,7 +50,7 @@ namespace GStar {
 	_usegravity(use_gravity),
 	_mass(mass),
 	_roughness(roughness) {}
-	 PhysicComponent::~ PhysicComponent(){}
+	inline PhysicComponent::~ PhysicComponent(){}
 	 //Mid value method
 	 //Update The delta
 	 inline void PhysicComponent::AddFource(const Vector3 & Force)
@@ -74,12 +74,12 @@ namespace GStar {
 	 {
 		 GStar::Vector3 resistance = GetCurrentResistance();
 		 if (_totalforce == ((-1.0f) *resistance)) {
-			 _delta = _speed * Time::Instance().GetdeltaTime();
+			 _delta = _speed * GSTime::Instance().GetdeltaTime();
 		 }
 		 else {
 			 GStar::Vector3 lastspeed = _speed;
-			 _speed += (_totalforce + resistance)*Time::Instance().GetdeltaTime();
-			 _delta = .5f*(_speed + lastspeed)*Time::Instance().GetdeltaTime();
+			 _speed += (_totalforce + resistance)*GSTime::Instance().GetdeltaTime();
+			 _delta = .5f*(_speed + lastspeed)*GSTime::Instance().GetdeltaTime();
 		 }
 		 my_transform->Translate(_delta,GStar::Base::WORLD);
 		 this->ResetValues();

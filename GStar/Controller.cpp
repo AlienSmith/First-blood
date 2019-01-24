@@ -1,5 +1,6 @@
 #include "Scene.h"
 #include "Controller.h"
+#include "Time.h"
 #include "Camera.h"
 //For look into other direction
 void Controller::mouse_callBack(GLFWwindow * window, double xpos, double ypos)
@@ -21,7 +22,7 @@ void Controller::processInput(GLFWwindow * window)
 		glfwSetWindowShouldClose(window, true);
 	}
 	//For move around
-	my_camera.processInput(window, my_Scene->Deltatime());
+	my_camera.processInput(window, GStar::Time::Instance().GetdeltaTime() );
 }
 
 void Controller::framebuffer_size_callback(GLFWwindow * window, int width, int height)

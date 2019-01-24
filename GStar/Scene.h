@@ -30,8 +30,6 @@ public:
 	inline void SetView(GStar::Matrix4& other) { view = other; }
 	void UpdateTime();
 	//Call UpdateTime first and only once 
-	inline const float Deltatime()const { return deltaTime; }
-	inline const float TotalTime()const { return currentFrame; }
 	inline void UpdateView(){ my_shaders->setMat4("view", view, GL_FALSE); }
 	virtual ~Scene() { if (my_shaders != NULL) { delete my_shaders; } }
 	unsigned int LoadMesh(const MeshParameters& parameters) const;
@@ -49,9 +47,6 @@ private:
 	GStar::Matrix4 projection;
 	GStar::Matrix4 view;
 	Shader* my_shaders;
-	float deltaTime;
-	float LastFrame;
-	float currentFrame;
 	GLFWwindow* window;
 	unsigned int VAO;
 	unsigned int VBO;

@@ -91,6 +91,12 @@
     <ClCompile Include="CameraManager.cpp">
       <Filter>Structure\Manager</Filter>
     </ClCompile>
+    <ClCompile Include="Time.cpp">
+      <Filter>Time</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicManager.cpp">
+      <Filter>Physics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -259,6 +265,15 @@
     <ClInclude Include="Compare.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="PhysicComponent.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
+    <ClInclude Include="Time.h">
+      <Filter>Time</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicManager.h">
+      <Filter>Physics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -402,6 +417,9 @@
     </Filter>
     <Filter Include="Physics\Geometry">
       <UniqueIdentifier>{a06bf765-af84-4035-81ab-15ecdffbf843}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Time">
+      <UniqueIdentifier>{84da8775-1006-4a82-9d16-7b4be741c58d}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

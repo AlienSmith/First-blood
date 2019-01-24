@@ -3,6 +3,7 @@
 #include"ConsolePrint.h"
 #include"stb_image.h"
 #include "Coordinate.h"
+#include "Time.h"
 Scene* Scene::Instance = nullptr;
 // return nullptr as fail, Remeber to delete this pointer
 Scene* Scene::Create()
@@ -13,14 +14,7 @@ Scene* Scene::Create()
 		if (!currentScene->SetupWindow()) {
 			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail set up window");
 			return nullptr;
-		}/*if (!currentScene->LoadObject()) {
-			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail load Object");
-			return nullptr;
 		}
-		if (!currentScene->CompileShader()) {
-			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Waring, "Fail set Compile Shader");
-			return nullptr;
-		}*/
 		currentScene->SetPespective();
 		Scene::Instance = currentScene;
 	}
@@ -44,9 +38,7 @@ bool Scene::Update()
 
 void Scene::UpdateTime()
 {
-	currentFrame = (float)glfwGetTime();
-	deltaTime = currentFrame - LastFrame;
-	LastFrame = currentFrame;
+	GStar::Time::Instance().Tick();
 }
 
 unsigned int Scene::LoadMesh(const MeshParameters & parameters) const
@@ -101,6 +93,7 @@ bool Scene::SetupWindow()
 	}
 	glEnable(GL_DEPTH_TEST);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+	UpdateTime();
 	return true;
 }
 
@@ -200,9 +193,6 @@ Scene::Scene():
 	projection(GStar::Matrix4(IDENTICAL_MATRIX)),
 	view(GStar::Matrix4(IDENTICAL_MATRIX)),
 	my_shaders(nullptr), //TODO add Creator To Shader
-	deltaTime(0.0f),
-	LastFrame(0.0f),
-	currentFrame(0.0f),
 	window(nullptr),
 	VAO(0),
 	VBO(0),

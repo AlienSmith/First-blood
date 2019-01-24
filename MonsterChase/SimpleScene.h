@@ -12,6 +12,7 @@
 #include"KeyControlComponent.h"
 #include"CameraManager.h"
 #include"LightManager.h"
+#include"PhysicManager.h"
 class SimpleScene : public GStar::SceneInterface {
 public:
 	SimpleScene() :GStar::SceneInterface(), TransformComponent(nullptr), TransformComponent1(nullptr) {
@@ -90,8 +91,12 @@ public:
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.5f, 0.5F, 0.5F), GStar::Vector3(0.7f, 0.7F, 0.7F));
 		temp->SetActivateConsts(1.0f, 0.09f, 0.032f);
 		temp->SetcutOff(20.0f, 0.5f, 0.707f);
+
+		GStar::PhysicComponent* physic = GStar::PhysicManager::Instance()->AddPhysic(TransfomrComponent3, false, 1.0f, 0.5f);
 		controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);
 		tempObject->AddComponent(controllerComponent);
+
+		
 
 	}
 	virtual void Update() {

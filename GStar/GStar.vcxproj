@@ -154,6 +154,8 @@
     <ClInclude Include="MainEntrance.h" />
     <ClInclude Include="MemorySystem.h" />
     <ClInclude Include="MouseInputEvent.h" />
+    <ClInclude Include="PhysicComponent.h" />
+    <ClInclude Include="PhysicManager.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="SceneInterface.h" />
     <ClInclude Include="Data.h" />
@@ -181,6 +183,7 @@
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="TextureManager.h" />
+    <ClInclude Include="Time.h" />
     <ClInclude Include="Trace.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="UpdateObject.h" />
@@ -211,6 +214,7 @@
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MeshManager.cpp" />
     <ClCompile Include="Object.cpp" />
+    <ClCompile Include="PhysicManager.cpp" />
     <ClCompile Include="Scene.cpp" />
     <ClCompile Include="SceneInterface.cpp" />
     <ClCompile Include="Shader.cpp" />
@@ -220,6 +224,7 @@
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="TextureManager.cpp" />
+    <ClCompile Include="Time.cpp" />
     <ClCompile Include="UpdateObject.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>

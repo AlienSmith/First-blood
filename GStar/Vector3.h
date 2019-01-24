@@ -29,8 +29,15 @@ namespace GStar {
 		static float Volume(const Vector3& A, const Vector3& B,const Vector3& C);
 		static short parallel(const Vector3& A, const Vector3&B);
 		//is the data guaranteed to be continues ?
+		inline bool operator==(const Vector3& B) const {
+			return ((Equals(m_x, B.m_x) && Equals(m_y, B.m_y) && Equals(m_z, B.m_z)) ? true: false);
+		}
 		inline float getValue(int index) const {
 			const float* x = &m_x;
+			return *(x + index);
+		}
+		inline float& getReference(int index){
+			float* x = &m_x;
 			return *(x + index);
 		}
 		inline float& operator[] (int index) {

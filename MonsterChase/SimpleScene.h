@@ -9,7 +9,9 @@
 #include"InterfaceComponent.h"
 #include"Data.h"
 #include"SimpleRotation.h"
-#include"KeyControlComponent.h"
+//#include"KeyControlComponent.h"
+#include"SimpleForce.h"
+#include"PhysicBasedController.h"
 #include"CameraManager.h"
 #include"LightManager.h"
 #include"PhysicManager.h"
@@ -93,11 +95,10 @@ public:
 		temp->SetcutOff(20.0f, 0.5f, 0.707f);
 
 		GStar::PhysicComponent* physic = GStar::PhysicManager::Instance()->AddPhysic(TransfomrComponent3, false, 1.0f, 0.5f);
-		controllerComponent = new KeyControlCompoenent(TransfomrComponent3, 2.0f);
+		//GStar::SimpleForce* forcecomponent = new GStar::SimpleForce(physic);
+		//tempObject->AddComponent(forcecomponent);
+		controllerComponent = new GStar::PhysicBasedController(physic, 1.01f);
 		tempObject->AddComponent(controllerComponent);
-
-		
-
 	}
 	virtual void Update() {
 		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));
@@ -111,5 +112,5 @@ private:
 	GStar::TransformComponent* TransfomrComponent3;
 	GStar::TransformComponent* TransfomrComponent4;
 	GStar::TransformComponent* TransfomrComponent5;
-	KeyControlCompoenent* controllerComponent;
+	GStar::PhysicBasedController* controllerComponent;
 };

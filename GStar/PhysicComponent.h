@@ -11,7 +11,7 @@ namespace GStar {
 		 PhysicComponent(const PhysicComponent&) = delete;
 		~ PhysicComponent();
 		inline void AddFource(const Vector3& Force);
-		inline const TransformComponent* GetTransformComponent() const {
+		inline TransformComponent* GetTransformComponent() {
 			return my_transform;
 		}
 		inline float getMass() const {
@@ -29,7 +29,7 @@ namespace GStar {
 		Vector3 _totalforce;
 		Vector3 _speed;
 		Vector3 _delta;//The movement within this frame
-		TransformComponent* const my_transform;
+		TransformComponent* my_transform;
 		bool _usegravity;
 		float _mass;//kg
 		float _roughness;

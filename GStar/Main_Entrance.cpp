@@ -15,6 +15,7 @@
 #include"SceneInterface.h"
 #include"EventManager.h"
 #include"KeyInputEvent.h"
+#include"PhysicManager.h"
 Scene* myScene = nullptr;
 Controller* myController = nullptr;
 View* myView = nullptr;
@@ -61,6 +62,7 @@ void MainEntrance() {
 		}
 		myScene->UpdateTime();
 		myController->Update();
+		GStar::PhysicManager::Instance()->Update();
 		CleanScreen();
 		world.Update();
 		myScene->UpdateEnd();

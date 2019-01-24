@@ -4,8 +4,14 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="KeyControlComponent.cpp" />
     <ClCompile Include="SimpleRotation.cpp" />
+    <ClCompile Include="KeyControlComponent.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="PhysicBasedController.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleForce.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -16,8 +22,16 @@
     <ClInclude Include="SimpleRotation.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
-    <ClInclude Include="KeyControlComponent.h" />
     <ClInclude Include="LightScene.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyControlComponent.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="PhysicBasedController.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleForce.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>

@@ -14,6 +14,7 @@
 #include"KeyInputEvent.h"
 #include"MouseInputEvent.h"
 #include "GLError.h"
+#include"PhysicManager.h"
 MainEntrance* MainEntrance::instance = nullptr;
 const float MainEntrance::MouseSensitivity = 0.05f;
 void MainEntrance::SetUpAndRun()
@@ -64,6 +65,7 @@ void MainEntrance::Run()
 		}
 		myScene->UpdateTime();
 		myController->Update();
+		GStar::PhysicManager::Instance()->Update();
 		CleanScreen();
 		world.Update();
 		myScene->UpdateEnd();

@@ -141,12 +141,16 @@
     <ClCompile Include="KeyControlComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="PhysicBasedController.cpp" />
+    <ClCompile Include="SimpleForce.cpp" />
     <ClCompile Include="SimpleRotation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="KeyControlComponent.h" />
     <ClInclude Include="LightScene.h" />
+    <ClInclude Include="PhysicBasedController.h" />
+    <ClInclude Include="SimpleForce.h" />
     <ClInclude Include="SimpleRotation.h" />
     <ClInclude Include="SimpleScene.h" />
     <ClInclude Include="Monster.h" />

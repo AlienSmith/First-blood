@@ -81,7 +81,7 @@ namespace GStar {
 			 _speed += (_totalforce + resistance)*GSTime::Instance().GetdeltaTime();
 			 _delta = .5f*(_speed + lastspeed)*GSTime::Instance().GetdeltaTime();
 		 }
-		 my_transform->Translate(_delta,GStar::Base::WORLD);
+		 my_transform->Translate(_delta/100.0f,GStar::Base::WORLD);
 		 this->ResetValues();
 	 }
 }

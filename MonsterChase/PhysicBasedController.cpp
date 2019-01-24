@@ -3,6 +3,9 @@
 void GStar::PhysicBasedController::Update()
 {
 	my_component->AddFource(delta);
+	for (int i = 0; i < 3; i++) {
+		delta.getReference(i) = 0.0f;
+	}
 }
 
 void GStar::PhysicBasedController::OnKeyControl(GStar::Event * input)

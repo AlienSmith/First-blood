@@ -77,7 +77,7 @@ public:
 		TransfomrComponent3 = new GStar::TransformComponent(tempObject, "Light1");
 		world.AddToRoot(TransfomrComponent3);
 		TransfomrComponent3->SetTransform(GStar::Vector3(0.0f, 0.0f, 0.0f), GStar::Base::WORLD);
-		TransfomrComponent3->SetScale(.1f, .1f, .1f);
+		TransfomrComponent3->SetScale(.03f, .03f, .03f);
 		tempObject->AddComponent(TransfomrComponent3);
 		TransfomrComponent3->UpdateTransform();
 		//Directional Light;
@@ -94,11 +94,11 @@ public:
 		temp->SetActivateConsts(1.0f, 0.09f, 0.032f);
 		temp->SetcutOff(20.0f, 0.5f, 0.707f);
 
-		GStar::PhysicComponent* physic = GStar::PhysicManager::Instance()->AddPhysic(TransfomrComponent3, false, 1.0f, 0.5f);
-		//GStar::SimpleForce* forcecomponent = new GStar::SimpleForce(physic);
-		//tempObject->AddComponent(forcecomponent);
-		controllerComponent = new GStar::PhysicBasedController(physic, 1.01f);
-		tempObject->AddComponent(controllerComponent);
+		GStar::PhysicComponent* physic = GStar::PhysicManager::Instance()->AddPhysic(TransfomrComponent3, false, 1.0f, .1f);
+		GStar::SimpleForce* forcecomponent = new GStar::SimpleForce(physic,1.0f);
+		tempObject->AddComponent(forcecomponent);
+		//controllerComponent = new GStar::PhysicBasedController(physic, 5.0f);
+		//tempObject->AddComponent(controllerComponent);
 	}
 	virtual void Update() {
 		/*TransformComponent->SetRotation(GStar::Vector3(Scene::Create()->TotalTime() * 100, 0.0f, 0.0f));

@@ -5,11 +5,11 @@
 #ifndef MATRIX4
 #define MATRIX4
 #define out
-#define SIZE 4
+#define DIMENTIONSIZE 4
 #define ZERO_MATRIX { {0,0,0,0},{0, 0, 0, 0},{ 0,0,0,0 },{ 0,0,0,0 }, }
 #define IDENTICAL_MATRIX { {1,0,0,0},{0, 1, 0, 0},{ 0,0,1,0 },{ 0,0,0,1 }, }
-typedef float array_ff[SIZE][SIZE]; 
-typedef float array_f[SIZE*SIZE];
+typedef float array_ff[DIMENTIONSIZE][DIMENTIONSIZE]; 
+typedef float array_f[DIMENTIONSIZE*DIMENTIONSIZE];
 namespace GStar {
 	class Matrix4;
 	extern  std::vector<Matrix4*>* tempresultpool;
@@ -76,8 +76,8 @@ namespace GStar {
 	inline void Matrix4::operator=(const Matrix4 & A)
 	{
 		const array_ff& TA = A.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				this->data[i][j] = TA[i][j];
 			}
 		}
@@ -86,8 +86,8 @@ namespace GStar {
 	inline void Matrix4::operator+=(const Matrix4 & A)
 	{
 		const array_ff& TA = A.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				this->data[i][j] += TA[i][j];
 			}
 		}
@@ -96,8 +96,8 @@ namespace GStar {
 	inline void Matrix4::operator-=(const Matrix4 & A)
 	{
 		const array_ff& TA = A.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				this->data[i][j] -= TA[i][j];
 			}
 		}
@@ -106,8 +106,8 @@ namespace GStar {
 	inline void Matrix4::operator*=(const Matrix4 & A)
 	{
 		const array_ff& TA = A.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				this->data[i][j] *= TA[i][j];
 			}
 		}
@@ -116,8 +116,8 @@ namespace GStar {
 	inline void Matrix4::operator/=(const Matrix4 & A)
 	{
 		const array_ff& TA = A.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				this->data[i][j] /= TA[i][j];
 			}
 		}
@@ -127,40 +127,40 @@ namespace GStar {
 	//Matrix to float = += -= *= /=
 	inline void Matrix4::operator=(float A)
 	{
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				this->data[i][j] = A;
 			}
 		}
 	}
 	inline void Matrix4::operator +=(float A)
 	{
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				this->data[i][j] += A;
 			}
 		}
 	}
 	inline void Matrix4::operator *=(float A)
 	{
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				this->data[i][j] *= A;
 			}
 		}
 	}
 	inline void Matrix4::operator -=(float A)
 	{
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				this->data[i][j] -= A;
 			}
 		}
 	}
 	inline void Matrix4::operator /=(float A)
 	{
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				this->data[i][j] /= A;
 			}
 		}
@@ -174,8 +174,8 @@ namespace GStar {
 		tempvector[2] = ve.z();
 		tempvector[3] = 1;
 		float result[4] = { 0,0,0,0 };
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				result[i] += temp[i][j]*tempvector[j];
 			}
 		}
@@ -186,9 +186,9 @@ namespace GStar {
 	{
 		array_ff temp = ZERO_MATRIX;
 		const array_ff& TB = B.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				for (int m = 0; m < SIZE; m++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
+				for (int m = 0; m < DIMENTIONSIZE; m++) {
 					temp[i][j] += this->data[i][m] * TB[m][j];
 				}
 			}
@@ -201,9 +201,9 @@ namespace GStar {
 	{
 		array_ff temp = ZERO_MATRIX;
 		const array_ff& TB = B.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				for (int m = 0; m < SIZE; m++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
+				for (int m = 0; m < DIMENTIONSIZE; m++) {
 					temp[i][j] += data[i][m] * TB[m][j];
 				}
 			}
@@ -215,8 +215,8 @@ namespace GStar {
 	inline Matrix4 & Matrix4::T() const
 	{
 		array_ff temp = ZERO_MATRIX;
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				temp[j][i] = this->data[i][j];
 			}
 		}
@@ -230,8 +230,8 @@ namespace GStar {
 		float deteminate = this->determinantc();
 		ASSERT(deteminate != 0, "The Matrix do not have a reverse");
 		Matrix4& transpose = this->T();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				temp[i][j] = transpose.C(i, j) / deteminate;
 			}
 		}
@@ -251,8 +251,8 @@ namespace GStar {
 		}
 		float temp[9];
 		int count = 0;
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				if (i != x && j != y) {
 					temp[count] = data[i][j];
 					count++;
@@ -298,8 +298,8 @@ namespace GStar {
 		array_ff temp;
 		const array_ff& TA = A.Get();
 		const array_ff& TB = B.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				temp[i][j] = TA[i][j] + TB[i][j];
 			}
 		}
@@ -309,8 +309,8 @@ namespace GStar {
 		array_ff temp;
 		const array_ff& TA = A.Get();
 		const array_ff& TB = B.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				temp[i][j] = TA[i][j] - TB[i][j];
 			}
 		}
@@ -321,8 +321,8 @@ namespace GStar {
 		array_ff temp;
 		const array_ff& TA = A.Get();
 		const array_ff& TB = B.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				temp[i][j] = TA[i][j] * TB[i][j];
 			}
 		}
@@ -332,8 +332,8 @@ namespace GStar {
 		array_ff temp;
 		const array_ff& TA = A.Get();
 		const array_ff& TB = B.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				temp[i][j] = TA[i][j] / TB[i][j];
 			}
 		}
@@ -344,8 +344,8 @@ namespace GStar {
 	inline const Matrix4& operator* (float A, const Matrix4& B){
 		array_ff temp;
 		const array_ff& TB = B.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				temp[i][j] = A * TB[i][j];
 			}
 		}
@@ -355,8 +355,8 @@ namespace GStar {
 	inline const Matrix4& operator* (const Matrix4& A, float B) {
 		array_ff temp;
 		const array_ff& TA = A.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				temp[i][j] = TA[i][j] * B;
 			}
 		}
@@ -366,8 +366,8 @@ namespace GStar {
 	inline const Matrix4& operator/ (const Matrix4& A, float B) {
 		array_ff temp;
 		const array_ff& TA = A.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
 				temp[i][j] = TA[i][j] / B;
 			}
 		}
@@ -377,9 +377,9 @@ namespace GStar {
 	inline void Matrix4::value_ptr(const Matrix4 & matrix,array_f & temparray)
 	{   // Since OpenGL use column major order so we need to transpose ower matrix
 		const array_ff& TA = matrix.Get();
-		for (int i = 0; i < SIZE; i++) {
-			for (int j = 0; j < SIZE; j++) {
-				temparray[i*SIZE + j] = TA[j][i];
+		for (int i = 0; i < DIMENTIONSIZE; i++) {
+			for (int j = 0; j < DIMENTIONSIZE; j++) {
+				temparray[i*DIMENTIONSIZE + j] = TA[j][i];
 			}
 		}
 	}

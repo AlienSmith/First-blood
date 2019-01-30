@@ -29,9 +29,9 @@ int main()
 		SimpleScene scene;
 		MainEntrance::SetUpAndRun();
 		DestroyMemorySystem();
-		int a = 0;
-		std::cin >> a;
-		return a; };
+	};
 	_CrtDumpMemoryLeaks();
-
+	int a = 0;
+	std::cin >> a;
+	return a;
 	}

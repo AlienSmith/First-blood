@@ -3,7 +3,7 @@
 #include "ConsolePrint.h"
 #include "Shader.h"
 #include "Scene.h"
-#include "UpdateObject.h"
+#include "UpdateRObject.h"
 #include "Data.h"
 #include "LightManager.h"
 #include "CameraManager.h"
@@ -25,7 +25,7 @@ bool GStar::ShaderComponent::Update() const
 	}if (t2) {
 		my_shader->setInt("texture2", 1);
 	}if (lighting || lightmapping) {
-		my_shader->setMat4("BaseMatrix", UpdateObject::OUT_Instance->GetTransformComponent()->GetBaseMatrix(),GL_FALSE);
+		my_shader->setMat4("BaseMatrix", UpdateRObject::OUT_Instance->GetTransformComponent()->GetBaseMatrix(),GL_FALSE);
 		my_shader->setVec3("viewPos", CameraManager::Instance()->GetTransform());
 		
 		my_shader->setFloat("matrial.shininess", 32.0f);
@@ -44,9 +44,9 @@ bool GStar::ShaderComponent::Update() const
 	//my_shader->setMat4("view", view, GL_FALSE);
 	Matrix4 projection = Scene::Create()->getProjection();
 	my_shader->setMat4("projection", Scene::Create()->getProjection(), GL_FALSE);	
-	Matrix4 model = UpdateObject::OUT_Instance->GetTransformComponent()->getModel();
-	my_shader->setMat4("model", UpdateObject::OUT_Instance->GetTransformComponent()->getModel(), GL_FALSE);
-	glDrawArrays(GL_TRIANGLES, 0, UpdateObject::OUT_Instance->GetMeshComponent()->GetMeshInfo().TriangleIndex());
+	Matrix4 model = UpdateRObject::OUT_Instance->GetTransformComponent()->getModel();
+	my_shader->setMat4("model", UpdateRObject::OUT_Instance->GetTransformComponent()->getModel(), GL_FALSE);
+	glDrawArrays(GL_TRIANGLES, 0, UpdateRObject::OUT_Instance->GetMeshComponent()->GetMeshInfo().TriangleIndex());
 	
 	return true;
 }

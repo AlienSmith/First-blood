@@ -2,11 +2,9 @@
 #define MESH_WORD 'm'
 #define TEXTURE_WORD 't'
 #define SHADER_WORD 's'
-#define TRANSFORM_WORD 'a'
-#define INTERFACE_WORD 'i'
 #define UNDEFINED_WORD 'u'
-#define LIGHT_WORD 'l'
-#define CAMERA_WORD 'c'
+#define TRANSFORM_WORD 'o'
+#define INTERFACE_WORD 'i'
 class Component {
 public:
 	//TODO add deltaTime to the update

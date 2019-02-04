@@ -24,18 +24,11 @@ namespace GStar {
 		LightInfo(Lighttype type, TransformComponent* component) :my_transform(component), my_type(type) {}
 	};
 	//This component will not be added on the Object
-	class LightComponent :public Component {
+	class LightComponent {
 	public:
 		const static float DistanceLimit;
 		const static float SpotLightLimit;
-		const static char TypeWord() {
-			return LIGHT_WORD;
-		}
-		bool Initialize();
-		bool Update();
-		bool Terminate();
-		LightComponent(Lighttype type, TransformComponent* component) :
-		Component(LIGHT_WORD),
+		LightComponent(Lighttype type, TransformComponent* component):
 		my_info(type, component) {
 			if (type == Lighttype::DIRECTIONAL) {
 				CleananglecutOff();

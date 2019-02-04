@@ -1,7 +1,7 @@
 #pragma once
 #include "SingleLinkedList.h"
 #include "Component.h"
-class Object {
+class RObject {
 public:
 	bool Update();
 	bool Terminate() {}
@@ -29,10 +29,10 @@ public:
 	void AddComponent(Component* component) {
 		my_components.Push(component);
 	}
-	Object() {}
-	Object(const Object& instance) = delete;
-	const Object& operator = (const Object& instance) = delete;
-	~Object() {
+	RObject() {}
+	RObject(const RObject& instance) = delete;
+	const RObject& operator = (const RObject& instance) = delete;
+	~RObject() {
 		my_components.DeleteContent();
 	}
 private:

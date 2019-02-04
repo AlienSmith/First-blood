@@ -1,6 +1,6 @@
-#include "Object.h"
-#include "UpdateObject.h"
-bool Object::Update()
+#include "RObject.h"
+#include "UpdateRObject.h"
+bool RObject::Update()
 {
 	Component* temp;
 	my_components.Resetcurrent();
@@ -9,7 +9,7 @@ bool Object::Update()
 		temp->Update();
 		my_components.Move();
 	}
-	UpdateObject::OUT_Instance->Update();
-	UpdateObject::Swamp();
+	UpdateRObject::OUT_Instance->Update();
+	UpdateRObject::Swamp();
 	return true;
 }

@@ -2,7 +2,7 @@
 #include "Coordinate.h"
 #include "Component.h"
 #include "View.h"
-#include "Object.h"
+#include "RObject.h"
 #include "MyString.h"
 namespace GStar {
 	//Version 3.0 Check OLDCODE Folder for previous version
@@ -234,7 +234,7 @@ namespace GStar {
 				matrix.Getreference(j, 3) = Scale.getValue(j);
 			}
 		}
-		TransformComponent(Object* object, const GStar::MyString& name) :
+		TransformComponent(RObject* object, const GStar::MyString& name) :
 			my_model{ GStar::Matrix4(IDENTICAL_MATRIX),//M
 			GStar::Matrix4(IDENTICAL_MATRIX),//MI
 			GStar::Matrix4(IDENTICAL_MATRIX),//DeltaR
@@ -282,7 +282,7 @@ namespace GStar {
 		TransformData my_model;
 		SingleLinkedList<GStar::TransformComponent*> my_children;
 		GStar::TransformComponent* my_parent;
-		Object* my_Object;
+		RObject* my_Object;
 		Layer my_layer;
 		unsigned int my_name;
 	};

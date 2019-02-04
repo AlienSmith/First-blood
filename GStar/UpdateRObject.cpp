@@ -1,8 +1,8 @@
-#include "UpdateObject.h"
+#include "UpdateRObject.h"
 #include "GLError.h"
-UpdateObject* UpdateObject::IN_Instance = nullptr;
-UpdateObject* UpdateObject::OUT_Instance = nullptr;
-void UpdateObject::Update()
+UpdateRObject* UpdateRObject::IN_Instance = nullptr;
+UpdateRObject* UpdateRObject::OUT_Instance = nullptr;
+void UpdateRObject::Update()
 {
 	if (my_interface != nullptr) {
 		my_interface->Update( );

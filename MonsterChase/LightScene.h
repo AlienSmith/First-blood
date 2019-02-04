@@ -2,7 +2,7 @@
 #include<stdlib.h>
 #include"SceneInterface.h"
 #include"World.h"
-#include"UpdateObject.h"
+#include"UpdateRObject.h"
 #include"MeshComponent.h"
 #include"TextureComponent.h"
 #include"ShaderComponent.h"
@@ -28,9 +28,9 @@ public:
 		LightMesh = new GStar::MeshComponent(NT_cubeparameters);
 		SpriteMesh = new GStar::MeshComponent(spriteNparameters);
 		GStar::World& world = GStar::World::Instance();
-		Object* tempObject = world.AddObject();
+		RObject* tempObject = world.AddObject();
 		//Camera
-		Object* tempObject1 = world.AddObject();
+		RObject* tempObject1 = world.AddObject();
 		TransformComponent2 = new GStar::TransformComponent(tempObject1, "Camera1");
 		world.AddToRoot(TransformComponent2);
 		TransformComponent2->SetTransform(GStar::Vector3(1.0f, 0.0f, 1.0f), GStar::Base::WORLD);
@@ -70,7 +70,7 @@ public:
 	virtual void Terminate() {}
 	inline void AddModule(float x, float y, const GStar::MyString& Name) {
 		GStar::World& world = GStar::World::Instance();
-		Object* tempObject = world.AddObject();
+		RObject* tempObject = world.AddObject();
 		tempObject->AddComponent(SpriteMesh);
 		CommonShader[Modulecount] = new GStar::ShaderComponent(Shader2L);
 		tempObject->AddComponent(CommonShader[Modulecount]);
@@ -89,7 +89,7 @@ public:
 	}
 	inline GStar::LightComponent* AddLight(float x, float y, const GStar::Vector3& color) {
 		GStar::World& world = GStar::World::Instance();
-		Object* tempObject = world.AddObject();
+		RObject* tempObject = world.AddObject();
 		tempObject->AddComponent(LightMesh);
 		tempObject->AddComponent(LightShader);
 		TransfomrComponent5 = new GStar::TransformComponent(tempObject, "Lights");

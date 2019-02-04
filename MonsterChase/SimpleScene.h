@@ -1,7 +1,7 @@
 #pragma once
 #include"SceneInterface.h"
 #include"World.h"
-#include"UpdateObject.h"
+#include"UpdateRObject.h"
 #include"MeshComponent.h"
 #include"TextureComponent.h"
 #include"ShaderComponent.h"
@@ -24,7 +24,7 @@ public:
 	}
 	virtual void Start() {
 		GStar::World& world = GStar::World::Instance();
-		Object* tempObject = world.AddObject();
+		RObject* tempObject = world.AddObject();
 
 		tempObject->AddComponent(new GStar::MeshComponent(normalcubeparameters));
 		tempObject->AddComponent(new GStar::ShaderComponent(Shader2L));
@@ -60,7 +60,7 @@ public:
 		//GStar::InterfaceComponent* component1 = new SimpleRotation(TransformComponent1);
 		//tempObject->AddComponent(component1);
 
-		Object* tempObject1 = world.AddObject();
+		RObject* tempObject1 = world.AddObject();
 		TransformComponent2 = new GStar::TransformComponent(tempObject1, "Camera1");
 		world.AddToRoot(TransformComponent2);
 		TransformComponent2->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f), GStar::Base::WORLD);

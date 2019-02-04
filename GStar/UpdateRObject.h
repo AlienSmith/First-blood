@@ -5,20 +5,20 @@
 #include"TransformComponent.h"
 #include"InterfaceComponent.h"
 //Two instance update one present one
-class UpdateObject {
+class UpdateRObject {
 public:
-	static UpdateObject* OUT_Instance;
-	static UpdateObject* IN_Instance;
+	static UpdateRObject* OUT_Instance;
+	static UpdateRObject* IN_Instance;
 	static void Initialize() {
-		OUT_Instance = new UpdateObject();
-		IN_Instance = new UpdateObject();
+		OUT_Instance = new UpdateRObject();
+		IN_Instance = new UpdateRObject();
 	}
 	static void Terminate() {
 		delete OUT_Instance;
 		delete IN_Instance;
 	}
 	static void Swamp() {
-		UpdateObject* temp = OUT_Instance;
+		UpdateRObject* temp = OUT_Instance;
 		OUT_Instance = IN_Instance;
 		IN_Instance = temp;
 	}
@@ -29,7 +29,7 @@ public:
 	inline void SetTransform(GStar::TransformComponent* transform) { my_transform = transform; }
 	inline void SetInterface(GStar::InterfaceComponent* component) { my_interface = component; }
 	inline void reset() { my_mesh = nullptr; my_shader = nullptr; my_texture = nullptr; my_transform = nullptr; my_interface = nullptr; }
-	UpdateObject() :my_mesh(nullptr), my_texture(nullptr), my_shader(nullptr),my_transform(nullptr),my_interface(nullptr) {}
+	UpdateRObject() :my_mesh(nullptr), my_texture(nullptr), my_shader(nullptr),my_transform(nullptr),my_interface(nullptr) {}
 	GStar::ShaderComponent* GetShaderComponent() { return this->my_shader; }
 	GStar::TransformComponent* GetTransformComponent() { return my_transform; }
 	GStar::MeshComponent* GetMeshComponent() { return my_mesh; };

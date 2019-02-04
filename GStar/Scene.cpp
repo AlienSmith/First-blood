@@ -50,8 +50,8 @@ unsigned int Scene::LoadMesh(const MeshParameters & parameters) const
 
 	unsigned int TempVBO;
 	//Put the data inside
-	// require buffers for the vertices on GPU VBO for Vertex buffer object
-	glGenBuffers(1, &TempVBO); // how many object names (unsigned integer) and where to store it.
+	// require buffers for the vertices on GPU VBO for Vertex buffer RObject
+	glGenBuffers(1, &TempVBO); // how many RObject names (unsigned integer) and where to store it.
 
 	glBindBuffer(GL_ARRAY_BUFFER, TempVBO); //VBO is GL_ARRAY_BUFFER. see docs.GL for other type
 
@@ -103,8 +103,8 @@ bool Scene::LoadObject()
 	glBindVertexArray(VAO);
 
 	//Put the data inside
-	// require buffers for the vertices on GPU VBO for Vertex buffer object
-	glGenBuffers(1, &VBO); // how many object names (unsigned integer) and where to store it.
+	// require buffers for the vertices on GPU VBO for Vertex buffer RObject
+	glGenBuffers(1, &VBO); // how many RObject names (unsigned integer) and where to store it.
 
 	glBindBuffer(GL_ARRAY_BUFFER, VBO); //VBO is GL_ARRAY_BUFFER. see docs.GL for other type
 
@@ -128,7 +128,7 @@ unsigned int Scene::LoadTexture(const TextureParameters& parameters) const
 	int width, height, nrComponents; //out parameter
 	unsigned char *data = stbi_load(parameters.textureroute, &width, &height, &nrComponents, 0);
 
-	unsigned int texture;// the texture object
+	unsigned int texture;// the texture RObject
 	glGenTextures(1, &texture); // claim a name 1 texture out parameter name.
 	glBindTexture(GL_TEXTURE_2D, texture); // bind name
 

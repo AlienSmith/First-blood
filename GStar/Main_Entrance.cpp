@@ -2,7 +2,7 @@
 #include"View.h"
 #include"Controller.h"
 #include"World.h"
-#include"UpdateObject.h"
+#include"UpdateRObject.h"
 #include"MeshComponent.h"
 #include"TextureComponent.h"
 #include"ShaderComponent.h"

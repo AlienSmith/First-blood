@@ -20,23 +20,14 @@
     <ClCompile Include="MyString.cpp">
       <Filter>MyString</Filter>
     </ClCompile>
-    <ClCompile Include="Controller.cpp">
-      <Filter>OpenGl\Core</Filter>
-    </ClCompile>
-    <ClCompile Include="Scene.cpp">
-      <Filter>OpenGl\Core</Filter>
-    </ClCompile>
     <ClCompile Include="stb_activate.cpp">
       <Filter>Debug</Filter>
     </ClCompile>
-    <ClCompile Include="View.cpp">
-      <Filter>OpenGl\Core</Filter>
-    </ClCompile>
     <ClCompile Include="Camera.cpp">
-      <Filter>OpenGl\Core\Camera</Filter>
+      <Filter>OpenGl\Rendering_Specific\Camera</Filter>
     </ClCompile>
     <ClCompile Include="Shader.cpp">
-      <Filter>OpenGl\Core\Shader</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shader</Filter>
     </ClCompile>
     <ClCompile Include="MeshComponent.cpp">
       <Filter>Structure\Component</Filter>
@@ -57,7 +48,7 @@
       <Filter>Structure\Manager</Filter>
     </ClCompile>
     <ClCompile Include="Mesh.cpp">
-      <Filter>OpenGl\Core\Mesh</Filter>
+      <Filter>OpenGl\Rendering_Specific\Mesh</Filter>
     </ClCompile>
     <ClCompile Include="Object.cpp">
       <Filter>Structure\Objects</Filter>
@@ -86,7 +77,7 @@
     </ClCompile>
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="EventManager.cpp">
-      <Filter>OpenGl\EventSystem</Filter>
+      <Filter>OpenGl\Core\EventSystem</Filter>
     </ClCompile>
     <ClCompile Include="CameraManager.cpp">
       <Filter>Structure\Manager</Filter>
@@ -101,6 +92,15 @@
       <Filter>Physics</Filter>
     </ClCompile>
     <ClCompile Include="SimpleRotationCopy.cpp" />
+    <ClCompile Include="View.cpp">
+      <Filter>OpenGl\Rendering_Specific</Filter>
+    </ClCompile>
+    <ClCompile Include="Controller.cpp">
+      <Filter>OpenGl\Core</Filter>
+    </ClCompile>
+    <ClCompile Include="Scene.cpp">
+      <Filter>OpenGl\Core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -131,15 +131,6 @@
     <ClInclude Include="NormalCube.h">
       <Filter>OpenGl</Filter>
     </ClInclude>
-    <ClInclude Include="Controller.h">
-      <Filter>OpenGl\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Data.h">
-      <Filter>OpenGl\Core</Filter>
-    </ClInclude>
-    <ClInclude Include="Scene.h">
-      <Filter>OpenGl\Core</Filter>
-    </ClInclude>
     <ClInclude Include="SingleLinkedList.h">
       <Filter>Container</Filter>
     </ClInclude>
@@ -149,14 +140,11 @@
     <ClInclude Include="Vector3.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="View.h">
-      <Filter>OpenGl\Core</Filter>
-    </ClInclude>
     <ClInclude Include="Camera.h">
-      <Filter>OpenGl\Core\Camera</Filter>
+      <Filter>OpenGl\Rendering_Specific\Camera</Filter>
     </ClInclude>
     <ClInclude Include="Shader.h">
-      <Filter>OpenGl\Core\Shader</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shader</Filter>
     </ClInclude>
     <ClInclude Include="MeshComponent.h">
       <Filter>Structure\Component</Filter>
@@ -179,17 +167,14 @@
     <ClInclude Include="TextureComponent.h">
       <Filter>Structure\Component</Filter>
     </ClInclude>
-    <ClInclude Include="GLINCLUDE.h">
-      <Filter>OpenGl\Core</Filter>
-    </ClInclude>
     <ClInclude Include="TextureManager.h">
       <Filter>Structure\Manager</Filter>
     </ClInclude>
     <ClInclude Include="Texture.h">
-      <Filter>OpenGl\Core\Texture</Filter>
+      <Filter>OpenGl\Rendering_Specific\Texture</Filter>
     </ClInclude>
     <ClInclude Include="Mesh.h">
-      <Filter>OpenGl\Core\Mesh</Filter>
+      <Filter>OpenGl\Rendering_Specific\Mesh</Filter>
     </ClInclude>
     <ClInclude Include="Object.h">
       <Filter>Structure\Objects</Filter>
@@ -204,7 +189,7 @@
       <Filter>OpenGl\Core\World</Filter>
     </ClInclude>
     <ClInclude Include="GLError.h">
-      <Filter>OpenGl\Debug</Filter>
+      <Filter>OpenGl\Rendering_Specific\Debug</Filter>
     </ClInclude>
     <ClInclude Include="SceneInterface.h">
       <Filter>Entrance</Filter>
@@ -234,16 +219,16 @@
       <Filter>Structure\Component</Filter>
     </ClInclude>
     <ClInclude Include="EventManager.h">
-      <Filter>OpenGl\EventSystem</Filter>
+      <Filter>OpenGl\Core\EventSystem</Filter>
     </ClInclude>
     <ClInclude Include="Delegate.h">
-      <Filter>OpenGl\EventSystem</Filter>
+      <Filter>OpenGl\Core\EventSystem</Filter>
     </ClInclude>
     <ClInclude Include="EventUnite.h">
-      <Filter>OpenGl\EventSystem</Filter>
+      <Filter>OpenGl\Core\EventSystem</Filter>
     </ClInclude>
     <ClInclude Include="Event.h">
-      <Filter>OpenGl\EventSystem</Filter>
+      <Filter>OpenGl\Core\EventSystem</Filter>
     </ClInclude>
     <ClInclude Include="CameraComponent.h">
       <Filter>Structure\Component</Filter>
@@ -281,72 +266,87 @@
     <ClInclude Include="SmartPointer.h">
       <Filter>SmartPointer</Filter>
     </ClInclude>
+    <ClInclude Include="View.h">
+      <Filter>OpenGl\Rendering_Specific</Filter>
+    </ClInclude>
+    <ClInclude Include="Data.h">
+      <Filter>OpenGl\Rendering_Specific</Filter>
+    </ClInclude>
+    <ClInclude Include="Controller.h">
+      <Filter>OpenGl\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="GLINCLUDE.h">
+      <Filter>OpenGl\Core</Filter>
+    </ClInclude>
+    <ClInclude Include="Scene.h">
+      <Filter>OpenGl\Core</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
-      <Filter>OpenGl\Texture</Filter>
+      <Filter>OpenGl\Rendering_Specific\Texture_DATA</Filter>
     </Image>
     <Image Include="woodcontainer.jpg">
-      <Filter>OpenGl\Texture</Filter>
+      <Filter>OpenGl\Rendering_Specific\Texture_DATA</Filter>
     </Image>
     <Image Include="awesomeface.png">
-      <Filter>OpenGl\Texture</Filter>
+      <Filter>OpenGl\Rendering_Specific\Texture_DATA</Filter>
     </Image>
     <Image Include="IronBox.png">
-      <Filter>OpenGl\Texture</Filter>
+      <Filter>OpenGl\Rendering_Specific\Texture_DATA</Filter>
     </Image>
     <Image Include="IronBox_specular.png">
-      <Filter>OpenGl\Texture</Filter>
+      <Filter>OpenGl\Rendering_Specific\Texture_DATA</Filter>
     </Image>
   </ItemGroup>
   <ItemGroup>
     <None Include="Excercise1.6.ves">
-      <Filter>OpenGl\Shaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA</Filter>
     </None>
     <None Include="Exercises1.4.ves">
-      <Filter>OpenGl\Shaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA</Filter>
     </None>
     <None Include="Exercises1.5.frs">
-      <Filter>OpenGl\Shaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA</Filter>
     </None>
     <None Include="FragmentShader.shader">
-      <Filter>OpenGl\Shaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA</Filter>
     </None>
     <None Include="FragmentShader1.2.shader">
-      <Filter>OpenGl\Shaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA</Filter>
     </None>
     <None Include="FragmentShader2.shader">
-      <Filter>OpenGl\Shaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA</Filter>
     </None>
     <None Include="VertexColor.frs">
-      <Filter>OpenGl\Shaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA</Filter>
     </None>
     <None Include="VertexColor.ves">
-      <Filter>OpenGl\Shaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA</Filter>
     </None>
     <None Include="VertexShader.shader">
-      <Filter>OpenGl\Shaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA</Filter>
     </None>
     <None Include="VertexShader2.shader">
-      <Filter>OpenGl\Shaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA</Filter>
     </None>
     <None Include="NTexture.ves">
-      <Filter>OpenGl\Shaders\NewShaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA\NewShaders</Filter>
     </None>
     <None Include="NTexture.frs">
-      <Filter>OpenGl\Shaders\NewShaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA\NewShaders</Filter>
     </None>
     <None Include="TLVertexColor.frs">
-      <Filter>OpenGl\Shaders\NewShaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA\NewShaders</Filter>
     </None>
     <None Include="TLVertexColor.ves">
-      <Filter>OpenGl\Shaders\NewShaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA\NewShaders</Filter>
     </None>
     <None Include="TextureMap.frs">
-      <Filter>OpenGl\Shaders\NewShaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA\NewShaders</Filter>
     </None>
     <None Include="TextureMap.ves">
-      <Filter>OpenGl\Shaders\NewShaders</Filter>
+      <Filter>OpenGl\Rendering_Specific\Shaders_DATA\NewShaders</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -365,20 +365,11 @@
     <Filter Include="MyString">
       <UniqueIdentifier>{a4d7e281-dd43-425c-a0e9-1c0be51f936e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OpenGl\Shaders">
-      <UniqueIdentifier>{d10c78f4-f327-4b56-b094-9e61c2a11879}</UniqueIdentifier>
-    </Filter>
     <Filter Include="OpenGl\Core">
       <UniqueIdentifier>{0e203f72-e48a-4a48-bbfd-c27aa33677ca}</UniqueIdentifier>
     </Filter>
     <Filter Include="Container">
       <UniqueIdentifier>{3ab2b6fd-dedb-4f01-9467-6680b84afc9c}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGl\Texture">
-      <UniqueIdentifier>{bc9ebce1-ecfa-40d3-88ae-6f03d4348c28}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGl\Core\Camera">
-      <UniqueIdentifier>{7f71c9ba-6d1c-4c61-8a5a-5bb87f4605f6}</UniqueIdentifier>
     </Filter>
     <Filter Include="Structure">
       <UniqueIdentifier>{59d18350-f82d-47f8-bdb0-c05d43364451}</UniqueIdentifier>
@@ -389,35 +380,14 @@
     <Filter Include="Structure\Manager">
       <UniqueIdentifier>{4cf51011-9a23-4920-b09e-00e0a04cd5eb}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OpenGl\Core\Shader">
-      <UniqueIdentifier>{943fadb7-94de-4381-9375-250d68197118}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGl\Core\Texture">
-      <UniqueIdentifier>{abe41098-92f1-4d78-befa-a5112c5b44c2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGl\Core\Mesh">
-      <UniqueIdentifier>{5ad54a04-3aa7-4082-8d9d-f834bd4cd25e}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Structure\Objects">
       <UniqueIdentifier>{2d40643a-d300-46be-8e1a-ad0bb865dd8a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGl\Core\World">
-      <UniqueIdentifier>{57af069c-4d64-437b-8dd7-ce1c5192363f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGl\Debug">
-      <UniqueIdentifier>{ed933325-52f7-4e71-bf63-086c79950a9d}</UniqueIdentifier>
     </Filter>
     <Filter Include="Entrance">
       <UniqueIdentifier>{f46391c3-48d6-442a-b872-95cc10627a74}</UniqueIdentifier>
     </Filter>
     <Filter Include="SimpleInterface">
       <UniqueIdentifier>{5ef075d2-315a-4b70-9cc0-1772b59dd679}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGl\Shaders\NewShaders">
-      <UniqueIdentifier>{7e098b22-1a44-49a4-b212-f2f2cb8a5afc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="OpenGl\EventSystem">
-      <UniqueIdentifier>{ad7c4843-74ad-464f-b874-f7b7ac841571}</UniqueIdentifier>
     </Filter>
     <Filter Include="Physics">
       <UniqueIdentifier>{a374dca5-d572-4cf1-bcde-bc762a76fbe5}</UniqueIdentifier>
@@ -430,6 +400,39 @@
     </Filter>
     <Filter Include="SmartPointer">
       <UniqueIdentifier>{3dcf3588-5f3b-4f8d-b262-8ce3ee80ad0b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Rendering_Specific">
+      <UniqueIdentifier>{2c98f4eb-566f-4929-989b-f81d0c099e86}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Rendering_Specific\Debug">
+      <UniqueIdentifier>{ed933325-52f7-4e71-bf63-086c79950a9d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Rendering_Specific\Texture_DATA">
+      <UniqueIdentifier>{bc9ebce1-ecfa-40d3-88ae-6f03d4348c28}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Rendering_Specific\Shaders_DATA">
+      <UniqueIdentifier>{d10c78f4-f327-4b56-b094-9e61c2a11879}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Rendering_Specific\Shaders_DATA\NewShaders">
+      <UniqueIdentifier>{7e098b22-1a44-49a4-b212-f2f2cb8a5afc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Rendering_Specific\Texture">
+      <UniqueIdentifier>{abe41098-92f1-4d78-befa-a5112c5b44c2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Rendering_Specific\Shader">
+      <UniqueIdentifier>{943fadb7-94de-4381-9375-250d68197118}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Rendering_Specific\Mesh">
+      <UniqueIdentifier>{5ad54a04-3aa7-4082-8d9d-f834bd4cd25e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Rendering_Specific\Camera">
+      <UniqueIdentifier>{7f71c9ba-6d1c-4c61-8a5a-5bb87f4605f6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Core\EventSystem">
+      <UniqueIdentifier>{ad7c4843-74ad-464f-b874-f7b7ac841571}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="OpenGl\Core\World">
+      <UniqueIdentifier>{57af069c-4d64-437b-8dd7-ce1c5192363f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

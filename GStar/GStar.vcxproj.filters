@@ -278,6 +278,9 @@
     <ClInclude Include="GSTime.h">
       <Filter>Time</Filter>
     </ClInclude>
+    <ClInclude Include="SmartPointer.h">
+      <Filter>SmartPointer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -424,6 +427,9 @@
     </Filter>
     <Filter Include="Time">
       <UniqueIdentifier>{84da8775-1006-4a82-9d16-7b4be741c58d}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="SmartPointer">
+      <UniqueIdentifier>{3dcf3588-5f3b-4f8d-b262-8ce3ee80ad0b}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

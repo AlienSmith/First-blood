@@ -180,6 +180,7 @@
     <ClInclude Include="SingleLinkedDictionary.h" />
     <ClInclude Include="SingleLinkedList.h" />
     <ClInclude Include="MyString.h" />
+    <ClInclude Include="SmartPointer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureComponent.h" />
     <ClInclude Include="TextureManager.h" />

@@ -30,7 +30,7 @@ namespace GStar {
 			QueryPerformanceFrequency((LARGE_INTEGER*)&_frequency);
 			__int64 count;
 			QueryPerformanceCounter((LARGE_INTEGER*)&count);
-			_base_time = (count*1.0 / _frequency);
+			_base_time = (count* 1.0 / _frequency);
 			_totaltime = 0.0;
 			int a = 0;
 		}

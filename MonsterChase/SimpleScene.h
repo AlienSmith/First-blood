@@ -6,7 +6,7 @@
 #include"TextureComponent.h"
 #include"ShaderComponent.h"
 #include"TransformComponent.h"
-#include"InterfaceComponent.h"
+#include"InterfaceComponentManager.h"
 #include"Data.h"
 #include"SimpleRotation.h"
 //#include"KeyControlComponent.h"
@@ -43,7 +43,9 @@ public:
 		//tempObject->AddComponent(controller);
 
 		GStar::InterfaceComponent* component = new SimpleRotation(TransformComponent);
-		tempObject->AddComponent(component);
+		GStar::InterfaceComponentManager::Instance()->AddInterface(component);
+
+
 		tempObject = world.AddObject();
 
 		tempObject->AddComponent(new GStar::MeshComponent(texturenormalcubeparameters));
@@ -96,7 +98,7 @@ public:
 
 		GStar::PhysicComponent* physic = GStar::PhysicManager::Instance()->AddPhysic(TransfomrComponent3, false, 1.0f, .1f);
 		GStar::SimpleForce* forcecomponent = new GStar::SimpleForce(physic,1.0f);
-		tempObject->AddComponent(forcecomponent);
+		GStar::InterfaceComponentManager::Instance()->AddInterface(component);
 		//controllerComponent = new GStar::PhysicBasedController(physic, 5.0f);
 		//tempObject->AddComponent(controllerComponent);
 	}

@@ -5,11 +5,10 @@ namespace GStar {
 }
 class SimpleRotation : public GStar::InterfaceComponent {
 public:
-	SimpleRotation(GStar::TransformComponent* transform) :InterfaceComponent(),my_transform(transform) {}
+	SimpleRotation(GStar::TransformComponent* transform) :InterfaceComponent(transform) {}
 	virtual void Initialize() override {}
 	virtual void Update() override;
 	virtual void Terminate() override {}
 	~SimpleRotation() {}
-	GStar::TransformComponent* my_transform;
 	float a;
 };

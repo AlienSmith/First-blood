@@ -3,8 +3,6 @@
 #define TEXTURE_WORD 't'
 #define SHADER_WORD 's'
 #define UNDEFINED_WORD 'u'
-#define TRANSFORM_WORD 'o'
-#define INTERFACE_WORD 'i'
 class Component {
 public:
 	//TODO add deltaTime to the update

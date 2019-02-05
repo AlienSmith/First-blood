@@ -101,6 +101,10 @@
     <ClCompile Include="CameraManager.cpp">
       <Filter>OpenGl\Core\CameraM</Filter>
     </ClCompile>
+    <ClCompile Include="InterfaceComponentManager.cpp">
+      <Filter>Entrance</Filter>
+    </ClCompile>
+    <ClCompile Include="RManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -280,6 +284,12 @@
     </ClInclude>
     <ClInclude Include="CameraComponent.h">
       <Filter>OldCode</Filter>
+    </ClInclude>
+    <ClInclude Include="InterfaceComponentManager.h">
+      <Filter>Entrance</Filter>
+    </ClInclude>
+    <ClInclude Include="RManager.h">
+      <Filter>OpenGl\Core\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

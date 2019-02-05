@@ -27,9 +27,8 @@ public:
 	inline void SetTexture( GStar::TextureComponent* textur) { my_texture = textur; }
 	inline void SetShader( GStar::ShaderComponent* shader) { my_shader = shader; }
 	inline void SetTransform(GStar::TransformComponent* transform) { my_transform = transform; }
-	inline void SetInterface(GStar::InterfaceComponent* component) { my_interface = component; }
-	inline void reset() { my_mesh = nullptr; my_shader = nullptr; my_texture = nullptr; my_transform = nullptr; my_interface = nullptr; }
-	UpdateRObject() :my_mesh(nullptr), my_texture(nullptr), my_shader(nullptr),my_transform(nullptr),my_interface(nullptr) {}
+	inline void reset() { my_mesh = nullptr; my_shader = nullptr; my_texture = nullptr; my_transform = nullptr; }
+	UpdateRObject() :my_mesh(nullptr), my_texture(nullptr), my_shader(nullptr),my_transform(nullptr) {}
 	GStar::ShaderComponent* GetShaderComponent() { return this->my_shader; }
 	GStar::TransformComponent* GetTransformComponent() { return my_transform; }
 	GStar::MeshComponent* GetMeshComponent() { return my_mesh; };
@@ -38,5 +37,4 @@ private:
 	GStar::TextureComponent* my_texture;
 	GStar::ShaderComponent* my_shader;
 	GStar::TransformComponent* my_transform;
-	GStar::InterfaceComponent* my_interface;
 };

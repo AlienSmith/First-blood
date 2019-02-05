@@ -245,7 +245,6 @@ namespace GStar {
 			false,
 			false,
 			},
-			Component(TRANSFORM_WORD),
 			my_parent(nullptr),
 			my_Object(object),
 			my_layer(Layer::DEFAULT),

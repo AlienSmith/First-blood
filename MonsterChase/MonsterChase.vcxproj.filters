@@ -4,14 +4,18 @@
     <ClCompile Include="Game.cpp" />
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="SimpleRotation.cpp" />
     <ClCompile Include="KeyControlComponent.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
     <ClCompile Include="PhysicBasedController.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleForce.cpp" />
+    <ClCompile Include="SimpleForce.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="SimpleRotation.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />

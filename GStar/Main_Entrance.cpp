@@ -7,7 +7,7 @@
 #include"TextureComponent.h"
 #include"ShaderComponent.h"
 #include"TransformComponent.h"
-#include"InterfaceComponent.h"
+#include"InterfaceComponentManager.h"
 #include"SimpleRotationCopy.h"
 #include"Data.h"
 #include"Assert.h"
@@ -31,11 +31,13 @@ void MainEntrance() {
 	if (GStar::SceneInterface::Instance) {
 		GStar::SceneInterface::Instance->Start();
 	}
+	///Intialization Area
+	
 	//this code is used for test indivisual component. Noteice the Component directly communicate with UpdateObject::OUT_Instance
 	//instead of holding a reference to the object it is attached to (which is always the UpdateObject::OUT_Instance)
 	//Add /*tempObject->Update();*/ to Update cercle to test it.
 
-	/*UpdateObject::IN_Instance;
+	/*UpdateObject::IN_Instance;d
 	UpdateObject::OUT_Instance;
 	Object* tempObject = new Object();
 	tempObject->AddComponent(new GStar::MeshComponent(cubeparameters));
@@ -61,7 +63,10 @@ void MainEntrance() {
 			GStar::SceneInterface::Instance->Update();
 		}
 		myScene->UpdateTime();
+		///Interface Class
 		myController->Update();
+		GStar::InterfaceComponentManager::Instance()->Update();
+
 		GStar::PhysicManager::Instance()->Update();
 		CleanScreen();
 		world.Update();

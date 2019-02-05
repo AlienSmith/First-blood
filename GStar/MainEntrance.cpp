@@ -5,7 +5,7 @@
 #include"TextureComponent.h"
 #include"ShaderComponent.h"
 #include"TransformComponent.h"
-#include"InterfaceComponent.h"
+#include"InterfaceComponentManager.h"
 #include"SimpleRotationCopy.h"
 #include"Data.h"
 #include"Assert.h"
@@ -15,6 +15,7 @@
 #include"MouseInputEvent.h"
 #include "GLError.h"
 #include"PhysicManager.h"
+#include"RManager.h"
 MainEntrance* MainEntrance::instance = nullptr;
 const float MainEntrance::MouseSensitivity = 0.05f;
 void MainEntrance::SetUpAndRun()
@@ -65,9 +66,12 @@ void MainEntrance::Run()
 		}
 		myScene->UpdateTime();
 		myController->Update();
+		GStar::InterfaceComponentManager::Instance()->Update();
 		GStar::PhysicManager::Instance()->Update();
 		CleanScreen();
+		//The World should only update transform
 		world.Update();
+		GStar::RManager::Instance()->Update();
 		myScene->UpdateEnd();
 	}
 	myScene->TerminateWindow();

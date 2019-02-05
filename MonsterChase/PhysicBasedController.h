@@ -9,7 +9,7 @@ namespace GStar {
 	{
 	public:
 		PhysicBasedController(GStar::PhysicComponent* component, float movespeed):
-			InterfaceComponent(),
+			InterfaceComponent(component->GetTransformComponent()),
 			delta(Vector3(0.0f,0.0f,0.0f)),
 			my_component(component),
 			speed(movespeed) {

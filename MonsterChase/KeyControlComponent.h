@@ -8,7 +8,7 @@
 class KeyControlCompoenent : public GStar::InterfaceComponent {
 public:
 	//the hock up the call back event
-	KeyControlCompoenent(GStar::TransformComponent* transform, float movespeed) :InterfaceComponent(transform),delta(GStar::Vector3(0,0,0)), my_transform(transform), speed(movespeed) { Initialize(); }
+	KeyControlCompoenent(GStar::TransformComponent* transform, float movespeed) :InterfaceComponent(transform),delta(GStar::Vector3(0,0,0)), speed(movespeed) { Initialize(); }
 	virtual void Initialize() override {
 		//This is how to use a Class specified function
 		GStar::EventManager::Instance()->GetEventUnite("KeyBoardInput").Bind<KeyControlCompoenent,&KeyControlCompoenent::OnKeyControl>(this);

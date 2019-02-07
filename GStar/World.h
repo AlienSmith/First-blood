@@ -10,11 +10,7 @@ namespace GStar {
 			static World instance;
 			return instance;
 		}
-		World():ObjectsList(SingleLinkedList<RObject*>()){}
-		RObject* AddObject() {
-			ObjectsList.Push(new RObject());
-			return ObjectsList.GetEndT();
-		}
+		World(){}
 		void Update() {
 			WorldRoot.Resetcurrent();
 			while (WorldRoot.HasNext()) {
@@ -27,7 +23,6 @@ namespace GStar {
 			WorldRoot.Push(transform); 
 		}
 	private:
-		SingleLinkedList<RObject*> ObjectsList;
 		SingleLinkedList<GStar::TransformComponent*> WorldRoot;
 	};
 }

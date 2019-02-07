@@ -14,3 +14,5 @@ bool RObject::Update()
 	UpdateRObject::Swamp();
 	return true;
 }
+
+RObject::RObject(GStar::TransformComponent * transform) :my_transform(transform){}

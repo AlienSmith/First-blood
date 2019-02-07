@@ -2,6 +2,9 @@
 #include "SingleLinkedList.h"
 #include "Component.h"
 #include <cstdint>
+namespace GStar {
+	class TransformComponent;
+}
 class RObject {
 public:
 	bool Update();
@@ -30,7 +33,7 @@ public:
 	void AddComponent(Component* component) {
 		my_components.Push(component);
 	}
-	RObject(GStar::TransformComponent* transform):my_transform(transform) {}
+	RObject(GStar::TransformComponent* transform);
 	RObject(const RObject& instance) = delete;
 	const RObject& operator = (const RObject& instance) = delete;
 	~RObject() {

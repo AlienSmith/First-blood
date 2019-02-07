@@ -104,7 +104,9 @@
     <ClCompile Include="InterfaceComponentManager.cpp">
       <Filter>Entrance</Filter>
     </ClCompile>
-    <ClCompile Include="RManager.cpp" />
+    <ClCompile Include="RManager.cpp">
+      <Filter>OpenGl\Core\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />

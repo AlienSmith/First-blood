@@ -1,5 +1,6 @@
 #pragma once
 #include "InterfaceComponent.h"
+#include "SingleLinkedList.h"
 namespace GStar {
 	class InterfaceComponentManager {
 	public:

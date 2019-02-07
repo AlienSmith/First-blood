@@ -2,8 +2,8 @@
 #include "Coordinate.h"
 #include "Component.h"
 #include "View.h"
-#include "RObject.h"
 #include "MyString.h"
+#include "SingleLinkedList.h"
 namespace GStar {
 	//Version 3.0 Check OLDCODE Folder for previous version
 	//transform must update after initialize, parent must be setted and updated before children transform can be used.
@@ -234,7 +234,7 @@ namespace GStar {
 				matrix.Getreference(j, 3) = Scale.getValue(j);
 			}
 		}
-		TransformComponent(RObject* object, const GStar::MyString& name) :
+		TransformComponent(const GStar::MyString& name) :
 			my_model{ GStar::Matrix4(IDENTICAL_MATRIX),//M
 			GStar::Matrix4(IDENTICAL_MATRIX),//MI
 			GStar::Matrix4(IDENTICAL_MATRIX),//DeltaR
@@ -246,11 +246,9 @@ namespace GStar {
 			false,
 			},
 			my_parent(nullptr),
-			my_Object(object),
 			my_layer(Layer::DEFAULT),
 			my_name(GStar::MyString::hash_str(name.GetString())){}
 		inline void WorldUpdate() {
-			my_Object->Update();
 			my_children.Resetcurrent();
 			while (my_children.HasNext()) {
 				my_children.GetNext()->WorldUpdate();
@@ -281,7 +279,6 @@ namespace GStar {
 		TransformData my_model;
 		SingleLinkedList<GStar::TransformComponent*> my_children;
 		GStar::TransformComponent* my_parent;
-		RObject* my_Object;
 		Layer my_layer;
 		unsigned int my_name;
 	};

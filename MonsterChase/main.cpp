@@ -7,7 +7,6 @@
 #include "HeapManager_UnitTest.cpp"
 //#include "MainRenderLoop.cpp"
 #include "SingleLinkedDictionary.h"
-#include "SimpleScene.h"
 #include "LightScene.h"
 #include "MemorySystem.h"
 #include "MainEntrance.h"
@@ -26,7 +25,7 @@ int main()
 {
 	{
 		InitializeMemorySystem();
-		SimpleScene scene;
+		LightScene scene;
 		MainEntrance::SetUpAndRun();
 		DestroyMemorySystem();
 	};

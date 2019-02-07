@@ -1,5 +1,6 @@
 #pragma once
 #include "InterfaceComponent.h"
+#include "PhysicComponent.h"
 namespace GStar {
 	class PhysicComponent;
 class SimpleForce:public InterfaceComponent{

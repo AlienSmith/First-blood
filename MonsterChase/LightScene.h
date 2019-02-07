@@ -14,9 +14,17 @@
 #include"CameraManager.h"
 #include"LightManager.h"
 #include"ConsolePrint.h"
+#include"RManager.h"
+#include"World.h"
+#include"InterfaceComponentManager.h"
 class LightScene : public GStar::SceneInterface {
 public:
-	LightScene() :GStar::SceneInterface(), TransformComponent(nullptr) {
+	LightScene() 
+		:GStar::SceneInterface()
+		,imanager(GStar::InterfaceComponentManager::Instance())
+		,Renderer(GStar::RManager::Instance())
+		,world(&GStar::World::Instance())
+	{
 		GStar::SceneInterface::Instance = this;
 	}
 	virtual ~LightScene() {
@@ -27,20 +35,17 @@ public:
 		LightShader = new GStar::ShaderComponent(NT_Shaders);
 		LightMesh = new GStar::MeshComponent(NT_cubeparameters);
 		SpriteMesh = new GStar::MeshComponent(spriteNparameters);
-		GStar::World& world = GStar::World::Instance();
-		RObject* tempObject = world.AddObject();
 		//Camera
-		RObject* tempObject1 = world.AddObject();
-		TransformComponent2 = new GStar::TransformComponent(tempObject1, "Camera1");
-		world.AddToRoot(TransformComponent2);
+		TransformComponent2 = new GStar::TransformComponent("Camera1");
+		world->AddToRoot(TransformComponent2);
 		TransformComponent2->SetTransform(GStar::Vector3(1.0f, 0.0f, 1.0f), GStar::Base::WORLD);
-		tempObject1->AddComponent(TransformComponent2);
 		TransformComponent2->UpdateTransform();
+		RObject& tempObject1 = Renderer->CreateRenderObject(TransformComponent2);
 		controllerComponent = new KeyControlCompoenent(TransformComponent2, 2.0f);
-		tempObject1->AddComponent(controllerComponent);
+		imanager->AddInterface(controllerComponent);
 		GStar::CameraManager::Instance()->SetCurrentCamera(TransformComponent2);
 
-		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(new GStar::TransformComponent(tempObject, "Lights"), GStar::Lighttype::DIRECTIONAL);
+		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(new GStar::TransformComponent("Lights"), GStar::Lighttype::DIRECTIONAL);
 		temp->SetIntensity(GStar::Vector3(0.2f, 0.2F, 0.2F), GStar::Vector3(0.0f, 0.0F, 0.0F), GStar::Vector3(0.0f, 0.0F, 0.0F));
 		
 		AddModule(0.0f, 0.0f, GStar::MyString("Module1"));
@@ -69,17 +74,16 @@ public:
 	}
 	virtual void Terminate() {}
 	inline void AddModule(float x, float y, const GStar::MyString& Name) {
-		GStar::World& world = GStar::World::Instance();
-		RObject* tempObject = world.AddObject();
-		tempObject->AddComponent(SpriteMesh);
-		CommonShader[Modulecount] = new GStar::ShaderComponent(Shader2L);
-		tempObject->AddComponent(CommonShader[Modulecount]);
-		TransformComponent = new GStar::TransformComponent(tempObject, Name);
-		world.AddToRoot(TransformComponent);
+		TransformComponent = new GStar::TransformComponent(Name);
+		world->AddToRoot(TransformComponent);
 		TransformComponent->SetTransform(GStar::Vector3(x, y, -10.0f), GStar::Base::WORLD);
 		TransformComponent->SetScale(GStar::Vector3(2.0f, 2.0f, 2.0f));
 		TransformComponent->UpdateTransform();
-		tempObject->AddComponent(TransformComponent);
+
+		RObject& tempObject = Renderer->CreateRenderObject(TransformComponent);
+		tempObject.AddComponent(SpriteMesh);
+		CommonShader[Modulecount] = new GStar::ShaderComponent(Shader2L);
+		tempObject.AddComponent(CommonShader[Modulecount]);
 
 		StartLight[Modulecount] = AddLight(0.5f+(-0.5f + (std::rand() % (10)) / 10.0f) +x, 0.5f+ (-0.5f + (std::rand() % (10)) / 10.0f) +y, GStar::Vector3(1.0f, float(rand()%2), 0.0f));
 		 AddLight(-0.5f + (-0.5f + (std::rand() % (10)) / 10.0f) + x, -0.5f + (-0.5f + (std::rand() % (10)) / 10.0f) + y, GStar::Vector3(0.0f, 1.0f, float(rand() % 2)));
@@ -88,16 +92,15 @@ public:
 		 Modulecount++;
 	}
 	inline GStar::LightComponent* AddLight(float x, float y, const GStar::Vector3& color) {
-		GStar::World& world = GStar::World::Instance();
-		RObject* tempObject = world.AddObject();
-		tempObject->AddComponent(LightMesh);
-		tempObject->AddComponent(LightShader);
-		TransfomrComponent5 = new GStar::TransformComponent(tempObject, "Lights");
-		world.AddToRoot(TransfomrComponent5);
+		TransfomrComponent5 = new GStar::TransformComponent("Lights");
+		world->AddToRoot(TransfomrComponent5);
 		TransfomrComponent5->SetTransform(GStar::Vector3(x, y, -9.7f), GStar::Base::WORLD);
 		TransfomrComponent5->SetScale(.1f, .1f, .1f);
-		tempObject->AddComponent(TransfomrComponent5);
 		TransfomrComponent5->UpdateTransform();
+
+		RObject& tempObject =  Renderer->CreateRenderObject(TransfomrComponent5);
+		tempObject.AddComponent(LightMesh);
+		tempObject.AddComponent(LightShader);
 		GStar::LightComponent* temp = GStar::LightManager::Instance()->GenerateLight(TransfomrComponent5, GStar::Lighttype::POINT);
 		temp->SetIntensity(GStar::Vector3(0.0f, 0.0F, 0.0F), color, GStar::Vector3(0.0f, 0.0F, 0.0F));
 		temp->SetActivateConsts(.2f, 0.0f, 6.0f);
@@ -105,6 +108,9 @@ public:
 		return temp;
 	}
 private:
+	GStar::InterfaceComponentManager* imanager;
+	GStar::RManager* Renderer;
+	GStar::World* world;
 	GStar::TransformComponent* TransformComponent;
 	GStar::TransformComponent* TransformComponent2;
 	GStar::TransformComponent* TransfomrComponent5;

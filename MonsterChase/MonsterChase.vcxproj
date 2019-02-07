@@ -152,7 +152,6 @@
     <ClInclude Include="PhysicBasedController.h" />
     <ClInclude Include="SimpleForce.h" />
     <ClInclude Include="SimpleRotation.h" />
-    <ClInclude Include="SimpleScene.h" />
     <ClInclude Include="Monster.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

@@ -20,9 +20,6 @@
   <ItemGroup>
     <ClInclude Include="Game.h" />
     <ClInclude Include="Monster.h" />
-    <ClInclude Include="SimpleScene.h">
-      <Filter>Interfaces</Filter>
-    </ClInclude>
     <ClInclude Include="SimpleRotation.h">
       <Filter>Interfaces</Filter>
     </ClInclude>

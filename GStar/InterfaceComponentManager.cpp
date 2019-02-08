@@ -14,11 +14,11 @@ namespace GStar {
 			delete instance;
 		}
 	}
-	inline void InterfaceComponentManager::AddInterface(InterfaceComponent * i_pinterface)
+	void InterfaceComponentManager::AddInterface(InterfaceComponent * i_pinterface)
 	{
 		interfacelist.Push(i_pinterface);
 	}
-	inline void InterfaceComponentManager::Update()
+	void InterfaceComponentManager::Update()
 	{
 		interfacelist.Resetcurrent();
 		while (interfacelist.HasNext()) {

@@ -2,9 +2,6 @@
 #include "UpdateRObject.h"
 bool Component::Update()
 {
-	if (!UpdateRObject::OUT_Instance && !UpdateRObject::IN_Instance) {
-		UpdateRObject::Initialize();
-	}
 	if (this->type == MESH_WORD) {
 		UpdateRObject::IN_Instance->SetMesh(static_cast<GStar::MeshComponent*> (this));
 	}

@@ -6,8 +6,8 @@ namespace GStar {
 	public:
 		static InterfaceComponentManager* Instance();
 		static void Terminate();
-		inline void AddInterface(InterfaceComponent* i_pinterface);
-		inline void Update();
+		void AddInterface(InterfaceComponent* i_pinterface);
+		void Update();
 	private:
 		InterfaceComponentManager() {}
 		static InterfaceComponentManager* instance;

@@ -5,6 +5,7 @@ namespace GStar {
 	{
 		if (!instance) {
 			instance = new RManager();
+			UpdateRObject::Initialize();
 		}
 		return instance;
 	}
@@ -14,13 +15,13 @@ namespace GStar {
 			delete instance;
 		}
 	}
-	inline RObject& RManager::CreateRenderObject(TransformComponent * gameobject)
+	RObject& RManager::CreateRenderObject(TransformComponent * gameobject)
 	{
 		RObject* temp_Robject = new RObject(gameobject);
 		RenderObjectList.Push(temp_Robject);
 		return *temp_Robject;
 	}
-	inline void RManager::Update()
+	void RManager::Update()
 	{
 		RenderObjectList.Resetcurrent();
 		while (RenderObjectList.HasNext()) {

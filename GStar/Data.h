@@ -144,7 +144,7 @@ const static float cubevertexs[] = {
 		-0.5f,  0.5f,  0.5f,  0.0f, 0.0f,
 		-0.5f,  0.5f, -0.5f,  0.0f, 1.0f
 };
-//position texture|coordinate|normal vector
+//position |texture coordinate|normal vector
 const static float cubevertexsn[] = {
 	-0.5f, -0.5f, -0.5f,  0.0f, 0.0f, 0.0f,0.0f,-1.0f,
 	 0.5f, -0.5f, -0.5f,  1.0f, 0.0f, 0.0f,0.0f,-1.0f,

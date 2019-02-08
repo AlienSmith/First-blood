@@ -2,7 +2,6 @@
 #include<stdlib.h>
 #include"SceneInterface.h"
 #include"World.h"
-#include"UpdateRObject.h"
 #include"MeshComponent.h"
 #include"TextureComponent.h"
 #include"ShaderComponent.h"

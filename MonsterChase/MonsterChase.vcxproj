@@ -153,6 +153,7 @@
     <ClInclude Include="SimpleForce.h" />
     <ClInclude Include="SimpleRotation.h" />
     <ClInclude Include="Monster.h" />
+    <ClInclude Include="TestScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

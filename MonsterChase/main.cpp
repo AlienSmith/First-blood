@@ -11,6 +11,7 @@
 #include "MemorySystem.h"
 #include "MainEntrance.h"
 #include "MyString.h"
+#include "TestScene.h"
 //#include "Matrix4.h"
 //#include "Vector2.h"
 //#include "Vector3.h"
@@ -25,7 +26,7 @@ int main()
 {
 	{
 		InitializeMemorySystem();
-		LightScene scene;
+		TestScene scene;
 		MainEntrance::SetUpAndRun();
 		DestroyMemorySystem();
 	};

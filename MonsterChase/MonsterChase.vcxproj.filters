@@ -35,6 +35,9 @@
     <ClInclude Include="SimpleForce.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="TestScene.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">

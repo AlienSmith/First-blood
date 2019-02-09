@@ -1,5 +1,6 @@
 #pragma once
 #include "TransformComponent.h"
+#include "SmartPointer.h"
 namespace GStar {
 	class InterfaceComponent{
 	public:
@@ -7,9 +8,9 @@ namespace GStar {
 		//This will work on the updateobject instead of the Object.
 		virtual void Update() = 0;
 		virtual void Terminate() = 0;
-		InterfaceComponent(TransformComponent* object):my_transform(object){}
+		InterfaceComponent(const SmartPointer<TransformComponent>& object):my_transform(object){}
 		virtual ~InterfaceComponent() {}
 	protected:
-		TransformComponent* my_transform;
+		SmartPointer<TransformComponent> my_transform;
 	};
 }

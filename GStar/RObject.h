@@ -2,6 +2,7 @@
 #include "SingleLinkedList.h"
 #include "Component.h"
 #include <cstdint>
+#include "SmartPointer.h"
 namespace GStar {
 	class TransformComponent;
 }
@@ -33,14 +34,14 @@ public:
 	void AddComponent(Component* component) {
 		my_components.Push(component);
 	}
-	RObject(GStar::TransformComponent* transform);
+	RObject(const GStar::SmartPointer<GStar::TransformComponent>& transform);
 	RObject(const RObject& instance) = delete;
 	const RObject& operator = (const RObject& instance) = delete;
 	~RObject() {
 		my_components.DeleteContent();
 	}
 private:
-	GStar::TransformComponent* my_transform;
+	GStar::SmartPointer<GStar::TransformComponent> my_transform;
 	GStar::SingleLinkedList<Component*> my_components;
 	int32_t priority;
 };

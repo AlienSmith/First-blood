@@ -4,6 +4,7 @@
 #include "View.h"
 #include "MyString.h"
 #include "SingleLinkedList.h"
+#include "SmartPointer.h"
 namespace GStar {
 	//Version 3.0 Check OLDCODE Folder for previous version
 	//transform must update after initialize, parent must be setted and updated before children transform can be used.
@@ -23,6 +24,9 @@ namespace GStar {
 	enum Layer { DEFAULT = 0, CAMERA = 1, LIGHT = 2 };
 	class TransformComponent :public Component {
 	public:
+		static SmartPointer<TransformComponent> Create(const GStar::MyString& name) {
+			return SmartPointer<TransformComponent>(new TransformComponent(name));
+		}
 		inline GStar::Matrix4 getModel() const { return my_model.M; }
 		inline GStar::Matrix4 getInverseModel() const {
 			return my_model.MI; 
@@ -234,20 +238,6 @@ namespace GStar {
 				matrix.Getreference(j, 3) = Scale.getValue(j);
 			}
 		}
-		TransformComponent(const GStar::MyString& name) :
-			my_model{ GStar::Matrix4(IDENTICAL_MATRIX),//M
-			GStar::Matrix4(IDENTICAL_MATRIX),//MI
-			GStar::Matrix4(IDENTICAL_MATRIX),//DeltaR
-			GStar::Vector3(0,0,0),//Ca
-			GStar::Vector3(1,1,1),//So
-			GStar::Vector3(1,1,1),//Sn
-			false,
-			false,
-			false,
-			},
-			my_parent(nullptr),
-			my_layer(Layer::DEFAULT),
-			my_name(GStar::MyString::hash_str(name.GetString())){}
 		inline void WorldUpdate() {
 			Update();
 			my_children.Resetcurrent();
@@ -276,6 +266,20 @@ namespace GStar {
 			Vector3 temp = component1.GetTransform() - component2.GetTransform();
 			return temp.Length();
 		}
+		TransformComponent(const GStar::MyString& name) :
+			my_model{ GStar::Matrix4(IDENTICAL_MATRIX),//M
+			GStar::Matrix4(IDENTICAL_MATRIX),//MI
+			GStar::Matrix4(IDENTICAL_MATRIX),//DeltaR
+			GStar::Vector3(0,0,0),//Ca
+			GStar::Vector3(1,1,1),//So
+			GStar::Vector3(1,1,1),//Sn
+			false,
+			false,
+			false,
+		},
+			my_parent(nullptr),
+			my_layer(Layer::DEFAULT),
+			my_name(GStar::MyString::hash_str(name.GetString())){}
 	private:
 		TransformData my_model;
 		SingleLinkedList<GStar::TransformComponent*> my_children;

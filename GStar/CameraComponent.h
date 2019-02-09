@@ -1,13 +1,12 @@
 #pragma once
 #include"Component.h"
+#include"SmartPointer.h"
 namespace GStar {
 	class TransformComponent;
-	//This class is used to replace the old camera system
-	//
 	class CameraComponent {
 	public:
-		CameraComponent(TransformComponent* transform ) :my_transform(transform) {}
+		CameraComponent(const SmartPointer<TransformComponent>& transform ) :my_transform(transform) {}
 	private:
-		TransformComponent* my_transform;
+		SmartPointer<TransformComponent> my_transform;
 	};
 }

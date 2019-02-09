@@ -2,7 +2,7 @@
 #include "UpdateRObject.h"
 bool RObject::Update()
 {
-	UpdateRObject::IN_Instance->SetTransform(my_transform);
+	UpdateRObject::IN_Instance->SetTransform(my_transform.GetUnderlingReference());
 	Component* temp;
 	my_components.Resetcurrent();
 	while (my_components.HasNext()) {
@@ -15,4 +15,4 @@ bool RObject::Update()
 	return true;
 }
 
-RObject::RObject(GStar::TransformComponent * transform) :my_transform(transform){}
+RObject::RObject( const GStar::SmartPointer<GStar::TransformComponent>& transform) :my_transform(transform){}

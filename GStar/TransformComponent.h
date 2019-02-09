@@ -249,6 +249,7 @@ namespace GStar {
 			my_layer(Layer::DEFAULT),
 			my_name(GStar::MyString::hash_str(name.GetString())){}
 		inline void WorldUpdate() {
+			Update();
 			my_children.Resetcurrent();
 			while (my_children.HasNext()) {
 				my_children.GetNext()->WorldUpdate();

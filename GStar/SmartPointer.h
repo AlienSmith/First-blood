@@ -5,10 +5,10 @@ namespace GStar {
 	template<class T>
 	class SmartPointer {
 	private:
-		T* m_ptr;
+		mutable T* m_ptr;
 		//This canbe unsigned int
-		unsigned int* m_RefCount;
-		unsigned int* m_ConstRefCount;
+		mutable unsigned int* m_RefCount;
+		mutable unsigned int* m_ConstRefCount;
 		inline void ReleaseReference() {
 			ASSERT(m_ptr != nullptr, "try to release a nullptr");
 			if (--(*m_RefCount) == 0) {
@@ -25,7 +25,12 @@ namespace GStar {
 		}
 	public:
 		const SmartPointer<T> ObtainConstPointer() const{
-
+			m_ConstRefCount++;
+			return *this;
+		}
+		SmartPointer<T> ObtainPointer() const{
+			m_RefCount++;
+			return const_cast<SmartPointer<T>>* this;
 		}
 		SmartPointer() :m_ptr(nullptr), m_RefCount(new unsigned int(0)) {}
 		SmartPointer(T* Pointer) :m_ptr(Pointer), m_RefCount(new unsigned int(1)) {}
@@ -36,7 +41,20 @@ namespace GStar {
 		{
 			m_ptr != nullptr ? (*m_RefCount)++ : (*m_RefCount) = 0;
 		}
-
+		inline const SmartPointer& operator = (const SmartPointer<T>& i_other) const {
+			if (m_ptr == i_other.m_ptr) {
+				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
+				return *this;
+			}
+			ReleaseReference();
+			if (m_ptr) {
+				m_ptr = i_other.m_ptr;
+				m_RefCount = i_other.m_RefCount;
+				m_ConstRefCount = i_other.m_ConstRefCount;
+				(*m_ConstRefCount)++;
+				return *this;
+			}
+		}
 		inline SmartPointer& operator = (const SmartPointer<T>& i_other) {
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");

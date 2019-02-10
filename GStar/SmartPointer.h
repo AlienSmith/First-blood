@@ -8,14 +8,25 @@ namespace GStar {
 		T* m_ptr;
 		//This canbe unsigned int
 		unsigned int* m_RefCount;
+		unsigned int* m_ConstRefCount;
 		inline void ReleaseReference() {
-			ASSERT(m_ptr != nullptr, "try to dereference a nullptr");
+			ASSERT(m_ptr != nullptr, "try to release a nullptr");
 			if (--(*m_RefCount) == 0) {
 				delete m_RefCount;
 				delete m_ptr;
 			}
 		}
+		inline void ReleaseReference() const {
+			if (--(*m_ConstRefCount) == 0) {
+				if (!m_ptr) {
+					delete m_WRefCount;
+				}
+			}
+		}
 	public:
+		const SmartPointer<T> ObtainConstPointer() const{
+
+		}
 		SmartPointer() :m_ptr(nullptr), m_RefCount(new unsigned int(0)) {}
 		SmartPointer(T* Pointer) :m_ptr(Pointer), m_RefCount(new unsigned int(1)) {}
 		template<class U>
@@ -23,7 +34,7 @@ namespace GStar {
 			m_ptr(i_other.m_ptr),
 			m_RefCount(i_other.m_RefCount)
 		{
-			m_ptr != nullptr ? (*m_RefCount)++:(*m_RefCount) = 0;
+			m_ptr != nullptr ? (*m_RefCount)++ : (*m_RefCount) = 0;
 		}
 
 		inline SmartPointer& operator = (const SmartPointer<T>& i_other) {
@@ -34,7 +45,7 @@ namespace GStar {
 			ReleaseReference();
 			m_ptr = i_other.m_ptr;
 			m_RefCount = i_other.m_RefCount;
-			m_ptr != nullptr ? (*m_RefCount)++:(*m_RefCount) = 0;
+			m_ptr != nullptr ? (*m_RefCount)++ : (*m_RefCount) = 0;
 			return *this;
 		}
 		template<class U>
@@ -46,7 +57,7 @@ namespace GStar {
 			ReleaseReference();
 			m_ptr = i_other.m_ptr;
 			m_RefCount = i_other.m_RefCount;
-			m_ptr != nullptr ? (*m_RefCount)++:(*m_RefCount) = 0;
+			m_ptr != nullptr ? (*m_RefCount)++ : (*m_RefCount) = 0;
 			return *this;
 		}
 
@@ -62,6 +73,47 @@ namespace GStar {
 		inline T& operator *() {
 			ASSERT(m_ptr != nullptr, "SmartPointer is null");
 			return *m_ptr;
+		}
+		inline bool operator == (const SmartPointer<T> & i_other) const {
+			return m_ptr == i_other.m_ptr;
+		}
+		template<class U>
+		inline bool operator == (const SmartPointer<U> & i_other) const {
+			return m_ptr == i_other.m_ptr;
+		}
+		inline bool operator ==(T* i_other_ptr) const {
+			return m_ptr == i_other_ptr;
+		}
+		template<class U>
+		inline bool operator ==(U* i_other_ptr) const {
+			return m_ptr == i_other_ptr;
+		}
+		inline bool operator ==(std::nullptr_t nullp) const {
+			return m_ptr == nullp;
+		}
+
+		inline bool operator != (const SmartPointer<T> & i_other) const {
+			return m_ptr == i_other.m_ptr;
+		}
+		template<class U>
+		inline bool operator != (const SmartPointer<U> & i_other) const {
+			return m_ptr == i_other.m_ptr;
+		}
+		inline bool operator !=(T* i_other_ptr) const {
+			return m_ptr == i_other_ptr;
+		}
+		template<class U>
+		inline bool operator !=(U* i_other_ptr) const {
+			return m_ptr == i_other_ptr;
+		}
+		inline bool operator !=(std::nullptr_t nullp) const {
+			return m_ptr == nullp;
+		}
+		inline bool operator!() const{
+			return !m_ptr;
+		}
+		inline operator bool() const {
+			return m_ptr;
 		}
 	};
 }

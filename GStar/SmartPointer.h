@@ -1,61 +1,57 @@
 #pragma once
 #include "ConsolePrint.h"
 #include "Assert.h"
+#include <stdint.h>
 namespace GStar {
+	typedef uint64_t	ref_counter_t;
+	template<class T>
+	class ObserverPointer;
 	template<class T>
 	class SmartPointer {
+		template<class U>
+		friend class ObserverPointer;
+		template<class U>
+		friend class SmartPointer;
 	private:
-		mutable T* m_ptr;
+		T* m_ptr;
 		//This canbe unsigned int
-		mutable unsigned int* m_RefCount;
-		mutable unsigned int* m_ConstRefCount;
+		ref_counter_t* m_RefCount;
+		ref_counter_t* m_observercount;
 		inline void ReleaseReference() {
 			ASSERT(m_ptr != nullptr, "try to release a nullptr");
 			if (--(*m_RefCount) == 0) {
 				delete m_RefCount;
 				delete m_ptr;
-			}
-		}
-		inline void ReleaseReference() const {
-			if (--(*m_ConstRefCount) == 0) {
-				if (!m_ptr) {
-					delete m_ConstRefCount;
+				if ((*m_observercount) == 0) {
+					delete m_observercount;
 				}
 			}
 		}
 	public:
-		const SmartPointer<T> ObtainConstPointer() const{
-			m_ConstRefCount++;
-			return *this;
+		inline T* GetUnderlingReference() {
+			return m_ptr;
 		}
-		SmartPointer<T> ObtainPointer() const{
-			m_RefCount++;
-			return const_cast<SmartPointer<T>>(*this);
-		}
-		SmartPointer() :m_ptr(nullptr), m_RefCount(new unsigned int(0)) {}
-		SmartPointer(T* Pointer) :m_ptr(Pointer), m_RefCount(new unsigned int(1)) {}
-		template<class U>
-		SmartPointer(const SmartPointer<U> & i_other) :
+		SmartPointer() :m_ptr(nullptr), m_RefCount(new ref_counter_t(0)),m_observercount(new ref_counter_t(0)) {}
+		SmartPointer(T* Pointer) :m_ptr(Pointer), m_RefCount(new ref_counter_t(1)),m_observercount(new ref_counter_t(0)) {}
+		SmartPointer(const SmartPointer& i_other) :
 			m_ptr(i_other.m_ptr),
-			m_RefCount(i_other.m_RefCount)
+			m_RefCount(i_other.m_RefCount),
+			m_observercount(i_other.m_observercount)
 		{
-			m_ptr != nullptr ? (*m_RefCount)++ : (*m_RefCount) = 0;
+			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			(*m_RefCount)++;
 		}
-		inline const SmartPointer& operator = (const SmartPointer<T>& i_other) const {
-			if (m_ptr == i_other.m_ptr) {
-				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
-				return *this;
-			}
-			ReleaseReference();
-			if (m_ptr) {
-				m_ptr = i_other.m_ptr;
-				m_RefCount = i_other.m_RefCount;
-				m_ConstRefCount = i_other.m_ConstRefCount;
-				(*m_ConstRefCount)++;
-				return *this;
-			}
+		template<class U>
+		SmartPointer(const SmartPointer<U> & i_other) : 
+			m_ptr(i_other.m_ptr),
+			m_RefCount(i_other.m_RefCount),
+			m_observercount(i_other.m_observercount)
+		{
+			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			(*m_RefCount)++;
 		}
 		inline SmartPointer& operator = (const SmartPointer<T>& i_other) {
+			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
 				return *this;
@@ -63,11 +59,13 @@ namespace GStar {
 			ReleaseReference();
 			m_ptr = i_other.m_ptr;
 			m_RefCount = i_other.m_RefCount;
-			m_ptr != nullptr ? (*m_RefCount)++ : (*m_RefCount) = 0;
+			m_observercount = i_other.m_observercount;
+			(*m_RefCount)++ ;
 			return *this;
 		}
 		template<class U>
 		inline SmartPointer& operator = (const SmartPointer<U> & i_other) {
+			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
 				return *this;
@@ -75,15 +73,14 @@ namespace GStar {
 			ReleaseReference();
 			m_ptr = i_other.m_ptr;
 			m_RefCount = i_other.m_RefCount;
-			m_ptr != nullptr ? (*m_RefCount)++ : (*m_RefCount) = 0;
+			m_observercount = i_other.m_observercount;
+			(*m_RefCount)++;
 			return *this;
 		}
-
-		inline T* GetUnderlingReference() {
-			return m_ptr;
-		}
 		~SmartPointer() {
-			ReleaseReference();
+			if (m_ptr) {
+				ReleaseReference();
+			}
 		}
 		inline T* operator ->() {
 			return m_ptr;
@@ -132,6 +129,73 @@ namespace GStar {
 		}
 		inline operator bool() const {
 			return m_ptr;
+		}
+	}; 
+	template<class T>
+	class ObserverPointer {
+		template<class U>
+		friend class ObserverPointer;
+		template<class U>
+		friend class SmartPointer;
+	private:
+		T* m_ptr;
+		//This canbe unsigned int
+		ref_counter_t* m_RefCount;
+		ref_counter_t* m_observercount;
+		inline void ReleaseReference() {
+			ASSERT(m_observercount != nullptr, "try to release a nullptr");
+			if (--(*m_observercount) == 0) {
+				if (!m_ptr) {
+					delete m_observercount;
+				}
+			}
+		}inline bool isValid() {
+			return m_ptr;
+		}
+	public:
+		ObserverPointer(const ObserverPointer& i_other) :
+			m_ptr(i_other.m_ptr),
+			m_RefCount(i_other.m_RefCount),
+			m_observercount(i_other.m_observercount)
+		{
+			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			(*m_observercount)++;
+		}
+		template<class U>
+		ObserverPointer(const ObserverPointer<U> & i_other) :
+			m_ptr(i_other.m_ptr),
+			m_RefCount(i_other.m_RefCount),
+			m_observercount(i_other.m_observercount)
+		{
+			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			(*m_observercount)++;
+		}
+		inline ObserverPointer& operator = (const ObserverPointer<T>& i_other) {
+			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			if (m_ptr == i_other.m_ptr) {
+				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
+				return *this;
+			}
+			ReleaseReference();
+			m_ptr = i_other.m_ptr;
+			m_RefCount = i_other.m_RefCount;
+			m_observercount = i_other.m_observercount;
+			(*m_observercount)++;
+			return *this;
+		}
+		template<class U>
+		inline ObserverPointer& operator = (const ObserverPointer<U> & i_other) {
+			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			if (m_ptr == i_other.m_ptr) {
+				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
+				return *this;
+			}
+			ReleaseReference();
+			m_ptr = i_other.m_ptr;
+			m_RefCount = i_other.m_RefCount;
+			m_observercount = i_other.m_observercount;
+			(*m_observercount)++;
+			return *this;
 		}
 	};
 }

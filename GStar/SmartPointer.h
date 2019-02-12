@@ -19,7 +19,7 @@ namespace GStar {
 		inline void ReleaseReference() const {
 			if (--(*m_ConstRefCount) == 0) {
 				if (!m_ptr) {
-					delete m_WRefCount;
+					delete m_ConstRefCount;
 				}
 			}
 		}
@@ -30,7 +30,7 @@ namespace GStar {
 		}
 		SmartPointer<T> ObtainPointer() const{
 			m_RefCount++;
-			return const_cast<SmartPointer<T>>* this;
+			return const_cast<SmartPointer<T>>(*this);
 		}
 		SmartPointer() :m_ptr(nullptr), m_RefCount(new unsigned int(0)) {}
 		SmartPointer(T* Pointer) :m_ptr(Pointer), m_RefCount(new unsigned int(1)) {}

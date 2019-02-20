@@ -16,6 +16,7 @@
 #include"RManager.h"
 #include"World.h"
 #include"InterfaceComponentManager.h"
+#include"TextureData.h"
 class TestScene : public GStar::SceneInterface {
 public:
 	TestScene() {
@@ -23,6 +24,23 @@ public:
 	}
 	virtual ~TestScene(){}
 	virtual void Start() {
+		float texels[36] =
+		{
+			// Texels for first image.
+			255, 0,   0,   255,
+			255, 0,   0,   255,
+			255, 0,   0,   255,
+			255, 0,   0,   255,
+			// Texels for second image.
+			255, 0,   0,   255,
+			255, 0,   0,   255,
+			255, 0,   0,   255,
+			255, 0,   0,   255,
+			255, 0,   0,   255,
+		};
+		int width = 3;
+		int height = 3;
+		GStar::TextureData texture(texels, height, width);
 		//Camaera
 		GStar::World& world = GStar::World::Instance();
 		GStar::RManager& renderer = *GStar::RManager::Instance();
@@ -43,9 +61,7 @@ public:
 		GStar::MeshComponent* m2 = new GStar::MeshComponent(cubeparameters);
 		R2.AddComponent(m2);
 		GStar::TextureComponent* t2 = new GStar::TextureComponent();
-		t2->Initialize(Default_Texture_BOX);
-		t2->Initialize(Default_TextureFace);
-		R2.AddComponent(t2);
+		t2->Initialize(texture.getData());
 		R2.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 		ai2 = new SimpleRotation(trans2);
 		imanager.AddInterface(ai2);

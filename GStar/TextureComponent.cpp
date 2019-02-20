@@ -1,9 +1,18 @@
 #include "TextureComponent.h"
 #include "TextureManager.h"
 #include "Texture.h"
+#include "Scene.h"
 bool GStar::TextureComponent::Initialize(const TextureParameters & parameters)
 {
 	my_textures.Push(GStar::TextureManager::Instance()->GetTexture(parameters));
+	return true;
+}
+
+bool GStar::TextureComponent::Initialize(const texturedata & parameters)
+{
+	Texture current;
+	current.SetTextureID(Scene::Create()->LoadTexture(parameters));
+	my_textures.Push(current);
 	return true;
 }
 

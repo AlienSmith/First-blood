@@ -5,12 +5,14 @@
 #include "Scene.h"
 const struct TextureParameters;
 namespace GStar {
+	struct texturedata;
 	class TextureComponent :public Component {
 	public:
 		const static char TypeWord() {
 			return TEXTURE_WORD;
 		}
 		bool Initialize(const TextureParameters& parameters);
+		bool Initialize(const texturedata& parameters);
 		//Mesh do not have these functions
 		bool Update() ;
 		bool Terminate() { return true; }

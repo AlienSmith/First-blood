@@ -9,6 +9,9 @@
 struct MeshParameters;
 const struct TextureParameters;
 struct GLFWwindow;
+namespace GStar {
+	struct texturedata;
+}
 class Scene {
 public:
 	unsigned int VA() { return VAO; }
@@ -34,6 +37,7 @@ public:
 	virtual ~Scene() { if (my_shaders != NULL) { delete my_shaders; } }
 	unsigned int LoadMesh(const MeshParameters& parameters) const;
 	unsigned int LoadTexture(const TextureParameters& parameters) const;
+	unsigned int LoadTexture(const GStar::texturedata& parameters) const;
 	const GStar::Matrix4& getProjection() const { return projection; }
 	const GStar::Matrix4& getview() const { return view; }
 	// This is wired 

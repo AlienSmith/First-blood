@@ -4,6 +4,7 @@
 #include"stb_image.h"
 #include "Coordinate.h"
 #include "GSTime.h"
+#include "TextureData.h"
 Scene* Scene::Instance = nullptr;
 // return nullptr as fail, Remeber to delete this pointer
 Scene* Scene::Create()
@@ -155,6 +156,21 @@ unsigned int Scene::LoadTexture(const TextureParameters& parameters) const
 		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Error, "Fail to LoadTexture");
 	}//Create minimap since the texture is binded.
 	stbi_image_free(data);
+	return texture;
+}
+
+unsigned int Scene::LoadTexture(const GStar::texturedata & parameters) const
+{
+	unsigned int texture;// the texture RObject
+	glGenTextures(1, &texture); // claim a name 1 texture out parameter name.
+	glBindTexture(GL_TEXTURE_2D, texture); // bind name
+	// Allocate the storage.
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, parameters.y, parameters.x, 0, GL_RGBA8, GL_UNSIGNED_BYTE, parameters.data);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_REPEAT);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+	glGenerateMipmap(GL_TEXTURE_2D);
 	return texture;
 }
 

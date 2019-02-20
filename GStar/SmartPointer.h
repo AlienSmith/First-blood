@@ -27,7 +27,7 @@ namespace GStar {
 				}
 			}
 		}
-	public:
+	public: 
 		inline T* GetUnderlingReference() {
 			return m_ptr;
 		}

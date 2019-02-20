@@ -185,8 +185,10 @@
     <ClInclude Include="SmartPointer.h" />
     <ClInclude Include="Texture.h" />
     <ClInclude Include="TextureComponent.h" />
+    <ClInclude Include="TextureData.h" />
     <ClInclude Include="TextureManager.h" />
     <ClInclude Include="GSTime.h" />
+    <ClInclude Include="TextureWriter.h" />
     <ClInclude Include="Trace.h" />
     <ClInclude Include="TransformComponent.h" />
     <ClInclude Include="UpdateRObject.h" />

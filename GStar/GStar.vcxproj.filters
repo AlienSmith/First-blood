@@ -293,6 +293,12 @@
     <ClInclude Include="RManager.h">
       <Filter>OpenGl\Core\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="TextureWriter.h">
+      <Filter>RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureData.h">
+      <Filter>RayTracer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -454,6 +460,9 @@
     </Filter>
     <Filter Include="OpenGl\Core\CameraM">
       <UniqueIdentifier>{b0d657a1-c6f1-4e8a-a87b-82a91803b589}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RayTracer">
+      <UniqueIdentifier>{fc1e2d21-d593-4f1b-9ff0-6b9ad06c9ace}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

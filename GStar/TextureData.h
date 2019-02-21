@@ -1,5 +1,6 @@
 #pragma once
 #include <stdlib.h>
+#include <stdint.h>
 namespace GStar {
 	struct texturedata {
 		float* data;
@@ -34,12 +35,9 @@ namespace GStar {
 		const texturedata& getData() const{ return my_data; }
 	private:
 		float* Copy(const float* const data, int x, int y) {
-			//float* new_data = new float(x*y);
-			float* new_data = (float*)malloc(sizeof(float)*x*y);
-			for (int i = 0; i < x; i++) {
-				for (int j = 0; j < y; j++) {
-					new_data[i*j + j] = data[i*j + j];
-				}
+			float* new_data = new float(x*y*4);
+			for (int i = 0; i < x*y * 4; i++) {
+				new_data[i] = data[i];
 			}
 			return new_data;
 		}

@@ -17,6 +17,7 @@
 #include"World.h"
 #include"InterfaceComponentManager.h"
 #include"TextureData.h"
+#include"SimpleExample.h"
 class TestScene : public GStar::SceneInterface {
 public:
 	TestScene() {
@@ -26,21 +27,22 @@ public:
 	virtual void Start() {
 		float texels[36] =
 		{
-			// Texels for first image.
+			0,   0,   0,   255,
 			255, 0,   0,   255,
-			255, 0,   0,   255,
-			255, 0,   0,   255,
-			255, 0,   0,   255,
+			0,   255, 0,   255,
+			0,   0,   255, 255, 
 			// Texels for second image.
-			255, 0,   0,   255,
-			255, 0,   0,   255,
-			255, 0,   0,   255,
-			255, 0,   0,   255,
-			255, 0,   0,   255,
+			255, 255, 255, 255,
+			255, 255,   0, 255,
+			0,   255, 255, 255,
+			255, 0,   255, 255,
+			255, 0,   0, 255,
 		};
-		int width = 3;
+		int width = 3; 
 		int height = 3;
 		GStar::TextureData texture(texels, height, width);
+
+		GStar::TextureData* i_texture = SimpleExample::getdata();
 		//Camaera
 		GStar::World& world = GStar::World::Instance();
 		GStar::RManager& renderer = *GStar::RManager::Instance();
@@ -65,7 +67,7 @@ public:
 		R2.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 		ai2 = new SimpleRotation(trans2);
 		imanager.AddInterface(ai2);
-
+		delete i_texture;
 	}
 	virtual void Update() {}
 	virtual void Terminate() {}

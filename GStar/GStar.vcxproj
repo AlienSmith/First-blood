@@ -178,6 +178,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderComponent.h" />
     <ClInclude Include="ShaderManger.h" />
+    <ClInclude Include="SimpleExample.h" />
     <ClInclude Include="SimpleRotationCopy.h" />
     <ClInclude Include="SingleLinkedDictionary.h" />
     <ClInclude Include="SingleLinkedList.h" />
@@ -228,6 +229,7 @@
     <ClCompile Include="Shader.cpp" />
     <ClCompile Include="ShaderComponent.cpp" />
     <ClCompile Include="ShaderManger.cpp" />
+    <ClCompile Include="SimpleExample.cpp" />
     <ClCompile Include="SimpleRotationCopy.cpp" />
     <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="MyString.cpp" />

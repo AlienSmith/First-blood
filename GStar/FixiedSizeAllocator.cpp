@@ -6,9 +6,9 @@
 #include "HeapManager.h"
 #include "ConsolePrint.h"
 FixedSizeAllocator* FixedSizeAllocator::instance = nullptr;
-const size_t FixedSizeAllocator::ByteBlock16COUNT = 100;
-const size_t FixedSizeAllocator::ByteBlock32COUNT = 200;
-const size_t FixedSizeAllocator::ByteBlock96COUNT = 400;
+const size_t FixedSizeAllocator::ByteBlock16COUNT = 100000;
+const size_t FixedSizeAllocator::ByteBlock32COUNT = 20000;
+const size_t FixedSizeAllocator::ByteBlock96COUNT = 40000;
 const size_t FixedSizeAllocator::Block16UP = 16;
 const size_t FixedSizeAllocator::Block16Down = 0;
 const size_t FixedSizeAllocator::Block32UP = 32;

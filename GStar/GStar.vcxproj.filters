@@ -107,6 +107,7 @@
     <ClCompile Include="RManager.cpp">
       <Filter>OpenGl\Core\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="SimpleExample.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -297,6 +298,9 @@
       <Filter>RayTracer</Filter>
     </ClInclude>
     <ClInclude Include="TextureData.h">
+      <Filter>RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleExample.h">
       <Filter>RayTracer</Filter>
     </ClInclude>
   </ItemGroup>

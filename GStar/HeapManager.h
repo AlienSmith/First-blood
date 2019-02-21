@@ -1,6 +1,6 @@
 #pragma once
 #include <stdio.h>
-#define GENERALHEAPSIZE 268435456// 64 mb
+#define GENERALHEAPSIZE 2.56e+8// 64 mb
 #if _WIN32 || _WIN64
 #if _WIN64
 #define ENVIRONMENT64

@@ -27,7 +27,7 @@ public:
 	virtual void Start() {
 		float texels[4] =
 		{
-			255,   255,   255,   0,
+			255,   0,   0,   127,
 		};
 		int width = 1; 
 		int height = 1;
@@ -54,7 +54,13 @@ public:
 		GStar::MeshComponent* m2 = new GStar::MeshComponent(cubeparameters);
 		R2.AddComponent(m2);
 		GStar::TextureComponent* t2 = new GStar::TextureComponent();
+
+
+		t2->Initialize(Default_Texture_BOX);
 		t2->Initialize(texture.getData());
+
+
+		R2.AddComponent(t2);
 		R2.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 		ai2 = new SimpleRotation(trans2);
 		imanager.AddInterface(ai2);

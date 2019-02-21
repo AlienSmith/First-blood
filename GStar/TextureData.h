@@ -35,8 +35,8 @@ namespace GStar {
 		const texturedata& getData() const{ return my_data; }
 	private:
 		uint8_t* Copy(const uint8_t* const data, int x, int y) {
-			uint8_t* new_data = new uint8_t(x*y*4);
-			for (int i = 0; i < x*y * 4; i++) {
+			uint8_t* new_data = new uint8_t(x*y*3);
+			for (int i = 0; i < x*y * 3; i++) {
 				new_data[i] = data[i];
 			}
 			return new_data;

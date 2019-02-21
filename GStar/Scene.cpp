@@ -93,6 +93,8 @@ bool Scene::SetupWindow()
 		return false;
 	}
 	glEnable(GL_DEPTH_TEST);
+	//glEnable(GL_BLEND);
+	//glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 	glfwSetInputMode(window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 	GStar::GSTime::Instance().Initialize();
 	return true;
@@ -161,6 +163,7 @@ unsigned int Scene::LoadTexture(const TextureParameters& parameters) const
 
 unsigned int Scene::LoadTexture(const GStar::texturedata & parameters) const
 {
+	glPixelStorei(GL_UNPACK_ALIGNMENT, 1);
 	unsigned int texture;// the texture RObject
 	glGenTextures(1, &texture); // claim a name 1 texture out parameter name.
 	glBindTexture(GL_TEXTURE_2D, texture); // bind name
@@ -170,7 +173,7 @@ unsigned int Scene::LoadTexture(const GStar::texturedata & parameters) const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	//load texture data into graphic card
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, parameters.x,parameters.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, parameters.data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, parameters.x,parameters.y, 0, GL_RGB, GL_UNSIGNED_BYTE, parameters.data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	return texture;
 }

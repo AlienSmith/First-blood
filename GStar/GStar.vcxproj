@@ -157,6 +157,7 @@
     <ClInclude Include="MouseInputEvent.h" />
     <ClInclude Include="PhysicComponent.h" />
     <ClInclude Include="PhysicManager.h" />
+    <ClInclude Include="Ray.h" />
     <ClInclude Include="Rectangle.h" />
     <ClInclude Include="RManager.h" />
     <ClInclude Include="SceneInterface.h" />

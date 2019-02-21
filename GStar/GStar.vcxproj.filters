@@ -303,6 +303,9 @@
     <ClInclude Include="SimpleExample.h">
       <Filter>RayTracer</Filter>
     </ClInclude>
+    <ClInclude Include="Ray.h">
+      <Filter>RayTracer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">

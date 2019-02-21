@@ -25,9 +25,9 @@ public:
 	}
 	virtual ~TestScene(){}
 	virtual void Start() {
-		uint8_t texels[4] =
+		uint8_t texels[3] =
 		{
-			255,   0,   0,   127,
+			255,   255,   0,  
 		};
 		int width = 1; 
 		int height = 1;
@@ -56,7 +56,6 @@ public:
 		GStar::TextureComponent* t2 = new GStar::TextureComponent();
 
 
-		t2->Initialize(Default_Texture_BOX);
 		t2->Initialize(i_texture->getData());
 
 

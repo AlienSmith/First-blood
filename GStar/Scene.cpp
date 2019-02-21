@@ -170,7 +170,7 @@ unsigned int Scene::LoadTexture(const GStar::texturedata & parameters) const
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
 	glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
 	//load texture data into graphic card
-	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA, parameters.y, parameters.x, 0,	GL_RGBA, GL_UNSIGNED_BYTE, parameters.data);
+	glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA8, parameters.x,parameters.y, 0, GL_RGBA, GL_UNSIGNED_BYTE, parameters.data);
 	glGenerateMipmap(GL_TEXTURE_2D);
 	return texture;
 }

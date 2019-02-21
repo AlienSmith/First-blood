@@ -140,6 +140,7 @@
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="EventUnite.h" />
     <ClInclude Include="GeometryOperations.h" />
+    <ClInclude Include="Hitable.h" />
     <ClInclude Include="InterfaceComponentManager.h" />
     <ClInclude Include="KeyInputEvent.h" />
     <ClInclude Include="LightComponent.h" />
@@ -233,6 +234,7 @@
     <ClCompile Include="ShaderManger.cpp" />
     <ClCompile Include="SimpleExample.cpp" />
     <ClCompile Include="SimpleRotationCopy.cpp" />
+    <ClCompile Include="Sphere.cpp" />
     <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="TextureComponent.cpp" />

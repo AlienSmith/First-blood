@@ -31,14 +31,13 @@ GStar::TextureData * SimpleExample::getdata()
 
 GStar::Vector3 SimpleExample::color(const GStar::Ray & ray, const GStar::Sphere& sphere)
 {
-	bool flag;
-	float t = sphere.Collision(ray,flag);
-	if (flag) {
-		GStar::Vector3 N = ray.point_at_parameter(t) - GStar::Vector3(0, 0, -1);
+	GStar::hit_record rec;
+	if (sphere.hit(ray,0.0f,1000.0f,rec)) {
+		GStar::Vector3 N = ray.point_at_parameter(rec.t) - GStar::Vector3(0, 0, -1);
 		N.Normalize();
 		return .5f* GStar::Vector3(N[0] +1, N[1]+1, N[2]+1);
 	}
 	GStar::RayData data = ray.getValue();
-	t = .5*(data.direction.y() + 1.0);
+	float t = .5*(data.direction.y() + 1.0);
 	return ((float)(1.0 - t))*GStar::Vector3(1,1,1) + ((float)t)*GStar::Vector3(.5f,.7f,1.0f);
 }

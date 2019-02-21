@@ -48,10 +48,10 @@ public:
 		//Cube
 		trans2 = new GStar::TransformComponent("Cube");
 		world.AddToRoot(trans2);
-		trans2->SetTransform(GStar::Vector3(0.0f, 0.0f, -1.0f), GStar::Base::WORLD);
+		trans2->SetTransform(GStar::Vector3(0.0f, 0.0f, -.5f), GStar::Base::WORLD);
 		trans2->UpdateTransform();
 		RObject& R2 = renderer.CreateRenderObject(trans2);
-		GStar::MeshComponent* m2 = new GStar::MeshComponent(cubeparameters);
+		GStar::MeshComponent* m2 = new GStar::MeshComponent(spriteTparameters);
 		R2.AddComponent(m2);
 		GStar::TextureComponent* t2 = new GStar::TextureComponent();
 
@@ -61,8 +61,8 @@ public:
 
 		R2.AddComponent(t2);
 		R2.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
-		ai2 = new SimpleRotation(trans2);
-		imanager.AddInterface(ai2);
+		//ai2 = new SimpleRotation(trans2);
+		//imanager.AddInterface(ai2);
 		delete i_texture;
 	}
 	virtual void Update() {}

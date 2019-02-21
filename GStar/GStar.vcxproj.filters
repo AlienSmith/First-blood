@@ -107,7 +107,9 @@
     <ClCompile Include="RManager.cpp">
       <Filter>OpenGl\Core\Objects</Filter>
     </ClCompile>
-    <ClCompile Include="SimpleExample.cpp" />
+    <ClCompile Include="SimpleExample.cpp">
+      <Filter>RayTracer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />

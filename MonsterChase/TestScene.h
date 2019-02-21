@@ -25,21 +25,12 @@ public:
 	}
 	virtual ~TestScene(){}
 	virtual void Start() {
-		float texels[36] =
+		float texels[4] =
 		{
-			0,   0,   0,   255,
-			255, 0,   0,   255,
-			0,   255, 0,   255,
-			0,   0,   255, 255, 
-			// Texels for second image.
-			255, 255, 255, 255,
-			255, 255,   0, 255,
-			0,   255, 255, 255,
-			255, 0,   255, 255,
-			255, 0,   0, 255,
+			255,   255,   255,   0,
 		};
-		int width = 3; 
-		int height = 3;
+		int width = 1; 
+		int height = 1;
 		GStar::TextureData texture(texels, height, width);
 
 		GStar::TextureData* i_texture = SimpleExample::getdata();

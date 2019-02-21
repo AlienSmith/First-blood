@@ -27,7 +27,7 @@ public:
 	virtual void Start() {
 		uint8_t texels[4] =
 		{
-			255,   0,   0,   127,
+			255,   255,   255,   254,
 		};
 		int width = 1; 
 		int height = 1;
@@ -57,7 +57,7 @@ public:
 
 
 		t2->Initialize(Default_Texture_BOX);
-		t2->Initialize(i_texture->getData());
+		t2->Initialize(texture.getData());
 
 
 		R2.AddComponent(t2);

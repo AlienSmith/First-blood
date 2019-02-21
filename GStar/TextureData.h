@@ -3,13 +3,13 @@
 #include <stdint.h>
 namespace GStar {
 	struct texturedata {
-		float* data;
+		uint8_t* data;
 		int x;
 		int y;
 	};
 	class TextureData {
 	public:
-		TextureData(float* data, int x, int y) :my_data({ nullptr,x,y }){
+		TextureData(uint8_t* data, int x, int y) :my_data({ nullptr,x,y }){
 			my_data.data = Copy(data, x, y);
 		}
 		TextureData() :my_data({nullptr,0,0}) {}
@@ -34,8 +34,8 @@ namespace GStar {
 		}
 		const texturedata& getData() const{ return my_data; }
 	private:
-		float* Copy(const float* const data, int x, int y) {
-			float* new_data = new float(x*y*4);
+		uint8_t* Copy(const uint8_t* const data, int x, int y) {
+			uint8_t* new_data = new uint8_t(x*y*4);
 			for (int i = 0; i < x*y * 4; i++) {
 				new_data[i] = data[i];
 			}

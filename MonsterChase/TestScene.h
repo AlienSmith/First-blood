@@ -25,7 +25,7 @@ public:
 	}
 	virtual ~TestScene(){}
 	virtual void Start() {
-		float texels[4] =
+		uint8_t texels[4] =
 		{
 			255,   0,   0,   127,
 		};
@@ -57,7 +57,7 @@ public:
 
 
 		t2->Initialize(Default_Texture_BOX);
-		t2->Initialize(texture.getData());
+		t2->Initialize(i_texture->getData());
 
 
 		R2.AddComponent(t2);

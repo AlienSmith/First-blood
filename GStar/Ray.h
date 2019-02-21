@@ -11,13 +11,13 @@ namespace GStar {
 		Ray(const Vector3& o, const Vector3& d) :m_data({ o,d }) {
 			m_data.direction.Normalize();
 		}
-		RayData getValue() const{
+		inline RayData getValue() const{
 			return m_data;
 		}
-		RayData* getReference(){
+		inline RayData* getReference(){
 			return &m_data;
 		}
-		Vector3 point_at_parameter(float t) const{
+		inline Vector3 point_at_parameter(float t) const{
 			return m_data.origin + m_data.direction*t;
 		}
 	private:

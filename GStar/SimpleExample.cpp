@@ -30,11 +30,12 @@ GStar::TextureData * SimpleExample::getdata()
 				col += color(r, *world);
 			}
 			col /= float(ns);
+			col = GStar::Vector3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
 			data[(j * 200 + i) * 3] = int(255.99*col[0]);
 			data[(j * 200 + i) * 3 + 1] = int(255.99*col[1]);
 			data[(j * 200 + i) * 3 + 2] = int(255.99*col[2]);
-			DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Generating RayTracing Map %f", float(j*100 / ny));
 		}
+		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Generating RayTracing Map %f", float(j * 100 / ny));
 	}
 	GStar::TextureData* texture = new GStar::TextureData(data, 200, 200);
 	delete list[0];
@@ -46,8 +47,10 @@ GStar::TextureData * SimpleExample::getdata()
 GStar::Vector3 SimpleExample::color(const GStar::Ray & ray, const GStar::Hitable & hitable)
 {
 	GStar::hit_record rec;
-	if (hitable.hit(ray, 0.0f, 1000.0f, rec)) {
-		return .5f* (GStar::Vector3(1, 1, 1) + rec.n);
+	if (hitable.hit(ray, 0.0f, 1000, rec)) {
+		GStar::Vector3 direction = rec.n + random_in_unit_sphere();
+		direction.Normalize();
+		return .5f* color(GStar::Ray(rec.p, direction),hitable);
 	}
 	GStar::RayData data = ray.getValue();
 	float t = .5*(data.direction.y() + 1.0);

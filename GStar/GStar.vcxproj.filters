@@ -403,6 +403,12 @@
     <None Include="base.bin">
       <Filter>RayTracer\Results</Filter>
     </None>
+    <None Include="diffuse.bin">
+      <Filter>RayTracer\Results</Filter>
+    </None>
+    <None Include="diffuse_2.bin">
+      <Filter>RayTracer\Results</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

@@ -254,7 +254,9 @@ const static float texCoords[] = {
 const static char RT_base[] = "../GStar/base.bin";
 //using MC 100 sample at each pixel
 const static char RT_antialiasing[] = "../GStar/antialiasing.bin";
-
+//using MC 100 sample at each pixel diffuse example
+const static char RT_diffuse[] = "../GStar/diffuse.bin";
+const static char RT_diffuse_gamma_2 [] = "../GStar/diffuse_2.bin";
 //Texturedata
 const static char title[] = "GStar Test Scene";
 const static char WoodBox[] = "../GStar/woodcontainer.jpg";

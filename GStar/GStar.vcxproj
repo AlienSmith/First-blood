@@ -251,6 +251,8 @@
   <ItemGroup>
     <None Include="antialiasing.bin" />
     <None Include="base.bin" />
+    <None Include="diffuse.bin" />
+    <None Include="diffuse_2.bin" />
     <None Include="Excercise1.6.ves" />
     <None Include="Exercises1.5.frs" />
     <None Include="FragmentShader.shader" />

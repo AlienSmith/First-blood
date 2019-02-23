@@ -49,6 +49,7 @@ public:
 		trans2 = new GStar::TransformComponent("Cube");
 		world.AddToRoot(trans2);
 		trans2->SetTransform(GStar::Vector3(0.0f, 0.0f, -.5f), GStar::Base::WORLD);
+		trans2->Rotate(0.0f, 0.0f, 90.0f);
 		trans2->UpdateTransform();
 		RObject& R2 = renderer.CreateRenderObject(trans2);
 		GStar::MeshComponent* m2 = new GStar::MeshComponent(spriteTparameters);

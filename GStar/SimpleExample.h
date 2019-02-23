@@ -4,9 +4,10 @@ namespace GStar {
 		struct TextureData;
 		class Ray;
 		class Sphere;
+		class Hitable;
 }
 class SimpleExample {
 public:
 	static GStar::TextureData* getdata();
-	static GStar::Vector3 color(const GStar::Ray& ray,const GStar::Sphere& sphere);
+	static GStar::Vector3 color(const GStar::Ray& ray,const GStar::Hitable& sphere);
 };

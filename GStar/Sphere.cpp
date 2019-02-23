@@ -14,11 +14,16 @@ bool GStar::Sphere::hit(const Ray & ray, float t_min, float t_max, hit_record & 
 		m_2 = l.Dot(l) - (s * s);
 		q = sqrt(m_r*m_r - m_2);
 		t = s + q;
-		rec.t = t;
-		rec.p = temp.direction*t;
-		rec.n = rec.p - m_center;
-		rec.n.Normalize();
-		return true;
+		if (t > t_min && t < t_max) {
+			rec.t = t;
+			rec.p = temp.direction*t;
+			rec.n = rec.p - m_center;
+			rec.n.Normalize();
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 	s = l.Dot(temp.direction);
 	if (s <= 0) {
@@ -31,10 +36,15 @@ bool GStar::Sphere::hit(const Ray & ray, float t_min, float t_max, hit_record & 
 	else {
 		q = sqrt(m_r*m_r - m_2);
 		t = s - q;
-		rec.t = t;
-		rec.p = temp.direction*t;
-		rec.n = rec.p - m_center;
-		rec.n.Normalize();
-		return true;
+		if (t > t_min && t < t_max) {
+			rec.t = t;
+			rec.p = temp.direction*t;
+			rec.n = rec.p - m_center;
+			rec.n.Normalize();
+			return true;
+		}
+		else {
+			return false;
+		}
 	}
 }

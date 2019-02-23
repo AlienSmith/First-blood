@@ -196,6 +196,7 @@
     <ClInclude Include="TextureWriter.h" />
     <ClInclude Include="Trace.h" />
     <ClInclude Include="TransformComponent.h" />
+    <ClInclude Include="TRCamera.h" />
     <ClInclude Include="UpdateRObject.h" />
     <ClInclude Include="Vector2.h" />
     <ClInclude Include="Vector3.h" />
@@ -242,6 +243,7 @@
     <ClCompile Include="TextureComponent.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="GSTime.cpp" />
+    <ClCompile Include="TRCamera.cpp" />
     <ClCompile Include="UpdateRObject.cpp" />
     <ClCompile Include="View.cpp" />
   </ItemGroup>

@@ -1,6 +1,7 @@
 #pragma once
 #include <stdlib.h>
 #include <stdint.h>
+#include "MyString.h"
 namespace GStar {
 	struct texturedata {
 		uint8_t* data;
@@ -33,6 +34,10 @@ namespace GStar {
 			}
 		}
 		const texturedata& getData() const{ return my_data; }
+		bool readformfile(const GStar::MyString& string);
+		bool writetofile(const GStar::MyString& string);
+		bool readformfile(const char* string);
+		bool writetofile(const char* string);
 	private:
 		uint8_t* Copy(const uint8_t* const data, int x, int y) {
 			uint8_t* new_data = new uint8_t(x*y*3);

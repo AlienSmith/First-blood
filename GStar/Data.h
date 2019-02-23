@@ -249,7 +249,13 @@ const static float texCoords[] = {
 	1.0f, 0.0f,  // lower-right corner
 	0.5f, 1.0f   // top-center corner
 }; 
+///RayTracing data
+//base result
+const static char RT_base[] = "../GStar/base.bin";
+//using MC 100 sample at each pixel
+const static char RT_antialiasing[] = "../GStar/antialiasing.bin";
 
+//Texturedata
 const static char title[] = "GStar Test Scene";
 const static char WoodBox[] = "../GStar/woodcontainer.jpg";
 const static char Wall[] = "../GStar/wall.jpg";

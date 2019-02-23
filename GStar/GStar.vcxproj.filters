@@ -119,6 +119,7 @@
     <ClCompile Include="TRCamera.cpp">
       <Filter>RayTracer</Filter>
     </ClCompile>
+    <ClCompile Include="TextureData.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -396,6 +397,12 @@
     <None Include="TextureMap.ves">
       <Filter>OpenGl\Rendering_Specific\Shaders_DATA\NewShaders</Filter>
     </None>
+    <None Include="antialiasing.bin">
+      <Filter>RayTracer\Results</Filter>
+    </None>
+    <None Include="base.bin">
+      <Filter>RayTracer\Results</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">
@@ -493,6 +500,9 @@
     </Filter>
     <Filter Include="RayTracer">
       <UniqueIdentifier>{fc1e2d21-d593-4f1b-9ff0-6b9ad06c9ace}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="RayTracer\Results">
+      <UniqueIdentifier>{452d72ec-e3d3-4486-88ad-bdd3b38a1408}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

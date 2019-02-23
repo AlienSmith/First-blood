@@ -241,6 +241,7 @@
     <ClCompile Include="stb_activate.cpp" />
     <ClCompile Include="MyString.cpp" />
     <ClCompile Include="TextureComponent.cpp" />
+    <ClCompile Include="TextureData.cpp" />
     <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="GSTime.cpp" />
     <ClCompile Include="TRCamera.cpp" />
@@ -248,6 +249,8 @@
     <ClCompile Include="View.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="antialiasing.bin" />
+    <None Include="base.bin" />
     <None Include="Excercise1.6.ves" />
     <None Include="Exercises1.5.frs" />
     <None Include="FragmentShader.shader" />

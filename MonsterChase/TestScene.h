@@ -18,6 +18,7 @@
 #include"InterfaceComponentManager.h"
 #include"TextureData.h"
 #include"SimpleExample.h"
+#include"Data.h"
 class TestScene : public GStar::SceneInterface {
 public:
 	TestScene() {
@@ -25,15 +26,21 @@ public:
 	}
 	virtual ~TestScene(){}
 	virtual void Start() {
+		float a = SimpleExample::UnitRandom();
 		uint8_t texels[3] =
 		{
 			255,   255,   0,  
 		};
 		int width = 1; 
 		int height = 1;
-		GStar::TextureData texture(texels, height, width);
+		GStar::TextureData texture;
 
+		///Generate and Write files
 		GStar::TextureData* i_texture = SimpleExample::getdata();
+		i_texture->writetofile(RT_antialiasing);
+
+		texture.readformfile(RT_antialiasing);
+
 		//Camaera
 		GStar::World& world = GStar::World::Instance();
 		GStar::RManager& renderer = *GStar::RManager::Instance();
@@ -49,7 +56,6 @@ public:
 		trans2 = new GStar::TransformComponent("Cube");
 		world.AddToRoot(trans2);
 		trans2->SetTransform(GStar::Vector3(0.0f, 0.0f, -.5f), GStar::Base::WORLD);
-		trans2->Rotate(0.0f, 0.0f, 90.0f);
 		trans2->UpdateTransform();
 		RObject& R2 = renderer.CreateRenderObject(trans2);
 		GStar::MeshComponent* m2 = new GStar::MeshComponent(spriteTparameters);
@@ -57,14 +63,14 @@ public:
 		GStar::TextureComponent* t2 = new GStar::TextureComponent();
 
 
-		t2->Initialize(i_texture->getData());
+		t2->Initialize(texture.getData());
 
 
 		R2.AddComponent(t2);
 		R2.AddComponent(new GStar::ShaderComponent(DefaultShader2T));
 		//ai2 = new SimpleRotation(trans2);
 		//imanager.AddInterface(ai2);
-		delete i_texture;
+		//delete i_texture;
 	}
 	virtual void Update() {}
 	virtual void Terminate() {}

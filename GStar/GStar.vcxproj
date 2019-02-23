@@ -141,6 +141,7 @@
     <ClInclude Include="EventUnite.h" />
     <ClInclude Include="GeometryOperations.h" />
     <ClInclude Include="Hitable.h" />
+    <ClInclude Include="hitable_list.h" />
     <ClInclude Include="InterfaceComponentManager.h" />
     <ClInclude Include="KeyInputEvent.h" />
     <ClInclude Include="LightComponent.h" />
@@ -214,6 +215,7 @@
     <ClCompile Include="GStar_init.cpp" />
     <ClCompile Include="HeapManager.cpp" />
     <ClCompile Include="HeapManagerProxy.cpp" />
+    <ClCompile Include="hitable_list.cpp" />
     <ClCompile Include="InterfaceComponentManager.cpp" />
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="MainEntrance.cpp" />

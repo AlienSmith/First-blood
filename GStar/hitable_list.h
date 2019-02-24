@@ -11,6 +11,6 @@ namespace GStar {
 
 		Hitable ** list;
 		int list_size;
-		
+		virtual ~hitable_list() {}
 	};
 }

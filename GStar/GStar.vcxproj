@@ -136,6 +136,7 @@
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="Compare.h" />
     <ClInclude Include="Delegate.h" />
+    <ClInclude Include="dielectric.h" />
     <ClInclude Include="Event.h" />
     <ClInclude Include="EventManager.h" />
     <ClInclude Include="EventUnite.h" />
@@ -144,6 +145,7 @@
     <ClInclude Include="hitable_list.h" />
     <ClInclude Include="InterfaceComponentManager.h" />
     <ClInclude Include="KeyInputEvent.h" />
+    <ClInclude Include="lambertian.h" />
     <ClInclude Include="LightComponent.h" />
     <ClInclude Include="Assert.h" />
     <ClInclude Include="BitArray.h" />
@@ -155,7 +157,9 @@
     <ClInclude Include="FixiedSizeAllocator.h" />
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="MainEntrance.h" />
+    <ClInclude Include="material.h" />
     <ClInclude Include="MemorySystem.h" />
+    <ClInclude Include="metal.h" />
     <ClInclude Include="MouseInputEvent.h" />
     <ClInclude Include="PhysicComponent.h" />
     <ClInclude Include="PhysicManager.h" />
@@ -178,6 +182,7 @@
     <ClInclude Include="NormalCube.h" />
     <ClInclude Include="RObject.h" />
     <ClInclude Include="Scene.h" />
+    <ClInclude Include="Schlick.h" />
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderComponent.h" />
     <ClInclude Include="ShaderManger.h" />
@@ -209,6 +214,7 @@
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConsolePrint.cpp" />
     <ClCompile Include="Controller.cpp" />
+    <ClCompile Include="dielectric.cpp" />
     <ClCompile Include="EventManager.cpp" />
     <ClCompile Include="FixiedSizeAllocator.cpp" />
     <ClCompile Include="GLAD\glad.c" />
@@ -218,6 +224,7 @@
     <ClCompile Include="HeapManagerProxy.cpp" />
     <ClCompile Include="hitable_list.cpp" />
     <ClCompile Include="InterfaceComponentManager.cpp" />
+    <ClCompile Include="lambertian.cpp" />
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="MainEntrance.cpp" />
     <ClCompile Include="Main_Entrance.cpp" />
@@ -226,6 +233,7 @@
     <ClCompile Include="Mesh.cpp" />
     <ClCompile Include="MeshComponent.cpp" />
     <ClCompile Include="MeshManager.cpp" />
+    <ClCompile Include="metal.cpp" />
     <ClCompile Include="RManager.cpp" />
     <ClCompile Include="RObject.cpp" />
     <ClCompile Include="PhysicComponent.cpp" />
@@ -259,6 +267,9 @@
     <None Include="FragmentShader1.2.shader" />
     <None Include="FragmentShader2.shader" />
     <None Include="Exercises1.4.ves" />
+    <None Include="glass.bin" />
+    <None Include="material_metal.bin" />
+    <None Include="metal_glossy.bin" />
     <None Include="NTexture.frs" />
     <None Include="NTexture.ves" />
     <None Include="TextureMap.frs" />

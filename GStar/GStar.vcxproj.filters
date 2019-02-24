@@ -120,6 +120,9 @@
       <Filter>RayTracer</Filter>
     </ClCompile>
     <ClCompile Include="TextureData.cpp" />
+    <ClCompile Include="lambertian.cpp" />
+    <ClCompile Include="metal.cpp" />
+    <ClCompile Include="dielectric.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -330,6 +333,21 @@
     <ClInclude Include="TRCamera.h">
       <Filter>RayTracer</Filter>
     </ClInclude>
+    <ClInclude Include="material.h">
+      <Filter>RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="lambertian.h">
+      <Filter>RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="metal.h">
+      <Filter>RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="dielectric.h">
+      <Filter>RayTracer</Filter>
+    </ClInclude>
+    <ClInclude Include="Schlick.h">
+      <Filter>RayTracer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -407,6 +425,15 @@
       <Filter>RayTracer\Results</Filter>
     </None>
     <None Include="diffuse_2.bin">
+      <Filter>RayTracer\Results</Filter>
+    </None>
+    <None Include="material_metal.bin">
+      <Filter>RayTracer\Results</Filter>
+    </None>
+    <None Include="metal_glossy.bin">
+      <Filter>RayTracer\Results</Filter>
+    </None>
+    <None Include="glass.bin">
       <Filter>RayTracer\Results</Filter>
     </None>
   </ItemGroup>

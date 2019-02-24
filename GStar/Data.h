@@ -257,6 +257,10 @@ const static char RT_antialiasing[] = "../GStar/antialiasing.bin";
 //using MC 100 sample at each pixel diffuse example
 const static char RT_diffuse[] = "../GStar/diffuse.bin";
 const static char RT_diffuse_gamma_2 [] = "../GStar/diffuse_2.bin";
+//using MC 100 
+const static char RT_metal[] = "../GStar/material_metal.bin";
+const static char RT_Glossy[] = "../GStar/metal_glossy.bin";
+const static char RT_GlassBubble[] = "../GStar/glass.bin";
 //Texturedata
 const static char title[] = "GStar Test Scene";
 const static char WoodBox[] = "../GStar/woodcontainer.jpg";

@@ -19,6 +19,7 @@ bool GStar::Sphere::hit(const Ray & ray, float t_min, float t_max, hit_record & 
 			rec.p = temp.direction*t;
 			rec.n = rec.p - m_center;
 			rec.n.Normalize();
+			rec.mat_ptr = m_material;
 			return true;
 		}
 		else {
@@ -41,6 +42,7 @@ bool GStar::Sphere::hit(const Ray & ray, float t_min, float t_max, hit_record & 
 			rec.p = temp.direction*t;
 			rec.n = rec.p - m_center;
 			rec.n.Normalize();
+			rec.mat_ptr = m_material;
 			return true;
 		}
 		else {

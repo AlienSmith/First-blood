@@ -36,10 +36,9 @@ public:
 		GStar::TextureData texture;
 
 		///Generate and Write files
-		//GStar::TextureData* i_texture = SimpleExample::getdata();
-		//i_texture->writetofile(RT_diffuse_gamma_2);
-
-		texture.readformfile(RT_diffuse);
+		GStar::TextureData* i_texture = SimpleExample::getdata();
+		i_texture->writetofile(RT_GlassBubble);
+		texture.readformfile(RT_GlassBubble);
 
 		//Camaera
 		GStar::World& world = GStar::World::Instance();

@@ -9,7 +9,7 @@ namespace GStar {
 class SimpleExample {
 public:
 	static GStar::TextureData* getdata();
-	static GStar::Vector3 color(const GStar::Ray& ray,const GStar::Hitable& sphere);
+	static GStar::Vector3 color(const GStar::Ray& ray,const GStar::Hitable& sphere, int depth);
 	static GStar::Vector3 random_in_unit_sphere();
 	static float UnitRandom();
 	static float Random();

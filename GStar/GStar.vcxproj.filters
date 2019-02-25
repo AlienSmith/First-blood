@@ -120,9 +120,15 @@
       <Filter>RayTracer</Filter>
     </ClCompile>
     <ClCompile Include="TextureData.cpp" />
-    <ClCompile Include="lambertian.cpp" />
-    <ClCompile Include="metal.cpp" />
-    <ClCompile Include="dielectric.cpp" />
+    <ClCompile Include="dielectric.cpp">
+      <Filter>RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="lambertian.cpp">
+      <Filter>RayTracer</Filter>
+    </ClCompile>
+    <ClCompile Include="metal.cpp">
+      <Filter>RayTracer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />

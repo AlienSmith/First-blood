@@ -16,9 +16,8 @@ bool GStar::Sphere::hit(const Ray & ray, float t_min, float t_max, hit_record & 
 		t = s + q;
 		if (t > t_min && t < t_max) {
 			rec.t = t;
-			rec.p = temp.direction*t;
-			rec.n = rec.p - m_center;
-			rec.n.Normalize();
+			rec.p = ray.point_at_parameter(t);
+			rec.n = (rec.p - m_center)/m_r;
 			rec.mat_ptr = m_material;
 			return true;
 		}
@@ -39,9 +38,8 @@ bool GStar::Sphere::hit(const Ray & ray, float t_min, float t_max, hit_record & 
 		t = s - q;
 		if (t > t_min && t < t_max) {
 			rec.t = t;
-			rec.p = temp.direction*t;
-			rec.n = rec.p - m_center;
-			rec.n.Normalize();
+			rec.p = ray.point_at_parameter(t);
+			rec.n = (rec.p - m_center) / m_r;
 			rec.mat_ptr = m_material;
 			return true;
 		}

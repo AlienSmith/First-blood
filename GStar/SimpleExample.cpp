@@ -12,18 +12,20 @@
 #include "metal.h"
 #include "lambertian.h"
 #include "dielectric.h"
+#include "Schlick.h"
 GStar::TextureData * SimpleExample::getdata()
 {
 	int nx = 200;
 	int ny = 200;
 	int ns = 100;
-	GStar::Hitable * list[5];
+	constexpr int hitables = 5;
+	GStar::Hitable * list[hitables];
 	list[0] = new GStar::Sphere(GStar::Vector3(0, 0, -1), .5f,new GStar::lambertian(GStar::Vector3(.1f,.2f,.5f)));
 	list[1] = new GStar::Sphere(GStar::Vector3(0.0f, -100.5f, -1.0f),100.0f, new GStar::lambertian(GStar::Vector3(.8f, .8f, .0f)));
-	list[2] = new GStar::Sphere(GStar::Vector3(1, 0, -1), .5f, new GStar::dielectric(1.5f));
+	list[2] = new GStar::Sphere(GStar::Vector3(1, 0, -1), .5f, new GStar::metal(GStar::Vector3(.8f,.6f,.2f),.3f));
 	list[3] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), .5f, new GStar::dielectric(1.5f));
-	list[4] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), -.45f, new GStar::dielectric(1.5f));
-	GStar::Hitable * world = new GStar::hitable_list(list,5);
+	list[4] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), -0.45f, new GStar::dielectric(1.5f));
+	GStar::Hitable * world = new GStar::hitable_list(list, hitables);
 	GStar::TRCamera cam;
 	uint8_t data[200*200* 3];
 	for (int j = 0; j < ny; j++) {
@@ -44,7 +46,7 @@ GStar::TextureData * SimpleExample::getdata()
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Generating RayTracing Map %f ", float(j * 100 / ny));
 	}
 	GStar::TextureData* texture = new GStar::TextureData(data, 200, 200);
-	for (int i = 0; i < 5; i++) {
+	for (int i = 0; i < hitables; i++) {
 		delete list[i];
 	}
 	delete world;
@@ -54,7 +56,7 @@ GStar::TextureData * SimpleExample::getdata()
 GStar::Vector3 SimpleExample::color(const GStar::Ray & ray, const GStar::Hitable & hitable, int depth)
 {
 	GStar::hit_record rec;
-	if (hitable.hit(ray, 0.001f, 1000, rec)) {
+	if (hitable.hit(ray, 0.001f, GStar::MAXFLOAT, rec)) {
 		GStar::Ray scattered;
 		GStar::Vector3 attenuation;
 		if (depth < 50 && rec.mat_ptr->scatter(ray, rec, attenuation, scattered)) {

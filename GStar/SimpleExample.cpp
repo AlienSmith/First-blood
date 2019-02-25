@@ -23,8 +23,8 @@ GStar::TextureData * SimpleExample::getdata()
 	list[0] = new GStar::Sphere(GStar::Vector3(0, 0, -1), .5f,new GStar::lambertian(GStar::Vector3(.1f,.2f,.5f)));
 	list[1] = new GStar::Sphere(GStar::Vector3(0.0f, -100.5f, -1.0f),100.0f, new GStar::lambertian(GStar::Vector3(.8f, .8f, .0f)));
 	list[2] = new GStar::Sphere(GStar::Vector3(1, 0, -1), .5f, new GStar::metal(GStar::Vector3(.8f,.6f,.2f),.3f));
-	list[3] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), .5f, new GStar::dielectric(1.0f/1.5f));
-	list[4] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), -.45f, new GStar::dielectric(1.0f / 1.5f));
+	list[3] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), .5f, new GStar::dielectric(1.5f));
+	list[4] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), -.45f, new GStar::dielectric(1.5f));
 	GStar::Hitable * world = new GStar::hitable_list(list, hitables);
 	GStar::TRCamera cam;
 	uint8_t data[200*200* 3];

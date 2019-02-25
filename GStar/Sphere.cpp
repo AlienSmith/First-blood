@@ -3,48 +3,29 @@
 
 bool GStar::Sphere::hit(const Ray & ray, float t_min, float t_max, hit_record & rec) const
 {
-	RayData temp = ray.getValue();
-	Vector3 l = m_center - temp.origin;
-	float t;
-	float m_2;
-	float s;
-	float q;
-	if (l.Dot(l) < m_r*m_r) {
-		s = l.Dot(temp.direction);
-		m_2 = l.Dot(l) - (s * s);
-		q = sqrt(m_r*m_r - m_2);
-		t = s + q;
-		if (t > t_min && t < t_max) {
-			rec.t = t;
-			rec.p = ray.point_at_parameter(t);
-			rec.n = (rec.p - m_center)/m_r;
-			rec.mat_ptr = m_material;
-			return true;
-		}
-		else {
-			return false;
-		}
-	}
-	s = l.Dot(temp.direction);
-	if (s <= 0) {
-		return false;
-	}
-	m_2 = l.Dot(l) - (s * s);
-	if (m_2 > m_r*m_r) {
-		return false;
-	}
-	else {
-		q = sqrt(m_r*m_r - m_2);
-		t = s - q;
-		if (t > t_min && t < t_max) {
-			rec.t = t;
-			rec.p = ray.point_at_parameter(t);
+	RayData r = ray.getValue();
+	Vector3 oc = r.origin - m_center;
+	float a = r.direction.Dot(r.direction);
+	float b = oc.Dot(r.direction);
+	float c = oc.Dot(oc) - m_r * m_r;
+	float discriminant = b * b - a * c;
+	if (discriminant > 0) {
+		float temp = (-b - sqrt(discriminant)) / a;
+		if (temp < t_max && temp > t_min) {
+			rec.t = temp;
+			rec.p = ray.point_at_parameter(rec.t);
 			rec.n = (rec.p - m_center) / m_r;
 			rec.mat_ptr = m_material;
 			return true;
 		}
-		else {
-			return false;
+		temp = (-b + sqrt(discriminant)) / a;
+		if (temp < t_max && temp > t_min) {
+			rec.t = temp;
+			rec.p = ray.point_at_parameter(rec.t);
+			rec.n = (rec.p - m_center) / m_r;
+			rec.mat_ptr = m_material;
+			return true;
 		}
 	}
+	return false;
 }

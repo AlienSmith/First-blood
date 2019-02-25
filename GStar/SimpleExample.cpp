@@ -69,7 +69,7 @@ GStar::Vector3 SimpleExample::color(const GStar::Ray & ray, const GStar::Hitable
 	}
 	else {
 		GStar::Vector3 unit_direction = ray.getValue().direction;
-		float t = .5f*(unit_direction[1] + 1.0);
+		float t = .5f*(unit_direction[1] + 1.0f);
 		return (1.0f - t)*GStar::Vector3(1, 1, 1) + t*GStar::Vector3(.5f, .7f, 1.0f);
 	}
 }

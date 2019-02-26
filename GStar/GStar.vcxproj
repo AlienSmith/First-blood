@@ -259,6 +259,7 @@
   <ItemGroup>
     <None Include="antialiasing.bin" />
     <None Include="base.bin" />
+    <None Include="Blur.bin" />
     <None Include="camera.bin" />
     <None Include="diffuse.bin" />
     <None Include="diffuse_2.bin" />

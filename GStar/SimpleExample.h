@@ -13,4 +13,5 @@ public:
 	static GStar::Vector3 random_in_unit_sphere();
 	static float UnitRandom();
 	static float Random();
+	static GStar::Hitable* random_scene();
 };

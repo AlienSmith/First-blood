@@ -37,8 +37,8 @@ public:
 
 		///Generate and Write files
 		GStar::TextureData* i_texture = SimpleExample::getdata();
-		i_texture->writetofile(RT_Camera);
-		texture.readformfile(RT_Camera);
+		i_texture->writetofile(RT_defocus_blur);
+		texture.readformfile(RT_defocus_blur);
 
 		//Camaera
 		GStar::World& world = GStar::World::Instance();

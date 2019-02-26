@@ -26,7 +26,11 @@ GStar::TextureData * SimpleExample::getdata()
 	list[3] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), .5f, new GStar::dielectric(1.5f));
 	list[4] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), -.45f, new GStar::dielectric(1.5f));
 	GStar::Hitable * world = new GStar::hitable_list(list, hitables);
-	GStar::TRCamera cam(GStar::Vector3(-1,1,0), GStar::Vector3(0,0,-1),GStar::Vector3(0,1,0),126,nx/ny);
+	GStar::Vector3 lookfrom(3, 3, 2);
+	GStar::Vector3 lookat(0, 0, -1);
+	float dist_focus = (lookfrom - lookat).Length();
+	float apeture = 2.0f;
+	GStar::TRCamera cam(lookfrom, lookat,GStar::Vector3(0,1,0),40,nx/ny,apeture,dist_focus);
 	uint8_t data[200*200* 3];
 	for (int j = 0; j < ny; j++) {
 		for (int i = 0; i < nx; i++) {
@@ -46,9 +50,6 @@ GStar::TextureData * SimpleExample::getdata()
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Generating RayTracing Map %f ", float(j * 100 / ny));
 	}
 	GStar::TextureData* texture = new GStar::TextureData(data, 200, 200);
-	for (int i = 0; i < hitables; i++) {
-		delete list[i];
-	}
 	delete world;
 	return texture;
 }
@@ -94,4 +95,35 @@ float SimpleExample::UnitRandom() {
 }
 float SimpleExample::Random() {
 	return ((float)rand() / (RAND_MAX));
+}
+
+GStar::Hitable * SimpleExample::random_scene()
+{
+	using namespace GStar;
+	constexpr int n = 500;
+	Hitable* list[n+1];
+	list[0] = new Sphere(Vector3(0, -1000, 0), 1000, new lambertian(Vector3(.5f, .5f, .5f)));
+	int i = 0;
+	for (int a = -11; a < 11; a++) {
+		for (int b = -11; b < 11; b++) {
+			float choose_mat = Random();
+			Vector3 center(a + .9f*Random(), .2f, .9f*Random());
+			if ((center - Vector3(4, .2, 0)).Length() > .9) {
+				if (choose_mat < .8) {
+					list[i++] = new Sphere(center, .2f, new lambertian(Vector3(Random()*Random(), Random()*Random(), Random()*Random())));
+				}
+				else if (choose_mat < .95) {
+					list[i++] = new Sphere(center, .2f, new metal(
+						Vector3(.5f*(1.0f + Random()), .5f*(1.0f + Random()), .5f*(1.0f + Random())), .5f*(1.0f + Random())));
+				}
+				else {
+					list[i++] = new Sphere(center, .2f, new dielectric(1.5f));
+				}
+			}
+		}
+	}
+	list[i++] = new Sphere(Vector3(0, 1, 0), 1.0f, new dielectric(1.5f));
+	list[i++] = new Sphere(Vector3(-4,1,0),1.0f,new lambertian(Vector3(.4f,.2f,.1f)));
+	list[i++] = new Sphere(Vector3(4, 1, 0), 1.0f, new metal(Vector3(.7f, .6f, .5f), 0.0f));
+	return new hitable_list(list,i);
 }

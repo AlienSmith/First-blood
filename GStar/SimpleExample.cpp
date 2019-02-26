@@ -26,7 +26,7 @@ GStar::TextureData * SimpleExample::getdata()
 	list[3] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), .5f, new GStar::dielectric(1.5f));
 	list[4] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), -.45f, new GStar::dielectric(1.5f));
 	GStar::Hitable * world = new GStar::hitable_list(list, hitables);
-	GStar::TRCamera cam;
+	GStar::TRCamera cam(GStar::Vector3(-1,1,0), GStar::Vector3(0,0,-1),GStar::Vector3(0,1,0),126,nx/ny);
 	uint8_t data[200*200* 3];
 	for (int j = 0; j < ny; j++) {
 		for (int i = 0; i < nx; i++) {

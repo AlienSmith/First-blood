@@ -37,8 +37,8 @@ public:
 
 		///Generate and Write files
 		GStar::TextureData* i_texture = SimpleExample::getdata();
-		i_texture->writetofile(RT_GlassBubble);
-		texture.readformfile(RT_GlassBubble);
+		i_texture->writetofile(RT_Camera);
+		texture.readformfile(RT_Camera);
 
 		//Camaera
 		GStar::World& world = GStar::World::Instance();
@@ -48,8 +48,8 @@ public:
 		world.AddToRoot(trans1);
 		trans1->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f), GStar::Base::WORLD);
 		trans1->UpdateTransform();
-		control1 = new KeyControlCompoenent(trans1, 2.0f);
-		imanager.AddInterface(control1);
+		//control1 = new KeyControlCompoenent(trans1, 2.0f);
+		//imanager.AddInterface(control1);
 		GStar::CameraManager::Instance()->SetCurrentCamera(trans1);
 		//Cube
 		trans2 = new GStar::TransformComponent("Cube");

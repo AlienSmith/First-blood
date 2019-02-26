@@ -2,25 +2,31 @@
 #include "Vector3.h"
 #include "Ray.h"
 namespace GStar {
+	static constexpr float M_PI_OVER_180 = 3.14159265359 / 180;
 	struct TRCdata {
 		Vector3 origin;
 		Vector3 lower_left_corner;
 		Vector3 horizontal;
 		Vector3 vertical;
+		Vector3 m_u, m_v, m_w;
+		float lens_radius;
 	};
 	class TRCamera {
 	public:
-		TRCamera() :m_data({orig,lf_cornor,hori,vert}) {}
-		inline Ray get_ray(float u, float v) {
-			return Ray(m_data.origin, m_data.lower_left_corner +
-				m_data.horizontal*u + m_data.vertical*v -
-				m_data.origin);
+		TRCamera() :m_data({orig,lf_cornor,hori,vert,u,v,w,radius}) {
+			float a = 0;
 		}
+		TRCamera(float vfov, float aspect);
+		Ray get_ray(float u, float v);
+		TRCamera(const GStar::Vector3& lookfrom, const GStar::Vector3& lookat, const GStar::Vector3& vup, float vfov, float aspect);
+		TRCamera(const GStar::Vector3& lookfrom, const GStar::Vector3& lookat, const GStar::Vector3& vup, float vfov, float aspect,float aperture,float focus_distance);
 	private:
 		static const Vector3 lf_cornor;
 		static const Vector3 hori;
 		static const Vector3 vert;
 		static const Vector3 orig;
+		static const Vector3 u,v,w;
+		static const float radius;
 		TRCdata m_data;
 	};
 }

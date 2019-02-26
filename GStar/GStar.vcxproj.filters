@@ -442,6 +442,9 @@
     <None Include="glass.bin">
       <Filter>RayTracer\Results</Filter>
     </None>
+    <None Include="camera.bin">
+      <Filter>RayTracer\Results</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

@@ -11,4 +11,11 @@ namespace GStar {
 	}inline static float UnitRandom() {
 			return ((float)rand() / (RAND_MAX));
 	}
+	inline static Vector3 random_in_unit_circle() {
+		Vector3 p;
+		do {
+			p = 2.0f*Vector3(UnitRandom(), UnitRandom(), 0.0f) - Vector3(1, 1, 0);
+		} while (p.Dot(p) >= 1.0);
+		return p;
+	}
 }

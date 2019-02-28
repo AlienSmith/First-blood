@@ -21,7 +21,9 @@ namespace GStar {
 			ASSERT(m_ptr != nullptr, "try to release a nullptr");
 			if (--(*m_RefCount) == 0) {
 				delete m_RefCount;
-				delete m_ptr;
+				if (m_ptr) {
+					delete m_ptr;
+				}
 				if ((*m_observercount) == 0) {
 					delete m_observercount;
 				}
@@ -31,7 +33,7 @@ namespace GStar {
 		inline T* GetUnderlingReference() {
 			return m_ptr;
 		}
-		SmartPointer() :m_ptr(nullptr), m_RefCount(new ref_counter_t(0)),m_observercount(new ref_counter_t(0)) {}
+		SmartPointer() :m_ptr(nullptr), m_RefCount(new ref_counter_t(1)),m_observercount(new ref_counter_t(0)) {}
 		SmartPointer(T* Pointer) :m_ptr(Pointer), m_RefCount(new ref_counter_t(1)),m_observercount(new ref_counter_t(0)) {}
 		SmartPointer(const SmartPointer& i_other) :
 			m_ptr(i_other.m_ptr),
@@ -153,6 +155,7 @@ namespace GStar {
 			return m_ptr;
 		}
 	public:
+		ObserverPointer():m_ptr(nullptr),m_RefCount(nullptr),m_observercount(new ref_counter_t(1)){}
 		ObserverPointer(const ObserverPointer& i_other) :
 			m_ptr(i_other.m_ptr),
 			m_RefCount(i_other.m_RefCount),
@@ -185,6 +188,33 @@ namespace GStar {
 		}
 		template<class U>
 		inline ObserverPointer& operator = (const ObserverPointer<U> & i_other) {
+			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			if (m_ptr == i_other.m_ptr) {
+				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
+				return *this;
+			}
+			ReleaseReference();
+			m_ptr = i_other.m_ptr;
+			m_RefCount = i_other.m_RefCount;
+			m_observercount = i_other.m_observercount;
+			(*m_observercount)++;
+			return *this;
+		}
+		inline ObserverPointer& operator = (const SmartPointer<T>& i_other) {
+			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			if (m_ptr == i_other.m_ptr) {
+				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
+				return *this;
+			}
+			ReleaseReference();
+			m_ptr = i_other.m_ptr;
+			m_RefCount = i_other.m_RefCount;
+			m_observercount = i_other.m_observercount;
+			(*m_observercount)++;
+			return *this;
+		}
+		template<class U>
+		inline ObserverPointer& operator = (const SmartPointer<U> & i_other) {
 			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");

@@ -1,4 +1,4 @@
-#Assignment 2.03 
+#Assignment 2.04 
 The Oberserving is under GStar, in SmartPointer Filter, Named ObservingPointer, Used in Sphere class and hit_rec class. 
 Notice the generation process will take a while, the generation progress is printed at Output console.
 #Assignment 2.03 

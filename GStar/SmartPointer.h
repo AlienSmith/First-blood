@@ -49,11 +49,11 @@ namespace GStar {
 			m_RefCount(i_other.m_RefCount),
 			m_observercount(i_other.m_observercount)
 		{
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			(*m_RefCount)++;
 		}
 		inline SmartPointer& operator = (const SmartPointer<T>& i_other) {
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
 				return *this;
@@ -67,7 +67,7 @@ namespace GStar {
 		}
 		template<class U>
 		inline SmartPointer& operator = (const SmartPointer<U> & i_other) {
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
 				return *this;
@@ -161,7 +161,7 @@ namespace GStar {
 			m_RefCount(i_other.m_RefCount),
 			m_observercount(i_other.m_observercount)
 		{
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			(*m_observercount)++;
 		}
 		template<class U>
@@ -170,11 +170,11 @@ namespace GStar {
 			m_RefCount(i_other.m_RefCount),
 			m_observercount(i_other.m_observercount)
 		{
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			(*m_observercount)++;
 		}
 		inline ObserverPointer& operator = (const ObserverPointer<T>& i_other) {
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
 				return *this;
@@ -188,7 +188,7 @@ namespace GStar {
 		}
 		template<class U>
 		inline ObserverPointer& operator = (const ObserverPointer<U> & i_other) {
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
 				return *this;
@@ -201,7 +201,7 @@ namespace GStar {
 			return *this;
 		}
 		inline ObserverPointer& operator = (const SmartPointer<T>& i_other) {
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
 				return *this;
@@ -215,7 +215,7 @@ namespace GStar {
 		}
 		template<class U>
 		inline ObserverPointer& operator = (const SmartPointer<U> & i_other) {
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
 				return *this;

@@ -8,6 +8,21 @@ namespace GStar {
 	class SharedPointer {
 		template<class U>
 		friend class SmartPointer;
+	private:
+		T* m_ptr;
+		ref_count_t* m_RefCount;
+		bool* markofdeath;
+		inline void ReleaseReference() {
+			ASSERT(m_ptr != nullptr, "try to release a nullptr");
+			if (--(*m_RefCount) == 0) {
+				(*markofdeath) = true;
+				delete m_RefCount;
+				if (m_ptr) {
+					delete m_ptr;
+				}
+				delete markofdeath;
+			}
+		}
 	public:
 		inline public bool MarkForDeath() {
 			if (!(*markofdeath)) {
@@ -16,7 +31,7 @@ namespace GStar {
 			}
 			return false;
 		}
-		SharedPointer():m_ptr(nullptr),m_RefCount(new ref_count_t(0)),markofdeath(new bool(false)){}
+		SharedPointer():m_ptr(nullptr),m_RefCount(new ref_count_t(1)),markofdeath(new bool(false)){}
 		SharedPointer(T* i_ptr):m_ptr(i_ptr),m_RefCount(new ref_count_t(1)),markofdeath(new bool(false)){}
 		SharedPointer(const SmartPointer<T>& i_other) :
 			m_ptr(i_other.m_ptr),
@@ -120,19 +135,6 @@ namespace GStar {
 			}
 			else {
 				ReleaseReference();
-			}
-		}
-	private:
-		T* m_ptr;
-		ref_count_t* m_RefCount;
-		bool* markofdeath;
-		inline void ReleaseReference() {
-			ASSERT(m_ptr != nullptr, "try to release a nullptr");
-			if (--(*m_RefCount) == 0) {
-				(*markofdeath) = true;
-				delete m_RefCount;
-				delete m_ptr;
-				delete markofdeath;
 			}
 		}
 	};

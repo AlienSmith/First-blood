@@ -275,6 +275,7 @@
     <None Include="metal_glossy.bin" />
     <None Include="NTexture.frs" />
     <None Include="NTexture.ves" />
+    <None Include="Test.bin" />
     <None Include="TextureMap.frs" />
     <None Include="TextureMap.ves" />
     <None Include="TLVertexColor.frs" />

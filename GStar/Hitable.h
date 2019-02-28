@@ -1,6 +1,6 @@
 #pragma once
 #include"Vector3.h"
-#include"SmartPointer.h"
+#include"SharedPointer.h"
 namespace GStar {
 	class Ray;
 	class material;
@@ -8,7 +8,7 @@ namespace GStar {
 		float t;
 		Vector3 p;
 		Vector3 n;
-		ObserverPointer<material> mat_ptr;
+		SharedPointer<material> mat_ptr;
 	};
 	class Hitable {
 	public:

@@ -265,6 +265,7 @@ const static char RT_GlassBubble[] = "../GStar/glass.bin";
 const static char RT_Camera[] = "../GStar/camera.bin";
 //blur
 const static char RT_defocus_blur[] = "../GStar/Blur.bin";
+const static char RT_Test[] = "../GStar/Test.bin";
 //Texturedata
 const static char title[] = "GStar Test Scene";
 const static char WoodBox[] = "../GStar/woodcontainer.jpg";

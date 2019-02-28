@@ -451,6 +451,9 @@
     <None Include="Blur.bin">
       <Filter>RayTracer\Results</Filter>
     </None>
+    <None Include="Test.bin">
+      <Filter>RayTracer\Results</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Math">

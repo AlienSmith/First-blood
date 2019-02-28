@@ -13,7 +13,6 @@ namespace GStar {
 		ref_count_t* m_RefCount;
 		bool* markofdeath;
 		inline void ReleaseReference() {
-			ASSERT(m_ptr != nullptr, "try to release a nullptr");
 			if (--(*m_RefCount) == 0) {
 				(*markofdeath) = true;
 				delete m_RefCount;
@@ -37,7 +36,7 @@ namespace GStar {
 			m_ptr(i_other.m_ptr),
 			m_RefCount(i_other.m_RefCount),
 			markofdeath(i_other.markofdeath){
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			(*m_RefCount)++;
 		}
 		template<class U>
@@ -45,11 +44,11 @@ namespace GStar {
 			m_ptr(i_other.m_ptr),
 			m_RefCount(i_other.m_RefCount),
 			markofdeath(i_other.markofdeath){
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			(*m_RefCount)++;
 		}
 		inline SharedPointer& operator = (const SharedPointer<T>& i_other) {
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
 				return *this;
@@ -64,7 +63,7 @@ namespace GStar {
 
 		template<class U>
 		inline SharedPointer& operator = (const SharedPointer<U>& i_other) {
-			ASSERT(m_ptr != nullptr, "try to copy a nullptr");
+			ASSERT(i_other.m_ptr != nullptr, "try to copy a nullptr");
 			if (m_ptr == i_other.m_ptr) {
 				DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "SelfAssignment");
 				return *this;

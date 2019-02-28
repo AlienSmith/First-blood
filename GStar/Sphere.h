@@ -1,7 +1,7 @@
 #pragma once
 #include <math.h>
 #include"Hitable.h"
-#include"SmartPointer.h"
+#include"SharedPointer.h"
 namespace GStar {
 	class material;
 	class Sphere: public Hitable {
@@ -14,6 +14,6 @@ namespace GStar {
 	private:
 		Vector3 m_center;
 		float m_r;
-		SmartPointer<material> m_material;
+		SharedPointer<material> m_material;
 	};
 }

@@ -47,7 +47,7 @@ GStar::TextureData * SimpleExample::getdata()
 			data[(j * 200 + i) * 3 + 1] = int(255.99*col[1]);
 			data[(j * 200 + i) * 3 + 2] = int(255.99*col[2]);
 		}
-		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Log, "Generating RayTracing Map %f ", float(j * 100 / ny));
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Generating RayTracing Map %f ", float(j * 100 / ny));
 	}
 	GStar::TextureData* texture = new GStar::TextureData(data, 200, 200);
 	delete world;

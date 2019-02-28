@@ -186,6 +186,7 @@
     <ClInclude Include="Shader.h" />
     <ClInclude Include="ShaderComponent.h" />
     <ClInclude Include="ShaderManger.h" />
+    <ClInclude Include="SharedPointer.h" />
     <ClInclude Include="SimpleExample.h" />
     <ClInclude Include="SimpleRotationCopy.h" />
     <ClInclude Include="SingleLinkedDictionary.h" />

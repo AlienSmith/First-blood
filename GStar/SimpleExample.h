@@ -14,4 +14,5 @@ public:
 	static float UnitRandom();
 	static float Random();
 	static GStar::Hitable* random_scene();
+	static GStar::Hitable* Glass_scene();
 };

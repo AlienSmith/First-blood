@@ -197,5 +197,16 @@ namespace GStar {
 			(*m_observercount)++;
 			return *this;
 		}
+		inline T* operator ->() {
+			if (isValid()) {
+				return m_ptr;
+			}
+		}
+		inline T& operator *() {
+			if (isValid) {
+				ASSERT(m_ptr != nullptr, "SmartPointer is null");
+				return *m_ptr;
+			}
+		}
 	};
 }

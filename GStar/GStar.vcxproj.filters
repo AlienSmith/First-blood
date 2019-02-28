@@ -354,6 +354,9 @@
     <ClInclude Include="Schlick.h">
       <Filter>RayTracer</Filter>
     </ClInclude>
+    <ClInclude Include="SharedPointer.h">
+      <Filter>SmartPointer</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">

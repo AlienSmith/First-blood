@@ -10,6 +10,7 @@ namespace GStar {
 			for (int i = 0; i < list_size; i++) {
 				delete list[i];
 			}
+			delete list;
 		}
 		virtual bool  hit(const Ray& ray, float t_min = Hitable::DEFAULT_RAY_MIN,
 			float t_max = Hitable::DEFAULT_RAY_MAX, hit_record& rec = Hitable::record) const;

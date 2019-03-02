@@ -34,10 +34,9 @@ public:
 		int width = 1; 
 		int height = 1;
 		GStar::TextureData texture;
-
 		///Generate and Write files
-		GStar::TextureData* i_texture = SimpleExample::getdata();
-		i_texture->writetofile(RT_Test);
+		//GStar::TextureData* i_texture = SimpleExample::getdata();
+		//i_texture->writetofile(RT_Test);
 		texture.readformfile(RT_Test);
 
 		//Camaera

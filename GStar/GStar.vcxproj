@@ -157,6 +157,7 @@
     <ClInclude Include="FixiedSizeAllocator.h" />
     <ClInclude Include="LightManager.h" />
     <ClInclude Include="MainEntrance.h" />
+    <ClInclude Include="Manager.h" />
     <ClInclude Include="material.h" />
     <ClInclude Include="MemorySystem.h" />
     <ClInclude Include="metal.h" />
@@ -229,6 +230,7 @@
     <ClCompile Include="LightManager.cpp" />
     <ClCompile Include="MainEntrance.cpp" />
     <ClCompile Include="Main_Entrance.cpp" />
+    <ClCompile Include="Manager.cpp" />
     <ClCompile Include="Matrix.cpp" />
     <ClCompile Include="MemorySystem.cpp" />
     <ClCompile Include="Mesh.cpp" />

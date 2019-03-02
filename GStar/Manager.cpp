@@ -52,20 +52,23 @@ uint8_t * GStar::LoadFile(const char * i_pFilename, size_t & o_sizeFile)
 
 	return pBuffer;
 }
-bool GStar::LoadObject(char * filename, size_t filesize, const InterfaceComponent* controller)
+bool GStar::LoadObject(const char * filename, const InterfaceComponent* controller)
 {
 	lua_State* pLuaState = luaL_newstate();
 	luaL_openlibs(pLuaState);
-
+	size_t filesize;
 	uint8_t* pFileContents = LoadFile(filename, filesize);
-	if (pFileContents && filesize) {
 		int  result = 0;
 		result = luaL_loadbuffer(pLuaState, reinterpret_cast<char*>(pFileContents), filesize, nullptr);
 		ASSERT(result == 0, "Load buffer fail");
 		result = lua_pcall(pLuaState, 0, 0, 0);
 		ASSERT(result == 0, "Load buffer fail");
-		lua_pushstring(pLuaState, "Version");
-		lua_pushnil(pLuaState);
-	}
+		result = lua_getglobal(pLuaState, "Version");
+		ASSERT(result == LUA_TSTRING,"Wrong DataType");
+		const char* pVersion = lua_tostring(pLuaState, -1);
+		if (pVersion) {
+			pVersion = _strdup(pVersion);
+		}
+		lua_pop(pLuaState, 1);
 	return true;
 }

@@ -1,4 +1,5 @@
 #pragma once
+#include"Manager.h"
 #include<stdlib.h>
 #include"SceneInterface.h"
 #include"World.h"
@@ -26,6 +27,8 @@ public:
 	}
 	virtual ~TestScene(){}
 	virtual void Start() {
+		GStar::MyString file = GStar::MyString("../MonsterChase/Sprite.lua");
+		GStar::LoadObject(file.GetString(),nullptr);
 		float a = SimpleExample::UnitRandom();
 		uint8_t texels[3] =
 		{

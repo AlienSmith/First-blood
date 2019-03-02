@@ -43,5 +43,13 @@
     <Filter Include="Interfaces">
       <UniqueIdentifier>{b08783bf-950d-4fbf-84dc-03732d07c8f3}</UniqueIdentifier>
     </Filter>
+    <Filter Include="GameObjects">
+      <UniqueIdentifier>{5a04c975-9e56-4281-b0f6-5863a3328ffa}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Sprite.lua">
+      <Filter>GameObjects</Filter>
+    </None>
   </ItemGroup>
 </Project>

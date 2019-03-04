@@ -70,5 +70,10 @@ bool GStar::LoadObject(const char * filename, const InterfaceComponent* controll
 			pVersion = _strdup(pVersion);
 		}
 		lua_pop(pLuaState, 1);
+		result = lua_getglobal(pLuaState, "Camera");
+		ASSERT(result == LUA_TTABLE, "Wrong DataType");
+		lua_len(pLuaState, -1);
+		ASSERT(lua_type(pLuaState,-1) == LUA_TNUMBER, "Wrong DataType");
+
 	return true;
 }

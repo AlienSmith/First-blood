@@ -1,9 +1,9 @@
-Version = "Alpha";
-Camera ={
-	Name = "Camera",
-	initial_position = {0.0, 0.0, 1.0}
+Version = "Alpha"
+Camera = {
+	name = "Camera",
+	initial_position = { 0.0, 0.0, 1.0 }
 }
 Sprite = {
-	Name = "Sprite",
+	name = "Sprite",
 	initial_position = {0.0, 0.0, -0.5}
 }

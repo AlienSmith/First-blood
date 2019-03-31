@@ -46,13 +46,13 @@ public:
 		GStar::World& world = GStar::World::Instance();
 		GStar::RManager& renderer = *GStar::RManager::Instance();
 		GStar::InterfaceComponentManager& imanager = *GStar::InterfaceComponentManager::Instance();
-		trans1 = new GStar::TransformComponent("Camera");
-		world.AddToRoot(trans1);
-		trans1->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f), GStar::Base::WORLD);
-		trans1->UpdateTransform();
+		//trans1 = new GStar::TransformComponent("Camera");
+		//world.AddToRoot(trans1);
+		//trans1->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f), GStar::Base::WORLD);
+		//trans1->UpdateTransform();
 		//control1 = new KeyControlCompoenent(trans1, 2.0f);
 		//imanager.AddInterface(control1);
-		GStar::CameraManager::Instance()->SetCurrentCamera(trans1);
+		//GStar::CameraManager::Instance()->SetCurrentCamera(trans1);
 		//Cube
 		trans2 = new GStar::TransformComponent("Cube");
 		world.AddToRoot(trans2);

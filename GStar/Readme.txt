@@ -1,3 +1,5 @@
+#Assignment 2.05
+The data is in the Sprite.lua file, used Manager.h and Manager.cpp to read the camera info from the file and generate the camera in the TestScene.h File.
 #Assignment 2.04 
 The Oberserving is under GStar, in SmartPointer Filter, Named ObservingPointer, Used in Sphere class and hit_rec class. 
 Notice the generation process will take a while, the generation progress is printed at Output console.

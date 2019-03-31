@@ -85,6 +85,7 @@ bool GStar::LoadObject(const char * filename, const InterfaceComponent* controll
 	lua_pop(pLuaState, 1);
 	float position[3];
 	LoadFloatArray("initial_position", position, pLuaState, 3);
+	GenerateObject(name, position);
 	return true;
 }
 
@@ -107,5 +108,17 @@ bool GStar::LoadFloatArray(const char* tablename,float * o_array, lua_State* i_p
 		lua_pop(i_pState, 1);
 		count++;
 	}
+	return true;
+}
+
+bool GStar::GenerateObject(const char * name, float * position)
+{
+	GStar::Vector3 transform = GStar::Vector3(position[0], position[1], position[2]);
+	GStar::World& world = GStar::World::Instance();
+	GStar::TransformComponent* trans1 = new TransformComponent(name);
+	world.AddToRoot(trans1);
+	trans1->SetTransform(transform, GStar::Base::WORLD);
+	trans1->UpdateTransform();
+	GStar::CameraManager::Instance()->SetCurrentCamera(trans1);
 	return true;
 }

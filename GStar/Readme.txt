@@ -1,3 +1,5 @@
+#Assignment 2.06
+Check Matrix4 for 4*4 matrix implementation, the Vector4 is generated during the calculation using Vector3
 #Assignment 2.05
 The data is in the Sprite.lua file, used Manager.h and Manager.cpp to read the camera info from the file and generate the camera in the TestScene.h File.
 #Assignment 2.04 

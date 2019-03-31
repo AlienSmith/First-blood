@@ -17,7 +17,7 @@ namespace GStar {
 			float a = 0;
 		}
 		TRCamera(float vfov, float aspect);
-		Ray get_ray(float u, float v);
+		Ray get_ray(float u, float v) const;
 		TRCamera(const GStar::Vector3& lookfrom, const GStar::Vector3& lookat, const GStar::Vector3& vup, float vfov, float aspect);
 		TRCamera(const GStar::Vector3& lookfrom, const GStar::Vector3& lookat, const GStar::Vector3& vup, float vfov, float aspect,float aperture,float focus_distance);
 	private:

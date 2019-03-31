@@ -24,7 +24,7 @@ GStar::TRCamera::TRCamera(float vfov, float aspect)
 	m_data.origin = GStar::Vector3(0.0f, 0.0f, 0.0f);
 }
 
-GStar::Ray GStar::TRCamera::get_ray(float u, float v)
+GStar::Ray GStar::TRCamera::get_ray(float u, float v) const
 {
 	Vector3 offset = Vector3(0, 0, 0);
 	if (m_data.lens_radius > 0.00001f || m_data.lens_radius < -0.00001f) {

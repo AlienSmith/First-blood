@@ -13,6 +13,7 @@
 #include "lambertian.h"
 #include "dielectric.h"
 #include "Schlick.h"
+std::mutex SimpleExample::mtx;
 GStar::TextureData * SimpleExample::getdata()
 {
 	int nx = 200;
@@ -32,7 +33,28 @@ GStar::TextureData * SimpleExample::getdata()
 	float apeture = 2.0f;
 	GStar::TRCamera cam(lookfrom, lookat,GStar::Vector3(0,1,0),40,nx/ny,apeture,dist_focus);
 	uint8_t data[200*200* 3];
-	for (int j = 0; j < ny; j++) {
+	constexpr int batch = 40;
+	constexpr int num_thread = 5;
+	//std::thread* myThreads[num_thread];
+	std::thread th1 = std::thread(&SimpleExample::CalculationBlock, 0, batch, nx, ns, cam, world, data);
+	std::thread th2 = std::thread(&SimpleExample::CalculationBlock, batch, 2*batch, nx, ns, cam, world, data);
+	std::thread th3 = std::thread(&SimpleExample::CalculationBlock, 2*batch, 3*batch, nx, ns, cam, world, data);
+	std::thread th4 = std::thread(&SimpleExample::CalculationBlock, 3*batch, 4*batch, nx, ns, cam, world, data);
+	std::thread th5 = std::thread(&SimpleExample::CalculationBlock, 4*batch, 5*batch, nx, ns, cam, world, data);
+	th1.join();
+	th2.join();
+	th3.join();
+	th4.join();
+	th5.join();
+	//myThreads[0] = new std::thread(&SimpleExample::CalculationBlock, 0, batch, nx, ns, cam, world, data);
+	//myThreads[0]->join();
+	/*for (int i = 0; i++; i < num_thread) {
+		myThreads[i] = new std::thread(&SimpleExample::CalculationBlock,  i*batch, (i+1)*batch,  nx,  ns,  cam,  world,  data);
+	}
+	for (int i = 0; i++; i < num_thread) {
+		myThreads[i]->join();
+	}*/
+	/*for (int j = 0; j < ny; j++) {
 		for (int i = 0; i < nx; i++) {
 			GStar::Vector3 col(0, 0, 0);
 			for (int s = 0; s < ns; s++) {
@@ -48,7 +70,7 @@ GStar::TextureData * SimpleExample::getdata()
 			data[(j * 200 + i) * 3 + 2] = int(255.99*col[2]);
 		}
 		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Generating RayTracing Map %f ", float(j * 100 / ny));
-	}
+	}*/
 	GStar::TextureData* texture = new GStar::TextureData(data, 200, 200);
 	delete world;
 	return texture;
@@ -138,4 +160,37 @@ GStar::Hitable * SimpleExample::Glass_scene()
 	list[3] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), .5f, new GStar::dielectric(1.5f));
 	list[4] = new GStar::Sphere(GStar::Vector3(-1, 0, -1), -.45f, new GStar::dielectric(1.5f));
 	return new GStar::hitable_list(list, hitables);
+}
+
+void SimpleExample::CalculationBlock(int start, int end,int nx,int ns,const GStar::TRCamera& cam, GStar::Hitable* world, uint8_t* data)
+{
+	int length = end - start;
+	uint8_t* local = new uint8_t(length * 200 * 3);
+	for (int j = start; j < end; j++) {
+		for (int i = 0; i < nx; i++) {
+			GStar::Vector3 col(0, 0, 0);
+			for (int s = 0; s < ns; s++) {
+				float u = float(i + Random()) / float(nx);
+				float v = float(j + Random()) / float(end);
+				GStar::Ray r = cam.get_ray(u, v);
+				col += color(r, *world, 0);
+			}
+			col /= float(ns);
+			col = GStar::Vector3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
+			local[((j -start) * 200 + i) * 3] = int(255.99*col[0]);
+			local[((j - start) * 200 + i) * 3 + 1] = int(255.99*col[1]);
+			local[((j - start) * 200 + i) * 3 + 2] = int(255.99*col[2]);
+		}
+	}
+	mtx.lock();
+	for (int j = start; j < end; j++) {
+		for (int i = 0; i < nx; i++) {
+			local[(j  * 200 + i) * 3] = local[((j - start) * 200 + i) * 3];
+			local[(j * 200 + i) * 3 + 1] = local[((j - start) * 200 + i) * 3 + 1];
+			local[(j  * 200 + i) * 3 + 2] = local[((j - start) * 200 + i) * 3 + 2];
+		}
+	}
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Generating RayTracing Map %d ", start);
+	delete[] local;
+	mtx.unlock();
 }

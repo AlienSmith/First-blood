@@ -16,7 +16,6 @@
 #include"TextureData.h"
 #include"SimpleExample.h"
 #include"Data.h"
-#include"lua.hpp"
 #include"Assert.h"
 uint8_t * GStar::LoadFile(const char * i_pFilename, size_t & o_sizeFile)
 {
@@ -63,13 +62,13 @@ bool GStar::LoadObject(const char * filename, const InterfaceComponent* controll
 	ASSERT(result == 0, "Load buffer fail");
 	result = lua_pcall(pLuaState, 0, 0, 0);
 	ASSERT(result == 0, "Load buffer fail");
-	result = lua_getglobal(pLuaState, "Version");
+	/*result = lua_getglobal(pLuaState, "Version");
 	ASSERT(result == LUA_TSTRING,"Wrong DataType");
-	const char* pVersion = lua_tostring(pLuaState, -1);
+	const char* pVersion = lua _tostring(pLuaState, -1);
 	if (pVersion) {
 		pVersion = _strdup(pVersion);
 	}
-	lua_pop(pLuaState, 1);
+	lua_pop(pLuaState, 1);*/
 	result = lua_getglobal(pLuaState, "Camera");
 	ASSERT(result == LUA_TTABLE, "Wrong DataType");
 	lua_len(pLuaState, -1);
@@ -78,11 +77,35 @@ bool GStar::LoadObject(const char * filename, const InterfaceComponent* controll
 	lua_pop(pLuaState, 1);
 	lua_pushstring(pLuaState, "name");
 	int type = lua_gettable(pLuaState, -2);
-	ASSERT(result == LUA_TSTRING, "Wrong DataType");
+	ASSERT(type == LUA_TSTRING, "Wrong DataType");
 	const char* name = lua_tostring(pLuaState, -1);
 	if (name) {
 		name = _strdup(name);
 	}
 	lua_pop(pLuaState, 1);
+	float position[3];
+	LoadFloatArray("initial_position", position, pLuaState, 3);
+	return true;
+}
+
+bool GStar::LoadFloatArray(const char* tablename,float * o_array, lua_State* i_pState, int size)
+{
+	lua_pushstring(i_pState, tablename);
+	int type = lua_gettable(i_pState, -2);
+	ASSERT(type == LUA_TTABLE, "Wrong DataType");
+	lua_len(i_pState, -1);
+	lua_Integer table_entries = lua_tointeger(i_pState, -1);
+	lua_pop(i_pState, 1);
+	int count = 0;
+	if (table_entries < size) {
+		return false;
+	}
+	lua_pushnil(i_pState);
+	while (lua_next(i_pState, -2) != 0 && count < size) {
+		ASSERT(lua_type(i_pState, -1) == LUA_TNUMBER, "Wrong DataType");
+		o_array[count] = lua_tonumber(i_pState, -1);
+		lua_pop(i_pState, 1);
+		count++;
+	}
 	return true;
 }

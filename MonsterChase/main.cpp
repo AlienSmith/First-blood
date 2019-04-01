@@ -12,6 +12,7 @@
 #include "MainEntrance.h"
 #include "MyString.h"
 #include "TestScene.h"
+#include "MT_MAIN.hpp"
 //#include "Matrix4.h"
 //#include "Vector2.h"
 //#include "Vector3.h"
@@ -24,6 +25,11 @@
 //void test3();
 int main() 
 {
+	bool MT = true;
+	if (MT) {
+		Entrance();
+	}
+	else
 	{
 		InitializeMemorySystem();
 		TestScene scene;

@@ -141,6 +141,7 @@
     <ClCompile Include="KeyControlComponent.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Monster.cpp" />
+    <ClCompile Include="MT_MAIN.cpp" />
     <ClCompile Include="PhysicBasedController.cpp" />
     <ClCompile Include="SimpleForce.cpp" />
     <ClCompile Include="SimpleRotation.cpp" />
@@ -149,6 +150,7 @@
     <ClInclude Include="Game.h" />
     <ClInclude Include="KeyControlComponent.h" />
     <ClInclude Include="LightScene.h" />
+    <ClInclude Include="MT_MAIN.hpp" />
     <ClInclude Include="PhysicBasedController.h" />
     <ClInclude Include="SimpleForce.h" />
     <ClInclude Include="SimpleRotation.h" />

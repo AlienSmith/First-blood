@@ -16,6 +16,9 @@
     <ClCompile Include="SimpleRotation.cpp">
       <Filter>Interfaces</Filter>
     </ClCompile>
+    <ClCompile Include="MT_MAIN.cpp">
+      <Filter>MT</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -38,6 +41,9 @@
     <ClInclude Include="TestScene.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="MT_MAIN.hpp">
+      <Filter>MT</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">
@@ -45,6 +51,9 @@
     </Filter>
     <Filter Include="GameObjects">
       <UniqueIdentifier>{5a04c975-9e56-4281-b0f6-5863a3328ffa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="MT">
+      <UniqueIdentifier>{f32a6279-b5da-46f6-b211-1db9114a4753}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

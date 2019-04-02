@@ -20,6 +20,9 @@
 #include"TextureData.h"
 #include"SimpleExample.h"
 #include"Data.h"
+#include"PhysicBasedController.h"
+#include"PhysicComponent.h"
+#include"PhysicManager.h"
 class TestScene : public GStar::SceneInterface {
 public:
 	TestScene() {
@@ -53,8 +56,8 @@ public:
 		//control1 = new KeyControlCompoenent(trans1, 2.0f);
 		//imanager.AddInterface(control1);
 		//GStar::CameraManager::Instance()->SetCurrentCamera(trans1);
-		//Cube
-		trans2 = new GStar::TransformComponent("Cube");
+		//Sprite
+		trans2 = new GStar::TransformComponent("Sprite");
 		world.AddToRoot(trans2);
 		trans2->SetTransform(GStar::Vector3(0.0f, 0.0f, -.5f), GStar::Base::WORLD);
 		trans2->UpdateTransform();
@@ -62,8 +65,6 @@ public:
 		GStar::MeshComponent* m2 = new GStar::MeshComponent(spriteTparameters);
 		R2.AddComponent(m2);
 		GStar::TextureComponent* t2 = new GStar::TextureComponent();
-
-
 		t2->Initialize(texture.getData());
 
 
@@ -72,6 +73,21 @@ public:
 		//ai2 = new SimpleRotation(trans2);
 		//imanager.AddInterface(ai2);
 		//delete i_texture;
+
+		//Cube
+		trans3 = new GStar::TransformComponent("Cube");
+		//add transform to the tree or it will not be updated
+		world.AddToRoot(trans3);
+		trans3->SetTransform(GStar::Vector3(0.0f, 0.0f, -.3f), GStar::WORLD);
+		trans3->SetScale(GStar::Vector3(.1f, .1f, .1f));
+		trans3->UpdateTransform();
+		RObject& R3 = renderer.CreateRenderObject(trans3);
+		GStar::MeshComponent* M3 = new GStar::MeshComponent(NT_cubeparameters);
+		R3.AddComponent(M3);
+		R3.AddComponent(new GStar::ShaderComponent(NT_Shaders));
+		GStar::PhysicComponent* P3 = GStar::PhysicManager::Instance()->AddPhysic(trans3,false,1.0f,.1f);
+		GStar::InterfaceComponent* I3 = new GStar::PhysicBasedController(P3, 1.0f);
+		imanager.AddInterface(I3);
 	}
 	virtual void Update() {}
 	virtual void Terminate() {}
@@ -79,5 +95,6 @@ private:
 	GStar::TransformComponent* trans1;
 	GStar::InterfaceComponent* control1;
 	GStar::TransformComponent* trans2;
+	GStar::TransformComponent* trans3;
 	GStar::InterfaceComponent* ai2;
 };

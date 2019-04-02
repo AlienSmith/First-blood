@@ -41,6 +41,33 @@ namespace GStar {
 			}
 			LeftApplyingTransform(temp, Vector3(0, 0, 0));
 			return temp;
+		}//Forward Vector with Scale
+		inline GStar::Vector3 Z() const {
+			return GStar::Vector3(
+				my_model.M.GetData(0, 2),
+				my_model.M.GetData(1, 2),
+				my_model.M.GetData(2, 2));
+		}
+		//Right Vector with Scale
+		inline GStar::Vector3 X() const {
+			return GStar::Vector3(
+				my_model.M.GetData(0, 0),
+				my_model.M.GetData(1, 0),
+				my_model.M.GetData(2, 0));
+		}
+		//Up Vector with Scale
+		inline GStar::Vector3 Y() const {
+			return GStar::Vector3(
+				my_model.M.GetData(0, 1),
+				my_model.M.GetData(1, 1),
+				my_model.M.GetData(2, 1));
+		}
+		//TranformVector To Local to World
+		inline GStar::Vector3 T() const {
+			return GStar::Vector3(
+				my_model.M.GetData(0, 3),
+				my_model.M.GetData(1, 3),
+				my_model.M.GetData(2, 3));
 		}
 		inline GStar::Vector3 GetForWardVector() const {
 			GStar::Matrix4 temp = my_model.M;

@@ -28,6 +28,10 @@ namespace GStar {
 		void Copy(const array_ff & rdata);
 		//TODO do I need to make this nonconst
 		const array_ff& Get() const;
+		const Vector3 X() const;
+		const Vector3 Y() const;
+		const Vector3 Z() const;
+		const Vector3 Tr() const;
 		void operator = (const Matrix4& A);
 		void operator += (const Matrix4& A);
 		void operator -= (const Matrix4& A);
@@ -406,6 +410,22 @@ namespace GStar {
 	inline const array_ff& Matrix4::Get() const
 	{
 		return data;
+	}
+	inline const Vector3 Matrix4::X() const
+	{
+		return Vector3(data[0][0],data[1][0],data[2][0]);
+	}
+	inline const Vector3 Matrix4::Y() const
+	{
+		return Vector3(data[0][1], data[1][1], data[2][1]);
+	}
+	inline const Vector3 Matrix4::Z() const
+	{
+		return Vector3(data[0][2], data[1][2], data[2][2]);
+	}
+	inline const Vector3 Matrix4::Tr() const
+	{
+		return Vector3(data[0][3], data[1][3], data[2][3]);
 	}
 }
 #endif // !MATRIX4

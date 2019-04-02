@@ -132,6 +132,10 @@
     <ClCompile Include="Manager.cpp">
       <Filter>Manager</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionComponent.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
+    <ClCompile Include="CollisionManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -363,6 +367,12 @@
     <ClInclude Include="Manager.h">
       <Filter>Manager</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionComponent.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionManager.h">
+      <Filter>Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -563,6 +573,9 @@
     </Filter>
     <Filter Include="Manager">
       <UniqueIdentifier>{2a972d2d-0b7e-49ee-81a2-da2808c5beae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Collision">
+      <UniqueIdentifier>{305ef33b-50cf-45eb-b586-e8a02dd2d963}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>

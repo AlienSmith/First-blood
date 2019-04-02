@@ -25,7 +25,7 @@
 //void test3();
 int main() 
 {{
-	bool MT = true;
+	bool MT = false;
 	InitializeMemorySystem();
 	if (MT) {
 		Entrance();

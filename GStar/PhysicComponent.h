@@ -11,7 +11,7 @@ namespace GStar {
 		 PhysicComponent(const PhysicComponent&) = delete;
 		~ PhysicComponent();
 		inline void AddFource(const Vector3& Force);
-		inline TransformComponent* GetTransformComponent() {
+		inline const TransformComponent* const GetTransformComponent() const {
 			return my_transform;
 		}
 		inline float getMass() const {
@@ -23,6 +23,9 @@ namespace GStar {
 			return _roughness;
 		}
 		inline void Update();
+		inline GStar::Vector3 GetSpeed() const {
+			return _speed;
+		}
 	private:
 		inline void ResetValues();
 		inline Vector3 GetCurrentResistance() const;

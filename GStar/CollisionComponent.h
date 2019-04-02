@@ -10,7 +10,8 @@ namespace GStar {
 		CollisionComponent(const CollisionComponent& other) = delete;
 		CollisionComponent& operator = (const CollisionComponent& other) = delete;
 		PhysicComponent* getPhysic();
-		Vector3 getOffset();
+		const PhysicComponent* const getPhysic() const;
+		Vector3 getOffset() const;
 	private:
 		PhysicComponent* my_physic;
 		Vector3 offsets;

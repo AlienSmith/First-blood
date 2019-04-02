@@ -68,8 +68,8 @@ namespace GStar {
 	 //return the value for the current speed
 	 inline Vector3 PhysicComponent::GetCurrentResistance() const
 	 {
-		// return (-1.0f * _speed * _speed* _roughness);
-		 return GStar::Vector3(.0f, .0f, .0f);
+		return (-0.01f * _speed * _speed* _roughness);
+		// return GStar::Vector3(.0f, .0f, .0f);
 	 }
 	 inline void PhysicComponent::Update()
 	 {

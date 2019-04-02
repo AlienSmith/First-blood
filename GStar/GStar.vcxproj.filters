@@ -129,9 +129,6 @@
     <ClCompile Include="metal.cpp">
       <Filter>RayTracer</Filter>
     </ClCompile>
-    <ClCompile Include="Manager.cpp">
-      <Filter>Manager</Filter>
-    </ClCompile>
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Collision</Filter>
     </ClCompile>
@@ -363,9 +360,6 @@
     </ClInclude>
     <ClInclude Include="SharedPointer.h">
       <Filter>SmartPointer</Filter>
-    </ClInclude>
-    <ClInclude Include="Manager.h">
-      <Filter>Manager</Filter>
     </ClInclude>
     <ClInclude Include="CollisionComponent.h">
       <Filter>Collision</Filter>

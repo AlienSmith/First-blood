@@ -1,5 +1,5 @@
 #pragma once
-#include"Manager.h"
+//#include"Manager.h"
 #include<stdlib.h>
 #include"SceneInterface.h"
 #include"World.h"
@@ -31,7 +31,8 @@ public:
 	virtual ~TestScene(){}
 	virtual void Start() {
 		GStar::MyString file = GStar::MyString("../MonsterChase/Sprite.lua");
-		GStar::LoadObject(file.GetString(),nullptr);
+		//temporary disable lua 
+		//GStar::LoadObject(file.GetString(),nullptr);
 		float a = SimpleExample::UnitRandom();
 		uint8_t texels[3] =
 		{
@@ -49,13 +50,14 @@ public:
 		GStar::World& world = GStar::World::Instance();
 		GStar::RManager& renderer = *GStar::RManager::Instance();
 		GStar::InterfaceComponentManager& imanager = *GStar::InterfaceComponentManager::Instance();
-		//trans1 = new GStar::TransformComponent("Camera");
-		//world.AddToRoot(trans1);
-		//trans1->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f), GStar::Base::WORLD);
-		//trans1->UpdateTransform();
+		trans1 = new GStar::TransformComponent("Camera");
+		world.AddToRoot(trans1);
+		trans1->SetTransform(GStar::Vector3(0.0f, 0.0f, 1.0f), GStar::Base::WORLD);
+		trans1->UpdateTransform();
+		//disable the camera 
 		//control1 = new KeyControlCompoenent(trans1, 2.0f);
 		//imanager.AddInterface(control1);
-		//GStar::CameraManager::Instance()->SetCurrentCamera(trans1);
+		GStar::CameraManager::Instance()->SetCurrentCamera(trans1);
 		//Sprite
 		trans2 = new GStar::TransformComponent("Sprite");
 		world.AddToRoot(trans2);

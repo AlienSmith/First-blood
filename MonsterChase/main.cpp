@@ -24,16 +24,16 @@
 //void test2();
 //void test3();
 int main() 
-{
+{{
 	bool MT = true;
+	InitializeMemorySystem();
 	if (MT) {
 		Entrance();
 	}
-	else
-	{
-		InitializeMemorySystem();
+	else {
 		TestScene scene;
 		MainEntrance::SetUpAndRun();
+	}
 		DestroyMemorySystem();
 	};
 	_CrtDumpMemoryLeaks();

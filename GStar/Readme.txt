@@ -10,4 +10,5 @@ The SmartPointer is under GStar, in SharedPointer Filter, Named SharedPointer, U
 Notice the generation process will take a while.
 #Assignment 2.02 
 The Timer is in the Time Filter, Named GSTime
-The Physic implimentation is in the Physics Filter, Named PhysicComponent. The PhysicManager manages the PhysicComponents
+The Physic implimentation is in the Physics Filter, Named PhysicComponent. The PhysicManager manages the PhysicComponents The physicbasedController
+Controls the object under physics. use "T""F"G""H" to move the object and use mouse to rotate the object.

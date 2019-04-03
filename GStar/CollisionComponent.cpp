@@ -1,5 +1,6 @@
 #include "CollisionComponent.h"
 #include "PhysicComponent.h"
+#include <math.h>
 GStar::CollisionComponent::CollisionComponent(PhysicComponent * trans):my_physic(trans){}
 
 GStar::CollisionComponent::CollisionComponent(PhysicComponent * trans, const Vector3 & offset): my_physic(trans),offsets(offset){}
@@ -19,18 +20,65 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 {
 	//X Y Z Tr
 	//Assume the speed does not change during this frame
-	GStar::Vector3 Vector_A[4];
-	GStar::Vector3 Vector_B[4];
-	GStar::Vector3 SpeedAtoB = ColliderA.getPhysic()->GetSpeed() -ColliderB.getPhysic()->GetSpeed();
-	Vector_A[0] = ColliderA.getPhysic()->GetTransformComponent()->X();
-	Vector_A[1] = ColliderA.getPhysic()->GetTransformComponent()->Y();
-	Vector_A[2] = ColliderA.getPhysic()->GetTransformComponent()->Z();
-	Vector_A[3] = ColliderA.getPhysic()->GetTransformComponent()->T();
- 	Vector_B[0] = ColliderB.getPhysic()->GetTransformComponent()->X();
-	Vector_B[1] = ColliderB.getPhysic()->GetTransformComponent()->Y();
-	Vector_B[2] = ColliderB.getPhysic()->GetTransformComponent()->Z();
-	Vector_B[3] = ColliderB.getPhysic()->GetTransformComponent()->T();
-	//Transfer Center to the world space
+	GStar::CollisionInfo InfoA = { ColliderA.getPhysic()->GetTransformComponent()->X(),
+	 ColliderA.getPhysic()->GetTransformComponent()->Y(),
+	 ColliderA.getPhysic()->GetTransformComponent()->Z(),
+	 ColliderA.getPhysic()->GetTransformComponent()->GetTransform(),
+	 ColliderA.getOffset()*ColliderA.getPhysic()->GetTransformComponent()->GetScale() };
+	GStar::CollisionInfo InfoB = { ColliderB.getPhysic()->GetTransformComponent()->X(),
+	 ColliderB.getPhysic()->GetTransformComponent()->Y(),
+	 ColliderB.getPhysic()->GetTransformComponent()->Z(),
+	 ColliderB.getPhysic()->GetTransformComponent()->GetTransform(),
+	 ColliderB.getOffset()*ColliderB.getPhysic()->GetTransformComponent()->GetScale() };
 
+	GStar::Vector3 SpeedAtoB = ColliderA.getPhysic()->GetSpeed() -ColliderB.getPhysic()->GetSpeed();
+	//Transfer Center to the world space
+	return false;
+}
+
+bool GStar::OverLapAtoB(const CollisionInfo * A, const CollisionInfo * B, const Vector3 & speed, float end_time, float & closeTime, float & opentime)
+{
+	for (int i = 0; i < 3; i++) {
+		GStar::Vector3 normalized_axies = (1.0f / (B->Scale).getValue(i)) *(B->Axies)[i];
+		float A_center_on_B_axies = (A->Tr).Dot(normalized_axies);
+		float B_center_on_B_axies = (B->Tr).Dot(normalized_axies);
+		float A_extends_on_B_axies = fabs(((A->Axies)[0]).Dot(normalized_axies)) + fabs(((A->Axies)[1]).Dot(normalized_axies)) + fabs(((A->Axies)[2]).Dot(normalized_axies));
+		float B_extends_on_B_axies = (B->Scale).getValue(i);
+		float speed_on_B_axies = speed.Dot(normalized_axies);
+		float distance = fabs(B_center_on_B_axies - A_center_on_B_axies);
+		float open_distance = distance + A_extends_on_B_axies + B_extends_on_B_axies;
+		float close_distance = distance - A_extends_on_B_axies - B_extends_on_B_axies;
+		float open_time;
+		float close_time;
+		if (Equals(speed_on_B_axies, 0.0f)) {
+			if (close_distance > 0.0f) {
+				return false;
+			}
+			else {
+				close_time = 0.0f;
+				open_time = 100.0f;
+			}
+		}
+		else {
+			open_time = open_distance / speed_on_B_axies;
+			close_time = close_distance / speed_on_B_axies;
+			if (close_time > end_time || open_time < 0) {
+				return false;
+			}
+		}
+		//if the largest close time is smaller that the smallest opentime then there is a time all axies are closed
+		if (close_time > closeTime) {
+			closeTime = close_time;
+		}if (open_time < opentime) {
+			opentime = open_time;
+		}
+		//It will not collide
+	}
+	return true;
+}
+
+
+bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vector3& axies, float end_time, float& closeTime, float& opentime)
+{
 	return false;
 }

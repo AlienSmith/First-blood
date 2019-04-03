@@ -16,7 +16,7 @@ void GStar::PhysicBasedController::OnKeyControl(GStar::Event * input)
 			delta[2] = 0;
 		}
 		else {
-			delta[2] = -speed;
+			delta[2] = -force;
 		}
 	}
 	else if (event->SingleKey == GLFW_KEY_F) {
@@ -25,7 +25,7 @@ void GStar::PhysicBasedController::OnKeyControl(GStar::Event * input)
 		}
 		else
 		{
-			delta[0] = -speed;
+			delta[0] = -force;
 		}
 	}
 	else if (event->SingleKey == GLFW_KEY_G) {
@@ -33,7 +33,7 @@ void GStar::PhysicBasedController::OnKeyControl(GStar::Event * input)
 			delta[2] = 0;
 		}
 		else {
-			delta[2] = speed;
+			delta[2] = force;
 		}
 	}
 	else if (event->SingleKey == GLFW_KEY_H) {
@@ -42,7 +42,7 @@ void GStar::PhysicBasedController::OnKeyControl(GStar::Event * input)
 		}
 		else
 		{
-			delta[0] = speed;
+			delta[0] = force;
 		}
 	}
 }

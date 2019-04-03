@@ -14,6 +14,9 @@ namespace GStar {
 		inline const TransformComponent* const GetTransformComponent() const {
 			return my_transform;
 		}
+		inline TransformComponent* GetTransformComponent() {
+			return my_transform;
+		}
 		inline float getMass() const {
 			return _mass;
 		}
@@ -71,8 +74,8 @@ namespace GStar {
 	 //return the value for the current speed
 	 inline Vector3 PhysicComponent::GetCurrentResistance() const
 	 {
-		return (-0.01f * _speed * _speed* _roughness);
-		// return GStar::Vector3(.0f, .0f, .0f);
+		//return (-1.0f* _speed * _speed* _roughness);
+		return GStar::Vector3(.0f, .0f, .0f);
 	 }
 	 inline void PhysicComponent::Update()
 	 {
@@ -85,7 +88,7 @@ namespace GStar {
 			 _speed += (_totalforce + resistance)*GSTime::Instance().GetdeltaTime();
 			 _delta = .5f*(_speed + lastspeed)*GSTime::Instance().GetdeltaTime();
 		 }
-		 my_transform->Translate(_delta/100.0f,GStar::Base::WORLD);
+		 my_transform->Translate(_delta,GStar::Base::WORLD);
 		 this->ResetValues();
 	 }
 }

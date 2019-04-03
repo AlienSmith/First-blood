@@ -62,12 +62,8 @@ namespace GStar {
 				my_model.M.GetData(1, 1),
 				my_model.M.GetData(2, 1));
 		}
-		//TranformVector To Local to World
-		inline GStar::Vector3 T() const {
-			return GStar::Vector3(
-				my_model.M.GetData(0, 3),
-				my_model.M.GetData(1, 3),
-				my_model.M.GetData(2, 3));
+		inline GStar::Vector3 GetScale() const {
+			return my_model.So;
 		}
 		inline GStar::Vector3 GetForWardVector() const {
 			GStar::Matrix4 temp = my_model.M;

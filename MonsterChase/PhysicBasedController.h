@@ -8,11 +8,11 @@ namespace GStar {
 	class PhysicBasedController : public InterfaceComponent
 	{
 	public:
-		PhysicBasedController(GStar::PhysicComponent* component, float movespeed):
+		PhysicBasedController(GStar::PhysicComponent* component, float forcescale):
 			InterfaceComponent(component->GetTransformComponent()),
 			delta(Vector3(0.0f,0.0f,0.0f)),
 			my_component(component),
-			speed(movespeed) {
+			force(forcescale) {
 			Initialize();
 		}
 		virtual void Initialize() override {
@@ -34,6 +34,6 @@ namespace GStar {
 	private:
 		GStar::Vector3 delta;
 		GStar::PhysicComponent* my_component;
-		const float speed;
+		const float force;
 	};
 }

@@ -96,8 +96,7 @@ bool GStar::OverLapAtoB(const CollisionInfo * A, const CollisionInfo * B, const 
 		float B_extends_on_B_axies = .5f*((B->Scale).getValue(i));
 		float speed_on_B_axies = speed.Dot(normalized_axies);
 		float distance = B_center_on_B_axies- A_center_on_B_axies;
-		float sign = distance / fabs(distance);
-		distance = fabs(distance);
+		distance *= speed_on_B_axies/fabs(speed_on_B_axies);
 		float offset = A_extends_on_B_axies + B_extends_on_B_axies;
 		float open_distance = distance + offset;
 		float close_distance = distance - offset;
@@ -113,8 +112,8 @@ bool GStar::OverLapAtoB(const CollisionInfo * A, const CollisionInfo * B, const 
 			}
 		}
 		else {
-			open_time = sign*(open_distance / speed_on_B_axies);
-			close_time = sign*(close_distance / speed_on_B_axies);
+			open_time = open_distance / fabs(speed_on_B_axies);
+			close_time = close_distance / fabs(speed_on_B_axies);
 			if (BigerThan(close_time, end_time) || SmallerThan(open_time, 0.0f)) {
 				return false;
 			}

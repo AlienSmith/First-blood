@@ -13,10 +13,10 @@ void GStar::PhysicBasedController::OnKeyControl(GStar::Event * input)
 	GStar::KeyInputEvent* event = static_cast<GStar::KeyInputEvent*>(input);
 	if (event->SingleKey == GLFW_KEY_T) {
 		if (event->action == GLFW_RELEASE) {
-			delta[2] = 0;
+			delta[1] = 0;
 		}
 		else {
-			delta[2] = -force;
+			delta[1] = force;
 		}
 	}
 	else if (event->SingleKey == GLFW_KEY_F) {
@@ -30,10 +30,10 @@ void GStar::PhysicBasedController::OnKeyControl(GStar::Event * input)
 	}
 	else if (event->SingleKey == GLFW_KEY_G) {
 		if (event->action == GLFW_RELEASE) {
-			delta[2] = 0;
+			delta[1] = 0;
 		}
 		else {
-			delta[2] = force;
+			delta[1] = -force;
 		}
 	}
 	else if (event->SingleKey == GLFW_KEY_H) {

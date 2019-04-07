@@ -82,7 +82,7 @@ public:
 		trans3 = new GStar::TransformComponent("Cube");
 		//add transform to the tree or it will not be updated
 		world.AddToRoot(trans3);
-		trans3->SetTransform(GStar::Vector3(-0.1f, 0.0f, -.3f), GStar::WORLD);
+		trans3->SetTransform(GStar::Vector3(0.0f, 0.2f, -.3f), GStar::WORLD);
 		trans3->SetScale(GStar::Vector3(.1f, .1f, .1f));
 		trans3->UpdateTransform();
 		RObject& R3 = renderer.CreateRenderObject(trans3);
@@ -98,7 +98,7 @@ public:
 		//Cube2 
 		trans4 = new GStar::TransformComponent("Cube2");
 		world.AddToRoot(trans4);
-		trans4->SetTransform(GStar::Vector3(0.05f, 0.0f, -.3f), GStar::WORLD);
+		trans4->SetTransform(GStar::Vector3(0.0f, -0.05f, -.3f), GStar::WORLD);
 		trans4->SetScale(GStar::Vector3(.1f, .1f, .1f));
 		trans4->UpdateTransform();
 		RObject& R4 = renderer.CreateRenderObject(trans4);

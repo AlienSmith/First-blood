@@ -92,8 +92,8 @@ bool GStar::OverLapAtoB(const CollisionInfo * A, const CollisionInfo * B, const 
 		GStar::Vector3 normalized_axies = (1.0f / (B->Scale).getValue(i)) *(B->Axies)[i];
 		float A_center_on_B_axies = (A->Tr).Dot(normalized_axies);
 		float B_center_on_B_axies = (B->Tr).Dot(normalized_axies);
-		float A_extends_on_B_axies = .5f*fabs(((A->Axies)[0]).Dot(normalized_axies)) + fabs(((A->Axies)[1]).Dot(normalized_axies)) + fabs(((A->Axies)[2]).Dot(normalized_axies));
-		float B_extends_on_B_axies = .5f*(B->Scale).getValue(i);
+		float A_extends_on_B_axies = .5f*(fabs(((A->Axies)[0]).Dot(normalized_axies)) + fabs(((A->Axies)[1]).Dot(normalized_axies)) + fabs(((A->Axies)[2]).Dot(normalized_axies)));
+		float B_extends_on_B_axies = .5f*((B->Scale).getValue(i));
 		float speed_on_B_axies = speed.Dot(normalized_axies);
 		float distance = B_center_on_B_axies - A_center_on_B_axies;
 		float open_distance = distance + (distance/fabs(distance))*(A_extends_on_B_axies + B_extends_on_B_axies);
@@ -140,8 +140,8 @@ bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vect
 			 }
 			 float A_center_on_axies = (A->Tr).Dot(temp_axies);
 			 float B_center_on_axies = (B->Tr).Dot(temp_axies);
-			 float A_extends_on_axies = .5f*fabs(((A->Axies)[0]).Dot(temp_axies)) + fabs(((A->Axies)[1]).Dot(temp_axies)) + fabs(((A->Axies)[2]).Dot(temp_axies));
-			 float B_extends_on_axies = .5f*fabs(((B->Axies)[0]).Dot(temp_axies)) + fabs(((B->Axies)[1]).Dot(temp_axies)) + fabs(((B->Axies)[2]).Dot(temp_axies));
+			 float A_extends_on_axies = .5f*(fabs(((A->Axies)[0]).Dot(temp_axies)) + fabs(((A->Axies)[1]).Dot(temp_axies)) + fabs(((A->Axies)[2]).Dot(temp_axies)));
+			 float B_extends_on_axies = .5f*(fabs(((B->Axies)[0]).Dot(temp_axies)) + fabs(((B->Axies)[1]).Dot(temp_axies)) + fabs(((B->Axies)[2]).Dot(temp_axies)));
 			 float speed_on_axies = speed.Dot(temp_axies);
 			 float distance =B_center_on_axies - A_center_on_axies;
 			 float open_distance = distance+(distance / fabs(distance))*(A_extends_on_axies + B_extends_on_axies);

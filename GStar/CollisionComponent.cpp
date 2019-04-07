@@ -24,6 +24,9 @@ GStar::Vector3 GStar::CollisionComponent::getOffset() const
 
 bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionComponent& ColliderB, Vector3& o_point, Vector3& o_normal, float deltatime, float& collisiontime)
 {
+	if (ColliderA.getPhysic()->GetSpeed() == ColliderB.getPhysic()->GetSpeed()) {
+		return false;
+	}
 	//X Y Z Tr
 	//Assume the speed does not change during this frame
 	GStar::CollisionInfo InfoA = { ColliderA.getPhysic()->GetTransformComponent()->X(),
@@ -71,6 +74,14 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 	float temp = SpeedAtoB.Dot(axies);
 	o_normal = -1.0f*(temp/fabs(temp))*axies;
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Collided");
+#if defined(_DEBUG)
+	int idA = ColliderA.getPhysic()->GetTransformComponent()->GetName();
+	GStar::Vector3 SpeedA = ColliderA.getPhysic()->GetSpeed();
+	int idB = ColliderB.getPhysic()->GetTransformComponent()->GetName();
+	GStar::Vector3 SpeedB = ColliderB.getPhysic()->GetSpeed();
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Object %i with speed %f,%f,%f",idA,SpeedA[0],SpeedA[1], SpeedA[2]);
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Object %i with speed %f,%f,%f", idB, SpeedB[0], SpeedB[1], SpeedB[2]);
+#endif
 	//Transfer Center to the world space
 	return true;
 }

@@ -25,7 +25,7 @@ namespace GStar {
 			while (PhysicsList.HasNext()) {
 				PhysicComponent* temp = PhysicsList.GetNext();
 				if (temp->useGravity()) {
-					temp->AddFource(PhysicManager::Gravity * temp->getMass());
+					temp->AddForce(PhysicManager::Gravity * temp->getMass());
 				}
 				if (temp->UpdateInPhysics()) {
 					temp->Update(deltatime);

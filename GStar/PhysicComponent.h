@@ -10,7 +10,8 @@ namespace GStar {
 		 PhysicComponent(TransformComponent* const transform, bool use_gravity, float mass, float roughness);
 		 PhysicComponent(const PhysicComponent&) = delete;
 		~ PhysicComponent();
-		inline void AddFource(const Vector3& Force);
+		inline void AddForce(const Vector3& Force);
+		inline void SetForce(const Vector3& Force);
 		inline const TransformComponent* const GetTransformComponent() const {
 			return my_transform;
 		}
@@ -71,10 +72,14 @@ namespace GStar {
 	inline PhysicComponent::~ PhysicComponent(){}
 	 //Mid value method
 	 //Update The delta
-	 inline void PhysicComponent::AddFource(const Vector3 & Force)
-	 {
-		 _totalforce += Force;
-	 }
+	inline void PhysicComponent::AddForce(const Vector3 & Force)
+	{
+		_totalforce += Force;
+	}
+	inline void PhysicComponent::SetForce(const Vector3 & Force)
+	{
+		_totalforce = Force;
+	}
 	 inline void PhysicComponent::ResetValues()
 	 {
 		 for (int i = 0; i < 3; i++) {

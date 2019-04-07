@@ -14,6 +14,7 @@ GStar::CollisionComponent * GStar::CollisionManager::AddCollision(PhysicComponen
 }
 void GStar::CollisionManager::Update()
 {
+	int iterations = 0;
 	float smallest_close = 100.0f;
 	GStar::Vector3 normal(0.0f,0.0f,0.0f);
 	CollisionComponent* A = nullptr;
@@ -21,6 +22,11 @@ void GStar::CollisionManager::Update()
 	float lefttime = GSTime::Instance().GetdeltaTime();
 	bool collisionflag = false;
 	do {
+		iterations++;
+		if (iterations > 5) {
+			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "Collision detection overtimes");
+			break;
+		}
 		smallest_close = 100.0f;
 		collisionflag = false;
 		float temp_time = 200.0f;
@@ -59,10 +65,22 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 {
 	GStar::Vector3 speed_A = A->getPhysic()->GetSpeed();
 	GStar::Vector3 speed_B = B->getPhysic()->GetSpeed();
-	GStar::Vector3 speed_BtoA = speed_B - speed_A;
-	speed_BtoA *= .5f;
-	speed_BtoA = speed_BtoA.Dot(NormalForA)*NormalForA;
-	A->getPhysic()->SetSpeed(speed_A + speed_BtoA);
-	B->getPhysic()->SetSpeed(speed_B - speed_BtoA);
-
+	if (speed_A == speed_B) {
+		return;
+	}
+	GStar::Vector3 speedAtoB = speed_A - speed_B;
+	speedAtoB *= .5f;
+	speedAtoB = speedAtoB.Dot(NormalForA)*NormalForA;
+	A->getPhysic()->SetSpeed(speed_A - 1.0f*speedAtoB);
+	B->getPhysic()->SetSpeed(speed_B + 1.0f*speedAtoB);
+	A->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
+	B->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
+#if defined(_DEBUG)
+	int idA = A->getPhysic()->GetTransformComponent()->GetName();
+	GStar::Vector3 SpeedA = A->getPhysic()->GetSpeed();
+	int idB = B->getPhysic()->GetTransformComponent()->GetName();
+	GStar::Vector3 SpeedB = B->getPhysic()->GetSpeed();
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "After Collision Object %i with speed %f,%f,%f", idA, SpeedA[0], SpeedA[1], SpeedA[2]);
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "After Collision Object %i with speed %f,%f,%f", idB, SpeedB[0], SpeedB[1], SpeedB[2]);
+#endif
 }

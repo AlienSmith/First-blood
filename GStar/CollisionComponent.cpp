@@ -55,7 +55,7 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 	else {
 		return false;
 	}
-	/*if(OverLapAtoB(&InfoB, &InfoA, -1.0f*SpeedAtoB, deltatime, largest_close, smallest_open, axies)){
+	if(OverLapAtoB(&InfoB, &InfoA, -1.0f*SpeedAtoB, deltatime, largest_close, smallest_open, axies)){
 		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "B to A Close");
 	}
 	else {
@@ -69,7 +69,7 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 	}
 	if (largest_close > smallest_open) {
 		return false;
-	}*/
+	}
 	collisiontime = largest_close;
 	float temp = SpeedAtoB.Dot(axies);
 	o_normal = -1.0f*(temp/fabs(temp))*axies;
@@ -146,8 +146,7 @@ bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vect
 			 float B_extends_on_axies = .5f*(fabs(((B->Axies)[0]).Dot(temp_axies)) + fabs(((B->Axies)[1]).Dot(temp_axies)) + fabs(((B->Axies)[2]).Dot(temp_axies)));
 			 float speed_on_axies = speed.Dot(temp_axies);
 			 float distance = A_center_on_axies-B_center_on_axies;
-			 float sign = distance / fabs(distance);
-			 distance = fabs(distance);
+			 distance *= speed_on_axies / fabs(speed_on_axies);
 			 float offset = A_extends_on_axies + B_extends_on_axies;
 			 float open_distance = distance + offset;
 			 float close_distance = distance - offset;
@@ -163,8 +162,8 @@ bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vect
 				 }
 			 }
 			 else {
-				 open_time = sign*open_distance / speed_on_axies;
-				 close_time = sign*close_distance / speed_on_axies;
+				 open_time = open_distance / speed_on_axies;
+				 close_time = close_distance / speed_on_axies;
 				 if (close_time > end_time || open_time < 0) {
 					 return false;
 				 }

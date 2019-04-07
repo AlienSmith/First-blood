@@ -16,6 +16,7 @@
 #include "GLError.h"
 #include"PhysicManager.h"
 #include"RManager.h"
+#include"CollisionManager.h"
 MainEntrance* MainEntrance::instance = nullptr;
 const float MainEntrance::MouseSensitivity = 0.05f;
 void MainEntrance::SetUpAndRun()
@@ -68,6 +69,7 @@ void MainEntrance::Run()
 		myController->Update();
 		GStar::InterfaceComponentManager::Instance()->Update();
 		GStar::PhysicManager::Instance()->Update(GStar::GSTime::Instance().GetdeltaTime());
+		GStar::CollisionManager::Instance()->Update();
 		CleanScreen();
 		//The World should only update transform
 		world.Update();

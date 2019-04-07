@@ -23,6 +23,8 @@
 #include"PhysicBasedController.h"
 #include"PhysicComponent.h"
 #include"PhysicManager.h"
+#include"CollisionComponent.h"
+#include"CollisionManager.h"
 class TestScene : public GStar::SceneInterface {
 public:
 	TestScene() {
@@ -80,16 +82,30 @@ public:
 		trans3 = new GStar::TransformComponent("Cube");
 		//add transform to the tree or it will not be updated
 		world.AddToRoot(trans3);
-		trans3->SetTransform(GStar::Vector3(0.0f, 0.0f, -.3f), GStar::WORLD);
+		trans3->SetTransform(GStar::Vector3(-0.1f, 0.0f, -.3f), GStar::WORLD);
 		trans3->SetScale(GStar::Vector3(.1f, .1f, .1f));
 		trans3->UpdateTransform();
 		RObject& R3 = renderer.CreateRenderObject(trans3);
 		GStar::MeshComponent* M3 = new GStar::MeshComponent(NT_cubeparameters);
 		R3.AddComponent(M3);
-		R3.AddComponent(new GStar::ShaderComponent(NT_Shaders));
+		GStar::ShaderComponent* S3 = new GStar::ShaderComponent(NT_Shaders);
+		R3.AddComponent(S3);
 		GStar::PhysicComponent* P3 = GStar::PhysicManager::Instance()->AddPhysic(trans3,false,1.0f,.1f);
+		GStar::CollisionManager::AddCollision(P3, GStar::Vector3(1.0f, 1.0f, 1.0f));
 		GStar::InterfaceComponent* I3 = new GStar::PhysicBasedController(P3, 1.0f);
 		imanager.AddInterface(I3);
+
+		//Cube2 
+		trans4 = new GStar::TransformComponent("Cube2");
+		world.AddToRoot(trans4);
+		trans4->SetTransform(GStar::Vector3(0.05f, 0.0f, -.3f), GStar::WORLD);
+		trans4->SetScale(GStar::Vector3(.1f, .1f, .1f));
+		trans4->UpdateTransform();
+		RObject& R4 = renderer.CreateRenderObject(trans4);
+		R4.AddComponent(M3);
+		R4.AddComponent(S3);
+		GStar::PhysicComponent* P4 = GStar::PhysicManager::Instance()->AddPhysic(trans4, false, 1.0f, .1f);
+		GStar::CollisionManager::AddCollision(P4, GStar::Vector3(1.0f, 1.0f, 1.0f));
 	}
 	virtual void Update() {}
 	virtual void Terminate() {}
@@ -98,5 +114,6 @@ private:
 	GStar::InterfaceComponent* control1;
 	GStar::TransformComponent* trans2;
 	GStar::TransformComponent* trans3;
+	GStar::TransformComponent* trans4;
 	GStar::InterfaceComponent* ai2;
 };

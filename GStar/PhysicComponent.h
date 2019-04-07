@@ -35,6 +35,9 @@ namespace GStar {
 		inline bool UpdateInPhysics() {
 			return _update_in_physicsmanager;
 		}
+		inline void SetSpeed(const GStar::Vector3 & speed) {
+			_speed = speed;
+		}
 	private:
 		inline void ResetValues();
 		inline Vector3 GetCurrentResistance() const;

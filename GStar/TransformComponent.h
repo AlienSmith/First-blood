@@ -5,6 +5,7 @@
 #include "MyString.h"
 #include "SingleLinkedList.h"
 #include "SmartPointer.h"
+#include "ConsolePrint.h"
 namespace GStar {
 	//Version 3.0 Check OLDCODE Folder for previous version
 	//transform must update after initialize, parent must be setted and updated before children transform can be used.
@@ -302,7 +303,9 @@ namespace GStar {
 		},
 			my_parent(nullptr),
 			my_layer(Layer::DEFAULT),
-			my_name(GStar::MyString::hash_str(name.GetString())){}
+			my_name(GStar::MyString::hash_str(name.GetString())){
+			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "%s is %i",name.GetString(),my_name);
+		}
 	private:
 		TransformData my_model;
 		SingleLinkedList<GStar::TransformComponent*> my_children;

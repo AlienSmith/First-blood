@@ -19,6 +19,8 @@ namespace GStar {
 			}
 		}
 		void Update();
+		void UpdatePhysic(float deltatime);
+		void ApplyCollisionResults(CollisionComponent* A, CollisionComponent* B, const GStar::Vector3& NormalForA);
 	private:
 		static CollisionManager* instance;
 		std::vector<CollisionComponent*> CollisionComponents;

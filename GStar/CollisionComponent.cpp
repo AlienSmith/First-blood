@@ -50,19 +50,19 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 		return false;
 	}*/
 	if (OverLapAtoB(&InfoA, &InfoB, SpeedAtoB, deltatime, largest_close, smallest_open, axies)) {
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "A to B Close");
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "A to B Close");
 	}
 	else {
 		return false;
 	}
 	if(OverLapAtoB(&InfoB, &InfoA, -1.0f*SpeedAtoB, deltatime, largest_close, smallest_open, axies)){
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "B to A Close");
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "B to A Close");
 	}
 	else {
 		return false;
 	}
 	if (OverLapAB(&InfoA, &InfoB, SpeedAtoB, deltatime, largest_close, smallest_open, axies)) {
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Other Close");
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "Other Close");
 	}
 	else {
 		return false;

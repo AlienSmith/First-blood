@@ -15,7 +15,7 @@ GStar::CollisionComponent * GStar::CollisionManager::AddCollision(PhysicComponen
 void GStar::CollisionManager::Update()
 {
 	float smallest_close = 100.0f;
-	GStar::Vector3 normal;
+	GStar::Vector3 normal(0.0f,0.0f,0.0f);
 	CollisionComponent* A = nullptr;
 	CollisionComponent* B = nullptr;
 	float lefttime = GSTime::Instance().GetdeltaTime();

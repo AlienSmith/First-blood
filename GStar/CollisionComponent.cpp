@@ -39,15 +39,15 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 
 	GStar::Vector3 SpeedAtoB = ColliderA.getPhysic()->GetSpeed() - ColliderB.getPhysic()->GetSpeed();
 	GStar::Vector3 axies(0.0f, 0.0f, 0.0f);
-	float largest_close = deltatime + 1.0f;
-	float smallest_open = -1.0f;
+	float largest_close = -.0f;
+	float smallest_open = deltatime + 1.0f;
 	/*if (!(OverLapAtoB(&InfoA, &InfoB, SpeedAtoB, deltatime, largest_close, smallest_open, axies) &&
 		OverLapAtoB(&InfoB, &InfoA, -1.0f*SpeedAtoB, deltatime, largest_close, smallest_open, axies) &&
 		OverLapAB(&InfoA, &InfoB, SpeedAtoB, deltatime, largest_close, smallest_open, axies))) {
 		return false;
 	}*/
 	if (OverLapAtoB(&InfoA, &InfoB, SpeedAtoB, deltatime, largest_close, smallest_open, axies)) {
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "A to B Close");
+		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "A to B Close");
 	}
 	else {
 		return false;
@@ -64,11 +64,12 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 	else {
 		return false;
 	}
-	if (largest_close < smallest_open) {
+	if (largest_close > smallest_open) {
 		return false;
 	}
 	collisiontime = largest_close;
-	o_normal = (axies.Dot(SpeedAtoB)*axies).Normalize();
+	float temp = SpeedAtoB.Dot(axies);
+	o_normal = -1.0f*(temp/fabs(temp))*axies;
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Collided");
 	//Transfer Center to the world space
 	return true;
@@ -83,9 +84,9 @@ bool GStar::OverLapAtoB(const CollisionInfo * A, const CollisionInfo * B, const 
 		float A_extends_on_B_axies = .5f*fabs(((A->Axies)[0]).Dot(normalized_axies)) + fabs(((A->Axies)[1]).Dot(normalized_axies)) + fabs(((A->Axies)[2]).Dot(normalized_axies));
 		float B_extends_on_B_axies = .5f*(B->Scale).getValue(i);
 		float speed_on_B_axies = speed.Dot(normalized_axies);
-		float distance = fabs(B_center_on_B_axies - A_center_on_B_axies);
-		float open_distance = distance + A_extends_on_B_axies + B_extends_on_B_axies;
-		float close_distance = distance - A_extends_on_B_axies - B_extends_on_B_axies;
+		float distance = B_center_on_B_axies - A_center_on_B_axies;
+		float open_distance = distance + (distance/fabs(distance))*(A_extends_on_B_axies + B_extends_on_B_axies);
+		float close_distance = distance - (distance / fabs(distance))*(A_extends_on_B_axies + B_extends_on_B_axies);
 		float open_time;
 		float close_time;
 		if (Equals(speed_on_B_axies, 0.0f)) {
@@ -131,9 +132,9 @@ bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vect
 			 float A_extends_on_axies = .5f*fabs(((A->Axies)[0]).Dot(temp_axies)) + fabs(((A->Axies)[1]).Dot(temp_axies)) + fabs(((A->Axies)[2]).Dot(temp_axies));
 			 float B_extends_on_axies = .5f*fabs(((B->Axies)[0]).Dot(temp_axies)) + fabs(((B->Axies)[1]).Dot(temp_axies)) + fabs(((B->Axies)[2]).Dot(temp_axies));
 			 float speed_on_axies = speed.Dot(temp_axies);
-			 float distance = fabs(B_center_on_axies - A_center_on_axies);
-			 float open_distance = distance + A_extends_on_axies + B_extends_on_axies;
-			 float close_distance = distance - A_extends_on_axies - B_extends_on_axies;
+			 float distance =B_center_on_axies - A_center_on_axies;
+			 float open_distance = distance+(distance / fabs(distance))*(A_extends_on_axies + B_extends_on_axies);
+			 float close_distance = distance-(distance / fabs(distance))*(A_extends_on_axies + B_extends_on_axies);
 			 float open_time;
 			 float close_time;
 			 if (Equals(speed_on_axies, 0.0f)) {

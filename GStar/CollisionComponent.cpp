@@ -145,7 +145,7 @@ bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vect
 			 float A_extends_on_axies = .5f*(fabs(((A->Axies)[0]).Dot(temp_axies)) + fabs(((A->Axies)[1]).Dot(temp_axies)) + fabs(((A->Axies)[2]).Dot(temp_axies)));
 			 float B_extends_on_axies = .5f*(fabs(((B->Axies)[0]).Dot(temp_axies)) + fabs(((B->Axies)[1]).Dot(temp_axies)) + fabs(((B->Axies)[2]).Dot(temp_axies)));
 			 float speed_on_axies = speed.Dot(temp_axies);
-			 float distance = A_center_on_axies-B_center_on_axies;
+			 float distance = B_center_on_axies-A_center_on_axies;
 			 distance *= speed_on_axies / fabs(speed_on_axies);
 			 float offset = A_extends_on_axies + B_extends_on_axies;
 			 float open_distance = distance + offset;
@@ -162,9 +162,9 @@ bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vect
 				 }
 			 }
 			 else {
-				 open_time = open_distance / speed_on_axies;
-				 close_time = close_distance / speed_on_axies;
-				 if (close_time > end_time || open_time < 0) {
+				 open_time = open_distance / fabs(speed_on_axies);
+				 close_time = close_distance / fabs(speed_on_axies);
+				 if (close_time > end_time || open_time < 0.0f) {
 					 return false;
 				 }
 			 }

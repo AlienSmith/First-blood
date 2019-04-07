@@ -25,9 +25,15 @@ namespace GStar {
 		}inline float getroughness() {
 			return _roughness;
 		}
-		inline void Update();
+		inline void Update(float deltatime);
 		inline GStar::Vector3 GetSpeed() const {
 			return _speed;
+		}
+		inline void UseCollision() {
+			_update_in_physicsmanager = false;
+		}
+		inline bool UpdateInPhysics() {
+			return _update_in_physicsmanager;
 		}
 	private:
 		inline void ResetValues();
@@ -39,6 +45,7 @@ namespace GStar {
 		bool _usegravity;
 		float _mass;//kg
 		float _roughness;
+		bool _update_in_physicsmanager;
 	};
 	inline PhysicComponent:: PhysicComponent(TransformComponent* const transform):
 	_totalforce(0.0f,0.0f,0.0f),
@@ -47,7 +54,8 @@ namespace GStar {
 	my_transform(transform),
 	_usegravity(false),
 	_mass(1.0f),
-	_roughness(0.1f){}
+	_roughness(0.1f),
+	_update_in_physicsmanager(true){}
 	inline PhysicComponent::PhysicComponent(TransformComponent * const transform, bool use_gravity, float mass, float roughness):
 	_totalforce(0.0f, 0.0f, 0.0f),
 	_speed(0.0f, 0.0f, 0.0f),
@@ -55,7 +63,8 @@ namespace GStar {
 	my_transform(transform),
 	_usegravity(use_gravity),
 	_mass(mass),
-	_roughness(roughness) {}
+	_roughness(roughness),
+	_update_in_physicsmanager(true) {}
 	inline PhysicComponent::~ PhysicComponent(){}
 	 //Mid value method
 	 //Update The delta
@@ -77,16 +86,16 @@ namespace GStar {
 		//return (-1.0f* _speed * _speed* _roughness);
 		return GStar::Vector3(.0f, .0f, .0f);
 	 }
-	 inline void PhysicComponent::Update()
+	 inline void PhysicComponent::Update(float deltatime)
 	 {
 		 GStar::Vector3 resistance = GetCurrentResistance();
 		 if (_totalforce == ((-1.0f) *resistance)) {
-			 _delta = _speed * GSTime::Instance().GetdeltaTime();
+			 _delta = _speed * deltatime;
 		 }
 		 else {
 			 GStar::Vector3 lastspeed = _speed;
-			 _speed += (_totalforce + resistance)*GSTime::Instance().GetdeltaTime();
-			 _delta = .5f*(_speed + lastspeed)*GSTime::Instance().GetdeltaTime();
+			 _speed += (_totalforce + resistance)*deltatime;
+			 _delta = .5f*(_speed + lastspeed)*deltatime;
 		 }
 		 my_transform->Translate(_delta,GStar::Base::WORLD);
 		 this->ResetValues();

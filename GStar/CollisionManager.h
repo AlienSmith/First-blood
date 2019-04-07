@@ -1,9 +1,12 @@
 #pragma once
-#include "SingleLinkedList.h"
+#include <vector>
 namespace GStar {
 	class CollisionComponent;
+	class PhysicComponent;
+	class Vector3;
 	class CollisionManager {
 	public:
+		static CollisionComponent* AddCollision(PhysicComponent* my_physic, const Vector3& offset);
 		static CollisionManager* Instance() {
 			if (!instance) {
 				instance = new CollisionManager();
@@ -18,7 +21,7 @@ namespace GStar {
 		void Update();
 	private:
 		static CollisionManager* instance;
-		SingleLinkedList<CollisionComponent*> CollisionComponentlist;
+		std::vector<CollisionComponent*> CollisionComponents;
 		CollisionManager(){}
 	};
 }

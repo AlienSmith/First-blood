@@ -20,7 +20,7 @@ namespace GStar {
 		void y(float y);
 		void z(float z);
 		// 2D vectors operations 
-		void Normalize();
+		const GStar::Vector3& Normalize();
 		float Dot(const Vector3& other) const;
 		float Length() const;
 		static Vector3 ProjAtoB(const Vector3& A, const Vector3& B);
@@ -30,6 +30,12 @@ namespace GStar {
 		static bool Refract(const Vector3& V, const Vector3& N, float ni_over_nt, Vector3& refracted);
 		static float Volume(const Vector3& A, const Vector3& B,const Vector3& C);
 		static short parallel(const Vector3& A, const Vector3&B);
+		inline bool isZero() {
+			if (Equals(m_x, 0.0f) && Equals(m_y, 0.0f) && Equals(m_z, 0.0f)) {
+				return true;
+			}
+			return false;
+		}
 		//is the data guaranteed to be continues ?
 		inline bool operator==(const Vector3& B) const {
 			return ((Equals(m_x, B.m_x) && Equals(m_y, B.m_y) && Equals(m_z, B.m_z)) ? true: false);
@@ -197,12 +203,12 @@ namespace GStar {
 		return (float)sqrt(this->m_x*this->m_x + this->m_y*this->m_y+this->m_z*this->m_z);
 	}
 	//this will normalize the vector
-	inline void GStar::Vector3::Normalize() {
+	inline const GStar::Vector3& GStar::Vector3::Normalize() {
 		float length = this->Length();
 		this->m_x = this->m_x / length;
 		this->m_y = this->m_y / length;
 		this->m_z = this->m_z / length;
-		return;
+		return *this;
 	}
 	// return projective from vector A onto vector B
 	inline GStar::Vector3 GStar::Vector3::ProjAtoB(const Vector3& A, const Vector3& B) {

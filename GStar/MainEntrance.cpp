@@ -67,7 +67,7 @@ void MainEntrance::Run()
 		myScene->UpdateTime();
 		myController->Update();
 		GStar::InterfaceComponentManager::Instance()->Update();
-		GStar::PhysicManager::Instance()->Update();
+		GStar::PhysicManager::Instance()->Update(GStar::GSTime::Instance().GetdeltaTime());
 		CleanScreen();
 		//The World should only update transform
 		world.Update();

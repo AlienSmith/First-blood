@@ -68,7 +68,7 @@ void MainEntrance() {
 		myController->Update();
 		GStar::InterfaceComponentManager::Instance()->Update();
 
-		GStar::PhysicManager::Instance()->Update();
+		GStar::PhysicManager::Instance()->Update(GStar::GSTime::Instance().GetdeltaTime());
 		world.Update();
 		CleanScreen();
 		GStar::RManager::Instance()->Update();

@@ -20,14 +20,16 @@ namespace GStar {
 			}
 		}
 		//Call The function To apply physical effects to objects
-		void Update() {
+		void Update(float deltatime) {
 			PhysicsList.Resetcurrent();
 			while (PhysicsList.HasNext()) {
 				PhysicComponent* temp = PhysicsList.GetNext();
 				if (temp->useGravity()) {
 					temp->AddFource(PhysicManager::Gravity * temp->getMass());
 				}
-				temp->Update();
+				if (temp->UpdateInPhysics()) {
+					temp->Update(deltatime);
+				}
 				PhysicsList.Move();
 			}
 		}

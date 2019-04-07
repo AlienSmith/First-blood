@@ -132,7 +132,9 @@
     <ClCompile Include="CollisionComponent.cpp">
       <Filter>Collision</Filter>
     </ClCompile>
-    <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="CollisionManager.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -571,8 +573,5 @@
     <Filter Include="Collision">
       <UniqueIdentifier>{305ef33b-50cf-45eb-b586-e8a02dd2d963}</UniqueIdentifier>
     </Filter>
-  </ItemGroup>
-  <ItemGroup>
-    <Text Include="Readme.txt" />
   </ItemGroup>
 </Project>

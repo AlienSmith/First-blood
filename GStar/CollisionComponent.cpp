@@ -2,6 +2,7 @@
 #include "PhysicComponent.h"
 #include <math.h>
 #include "ConsolePrint.h"
+const float GStar::CollisionComponent::margin = -0.0001f;
 GStar::CollisionComponent::CollisionComponent(PhysicComponent * trans) :my_physic(trans) {}
 
 GStar::CollisionComponent::CollisionComponent(PhysicComponent * trans, const Vector3 & offset) : my_physic(trans), offsets(offset) {}
@@ -72,21 +73,19 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 	}
 	collisiontime = largest_close;
 	float temp = SpeedAtoB.Dot(axies);
-	o_normal = -1.0f*(temp/fabs(temp))*axies;
+	o_normal = -1.0f*signum(temp)*axies;
 
 	float speed_on_axies = SpeedAtoB.Dot(o_normal);
 	if (Equals(speed_on_axies,0.0f)) {
 		return false;
 	}
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Collided");
-#if defined(_DEBUG)
 	int idA = ColliderA.getPhysic()->GetTransformComponent()->GetName();
 	GStar::Vector3 SpeedA = ColliderA.getPhysic()->GetSpeed();
 	int idB = ColliderB.getPhysic()->GetTransformComponent()->GetName();
 	GStar::Vector3 SpeedB = ColliderB.getPhysic()->GetSpeed();
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Object %i with speed %f,%f,%f",idA,SpeedA[0],SpeedA[1], SpeedA[2]);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Object %i with speed %f,%f,%f", idB, SpeedB[0], SpeedB[1], SpeedB[2]);
-#endif
 	//Transfer Center to the world space
 	return true;
 }
@@ -101,14 +100,11 @@ bool GStar::OverLapAtoB(const CollisionInfo * A, const CollisionInfo * B, const 
 		float B_extends_on_B_axies = .5f*((B->Scale).getValue(i));
 		float speed_on_B_axies = speed.Dot(normalized_axies);
 		float distance = B_center_on_B_axies- A_center_on_B_axies;
-		distance *= speed_on_B_axies/fabs(speed_on_B_axies);
 		float offset = A_extends_on_B_axies + B_extends_on_B_axies;
-		float open_distance = distance + offset;
-		float close_distance = distance - offset;
 		float open_time;
 		float close_time;
 		if (Equals(speed_on_B_axies, 0.0f)) {
-			if (BigerThan( close_distance, 0.0f)) {
+			if (BigerThan((fabs(distance) - offset), CollisionComponent::margin)) {
 				return false;
 			}
 			else {
@@ -117,6 +113,9 @@ bool GStar::OverLapAtoB(const CollisionInfo * A, const CollisionInfo * B, const 
 			}
 		}
 		else {
+			distance *= signum(speed_on_B_axies);
+			float open_distance = distance + offset;
+			float close_distance = distance - offset;
 			open_time = open_distance / fabs(speed_on_B_axies);
 			close_time = close_distance / fabs(speed_on_B_axies);
 			if (BigerThan(close_time, end_time) || SmallerThan(open_time, 0.0f)) {
@@ -138,10 +137,9 @@ bool GStar::OverLapAtoB(const CollisionInfo * A, const CollisionInfo * B, const 
 
 bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vector3& speed, float end_time, float& closeTime, float& opentime, Vector3& o_axies)
 {
-	GStar::Vector3 temp_axies;
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
-			 temp_axies = GStar::Vector3::Cross((1.0f / (B->Scale).getValue(j)) *(B->Axies)[j],(1.0f / (A->Scale).getValue(i)) *(A->Axies)[i]);
+			 GStar::Vector3 temp_axies = GStar::Vector3::Cross((1.0f / (B->Scale).getValue(j)) *(B->Axies)[j],(1.0f / (A->Scale).getValue(i)) *(A->Axies)[i]);
 			 if (temp_axies.isZero()) {
 				 continue; 
 			 }
@@ -151,14 +149,11 @@ bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vect
 			 float B_extends_on_axies = .5f*(fabs(((B->Axies)[0]).Dot(temp_axies)) + fabs(((B->Axies)[1]).Dot(temp_axies)) + fabs(((B->Axies)[2]).Dot(temp_axies)));
 			 float speed_on_axies = speed.Dot(temp_axies);
 			 float distance = B_center_on_axies-A_center_on_axies;
-			 distance *= speed_on_axies / fabs(speed_on_axies);
 			 float offset = A_extends_on_axies + B_extends_on_axies;
-			 float open_distance = distance + offset;
-			 float close_distance = distance - offset;
 			 float open_time;
 			 float close_time;
 			 if (Equals(speed_on_axies, 0.0f)) {
-				 if (close_distance > 0.0f) {
+				 if (BigerThan((fabs(distance) - offset),CollisionComponent::margin)) {
 					 return false;
 				 }
 				 else {
@@ -167,17 +162,20 @@ bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vect
 				 }
 			 }
 			 else {
+				 distance *= signum(speed_on_axies);
+				 float open_distance = distance + offset;
+				 float close_distance = distance - offset;
 				 open_time = open_distance / fabs(speed_on_axies);
 				 close_time = close_distance / fabs(speed_on_axies);
-				 if (close_time > end_time || open_time < 0.0f) {
+				 if (BigerThan(close_time, end_time) ||SmallerThan(open_time, 0.0f)) {
 					 return false;
 				 }
 			 }
 			 //if the largest close time is smaller that the smallest opentime then there is a time all axies are closed
-			 if (close_time > closeTime) {
+			 if (BigerThan( close_time, closeTime)) {
 				 closeTime = close_time;
 				 o_axies = temp_axies;
-			 }if (open_time < opentime) {
+			 }if (SmallerThan( open_time, opentime)) {
 				 opentime = open_time;
 			 }
 			 //It will not collide

@@ -10,6 +10,7 @@ namespace GStar {
 	//cuboid collider
 	class CollisionComponent {
 	public:
+		const static float margin;
 		explicit CollisionComponent(PhysicComponent* trans);
 		explicit CollisionComponent(PhysicComponent* trans, const Vector3& offset);
 		CollisionComponent(const CollisionComponent& other) = delete;

@@ -65,9 +65,6 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 {
 	GStar::Vector3 speed_A = A->getPhysic()->GetSpeed();
 	GStar::Vector3 speed_B = B->getPhysic()->GetSpeed();
-	if (speed_A == speed_B) {
-		return;
-	}
 	GStar::Vector3 speedAtoB = speed_A - speed_B;
 	speedAtoB *= .5f;
 	speedAtoB = speedAtoB.Dot(NormalForA)*NormalForA;

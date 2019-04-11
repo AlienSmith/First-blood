@@ -41,7 +41,7 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 	 ColliderB.getOffset()*ColliderB.getPhysic()->GetTransformComponent()->GetScale() };
 
 	GStar::Vector3 SpeedAtoB = ColliderA.getPhysic()->GetSpeed() - ColliderB.getPhysic()->GetSpeed();
-	GStar::Vector3 axies(0.0f, 0.0f, 0.0f);
+ 	GStar::Vector3 axies(0.0f, 0.0f, 0.0f);
 	float smallest_open = deltatime + 1.0f;
 	float largest_close = -1.0*smallest_open;
 	/*if (!(OverLapAtoB(&InfoA, &InfoB, SpeedAtoB, deltatime, largest_close, smallest_open, axies) &&
@@ -73,6 +73,11 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 	collisiontime = largest_close;
 	float temp = SpeedAtoB.Dot(axies);
 	o_normal = -1.0f*(temp/fabs(temp))*axies;
+
+	float speed_on_axies = SpeedAtoB.Dot(o_normal);
+	if (Equals(speed_on_axies,0.0f)) {
+		return false;
+	}
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Collided");
 #if defined(_DEBUG)
 	int idA = ColliderA.getPhysic()->GetTransformComponent()->GetName();

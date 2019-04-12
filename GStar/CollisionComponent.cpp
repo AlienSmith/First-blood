@@ -79,13 +79,15 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 	if (Equals(speed_on_axies,0.0f)) {
 		return false;
 	}
+#ifdef _DEBUG
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Collided");
 	int idA = ColliderA.getPhysic()->GetTransformComponent()->GetName();
 	GStar::Vector3 SpeedA = ColliderA.getPhysic()->GetSpeed();
 	int idB = ColliderB.getPhysic()->GetTransformComponent()->GetName();
 	GStar::Vector3 SpeedB = ColliderB.getPhysic()->GetSpeed();
-	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Object %i with speed %f,%f,%f",idA,SpeedA[0],SpeedA[1], SpeedA[2]);
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Object %i with speed %f,%f,%f", idA, SpeedA[0], SpeedA[1], SpeedA[2]);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Object %i with speed %f,%f,%f", idB, SpeedB[0], SpeedB[1], SpeedB[2]);
+#endif // !
 	//Transfer Center to the world space
 	return true;
 }

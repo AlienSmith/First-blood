@@ -63,16 +63,16 @@ void GStar::CollisionManager::UpdatePhysic(float deltatime)
 // this is only correct if A and B are of the same weight
 void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, CollisionComponent * B, const GStar::Vector3 & NormalForA)
 {
-	GStar::Vector3 speed_A = A->getPhysic()->GetSpeed();
-	GStar::Vector3 speed_B = B->getPhysic()->GetSpeed();
-	GStar::Vector3 speedAtoB = speed_A - speed_B;
-	speedAtoB *= .5f;
-	speedAtoB = speedAtoB.Dot(NormalForA)*NormalForA;
-	if (speedAtoB == GStar::Vector3(0.0f,0.0f,0.0f)) {
-		return;
-	}
-	A->getPhysic()->SetSpeed(speed_A - 1.0f*speedAtoB);
-	B->getPhysic()->SetSpeed(speed_B + 1.0f*speedAtoB);
+	float speed_A = (A->getPhysic()->GetSpeed()).Dot(NormalForA);
+	float speed_B = (B->getPhysic()->GetSpeed()).Dot(NormalForA);
+	float mass_A = A->getPhysic()->getMass();
+	float mass_B = B->getPhysic()->getMass();
+	float mass_AmB = mass_A - mass_B;
+	float mass_ApB = mass_A + mass_B;
+	float speed_delta_A = (mass_AmB / mass_ApB - 1.0f)*speed_A + (2.0f*mass_B / mass_ApB)*speed_B;
+	float speed_delta_B = (mass_AmB / mass_ApB - 1.0f)*speed_B + (2.0f*mass_A / mass_ApB)*speed_A;
+	A->getPhysic()->SetSpeed(A->getPhysic()->GetSpeed()+(NormalForA*speed_delta_A));
+	B->getPhysic()->SetSpeed(B->getPhysic()->GetSpeed() + (NormalForA*speed_delta_B));
 	A->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
 	B->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
 #if defined(_DEBUG)

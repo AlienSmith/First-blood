@@ -23,10 +23,14 @@ namespace GStar {
 		void OnMouseControl(GStar::Event* input) {
 			GStar::MouseInputEvent* event = static_cast<GStar::MouseInputEvent*>(input);
 			GStar::Vector3 rotation = GStar::Vector3();
-			rotation[1] = (float)-event->xpos;
-			rotation[0] = (float)-event->ypos;
-			rotation[2] = 0;
-			//my_component->GetTransformComponent()->Rotate(rotation);
+			//rotation[1] = (float)-event->xpos;
+			//rotation[0] = (float)-event->ypos;
+			//rotation[2] = 0;
+
+			rotation[1] = 0;
+			rotation[0] = 0;
+			rotation[2] = (float)-event->ypos;
+			my_component->GetTransformComponent()->Rotate(rotation);
 		}
 		void OnKeyControl(GStar::Event* input);
 		virtual void Terminate() override {}

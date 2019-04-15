@@ -97,14 +97,16 @@ namespace GStar {
 	 inline void PhysicComponent::Update(float deltatime)
 	 {
 		 GStar::Vector3 resistance = GetCurrentResistance();
-		 if (_totalforce == ((-1.0f) *resistance)) {
+		 /*if (_totalforce == ((-1.0f) *resistance)) {
 			 _delta = _speed * deltatime;
 		 }
 		 else {
 			 GStar::Vector3 lastspeed = _speed;
 			 _speed += (_totalforce + resistance)*deltatime;
 			 _delta = .5f*(_speed + lastspeed)*deltatime;
-		 }
+		 }*/
+		 _delta = _speed * deltatime;
+		 _speed += (_totalforce + resistance)*deltatime;
 		 my_transform->Translate(_delta,GStar::Base::WORLD);
 		 this->ResetValues();
 	 }

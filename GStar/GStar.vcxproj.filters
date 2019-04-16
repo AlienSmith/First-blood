@@ -369,6 +369,9 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Collision</Filter>
     </ClInclude>
+    <ClInclude Include="Matrix3.h">
+      <Filter>Math</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">

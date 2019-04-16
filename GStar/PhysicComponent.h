@@ -1,6 +1,7 @@
 #pragma once
 #include"TransformComponent.h"
 #include"GSTime.h"
+#include"Matrix3.h"
 //Another Component that would not be attached to the gameobject
 namespace GStar {
 	class PhysicComponent
@@ -42,6 +43,10 @@ namespace GStar {
 	private:
 		inline void ResetValues();
 		inline Vector3 GetCurrentResistance() const;
+		//rotation components
+		Matrix4 _inertia_inverse;
+		Vector3 _angular_momentum;
+		Vector3 _angular_speed;
 		Vector3 _totalforce;
 		Vector3 _speed;
 		Vector3 _delta;//The movement within this frame
@@ -50,6 +55,7 @@ namespace GStar {
 		float _mass;//kg
 		float _roughness;
 		bool _update_in_physicsmanager;
+		inline void GetAngularSpeed();
 	};
 	inline PhysicComponent:: PhysicComponent(TransformComponent* const transform):
 	_totalforce(0.0f,0.0f,0.0f),
@@ -91,8 +97,13 @@ namespace GStar {
 	 //return the value for the current speed
 	 inline Vector3 PhysicComponent::GetCurrentResistance() const
 	 {
-		//return (-1.0f* _speed * _speed* _roughness);
-		return GStar::Vector3(.0f, .0f, .0f);
+		return (-1.0f* _speed * _speed* _roughness);
+		//return GStar::Vector3(.0f, .0f, .0f);
+	 }
+	 inline void PhysicComponent::GetAngularSpeed()
+	 {
+		 Matrix4 TempInverInertiainWorld;
+
 	 }
 	 inline void PhysicComponent::Update(float deltatime)
 	 {

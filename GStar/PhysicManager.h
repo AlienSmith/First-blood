@@ -35,6 +35,7 @@ namespace GStar {
 		}
 		inline PhysicComponent* AddPhysic(TransformComponent* const component);
 		inline PhysicComponent* AddPhysic(TransformComponent* const component, bool use_gravity, float mass, float roughtness);
+		inline PhysicComponent* AddPhysic(TransformComponent* const component, bool use_gravity, float mass, float roughtness,Vector3 _angular_momentum);
 		inline PhysicComponent* GetPhysic(const GStar::MyString& string);
 		inline PhysicComponent* GetPhysic(const TransformComponent* const Component);
 		inline bool removePhysic(const TransformComponent* component);
@@ -52,6 +53,12 @@ namespace GStar {
 	inline PhysicComponent * PhysicManager::AddPhysic(TransformComponent * const component, bool use_gravity, float mass, float roughtness)
 	{
 		PhysicComponent* temp = new PhysicComponent(component,use_gravity,mass,roughtness);
+		PhysicsList.Push(temp);
+		return temp;
+	}
+	inline PhysicComponent * PhysicManager::AddPhysic(TransformComponent * const component, bool use_gravity, float mass, float roughtness, Vector3 _angular_momentum)
+	{
+		PhysicComponent* temp = new PhysicComponent(component, use_gravity, mass, roughtness,_angular_momentum);
 		PhysicsList.Push(temp);
 		return temp;
 	}

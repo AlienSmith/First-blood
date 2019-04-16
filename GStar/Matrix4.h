@@ -52,6 +52,7 @@ namespace GStar {
 		Matrix4& Dot(const Matrix4& B)const;
 		Matrix4& T() const;
 		Matrix4& I()const;
+		Matrix4& Orthogonalize();
 		float determinant() const;
 		float determinantc() const;
 	private:
@@ -241,6 +242,18 @@ namespace GStar {
 		}
 
 			return GStar::AddPool(temp);
+	}
+	//The 3*3 part of the Matrix should be generated through rotations from a originally orthogonal matrix
+	inline Matrix4 & Matrix4::Orthogonalize()
+	{
+		for (int i = 0; i < 3; i++) {
+			Vector3 temp = Vector3(data[0][i], data[1][i], data[2][i]);
+			temp.Normalize();
+			data[0][i] = temp[0];
+			data[1][i] = temp[1];
+			data[2][i] = temp[2];
+		}
+		return *this;
 	}
 	//Mathmatic determinant of a 3*3 matrix cut from the original matirx
 	inline float Matrix4::C(int x, int y) const

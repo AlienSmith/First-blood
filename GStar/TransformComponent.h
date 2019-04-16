@@ -133,6 +133,27 @@ namespace GStar {
 			my_model.Ca += delta;
 			my_model.TransformUpdate = true;
 		}
+		//CR = R + h* Rotation.Cross(R)
+		//CR = R + _delta.Cross(R)
+		//CR = R + M*R
+		inline void _Rotate(Vector3 _delta) {
+			//The Cross product matrix of _delta
+			array_ff M = IDENTICAL_MATRIX;
+			M[0][0] = 0.0f;
+			M[0][1] = -1.0f*_delta[2];
+			M[0][2] = _delta[1];
+			M[1][0] = _delta[2];
+			M[1][1] = 0.0f;
+			M[1][2] = -1.0f*_delta[0];
+			M[2][0] = -1.0f*_delta[1];
+			M[2][1] = _delta[0];
+			M[2][2] = 0.0f;
+			M[3][3] = 0.0f;
+			my_model.CR += GStar::Matrix4(M).Dot(my_model.CR);
+			// try to comment out this and see interesting effects
+			my_model.CR.Orthogonalize();
+			my_model.RotationUpdate = true;
+		}
 		inline void Rotate(const GStar::Vector3& rotation) {
 			Rotate(rotation.x(), rotation.y(), rotation.z());
 			return;
@@ -155,8 +176,6 @@ namespace GStar {
 			temp[2][0] = -cx * sy;
 			temp[2][1] = sx;
 			temp[2][2] = cx * cy;
-			//Why should I mulitply it in this way?
-			//Why is it correct?
 			my_model.CR = my_model.CR.Dot(GStar::Matrix4(temp));
 			my_model.RotationUpdate = true;
 			return;

@@ -20,6 +20,12 @@ bool GStar::ShaderComponent::Initialize(const ShaderParameters & parameters)
 bool GStar::ShaderComponent::Update() const
 {
 	my_shader->use();
+	Matrix4 projection = Scene::Create()->getProjection();
+	my_shader->setMat4("projection", Scene::Create()->getProjection(), GL_FALSE);
+	my_shader->setMat4("view", CameraManager::Instance()->GetInverseTransform(), GL_FALSE);
+	Matrix4 model = UpdateRObject::OUT_Instance->GetTransformComponent()->getModel();
+	my_shader->setMat4("model", UpdateRObject::OUT_Instance->GetTransformComponent()->getModel(), GL_FALSE);
+	glDrawArrays(GL_TRIANGLES, 0, UpdateRObject::OUT_Instance->GetMeshComponent()->GetMeshInfo().TriangleIndex());
 	if (t1) {
 		my_shader->setInt("texture1", 0);
 	}if (t2) {
@@ -40,13 +46,8 @@ bool GStar::ShaderComponent::Update() const
 		my_shader->setVec3("material.specular", GStar::Vector3(.7f, .7f, .7f));
 	}
 	//Matrix4 view = Scene::Create()->getview();
-	my_shader->setMat4("view",CameraManager::Instance()->GetInverseTransform(), GL_FALSE);
+	
 	//my_shader->setMat4("view", view, GL_FALSE);
-	Matrix4 projection = Scene::Create()->getProjection();
-	my_shader->setMat4("projection", Scene::Create()->getProjection(), GL_FALSE);	
-	Matrix4 model = UpdateRObject::OUT_Instance->GetTransformComponent()->getModel();
-	my_shader->setMat4("model", UpdateRObject::OUT_Instance->GetTransformComponent()->getModel(), GL_FALSE);
-	glDrawArrays(GL_TRIANGLES, 0, UpdateRObject::OUT_Instance->GetMeshComponent()->GetMeshInfo().TriangleIndex());
 	
 	return true;
 }

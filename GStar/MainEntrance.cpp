@@ -75,6 +75,7 @@ void MainEntrance::Run()
 		world.Update();
 		GStar::RManager::Instance()->Update();
 		myScene->UpdateEnd();
+		Sleep(15);
 	}
 	myScene->TerminateWindow();
 	if (GStar::SceneInterface::Instance) {

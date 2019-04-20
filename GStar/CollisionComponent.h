@@ -18,6 +18,9 @@ namespace GStar {
 		PhysicComponent* getPhysic();
 		const PhysicComponent* const getPhysic() const;
 		Vector3 getOffset() const;
+		void GetCollisionInfo();
+		void Update();
+		GStar::CollisionInfo my_info;
 	private:
 		PhysicComponent* my_physic;
 		Vector3 offsets;

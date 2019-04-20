@@ -22,6 +22,20 @@ GStar::Vector3 GStar::CollisionComponent::getOffset() const
 	return offsets;
 }
 
+void GStar::CollisionComponent::GetCollisionInfo()
+{
+	my_info = { my_physic->GetTransformComponent()->X(),
+			my_physic->GetTransformComponent()->Y(),
+			my_physic->GetTransformComponent()->Z(),
+			my_physic->GetTransformComponent()->GetTransform(),
+			offsets*my_physic->GetTransformComponent()->GetScale() };
+}
+
+void GStar::CollisionComponent::Update()
+{
+	GetCollisionInfo();
+}
+
 
 bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionComponent& ColliderB, Vector3& o_point, Vector3& o_normal, float deltatime, float& collisiontime)
 {
@@ -30,16 +44,8 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 	}
 	//X Y Z Tr
 	//Assume the speed does not change during this frame
-	GStar::CollisionInfo InfoA = { ColliderA.getPhysic()->GetTransformComponent()->X(),
-	 ColliderA.getPhysic()->GetTransformComponent()->Y(),
-	 ColliderA.getPhysic()->GetTransformComponent()->Z(),
-	 ColliderA.getPhysic()->GetTransformComponent()->GetTransform(),
-	 ColliderA.getOffset()*ColliderA.getPhysic()->GetTransformComponent()->GetScale() };
-	GStar::CollisionInfo InfoB = { ColliderB.getPhysic()->GetTransformComponent()->X(),
-	 ColliderB.getPhysic()->GetTransformComponent()->Y(),
-	 ColliderB.getPhysic()->GetTransformComponent()->Z(),
-	 ColliderB.getPhysic()->GetTransformComponent()->GetTransform(),
-	 ColliderB.getOffset()*ColliderB.getPhysic()->GetTransformComponent()->GetScale() };
+	const GStar::CollisionInfo& InfoA = ColliderA.my_info;
+	const GStar::CollisionInfo& InfoB = ColliderB.my_info;
 
 	GStar::Vector3 SpeedAtoB = ColliderA.getPhysic()->GetSpeed() - ColliderB.getPhysic()->GetSpeed();
  	GStar::Vector3 axies(0.0f, 0.0f, 0.0f);

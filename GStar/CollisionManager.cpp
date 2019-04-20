@@ -4,6 +4,7 @@
 #include "Vector3.h"
 #include <iterator>
 #include "GSTime.h"
+#include <utility>
 GStar::CollisionManager* GStar::CollisionManager::instance = nullptr;
 GStar::CollisionComponent * GStar::CollisionManager::AddCollision(PhysicComponent * my_physic, const Vector3 & offset)
 {
@@ -26,6 +27,10 @@ void GStar::CollisionManager::Update()
 		if (iterations > 5) {
 			DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "Collision detection overtimes");
 			break;
+		}
+		//Initialize Collision Info
+		for (std::vector<CollisionComponent*>::iterator it = CollisionComponents.begin(); it != CollisionComponents.end(); it++) {
+			(*it)->Update();
 		}
 		smallest_close = 100.0f;
 		collisionflag = false;
@@ -59,6 +64,83 @@ void GStar::CollisionManager::UpdatePhysic(float deltatime)
 	for (std::vector<CollisionComponent*>::iterator it = CollisionComponents.begin(); it != CollisionComponents.end(); it++) {
 		(*it)->getPhysic()->Update(deltatime);
 	}
+}
+void GStar::CollisionManager::GetCollisionPoint(CollisionComponent * A, CollisionComponent * B, const Vector3& normal, Vector3 & o_RA, Vector3 & o_RB, Vector3 & o_Point, float deltatime) const
+{
+	Vector3 Center_A = A->my_info.Tr + A->getPhysic()->GetSpeed()*deltatime;
+	Vector3 Center_B = B->my_info.Tr + B->getPhysic()->GetSpeed()*deltatime;
+	Vector3 temp_A;
+	std::vector<Vector3> Vector3_A;
+	std::vector<Vector3> Vector3_B;
+	Vector3 temp_B;
+	int count_A = ContactInfo(A,normal,temp_A,Vector3_A);
+	//contact is a point for A, Hence no need for futher computation
+	if (count_A == 3) {
+		o_RA = temp_A;
+		o_Point = Center_A + temp_A;
+		o_RB = o_Point - Center_B;
+		return;
+	}
+	int count_B = ContactInfo(B, normal, temp_B, Vector3_B);
+	if (count_B == 3) {
+		o_RB = temp_B;
+		o_Point = temp_B + Center_B;
+		o_RA = o_Point - Center_A;
+		return;
+	}
+	// line line
+	if (count_A == 2 && count_B == 2) {
+		//find if two line is parrellel
+		if (Vector3::parallel(Vector3_A[0], Vector3_B[0])) {
+			o_Point = .5f*(Center_A + Center_B + temp_A + temp_B);
+			o_RB = o_Point - Center_B;
+			o_RA = o_Point - Center_A;
+			return;
+		}
+		//find if the middle point is on the other line;
+		Vector3 middle_A = Center_A + temp_A;
+		Vector3 middle_B = Center_B + temp_B;
+		Vector3 Middle_A_to_B = middle_A - middle_B;
+		if (Middle_A_to_B == Vector3(.0f, .0f, .0f) || Vector3::parallel(Middle_A_to_B,Vector3_B[0])) {
+			o_Point = middle_A;
+			o_RA = temp_A;
+			o_RB = o_Point - Center_B;
+			return;
+		}
+		else if (Vector3::parallel(Middle_A_to_B, Vector3_A[0])) {
+			o_Point = middle_B;
+			o_RA = o_Point - Center_A;
+			o_RB = temp_B;
+			return;
+		}
+		//Find the intersection point
+		
+	}
+	// Plane Plane
+	else if (count_A == 1 && count_B == 1) {
+	
+	}
+	else {
+
+	}
+	// Line Plane 
+}
+int GStar::CollisionManager::ContactInfo(CollisionComponent* A, const Vector3& normal,Vector3 & o_offset, std::vector<Vector3>& o_Vector) const
+{
+	Vector3 temp_A = Vector3(.0f, .0f, .0f);
+	int count_A = 0;
+	for (int i = 0; i < 3; i++) {
+		Vector3 temp = A->my_info.Axies[0];
+		float flag = normal.Dot(temp);
+		if (Equals(flag, 0.0f)) {
+			o_Vector.push_back(temp);
+			continue;
+		}
+		temp_A += (flag > 0 ? temp : -1.0f*temp);
+		count_A++;
+	}
+	o_offset = temp_A;
+	return count_A;
 }
 // this is only correct if A and B are of the same weight
 void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, CollisionComponent * B, const GStar::Vector3 & NormalForA)

@@ -141,7 +141,7 @@ namespace GStar {
 			array_ff M = IDENTICAL_MATRIX;
 			M[0][0] = 0.0f;
 			M[0][1] = -1.0f*_delta[2];
-			M[0][2] = _delta[1];
+			M[0][2] = _delta[1]; 
 			M[1][0] = _delta[2];
 			M[1][1] = 0.0f;
 			M[1][2] = -1.0f*_delta[0];

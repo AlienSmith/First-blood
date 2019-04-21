@@ -50,6 +50,15 @@ namespace GStar {
 		inline void SetSpeed(const GStar::Vector3 & speed) {
 			_speed = speed;
 		}
+		inline Vector3 Applyintertia(const Vector3& vector) const {
+			return _inertia_inverse * vector;
+		}
+		inline Vector3 GetAngularSpeed() const {
+			return _angular_speed;
+		}inline void SetAngularSpeed(const Vector3& vector) {
+			_angular_speed = vector;
+			return;
+		}
 	private:
 		inline void ResetValues();
 		inline Vector3 GetCurrentResistance() const;
@@ -67,7 +76,7 @@ namespace GStar {
 		float _mass;//kg
 		float _roughness;
 		bool _update_in_physicsmanager;
-		inline void GetAngularSpeed();
+		inline void GenerateAngularSpeed();
 	};
 	inline PhysicComponent::PhysicComponent(TransformComponent* const transform) :
 	_inertia_inverse(),
@@ -144,7 +153,7 @@ namespace GStar {
 	 }
 
 	 //These used to do angular movment, could cause cache miss,considered move those info here
-	 inline void PhysicComponent::GetAngularSpeed()
+	 inline void PhysicComponent::GenerateAngularSpeed()
 	 {
 		 Matrix4 TempInverInertiainWorld = my_transform->GetBaseMatrix()*_inertia_inverse*my_transform->GetBaseMatrix().I();
 		 _angular_speed = TempInverInertiainWorld * _angular_momentum;
@@ -156,7 +165,7 @@ namespace GStar {
 	 }
 	 inline void PhysicComponent::Update(float deltatime)
 	 {
-		 GetAngularSpeed();
+		 GenerateAngularSpeed();
 		 //Linear
 		 GStar::Vector3 resistance = GetCurrentResistance();
 		 _delta = _speed * deltatime;

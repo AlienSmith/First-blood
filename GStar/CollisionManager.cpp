@@ -53,7 +53,7 @@ void GStar::CollisionManager::Update()
 		if (collisionflag) {
 			lefttime -= smallest_close;
 			UpdatePhysic(smallest_close);
-			ApplyCollisionResults(A, B, normal);
+			ApplyCollisionResults(A, B, normal,smallest_close);
 		}
 	} while (collisionflag);
 	UpdatePhysic(lefttime);
@@ -73,7 +73,8 @@ void GStar::CollisionManager::GetCollisionPoint(CollisionComponent * A, Collisio
 	std::vector<Vector3> Vector3_A;
 	std::vector<Vector3> Vector3_B;
 	Vector3 temp_B;
-	int count_A = ContactInfo(A,normal,temp_A,Vector3_A);
+	//We what the face that is face agianst the normal
+	int count_A = ContactInfo(A,-1.0f*normal,temp_A,Vector3_A);
 	//contact is a point for A, Hence no need for futher computation
 	if (count_A == 3) {
 		o_RA = temp_A;
@@ -143,7 +144,7 @@ void GStar::CollisionManager::GetCollisionPoint(CollisionComponent * A, Collisio
 			o_RB = o_Point - Center_B;
 			return;
 		}
-		else {
+		else { 
 			o_Point = LinePlaneIntersection(middle_B, Vector3::Cross(Vector3_A[0], Vector3_A[1]), middle_B, Vector3_B[0]);
 			o_RA = o_Point - Center_A;
 			o_RB = o_Point - Center_B;
@@ -151,13 +152,13 @@ void GStar::CollisionManager::GetCollisionPoint(CollisionComponent * A, Collisio
 		}
 	}
 	
-}
+} 
 int GStar::CollisionManager::ContactInfo(CollisionComponent* A, const Vector3& normal,Vector3 & o_offset, std::vector<Vector3>& o_Vector) const
 {
 	Vector3 temp_A = Vector3(.0f, .0f, .0f);
 	int count_A = 0;
 	for (int i = 0; i < 3; i++) {
-		Vector3 temp = A->my_info.Axies[0];
+		Vector3 temp = .5f* A->my_info.Axies[i];
 		float flag = normal.Dot(temp);
 		if (Equals(flag, 0.0f)) {
 			o_Vector.push_back(temp);
@@ -170,8 +171,18 @@ int GStar::CollisionManager::ContactInfo(CollisionComponent* A, const Vector3& n
 	return count_A;
 }
 // this is only correct if A and B are of the same weight
-void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, CollisionComponent * B, const GStar::Vector3 & NormalForA)
+void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, CollisionComponent * B, const GStar::Vector3 & NormalForA,float deltatime)
 {
+	Vector3 CollisionPoint;
+	Vector3 Ra;
+	Vector3 Rb;
+	Vector3 normal = NormalForA;
+	normal.Normalize();
+	GetCollisionPoint(A, B, normal, Ra, Rb, CollisionPoint,deltatime);
+	float impulse = GetImpulse(Ra, Rb, A, B, normal);
+	Vector3 delta_a = -1* (impulse / A->getPhysic()->getMass())*normal;
+	Vector3 delta_B = (impulse / B->getPhysic()->getMass())*normal;
+
 	float speed_A = (A->getPhysic()->GetSpeed()).Dot(NormalForA);
 	float speed_B = (B->getPhysic()->GetSpeed()).Dot(NormalForA);
 	float mass_A = A->getPhysic()->getMass();
@@ -180,17 +191,27 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	float mass_ApB = mass_A + mass_B;
 	float speed_delta_A = (mass_AmB / mass_ApB - 1.0f)*speed_A + (2.0f*mass_B / mass_ApB)*speed_B;
 	float speed_delta_B = (mass_AmB / mass_ApB - 1.0f)*speed_B + (2.0f*mass_A / mass_ApB)*speed_A;
-	A->getPhysic()->SetSpeed(A->getPhysic()->GetSpeed()+(NormalForA*speed_delta_A));
+	A->getPhysic()->SetSpeed(A->getPhysic()->GetSpeed() + (NormalForA*speed_delta_A));
 	B->getPhysic()->SetSpeed(B->getPhysic()->GetSpeed() + (NormalForA*speed_delta_B));
 	A->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
 	B->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
+	//A->getPhysic()->SetSpeed(Speed_a);
+	//B->getPhysic()->SetSpeed(Speed_b);
+
+	//A->getPhysic()->SetAngularSpeed(A->getPhysic()->GetAngularSpeed() + A->getPhysic()->Applyintertia(Ra)*impulse);
+	//B->getPhysic()->SetAngularSpeed(B->getPhysic()->GetAngularSpeed() - B->getPhysic()->Applyintertia(Rb)*impulse);
+
 #if defined(_DEBUG)
 	int idA = A->getPhysic()->GetTransformComponent()->GetName();
 	GStar::Vector3 SpeedA = A->getPhysic()->GetSpeed();
 	int idB = B->getPhysic()->GetTransformComponent()->GetName();
 	GStar::Vector3 SpeedB = B->getPhysic()->GetSpeed();
+	GStar::Vector3 Angular_SpeedA = A->getPhysic()->GetAngularSpeed();
+	GStar::Vector3 Angular_SpeedB = B->getPhysic()->GetAngularSpeed();
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "After Collision Object %i with speed %f,%f,%f", idA, SpeedA[0], SpeedA[1], SpeedA[2]);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "After Collision Object %i with speed %f,%f,%f", idB, SpeedB[0], SpeedB[1], SpeedB[2]);
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "After Collision Object %i with angular speed %f,%f,%f", idA, Angular_SpeedA[0], Angular_SpeedA[1], Angular_SpeedA[2]);
+	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "After Collision Object %i with angular speed %f,%f,%f", idB, Angular_SpeedB[0], Angular_SpeedB[1], Angular_SpeedB[2]);
 #endif
 }
 
@@ -200,4 +221,15 @@ GStar::Vector3 GStar::LinePlaneIntersection(Vector3 PlanePoint, Vector3 PlaneNor
 	float t = (PlanePoint - LinePoint).Dot(normal);
 	t /= LineDirection.Dot(normal);
 	return LinePoint + t * LineDirection;
+}
+// e == 0 No energy is lost in the process 
+float GStar::GetImpulse(const Vector3 & Ra, const Vector3 & Rb, CollisionComponent * A, CollisionComponent * B, const Vector3 & _normal,float e)
+{
+	Vector3 speed_A_to_B = A->getPhysic()->GetSpeed() - B->getPhysic()->GetSpeed();
+	float Fraction = (-1.0f - e)* speed_A_to_B.Dot(_normal);
+	float Denominator = _normal.Dot(_normal)*(1.0f / A->getPhysic()->getMass() + 1.0f / B->getPhysic()->getMass());
+	Vector3 Group_A = A->getPhysic()->Applyintertia(Vector3::Cross(Ra, _normal));
+	Vector3 Group_B = B->getPhysic()->Applyintertia(Vector3::Cross(Rb, _normal));
+	Denominator += (Group_A + Group_B).Dot(_normal);
+	return (1.0f/Denominator)*Fraction;
 }

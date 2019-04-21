@@ -110,7 +110,7 @@ public:
 		RObject& R4 = renderer.CreateRenderObject(trans4);
 		R4.AddComponent(M3);
 		R4.AddComponent(S3);
-		GStar::PhysicComponent* P4 = GStar::PhysicManager::Instance()->AddPhysic(trans4, false, 10.0f, .1f);
+		GStar::PhysicComponent* P4 = GStar::PhysicManager::Instance()->AddPhysic(trans4, false, 1.0f, .1f);
 		GStar::CollisionManager::AddCollision(P4, GStar::Vector3(1.0f, 1.0f, 1.0f));
 	}
 	virtual void Update() {}

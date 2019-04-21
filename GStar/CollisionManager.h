@@ -5,7 +5,7 @@ namespace GStar {
 	class PhysicComponent;
 	class Vector3;
 	Vector3 LinePlaneIntersection(Vector3 PlanePoint, Vector3 PlaneNormal, Vector3 LinePoint, Vector3 LineDirection);
-	float GetImpulse(const Vector3& Ra, const Vector3& Rb, CollisionComponent* A, CollisionComponent* B, const Vector3& _normal,float e = 0);
+	float GetImpulse(const Vector3& Ra, const Vector3& Rb, CollisionComponent* A, CollisionComponent* B, const Vector3& _normal,float e = 1.0f);
 	class CollisionManager {
 	public:
 		static CollisionComponent* AddCollision(PhysicComponent* my_physic, const Vector3& offset);

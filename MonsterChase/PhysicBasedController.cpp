@@ -2,7 +2,7 @@
 
 void GStar::PhysicBasedController::Update()
 {
-	my_component->AddForce( delta, my_transform->GetTransform() + 0.5f*my_transform->GetRightVector());
+	my_component->AddForce( delta, my_transform->GetTransform());
 	for (int i = 0; i < 3; i++) {
 		delta.getReference(i) = 0.0f;
 	}

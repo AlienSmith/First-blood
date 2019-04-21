@@ -30,7 +30,7 @@ namespace GStar {
 			rotation[1] = 0;
 			rotation[0] = 0;
 			rotation[2] = (float)-event->ypos;
-			my_component->GetTransformComponent()->Rotate(rotation);
+			//my_component->GetTransformComponent()->Rotate(rotation);
 		}
 		void OnKeyControl(GStar::Event* input);
 		virtual void Terminate() override {}

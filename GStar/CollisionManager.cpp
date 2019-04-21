@@ -145,7 +145,7 @@ void GStar::CollisionManager::GetCollisionPoint(CollisionComponent * A, Collisio
 			return;
 		}
 		else { 
-			o_Point = LinePlaneIntersection(middle_B, Vector3::Cross(Vector3_A[0], Vector3_A[1]), middle_B, Vector3_B[0]);
+ 			o_Point = LinePlaneIntersection(middle_B, Vector3::Cross(Vector3_B[0], Vector3_B[1]), middle_B, Vector3_A[0]);
 			o_RA = o_Point - Center_A;
 			o_RB = o_Point - Center_B;
 			return;
@@ -180,23 +180,21 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	normal.Normalize();
 	GetCollisionPoint(A, B, normal, Ra, Rb, CollisionPoint,deltatime);
 	float impulse = GetImpulse(Ra, Rb, A, B, normal);
-	float delta_a = -1* (impulse / A->getPhysic()->getMass());
-	float delta_B = (impulse / B->getPhysic()->getMass());
-
-	float speed_A = (A->getPhysic()->GetSpeed()).Dot(NormalForA);
+	float delta_A = (impulse / A->getPhysic()->getMass());
+	float delta_B = -1*(impulse / B->getPhysic()->getMass());
+	///Old Algorithm to test linear impulse
+	/*float speed_A = (A->getPhysic()->GetSpeed()).Dot(NormalForA);
 	float speed_B = (B->getPhysic()->GetSpeed()).Dot(NormalForA);
 	float mass_A = A->getPhysic()->getMass();
 	float mass_B = B->getPhysic()->getMass();
 	float mass_AmB = mass_A - mass_B;
 	float mass_ApB = mass_A + mass_B;
 	float speed_delta_A = (mass_AmB / mass_ApB - 1.0f)*speed_A + (2.0f*mass_B / mass_ApB)*speed_B;
-	float speed_delta_B = (mass_AmB / mass_ApB - 1.0f)*speed_B + (2.0f*mass_A / mass_ApB)*speed_A;
-	A->getPhysic()->SetSpeed(A->getPhysic()->GetSpeed() + (NormalForA*speed_delta_A));
-	B->getPhysic()->SetSpeed(B->getPhysic()->GetSpeed() + (NormalForA*speed_delta_B));
+	float speed_delta_B = (mass_AmB / mass_ApB - 1.0f)*speed_B + (2.0f*mass_A / mass_ApB)*speed_A;*/
+	A->getPhysic()->SetSpeed(A->getPhysic()->GetSpeed() + (normal*delta_A));
+	B->getPhysic()->SetSpeed(B->getPhysic()->GetSpeed() + (normal*delta_B));
 	A->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
 	B->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
-	//A->getPhysic()->SetSpeed(Speed_a);
-	//B->getPhysic()->SetSpeed(Speed_b);
 
 	//A->getPhysic()->SetAngularSpeed(A->getPhysic()->GetAngularSpeed() + A->getPhysic()->Applyintertia(Ra)*impulse);
 	//B->getPhysic()->SetAngularSpeed(B->getPhysic()->GetAngularSpeed() - B->getPhysic()->Applyintertia(Rb)*impulse);
@@ -217,12 +215,15 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 
 GStar::Vector3 GStar::LinePlaneIntersection(Vector3 PlanePoint, Vector3 PlaneNormal, Vector3 LinePoint, Vector3 LineDirection)
 {
+	if (PlanePoint == LinePoint) {
+		return PlanePoint;
+	}
 	Vector3 normal = PlaneNormal.Normalize();
 	float t = (PlanePoint - LinePoint).Dot(normal);
-	t /= LineDirection.Dot(normal);
+	t /= LineDirection.Dot(normal); 
 	return LinePoint + t * LineDirection;
 }
-// e == 0 No energy is lost in the process 
+// e == 1  No energy is lost in the process 
 float GStar::GetImpulse(const Vector3 & Ra, const Vector3 & Rb, CollisionComponent * A, CollisionComponent * B, const Vector3 & _normal,float e)
 {
 	Vector3 speed_A_to_B = A->getPhysic()->GetSpeed() - B->getPhysic()->GetSpeed();

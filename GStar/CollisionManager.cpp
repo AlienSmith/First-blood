@@ -88,42 +88,69 @@ void GStar::CollisionManager::GetCollisionPoint(CollisionComponent * A, Collisio
 		o_RA = o_Point - Center_A;
 		return;
 	}
+	Vector3 middle_A = Center_A + temp_A;
+	Vector3 middle_B = Center_B + temp_B;
+	Vector3 Middle_A_B = middle_A - middle_B;
 	// line line
 	if (count_A == 2 && count_B == 2) {
 		//find if two line is parrellel
 		if (Vector3::parallel(Vector3_A[0], Vector3_B[0])) {
-			o_Point = .5f*(Center_A + Center_B + temp_A + temp_B);
+			o_Point = .5f*(middle_A+middle_B);
 			o_RB = o_Point - Center_B;
 			o_RA = o_Point - Center_A;
 			return;
 		}
 		//find if the middle point is on the other line;
-		Vector3 middle_A = Center_A + temp_A;
-		Vector3 middle_B = Center_B + temp_B;
-		Vector3 Middle_A_to_B = middle_A - middle_B;
-		if (Middle_A_to_B == Vector3(.0f, .0f, .0f) || Vector3::parallel(Middle_A_to_B,Vector3_B[0])) {
+		if (Middle_A_B == Vector3(.0f, .0f, .0f) || Vector3::parallel(Middle_A_B,Vector3_B[0])) {
 			o_Point = middle_A;
 			o_RA = temp_A;
 			o_RB = o_Point - Center_B;
 			return;
 		}
-		else if (Vector3::parallel(Middle_A_to_B, Vector3_A[0])) {
+		else if (Vector3::parallel(Middle_A_B, Vector3_A[0])) {
 			o_Point = middle_B;
 			o_RA = o_Point - Center_A;
 			o_RB = temp_B;
 			return;
 		}
 		//Find the intersection point
-		
+		float Ax = middle_A[0];
+		float Ay = middle_A[1];
+		float ax = Vector3_A[0][0];
+		float ay = Vector3_A[0][1];
+		float Bx = middle_B[0];
+		float By = middle_B[1];
+		float bx = Vector3_B[0][0];
+		float by = Vector3_B[0][1];
+		float h = (Ay*ax - Ax * ay + Bx * ay - By * ax) / (ax*by - bx * ay);
+		o_Point = middle_B + h * Vector3_B[0];
+		o_RA = o_Point - Center_A;
+		o_RB = o_Point - Center_B;
+		return;
 	}
 	// Plane Plane
 	else if (count_A == 1 && count_B == 1) {
-	
-	}
-	else {
-
+		o_Point = .5f*(middle_A + middle_B);
+		o_RB = o_Point - Center_B;
+		o_RA = o_Point - Center_A;
+		return;
 	}
 	// Line Plane 
+	else {
+		if (count_A == 1) {
+			o_Point = LinePlaneIntersection(middle_A, Vector3::Cross(Vector3_A[0], Vector3_A[1]), middle_B, Vector3_B[0]);
+			o_RA = o_Point - Center_A;
+			o_RB = o_Point - Center_B;
+			return;
+		}
+		else {
+			o_Point = LinePlaneIntersection(middle_B, Vector3::Cross(Vector3_A[0], Vector3_A[1]), middle_B, Vector3_B[0]);
+			o_RA = o_Point - Center_A;
+			o_RB = o_Point - Center_B;
+			return;
+		}
+	}
+	
 }
 int GStar::CollisionManager::ContactInfo(CollisionComponent* A, const Vector3& normal,Vector3 & o_offset, std::vector<Vector3>& o_Vector) const
 {
@@ -165,4 +192,12 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "After Collision Object %i with speed %f,%f,%f", idA, SpeedA[0], SpeedA[1], SpeedA[2]);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "After Collision Object %i with speed %f,%f,%f", idB, SpeedB[0], SpeedB[1], SpeedB[2]);
 #endif
+}
+
+GStar::Vector3 GStar::LinePlaneIntersection(Vector3 PlanePoint, Vector3 PlaneNormal, Vector3 LinePoint, Vector3 LineDirection)
+{
+	Vector3 normal = PlaneNormal.Normalize();
+	float t = (PlanePoint - LinePoint).Dot(normal);
+	t /= LineDirection.Dot(normal);
+	return LinePoint + t * LineDirection;
 }

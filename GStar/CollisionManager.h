@@ -4,6 +4,7 @@ namespace GStar {
 	class CollisionComponent;
 	class PhysicComponent;
 	class Vector3;
+	Vector3 LinePlaneIntersection(Vector3 PlanePoint, Vector3 PlaneNormal, Vector3 LinePoint, Vector3 LineDirection);
 	class CollisionManager {
 	public:
 		static CollisionComponent* AddCollision(PhysicComponent* my_physic, const Vector3& offset);

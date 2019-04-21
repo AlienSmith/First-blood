@@ -145,7 +145,7 @@ void GStar::CollisionManager::GetCollisionPoint(CollisionComponent * A, Collisio
 			return;
 		}
 		else { 
- 			o_Point = LinePlaneIntersection(middle_B, Vector3::Cross(Vector3_B[0], Vector3_B[1]), middle_B, Vector3_A[0]);
+ 			o_Point = LinePlaneIntersection(middle_B, Vector3::Cross(Vector3_B[0], Vector3_B[1]), middle_A, Vector3_A[0]);
 			o_RA = o_Point - Center_A;
 			o_RB = o_Point - Center_B;
 			return;
@@ -195,9 +195,10 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	B->getPhysic()->SetSpeed(B->getPhysic()->GetSpeed() + (normal*delta_B));
 	A->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
 	B->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
-
-	//A->getPhysic()->SetAngularSpeed(A->getPhysic()->GetAngularSpeed() + A->getPhysic()->Applyintertia(Ra)*impulse);
-	//B->getPhysic()->SetAngularSpeed(B->getPhysic()->GetAngularSpeed() - B->getPhysic()->Applyintertia(Rb)*impulse);
+	Vector3 deltaM_A = 100*Vector3::Cross(Ra,normal)*impulse;
+	Vector3 deltaM_B = -100*Vector3::Cross(Rb, normal)*impulse;
+	A->getPhysic()->SetAngularMomentum(A->getPhysic()->GetAngularMomentum() +deltaM_A);
+	B->getPhysic()->SetAngularMomentum(B->getPhysic()->GetAngularMomentum() +deltaM_B);
 
 #if defined(_DEBUG)
 	int idA = A->getPhysic()->GetTransformComponent()->GetName();
@@ -215,11 +216,11 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 
 GStar::Vector3 GStar::LinePlaneIntersection(Vector3 PlanePoint, Vector3 PlaneNormal, Vector3 LinePoint, Vector3 LineDirection)
 {
-	if (PlanePoint == LinePoint) {
-		return PlanePoint;
-	}
 	Vector3 normal = PlaneNormal.Normalize();
 	float t = (PlanePoint - LinePoint).Dot(normal);
+	if (Equals(t, 0.0f)) {
+		return LinePoint;
+	}
 	t /= LineDirection.Dot(normal); 
 	return LinePoint + t * LineDirection;
 }

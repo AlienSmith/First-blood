@@ -53,11 +53,13 @@ namespace GStar {
 		inline Vector3 Applyintertia(const Vector3& vector) const {
 			return _inertia_inverse * vector;
 		}
-		inline Vector3 GetAngularSpeed() const {
-			return _angular_speed;
-		}inline void SetAngularSpeed(const Vector3& vector) {
-			_angular_speed = vector;
+		inline Vector3 GetAngularMomentum() const {
+			return _angular_momentum;
+		}inline void SetAngularMomentum(const Vector3& vector) {
+			_angular_momentum = vector;
 			return;
+		}inline Vector3 GetAngularSpeed()const{
+			return _angular_speed;
 		}
 	private:
 		inline void ResetValues();
@@ -172,8 +174,9 @@ namespace GStar {
 		 _speed += (_totalforce + resistance)*deltatime;
 		 my_transform->Translate(_delta, GStar::Base::WORLD);
 		 //Angular
-		 if(_angular_speed != Vector3(0.0f,0.0f,0.0f))
-		 my_transform->_Rotate(_angular_speed*deltatime);
+		 if (_angular_speed != Vector3(0.0f, 0.0f, 0.0f)) {
+			 my_transform->_Rotate(_angular_speed*deltatime);
+		 }
 		 _angular_momentum += deltatime * _totaltorque;
 		 this->ResetValues();
 	 }

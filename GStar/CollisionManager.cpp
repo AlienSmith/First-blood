@@ -180,8 +180,8 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	normal.Normalize();
 	GetCollisionPoint(A, B, normal, Ra, Rb, CollisionPoint,deltatime);
 	float impulse = GetImpulse(Ra, Rb, A, B, normal);
-	Vector3 delta_a = -1* (impulse / A->getPhysic()->getMass())*normal;
-	Vector3 delta_B = (impulse / B->getPhysic()->getMass())*normal;
+	float delta_a = -1* (impulse / A->getPhysic()->getMass());
+	float delta_B = (impulse / B->getPhysic()->getMass());
 
 	float speed_A = (A->getPhysic()->GetSpeed()).Dot(NormalForA);
 	float speed_B = (B->getPhysic()->GetSpeed()).Dot(NormalForA);

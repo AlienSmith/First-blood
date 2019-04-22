@@ -82,8 +82,8 @@ public:
 		trans3 = new GStar::TransformComponent("Cube");
 		//add transform to the tree or it will not be updated
 		world.AddToRoot(trans3);
-		trans3->SetTransform(GStar::Vector3(0.1f, 0.0f, -.3f), GStar::WORLD);
-		trans3->Rotate(GStar::Vector3(0.0f, 0.0f, 30.0f));
+		trans3->SetTransform(GStar::Vector3(0.1f, 0.05f, -.3f), GStar::WORLD);
+		trans3->Rotate(GStar::Vector3(10.0f, 0.0f, 10.0f));
 		//trans3->SetTransform(GStar::Vector3(0.1f, 0.0f, -.3f), GStar::WORLD);
 		//trans3->SetTransform(GStar::Vector3(0.0f, 0.1f, -.3f), GStar::WORLD);
 		trans3->SetScale(GStar::Vector3(.1f, .1f, .1f));

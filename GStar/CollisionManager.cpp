@@ -195,8 +195,8 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	B->getPhysic()->SetSpeed(B->getPhysic()->GetSpeed() + (normal*delta_B));
 	A->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
 	B->getPhysic()->SetForce(GStar::Vector3(0.0f, 0.0f, 0.0f));
-	Vector3 deltaM_A = 100*Vector3::Cross(Ra,normal)*impulse;
-	Vector3 deltaM_B = -100*Vector3::Cross(Rb, normal)*impulse;
+	Vector3 deltaM_A = 1000*Vector3::Cross(Ra,normal)*impulse;
+	Vector3 deltaM_B = -1000*Vector3::Cross(Rb, normal)*impulse;
 	A->getPhysic()->SetAngularMomentum(A->getPhysic()->GetAngularMomentum() +deltaM_A);
 	B->getPhysic()->SetAngularMomentum(B->getPhysic()->GetAngularMomentum() +deltaM_B);
 

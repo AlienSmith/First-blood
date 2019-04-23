@@ -30,6 +30,9 @@ namespace GStar {
 				if (temp->UpdateInPhysics()) {
 					temp->Update(deltatime);
 				}
+				else {
+					temp->UpdateAngularSpeed(deltatime);
+				}
 				PhysicsList.Move();
 			}
 		}

@@ -23,6 +23,8 @@
 //void test1();
 //void test2();
 //void test3();
+#include<vector>
+std::vector<GStar::MyString> strings;
 int main() 
 {{
 	bool MT = false;

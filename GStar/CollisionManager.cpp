@@ -62,7 +62,7 @@ void GStar::CollisionManager::Update()
 void GStar::CollisionManager::UpdatePhysic(float deltatime)
 {
 	for (std::vector<CollisionComponent*>::iterator it = CollisionComponents.begin(); it != CollisionComponents.end(); it++) {
-		(*it)->getPhysic()->Update(deltatime);
+		(*it)->getPhysic()->UpdateLinearSpeed(deltatime);
 	}
 }
 void GStar::CollisionManager::GetCollisionPoint(CollisionComponent * A, CollisionComponent * B, const Vector3& normal, Vector3 & o_RA, Vector3 & o_RB, Vector3 & o_Point, float deltatime) const

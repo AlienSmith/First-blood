@@ -60,6 +60,17 @@ namespace GStar {
 			return;
 		}inline Vector3 GetAngularSpeed()const{
 			return _angular_speed;
+		}inline void UpdateAngularSpeed(float deltatime) {
+			GenerateAngularSpeed();
+			if (_angular_speed != Vector3(0.0f, 0.0f, 0.0f)) {
+				my_transform->_Rotate(_angular_speed*deltatime);
+			}
+			_angular_momentum += deltatime * _totaltorque;
+		}inline void UpdateLinearSpeed(float deltatime) {
+			GStar::Vector3 resistance = GetCurrentResistance();
+			_delta = _speed * deltatime;
+			_speed += (_totalforce + resistance)*deltatime;
+			my_transform->Translate(_delta, GStar::Base::WORLD);
 		}
 	private:
 		inline void ResetValues();

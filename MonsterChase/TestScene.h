@@ -78,7 +78,7 @@ public:
 		//imanager.AddInterface(ai2);
 		//delete i_texture;
 
-		//Cube
+		/*//Cube
 		trans3 = new GStar::TransformComponent("Cube");
 		//add transform to the tree or it will not be updated
 		world.AddToRoot(trans3);
@@ -111,7 +111,7 @@ public:
 		R4.AddComponent(M3);
 		R4.AddComponent(S3);
 		GStar::PhysicComponent* P4 = GStar::PhysicManager::Instance()->AddPhysic(trans4, false, 1.0f, .1f);
-		GStar::CollisionManager::AddCollision(P4, GStar::Vector3(1.0f, 1.0f, 1.0f));
+		GStar::CollisionManager::AddCollision(P4, GStar::Vector3(1.0f, 1.0f, 1.0f));*/
 	}
 	virtual void Update() {}
 	virtual void Terminate() {}

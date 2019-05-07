@@ -1,0 +1,5 @@
+Before Optimization
+System function OuputDebugStringA() used by GStar::ConsolePrint() takes 40% samples
+GStar::Vector3::Dot() takes most exclusive samples 5.16% amount functions writen by me
+GStar::Vector3::Cross() takes 1.35% samples
+After Optimization

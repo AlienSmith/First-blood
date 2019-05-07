@@ -135,6 +135,9 @@
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Collision</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionTest.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -372,6 +375,9 @@
     <ClInclude Include="Matrix3.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionTest.hpp">
+      <Filter>Collision</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">
@@ -576,5 +582,8 @@
     <Filter Include="Physics\OldCode">
       <UniqueIdentifier>{bf37cbf9-7c7f-475e-94a9-348d33d86ae9}</UniqueIdentifier>
     </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Results.txt" />
   </ItemGroup>
 </Project>

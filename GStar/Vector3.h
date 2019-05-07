@@ -1,6 +1,7 @@
 #pragma once
 #include <math.h>
 #include "Compare.h"
+#include <xmmintrin.h>
 #ifndef Vector3_H
 #define Vector3_H
 namespace GStar {
@@ -22,6 +23,10 @@ namespace GStar {
 		// 2D vectors operations 
 		const GStar::Vector3& Normalize();
 		float Dot(const Vector3& other) const;
+		//SIMD version
+		float SDot(const Vector3& other) const;
+		Vector3 SCross(const Vector3& other) const;
+
 		float Length() const;
 		static Vector3 ProjAtoB(const Vector3& A, const Vector3& B);
 		static Vector3 PerpAtoB(const Vector3& A, const Vector3& B);
@@ -53,6 +58,11 @@ namespace GStar {
 		inline float& operator[] (int index) {
 			float* x = &m_x;
 			return *(x + index);
+		}
+		inline float operator[] (int index) const {
+			float* x = const_cast<float*>(&m_x);
+			return *(x + index);
+
 		}
 		void operator = (const Vector3& B) {
 			this->m_x = B.x();
@@ -100,9 +110,12 @@ namespace GStar {
 			this->m_z /= B;
 		}
 	private:
-		float m_x;
-		float m_y;
-		float m_z;
+		union {
+			struct {
+				float 	m_x, m_y, m_z;
+			};
+			__m128	m_vec;
+		};
 	};
 	// Operator overriede
 	inline Vector3 operator + (const Vector3& a, const Vector3& b) {
@@ -139,18 +152,12 @@ namespace GStar {
 	{
 	}
 
-	inline GStar::Vector3::Vector3(int x, int y, int z)
+	inline GStar::Vector3::Vector3(int x, int y, int z):m_vec(_mm_set_ps(0.0f, (float)z, (float)y, (float)x))
 	{
-		this->m_x = (float)x;
-		this->m_y = (float)y;
-		this->m_z = (float)z;
 	}
 
-	inline GStar::Vector3::Vector3(float x, float y,float z)
+	inline GStar::Vector3::Vector3(float x, float y,float z):m_vec(_mm_set_ps(0.0f, z, y, x))
 	{
-		this->m_x = x;
-		this->m_y = y;
-		this->m_z = z;
 	}
 
 	inline float GStar::Vector3::x() const
@@ -194,6 +201,13 @@ namespace GStar {
 	inline void GStar::Vector3::z(float z)
 	{
 		this->m_z = z;
+	}
+	//
+	inline float GStar::Vector3::SDot(const Vector3& other)const {
+		return 0;
+	}
+	inline GStar::Vector3 GStar::Vector3::SCross(const Vector3& other)const {
+		return GStar::Vector3(1, 1, 1);
 	}
 	// this manage the dot product of two vector.
 	inline float GStar::Vector3::Dot(const Vector3& other) const

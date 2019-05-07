@@ -24,13 +24,18 @@
 //void test2();
 //void test3();
 #include<vector>
+#include"CollisionTest.hpp"
 //std::vector<GStar::MyString> strings;
 int main() 
 {{
 	bool MT = false;
+	bool CollsionTest = false;
 	InitializeMemorySystem();
 	if (MT) {
 		Entrance();
+	}
+	else if (CollsionTest) {
+		GStar::CollisionPoolCheck();
 	}
 	else {
 		TestScene scene;

@@ -50,6 +50,7 @@ namespace GStar {
 		}
 		void Dot(const Matrix4& B, Matrix4& out result) const;
 		Matrix4& Dot(const Matrix4& B)const;
+		Matrix4& SDot(const Matrix4& B) const;
 		Matrix4& T() const;
 		Matrix4& I()const;
 		Matrix4& Orthogonalize();
@@ -58,6 +59,7 @@ namespace GStar {
 	private:
 		array_ff data = ZERO_MATRIX;
 		float C(int x, int y) const;
+		float& getReference(int x, int y) const;
 	};
 	inline GStar::Matrix4& GStar::AddPool(array_ff& rdata) {
 		if (GStar::tempresultpool == nullptr) {
@@ -216,6 +218,74 @@ namespace GStar {
 		return AddPool(temp);
 	}
 
+	inline Matrix4 & Matrix4::SDot(const Matrix4 & B) const
+	{
+		array_ff temp = ZERO_MATRIX;
+		__m128 rhs_row1 = _mm_load_ps(&B.getReference(1,1));
+		__m128 rhs_row2 = _mm_load_ps(&B.getReference(2, 1));
+		__m128 rhs_row3 = _mm_load_ps(&B.getReference(3, 1));
+		__m128 rhs_row4 = _mm_load_ps(&B.getReference(4, 1));
+
+		__m128 acc;
+
+		// (*this).col1 * i_other
+		// m_11 * i_other.row1
+		acc = _mm_mul_ps(_mm_load1_ps(&getReference(1, 1)), rhs_row1);
+		// m_12 * i_other.row2
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(1, 2)), rhs_row2));
+		// m_13 * i_other.row3
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(1, 3)), rhs_row3));
+		// m_14 * i_other.row4
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(1, 4)), rhs_row4));
+
+		// write result
+		_mm_storel_pi(reinterpret_cast<__m64 *>(&temp[1][1]), acc);
+		_mm_storeh_pi(reinterpret_cast<__m64 *>(&temp[1][3]), acc);
+		
+		// (*this).col2 * i_other
+		// m_21 * i_other.row1
+		acc = _mm_mul_ps(_mm_load1_ps(&getReference(2,1)), rhs_row1);
+		// m_22 * i_other.row2
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(2, 2)), rhs_row2));
+		// m_23 * i_other.row3
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(2, 3)), rhs_row3));
+		// m_24 * i_other.row4
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(2, 4)), rhs_row4));
+
+		// write result
+		_mm_storel_pi(reinterpret_cast<__m64 *>(&temp[2][1]), acc);
+		_mm_storeh_pi(reinterpret_cast<__m64 *>(&temp[2][3]), acc);
+
+		// (*this).col3 * i_other
+		// m_31 * i_other.row1
+		acc = _mm_mul_ps(_mm_load1_ps(&getReference(3,1)), rhs_row1);
+		// m_32 * i_other.row2
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(3, 2)), rhs_row2));
+		// m_33 * i_other.row3
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(3, 3)), rhs_row3));
+		// m_34 * i_other.row4
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(3, 4)), rhs_row4));
+
+		// write result
+		_mm_storel_pi(reinterpret_cast<__m64 *>(&temp[3][1]), acc);
+		_mm_storeh_pi(reinterpret_cast<__m64 *>(&temp[3][3]), acc);
+
+		// (*this).col4 * i_other
+		// m_41 * i_other.row1
+		acc = _mm_mul_ps(_mm_load1_ps(&getReference(4, 1)), rhs_row1);
+		// m_42 * i_other.row2
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(4, 2)), rhs_row2));
+		// m_43 * i_other.row3
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(4, 3)), rhs_row3));
+		// m_44 * i_other.row4
+		acc = _mm_add_ps(acc, _mm_mul_ps(_mm_load1_ps(&getReference(4, 4)), rhs_row4));
+
+		// write result
+		_mm_storel_pi(reinterpret_cast<__m64 *>(&temp[4][1]), acc);
+		_mm_storeh_pi(reinterpret_cast<__m64 *>(&temp[4][3]), acc);
+		return AddPool(temp);
+	}
+
 	// POOL Mathmatic transpose of matrix 
 	inline Matrix4 & Matrix4::T() const
 	{
@@ -280,6 +350,11 @@ namespace GStar {
 		float temp2 = temp[1] * (temp[3] * temp[8] - temp[5] * temp[6]);
 		float temp3 = temp[2] * (temp[3] * temp[7] - temp[4] * temp[6]);
 		return tempflag*(temp1 - temp2 + temp3);
+	}
+
+	inline float& Matrix4::getReference(int x, int y) const
+	{
+		return const_cast<float&>(data[x][y]);
 	}
 
 	inline float Matrix4::determinant() const

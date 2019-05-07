@@ -2,6 +2,7 @@
 #include <math.h>
 #include "Compare.h"
 #include <xmmintrin.h>
+#include <smmintrin.h>
 #ifndef Vector3_H
 #define Vector3_H
 namespace GStar {
@@ -11,6 +12,7 @@ namespace GStar {
 		Vector3();
 		Vector3(int x, int y, int z);
 		Vector3(float x, float y, float z);
+		Vector3(__m128 other);
 		float x() const;
 		float y() const;
 		float z() const;
@@ -159,7 +161,7 @@ namespace GStar {
 	inline GStar::Vector3::Vector3(float x, float y,float z):m_vec(_mm_set_ps(0.0f, z, y, x))
 	{
 	}
-
+	inline GStar::Vector3::Vector3(__m128 other) : m_vec(other) {}
 	inline float GStar::Vector3::x() const
 	{
 		return this->m_x;
@@ -204,10 +206,16 @@ namespace GStar {
 	}
 	//
 	inline float GStar::Vector3::SDot(const Vector3& other)const {
-		return 0;
+		return _mm_cvtss_f32(_mm_dp_ps(m_vec,other.m_vec,0x71));
 	}
 	inline GStar::Vector3 GStar::Vector3::SCross(const Vector3& other)const {
-		return GStar::Vector3(1, 1, 1);
+		return GStar::Vector3(_mm_sub_ps(
+			_mm_mul_ps(_mm_shuffle_ps(m_vec, m_vec, _MM_SHUFFLE(3, 0, 2, 1)), 
+			_mm_shuffle_ps(other.m_vec, other.m_vec, _MM_SHUFFLE(3, 1, 0, 2))),
+
+			_mm_mul_ps(_mm_shuffle_ps(m_vec, m_vec, _MM_SHUFFLE(3, 1, 0, 2)), 
+				_mm_shuffle_ps(other.m_vec, other.m_vec, _MM_SHUFFLE(3, 0, 2, 1)))
+		));
 	}
 	// this manage the dot product of two vector.
 	inline float GStar::Vector3::Dot(const Vector3& other) const

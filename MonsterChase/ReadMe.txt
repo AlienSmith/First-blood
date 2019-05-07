@@ -1,3 +1,6 @@
+Assignment2.10
+Check the SDot and SCross in the Vector3 class for SSE implmentation, Chech Matrix4.h for SSE Version of matrix multiplication. 
+Check CollisionTest.hpp and CollisionTest.cpp for Unite Test, check Results.txt for Sampleing results before and after using SSE.  
 #Extra Assignment2
 Check Delegate.h EventSystem.h EventManager.h EventUnit.h KeyInputEvent.h for implementations, it is used to get the imputs from the keyboard and mouse.
 #Extra Assignment1

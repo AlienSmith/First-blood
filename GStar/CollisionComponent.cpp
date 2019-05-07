@@ -78,10 +78,10 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 		return false;
 	}
 	collisiontime = largest_close;
-	float temp = SpeedAtoB.Dot(axies);
+	float temp = SpeedAtoB.SDot(axies);
 	o_normal = -1.0f*signum(temp)*axies;
 
-	float speed_on_axies = SpeedAtoB.Dot(o_normal);
+	float speed_on_axies = SpeedAtoB.SDot(o_normal);
 	if (Equals(speed_on_axies,0.0f)) {
 		return false;
 	}
@@ -102,11 +102,11 @@ bool GStar::OverLapAtoB(const CollisionInfo * A, const CollisionInfo * B, const 
 {
 	for (int i = 0; i < 3; i++) {
 		GStar::Vector3 normalized_axies = (1.0f / (B->Scale).getValue(i)) *(B->Axies)[i];
-		float A_center_on_B_axies = (A->Tr).Dot(normalized_axies);
-		float B_center_on_B_axies = (B->Tr).Dot(normalized_axies);
-		float A_extends_on_B_axies = .5f*(fabs(((A->Axies)[0]).Dot(normalized_axies)) + fabs(((A->Axies)[1]).Dot(normalized_axies)) + fabs(((A->Axies)[2]).Dot(normalized_axies)));
+		float A_center_on_B_axies = (A->Tr).SDot(normalized_axies);
+		float B_center_on_B_axies = (B->Tr).SDot(normalized_axies);
+		float A_extends_on_B_axies = .5f*(fabs(((A->Axies)[0]).SDot(normalized_axies)) + fabs(((A->Axies)[1]).SDot(normalized_axies)) + fabs(((A->Axies)[2]).SDot(normalized_axies)));
 		float B_extends_on_B_axies = .5f*((B->Scale).getValue(i));
-		float speed_on_B_axies = speed.Dot(normalized_axies);
+		float speed_on_B_axies = speed.SDot(normalized_axies);
 		float distance = B_center_on_B_axies- A_center_on_B_axies;
 		float offset = A_extends_on_B_axies + B_extends_on_B_axies;
 		float open_time;
@@ -147,15 +147,15 @@ bool GStar::OverLapAB(const CollisionInfo* A, const CollisionInfo* B, const Vect
 {
 	for (int i = 0; i < 3; i++) {
 		for (int j = 0; j < 3; j++) {
-			 GStar::Vector3 temp_axies = GStar::Vector3::Cross((1.0f / (B->Scale).getValue(j)) *(B->Axies)[j],(1.0f / (A->Scale).getValue(i)) *(A->Axies)[i]);
+			 GStar::Vector3 temp_axies = ((1.0f / (B->Scale).getValue(j)) *(B->Axies)[j]).SCross((1.0f / (A->Scale).getValue(i)) *(A->Axies)[i]);
 			 if (temp_axies.isZero()) {
 				 continue; 
 			 }
-			 float A_center_on_axies = (A->Tr).Dot(temp_axies);
-			 float B_center_on_axies = (B->Tr).Dot(temp_axies);
-			 float A_extends_on_axies = .5f*(fabs(((A->Axies)[0]).Dot(temp_axies)) + fabs(((A->Axies)[1]).Dot(temp_axies)) + fabs(((A->Axies)[2]).Dot(temp_axies)));
-			 float B_extends_on_axies = .5f*(fabs(((B->Axies)[0]).Dot(temp_axies)) + fabs(((B->Axies)[1]).Dot(temp_axies)) + fabs(((B->Axies)[2]).Dot(temp_axies)));
-			 float speed_on_axies = speed.Dot(temp_axies);
+			 float A_center_on_axies = (A->Tr).SDot(temp_axies);
+			 float B_center_on_axies = (B->Tr).SDot(temp_axies);
+			 float A_extends_on_axies = .5f*(fabs(((A->Axies)[0]).SDot(temp_axies)) + fabs(((A->Axies)[1]).SDot(temp_axies)) + fabs(((A->Axies)[2]).SDot(temp_axies)));
+			 float B_extends_on_axies = .5f*(fabs(((B->Axies)[0]).SDot(temp_axies)) + fabs(((B->Axies)[1]).SDot(temp_axies)) + fabs(((B->Axies)[2]).SDot(temp_axies)));
+			 float speed_on_axies = speed.SDot(temp_axies);
 			 float distance = B_center_on_axies-A_center_on_axies;
 			 float offset = A_extends_on_axies + B_extends_on_axies;
 			 float open_time;

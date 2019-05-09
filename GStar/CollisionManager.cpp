@@ -179,7 +179,7 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	Vector3 normal = NormalForA;
 	normal.Normalize();
 	GetCollisionPoint(A, B, normal, Ra, Rb, CollisionPoint,deltatime);
-	float impulse = GetImpulse(Ra, Rb, A, B, normal);
+	float impulse = GetImpulse(Ra, Rb, A, B, normal,.5*(A->getPhysic()->gete() + B->getPhysic()->gete()));
 	float delta_A = (impulse / A->getPhysic()->getMass());
 	float delta_B = -1*(impulse / B->getPhysic()->getMass());
 	///Old Algorithm to test linear impulse

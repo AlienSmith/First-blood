@@ -20,6 +20,7 @@
       <Filter>MT</Filter>
     </ClCompile>
     <ClCompile Include="PongController.cpp" />
+    <ClCompile Include="PongGame.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />

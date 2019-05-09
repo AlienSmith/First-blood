@@ -30,15 +30,14 @@ namespace GStar {
 				if (temp->UpdateInPhysics()) {
 					temp->Update(deltatime);
 				}
-				else {
+				/*else {
 					temp->UpdateAngularSpeed(deltatime);
-				}
+				}*/
 				PhysicsList.Move();
 			}
 		}
 		inline PhysicComponent* AddPhysic(TransformComponent* const component);
-		inline PhysicComponent* AddPhysic(TransformComponent* const component, bool use_gravity, float mass, float roughtness);
-		inline PhysicComponent* AddPhysic(TransformComponent* const component, bool use_gravity, float mass, float roughtness,Vector3 _angular_momentum);
+		inline PhysicComponent* AddPhysic(TransformComponent* const component, bool use_gravity, float mass, float roughtness,float constant = 1.0f,Vector3 _angular_momentu=Vector3(0,0,0));
 		inline PhysicComponent* GetPhysic(const GStar::MyString& string);
 		inline PhysicComponent* GetPhysic(const TransformComponent* const Component);
 		inline bool removePhysic(const TransformComponent* component);
@@ -53,15 +52,9 @@ namespace GStar {
 		PhysicsList.Push(temp);
 		return temp;
 	}
-	inline PhysicComponent * PhysicManager::AddPhysic(TransformComponent * const component, bool use_gravity, float mass, float roughtness)
+	inline PhysicComponent * PhysicManager::AddPhysic(TransformComponent * const component, bool use_gravity, float mass, float roughtness, float constant, Vector3 _angular_momentu)
 	{
-		PhysicComponent* temp = new PhysicComponent(component,use_gravity,mass,roughtness);
-		PhysicsList.Push(temp);
-		return temp;
-	}
-	inline PhysicComponent * PhysicManager::AddPhysic(TransformComponent * const component, bool use_gravity, float mass, float roughtness, Vector3 _angular_momentum)
-	{
-		PhysicComponent* temp = new PhysicComponent(component, use_gravity, mass, roughtness,_angular_momentum);
+		PhysicComponent* temp = new PhysicComponent(component, use_gravity, mass, roughtness,constant, _angular_momentu);
 		PhysicsList.Push(temp);
 		return temp;
 	}

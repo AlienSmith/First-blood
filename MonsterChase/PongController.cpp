@@ -18,7 +18,7 @@ void GStar::PongController::Initialize()
 
 void GStar::PongController::Update()
 {
-	my_component->SetSpeed(delta);
+	my_component->AddForce(delta);
 }
 
 void GStar::PongController::OnKeyControl(GStar::Event * input)

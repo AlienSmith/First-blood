@@ -19,6 +19,7 @@
     <ClCompile Include="MT_MAIN.cpp">
       <Filter>MT</Filter>
     </ClCompile>
+    <ClCompile Include="PongController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -43,6 +44,12 @@
     </ClInclude>
     <ClInclude Include="MT_MAIN.hpp">
       <Filter>MT</Filter>
+    </ClInclude>
+    <ClInclude Include="PongGame.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="PongController.h">
+      <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

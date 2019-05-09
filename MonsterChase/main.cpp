@@ -12,6 +12,7 @@
 #include "MainEntrance.h"
 #include "MyString.h"
 #include "TestScene.h"
+#include "PongGame.h"
 #include "MT_MAIN.hpp"
 #include "Matrix4.h"
 //#include "Matrix4.h"
@@ -31,7 +32,7 @@
 int main() 
 {{
 	bool MT = false;
-	bool CollsionTest = true;
+	bool CollsionTest = false;
 	InitializeMemorySystem();
 	//GStar::Vector3 left(1, 2, 3);
 	//GStar::Vector3 right(3, 2, 1);
@@ -50,7 +51,7 @@ int main()
 		GStar::CollisionPoolCheck();
 	}
 	else {
-		TestScene scene;
+		PongGame scene;
 		MainEntrance::SetUpAndRun();
 	}
 		DestroyMemorySystem();

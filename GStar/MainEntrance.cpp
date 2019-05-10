@@ -59,6 +59,11 @@ void MainEntrance::Run()
 	glfwSetCursorPosCallback(myScene->Window(), MainEntrance::mouse_call);
 	glfwSetKeyCallback(myScene->Window(), MainEntrance::keyboard_call);
 	check_gl_error();
+	//Intialize Managers
+	GStar::CollisionManager::Instance();
+	GStar::InterfaceComponentManager::Instance()->RegisterCollisionEventReciver();
+	GStar::PhysicManager::Instance();
+	GStar::RManager::Instance();
 	//RenderLoop
 	while (!glfwWindowShouldClose(myScene->Window())) {
 		if (GStar::SceneInterface::Instance) {

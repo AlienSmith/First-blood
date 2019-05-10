@@ -135,6 +135,7 @@
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CollisionComponent.h" />
+    <ClInclude Include="CollisionEvent.h" />
     <ClInclude Include="CollisionManager.h" />
     <ClInclude Include="CollisionTest.hpp" />
     <ClInclude Include="Compare.h" />

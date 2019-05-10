@@ -378,6 +378,9 @@
     <ClInclude Include="CollisionTest.hpp">
       <Filter>Collision</Filter>
     </ClInclude>
+    <ClInclude Include="CollisionEvent.h">
+      <Filter>Entrance</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Image Include="wall.jpg">

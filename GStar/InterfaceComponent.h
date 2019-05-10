@@ -2,6 +2,7 @@
 #include "TransformComponent.h"
 #include "SmartPointer.h"
 namespace GStar {
+	class CollisionComponent;
 	class InterfaceComponent{
 	public:
 		virtual void Initialize() = 0;

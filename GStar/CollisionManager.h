@@ -1,5 +1,6 @@
 #pragma once
 #include <vector>
+#include "EventManager.h"
 namespace GStar {
 	class CollisionComponent;
 	class PhysicComponent;
@@ -27,9 +28,11 @@ namespace GStar {
 		void GetCollisionPoint(CollisionComponent* A, CollisionComponent* B, const Vector3& normal,Vector3& RA,Vector3& RB,Vector3& Point,float deltatime) const;
 		int ContactInfo(CollisionComponent* A, const Vector3& normal,Vector3& offset, std::vector<Vector3>& o_Vector) const;
 		void ApplyCollisionResults(CollisionComponent* A, CollisionComponent* B, const GStar::Vector3& NormalForA,float deltatime);
+		void SendCollisionInfo(CollisionComponent* collider1, CollisionComponent* collider2, const GStar::Vector3& Point);
 	private:
+		GStar::EventUnite& CollisionSender;
 		static CollisionManager* instance;
 		std::vector<CollisionComponent*> CollisionComponents;
-		CollisionManager(){}
+		CollisionManager():CollisionSender(GStar::EventManager::Instance()->RegisterEvent("CollisionInput")){}
 	};
 }

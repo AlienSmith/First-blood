@@ -37,7 +37,7 @@ void GStar::CollisionComponent::Update()
 }
 
 
-bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionComponent& ColliderB, Vector3& o_point, Vector3& o_normal, float deltatime, float& collisiontime)
+bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionComponent& ColliderB, Vector3&, Vector3& o_normal, float deltatime, float& collisiontime)
 {
 	if (ColliderA.getPhysic()->GetSpeed() == ColliderB.getPhysic()->GetSpeed()) {
 		return false;

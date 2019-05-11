@@ -24,7 +24,7 @@ GStar::TRCamera::TRCamera(float vfov, float aspect)
 	m_data.origin = GStar::Vector3(0.0f, 0.0f, 0.0f);
 }
 
-GStar::Ray GStar::TRCamera::get_ray(float u, float v) const
+GStar::Ray GStar::TRCamera::get_ray(float i_u, float i_v) const
 {
 	Vector3 offset = Vector3(0, 0, 0);
 	if (m_data.lens_radius > 0.00001f || m_data.lens_radius < -0.00001f) {
@@ -33,7 +33,7 @@ GStar::Ray GStar::TRCamera::get_ray(float u, float v) const
 	}
 
 	Vector3 direction = m_data.lower_left_corner +
-	m_data.horizontal*u + m_data.vertical*v -
+	m_data.horizontal*i_u + m_data.vertical*i_v -
 	m_data.origin - offset;
 	direction.Normalize();
 	return Ray(m_data.origin+offset, direction);
@@ -57,7 +57,6 @@ GStar::TRCamera::TRCamera(const GStar::Vector3 & lookfrom, const GStar::Vector3 
 	m_data.lower_left_corner = m_data.origin - 1 *  m_data.m_w - 1 * half_width * m_data.m_u - 1 * half_height * m_data.m_v;
 	m_data.horizontal = 2 * half_width * m_data.m_u;
 	m_data.vertical = 2 * half_height *m_data.m_v;
-	float a = 0;
 }
 
 GStar::TRCamera::TRCamera(const GStar::Vector3 & lookfrom, const GStar::Vector3 & lookat, const GStar::Vector3 & vup, float vfov, float aspect, float aperture, float focus_distance)
@@ -75,5 +74,4 @@ GStar::TRCamera::TRCamera(const GStar::Vector3 & lookfrom, const GStar::Vector3 
 	m_data.lower_left_corner = m_data.origin - 1 * focus_distance* m_data.m_w - 1 * half_width *focus_distance* m_data.m_u - 1 * half_height *focus_distance* m_data.m_v;
 	m_data.horizontal = 2 * half_width *focus_distance* m_data.m_u;
 	m_data.vertical = 2 * half_height*focus_distance*m_data.m_v;
-	float a = 0;
 }

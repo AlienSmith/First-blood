@@ -39,7 +39,7 @@ public:
 		world->AddToRoot(TransformComponent2);
 		TransformComponent2->SetTransform(GStar::Vector3(1.0f, 0.0f, 1.0f), GStar::Base::WORLD);
 		TransformComponent2->UpdateTransform();
-		RObject& tempObject1 = Renderer->CreateRenderObject(TransformComponent2);
+		Renderer->CreateRenderObject(TransformComponent2);
 		controllerComponent = new KeyControlCompoenent(TransformComponent2, 2.0f);
 		imanager->AddInterface(controllerComponent);
 		GStar::CameraManager::Instance()->SetCurrentCamera(TransformComponent2);

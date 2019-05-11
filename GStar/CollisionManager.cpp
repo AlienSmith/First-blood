@@ -21,7 +21,7 @@ void GStar::CollisionManager::Update()
 	GStar::Vector3 normal(0.0f,0.0f,0.0f);
 	CollisionComponent* A = nullptr;
 	CollisionComponent* B = nullptr;
-	float lefttime = GSTime::Instance().GetdeltaTime();
+	float lefttime = (float)GSTime::Instance().GetdeltaTime();
 	bool collisionflag = false;
 	do {
 		iterations++;
@@ -39,8 +39,8 @@ void GStar::CollisionManager::Update()
 		GStar::Vector3 temp_normal;
 		for (std::vector<CollisionComponent*>::iterator it = CollisionComponents.begin(); it != CollisionComponents.end(); it++) {
 			for (std::vector<CollisionComponent*>::iterator is = it + 1; is != CollisionComponents.end(); is++) {
-				float temp_time = 200.0f;
-				GStar::Vector3 temp_normal;
+				temp_time = 200.0f;
+				temp_normal;
 				Collided(**it, **is, temp_normal, temp_normal, lefttime, temp_time);
 				if (temp_time < smallest_close) {
 					smallest_close = temp_time;
@@ -180,7 +180,7 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	Vector3 normal = NormalForA;
 	normal.Normalize();
 	GetCollisionPoint(A, B, normal, Ra, Rb, CollisionPoint,deltatime);
-	float impulse = GetImpulse(Ra, Rb, A, B, normal,.5*(A->getPhysic()->gete() + B->getPhysic()->gete()));
+	float impulse = GetImpulse(Ra, Rb, A, B, normal,.5f*(A->getPhysic()->gete() + B->getPhysic()->gete()));
 	float delta_A = (impulse / A->getPhysic()->getMass());
 	float delta_B = -1*(impulse / B->getPhysic()->getMass());
 	///Old Algorithm to test linear impulse

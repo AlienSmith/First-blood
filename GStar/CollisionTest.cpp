@@ -50,13 +50,13 @@ std::pair<GStar::CollisionComponent*, GStar::CollisionComponent*> GStar::FindCol
 	return {nullptr,nullptr};
  } 
 
-GStar::Vector3 GStar::GenerateRandomVector(const Vector3 & min, const Vector3 & max)
+GStar::Vector3 GStar::GenerateRandomVector(const Vector3 &, const Vector3 &)
 {
 	return Vector3(0, 0, 0);
 }
 
 float GStar::RandomInRange(float min, float max)
 {
-	return min + (max-min)*((double)rand() / (RAND_MAX));
+	return (float)(min + (max-min)*((double)rand() / (RAND_MAX)));
 }
 

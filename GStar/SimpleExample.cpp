@@ -31,7 +31,7 @@ GStar::TextureData * SimpleExample::getdata()
 	GStar::Vector3 lookat(0, 0, -1);
 	float dist_focus = (lookfrom - lookat).Length();
 	float apeture = 2.0f;
-	GStar::TRCamera cam(lookfrom, lookat,GStar::Vector3(0,1,0),40,nx/ny,apeture,dist_focus);
+	GStar::TRCamera cam(lookfrom, lookat,GStar::Vector3(0,1,0),40.0f,(float)nx/(float)ny,apeture,dist_focus);
 	uint8_t data[200*200* 3];
 	constexpr int batch = 40;
 	constexpr int num_thread = 5;
@@ -113,7 +113,7 @@ float SimpleExample::UnitRandom() {
 	rng.seed(ss);
 	// initialize a uniform distribution between 0 and 1
 	std::uniform_real_distribution<double> unif(0, 1);
-	return unif(rng);
+	return (float)unif(rng);
 }
 float SimpleExample::Random() {
 	return ((float)rand() / (RAND_MAX));
@@ -130,7 +130,7 @@ GStar::Hitable * SimpleExample::random_scene()
 		for (int b = -11; b < 11; b++) {
 			float choose_mat = Random();
 			Vector3 center(a + .9f*Random(), .2f, .9f*Random());
-			if ((center - Vector3(4, .2, 0)).Length() > .9) {
+			if ((center - Vector3(4.0f, .2f, 0.0f)).Length() > .9f) {
 				if (choose_mat < .8) {
 					list[i++] = new Sphere(center, .2f, new lambertian(Vector3(Random()*Random(), Random()*Random(), Random()*Random())));
 				}
@@ -162,10 +162,10 @@ GStar::Hitable * SimpleExample::Glass_scene()
 	return new GStar::hitable_list(list, hitables);
 }
 
-void SimpleExample::CalculationBlock(int start, int end,int nx,int ns,const GStar::TRCamera& cam, GStar::Hitable* world, uint8_t* data)
+void SimpleExample::CalculationBlock(int start, int end,int nx,int ns,const GStar::TRCamera& cam, GStar::Hitable* world, uint8_t*)
 {
 	int length = end - start;
-	uint8_t* local = new uint8_t(length * 200 * 3);
+	uint8_t* local = new uint8_t((uint8_t)(length * 200 * 3));
 	for (int j = start; j < end; j++) {
 		for (int i = 0; i < nx; i++) {
 			GStar::Vector3 col(0, 0, 0);
@@ -177,9 +177,9 @@ void SimpleExample::CalculationBlock(int start, int end,int nx,int ns,const GSta
 			}
 			col /= float(ns);
 			col = GStar::Vector3(sqrt(col[0]), sqrt(col[1]), sqrt(col[2]));
-			local[((j -start) * 200 + i) * 3] = int(255.99*col[0]);
-			local[((j - start) * 200 + i) * 3 + 1] = int(255.99*col[1]);
-			local[((j - start) * 200 + i) * 3 + 2] = int(255.99*col[2]);
+			local[((j -start) * 200 + i) * 3] = (uint8_t)int(255.99*col[0]);
+			local[((j - start) * 200 + i) * 3 + 1] = (uint8_t) int(255.99*col[1]);
+			local[((j - start) * 200 + i) * 3 + 2] = (uint8_t) int(255.99*col[2]);
 		}
 	}
 	mtx.lock();

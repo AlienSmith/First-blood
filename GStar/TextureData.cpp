@@ -24,7 +24,7 @@ bool GStar::TextureData::readformfile(const char * string)
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "Fail Read File %s", string);
 	this->my_data.x = nx;
 	this->my_data.y = ny;
-	uint8_t* data = new uint8_t(nx*ny * 3);
+	uint8_t* data = new uint8_t((uint8_t)(nx*ny * 3));
 	if (!myFile.read(reinterpret_cast<char*>(data), nx*ny * 3))
 		DEBUG_PRINT(GStar::LOGPlatform::Console, GStar::LOGType::Error, "Fail Read File %s", string);
 	this->my_data.data = data;

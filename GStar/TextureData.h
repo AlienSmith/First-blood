@@ -40,7 +40,7 @@ namespace GStar {
 		bool writetofile(const char* string);
 	private:
 		uint8_t* Copy(const uint8_t* const data, int x, int y) {
-			uint8_t* new_data = new uint8_t(x*y*3);
+			uint8_t* new_data = new uint8_t((uint8_t)(x*y*3));
 			for (int i = 0; i < x*y * 3; i++) {
 				new_data[i] = data[i];
 			}

@@ -10,7 +10,7 @@ GStar::PongBallController::PongBallController(GStar::PhysicComponent * component
 
 void GStar::PongBallController::Initialize()
 {
-	float tempvalue = ((double)rand() / (RAND_MAX))* 10 + 1;
+	float tempvalue =float( ((double)rand() / (RAND_MAX))* 10 + 1);
 	Vector3 temp = Vector3( tempvalue/10.0f + 1.0f, tempvalue/10.0f,0.0f);
 	temp /= 2 * temp.Length();
 	my_component->SetSpeed(temp);
@@ -18,7 +18,7 @@ void GStar::PongBallController::Initialize()
 	return;
 }
 
-void GStar::PongBallController::OnCollision(CollisionComponent * other_collider, const Vector3 & Collision_Point)
+void GStar::PongBallController::OnCollision(CollisionComponent *, const Vector3 &)
 {
 	Vector3 temp = my_component->GetSpeed();
 	if (temp.Length()*(1 + enhancement) < maxspeed) {

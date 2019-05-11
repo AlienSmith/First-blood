@@ -2,7 +2,7 @@
 #include"GSTime.h"
 void KeyControlCompoenent::Update()
 {
-	my_transform->Translate(delta * GStar::GSTime::Instance().GetdeltaTime(), GStar::Base::SELF);
+	my_transform->Translate(delta * (float)GStar::GSTime::Instance().GetdeltaTime(), GStar::Base::SELF);
 }
 
 void KeyControlCompoenent::OnKeyControl(GStar::Event * input)

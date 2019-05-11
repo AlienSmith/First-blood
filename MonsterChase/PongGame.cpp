@@ -34,8 +34,6 @@ void PongGame::Start()
 	{
 		255,   255,   0,
 	};
-	int width = 1;
-	int height = 1;
 	GStar::TextureData texture;
 	///Generate and Write files
 	//GStar::TextureData* i_texture = SimpleExample::getdata();

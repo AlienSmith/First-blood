@@ -41,7 +41,7 @@ void GStar::PongController::OnKeyControl(GStar::Event * input)
 	}
 }
 
-void GStar::PongController::OnCollision(CollisionComponent * other_collider, const Vector3 & Collision_Point)
+void GStar::PongController::OnCollision(CollisionComponent * other_collider, const Vector3 &)
 {
 	if (other_collider->getPhysic()->getMass() > my_component->getMass()) {
 		my_component->SetSpeed(.1f*my_component->GetSpeed());

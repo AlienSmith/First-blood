@@ -2,7 +2,7 @@
 #include "Vector3.h"
 #include <mutex>
 namespace GStar {
-		struct TextureData;
+		class TextureData;
 		class Ray;
 		class Sphere;
 		class Hitable;

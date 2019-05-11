@@ -35,13 +35,10 @@ public:
 		GStar::MyString file = GStar::MyString("../MonsterChase/Sprite.lua");
 		//temporary disable lua 
 		//GStar::LoadObject(file.GetString(),nullptr);
-		float a = SimpleExample::UnitRandom();
 		uint8_t texels[3] =
 		{
 			255,   255,   0,  
 		};
-		int width = 1; 
-		int height = 1;
 		GStar::TextureData texture;
 		///Generate and Write files
 		//GStar::TextureData* i_texture = SimpleExample::getdata();

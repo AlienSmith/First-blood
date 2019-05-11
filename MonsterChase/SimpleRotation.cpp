@@ -3,5 +3,5 @@
 #include "GSTime.h"
 void SimpleRotation::Update()
 {
-	my_transform->Rotate(GStar::Vector3(GStar::GSTime::Instance().GetdeltaTime()*10.0F, 0.0f, 0.0f));
+	my_transform->Rotate(GStar::Vector3((float)(GStar::GSTime::Instance().GetdeltaTime())*10.0F, 0.0f, 0.0f));
 }

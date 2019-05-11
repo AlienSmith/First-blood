@@ -238,7 +238,7 @@ namespace GStar {
 		float dt = uv.Dot(N);
 		float discriminant = (float)(1.0 - ni_over_nt * ni_over_nt*(1.0f - dt * dt));
 		if (discriminant > 0) {
-			refracted = ni_over_nt * (V - N * dt) - N * sqrt(discriminant);
+			refracted = ni_over_nt * (V - N) * N * (float)sqrt(discriminant);
 			return true;
 		}
 		else

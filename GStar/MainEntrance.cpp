@@ -73,7 +73,7 @@ void MainEntrance::Run()
 		myScene->UpdateTime();
 		myController->Update();
 		GStar::InterfaceComponentManager::Instance()->Update();
-		GStar::PhysicManager::Instance()->Update(GStar::GSTime::Instance().GetdeltaTime());
+		GStar::PhysicManager::Instance()->Update((float)GStar::GSTime::Instance().GetdeltaTime());
 		GStar::CollisionManager::Instance()->Update();
 		CleanScreen();
 		//The World should only update transform
@@ -105,7 +105,7 @@ void MainEntrance::framebuffer_size_call(GLFWwindow * window, int width, int hei
 	MainEntrance::instance->myController->framebuffer_size_callback(window, width, height);
 }
 //The keyinputevent object will die with the function
-void MainEntrance::keyboard_call(GLFWwindow * window, int key, int scancode, int action, int mods)
+void MainEntrance::keyboard_call(GLFWwindow * window, int key, int, int action, int)
 {
 	if (window) {
 		MainEntrance::instance->KeyBoardInput.Invoke(new GStar::KeyInputEvent(key, action));

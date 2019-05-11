@@ -2,7 +2,7 @@
 #include "Vector3.h"
 #include "Ray.h"
 namespace GStar {
-	static constexpr float M_PI_OVER_180 = 3.14159265359 / 180;
+	static constexpr float M_PI_OVER_180 = 3.14159265359f / 180.0f;
 	struct TRCdata {
 		Vector3 origin;
 		Vector3 lower_left_corner;
@@ -14,7 +14,6 @@ namespace GStar {
 	class TRCamera {
 	public:
 		TRCamera() :m_data({orig,lf_cornor,hori,vert,u,v,w,radius}) {
-			float a = 0;
 		}
 		TRCamera(float vfov, float aspect);
 		Ray get_ray(float u, float v) const;

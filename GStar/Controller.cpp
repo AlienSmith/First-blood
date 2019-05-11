@@ -22,7 +22,7 @@ void Controller::processInput(GLFWwindow * window)
 		glfwSetWindowShouldClose(window, true);
 	}
 	//For move around
-	my_camera.processInput(window, GStar::GSTime::Instance().GetdeltaTime() );
+	my_camera.processInput(window,(float)GStar::GSTime::Instance().GetdeltaTime() );
 }
 
 void Controller::framebuffer_size_callback(GLFWwindow * window, int width, int height)

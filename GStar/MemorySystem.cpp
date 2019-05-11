@@ -5,8 +5,8 @@
 void* generalHeap = nullptr;
 bool InitializeMemorySystem()
 { 
-	generalHeap = HeapAlloc(GetProcessHeap(), 0, GENERALHEAPSIZE);
-	FixedSizeAllocator::Initialize(generalHeap, GENERALHEAPSIZE);
+	generalHeap = HeapAlloc(GetProcessHeap(), 0, (SIZE_T)GENERALHEAPSIZE);
+	FixedSizeAllocator::Initialize(generalHeap, (size_t)GENERALHEAPSIZE);
 	return true;
 }
 

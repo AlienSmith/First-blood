@@ -9,7 +9,7 @@ namespace GStar {
 		//This will work on the updateobject instead of the Object.
 		virtual void Update() = 0;
 		virtual void Terminate() = 0;
-		virtual void OnCollision(CollisionComponent* other_collider, const Vector3& Collision_Point){}
+		virtual void OnCollision(CollisionComponent*, const Vector3&) {}
 		InterfaceComponent(TransformComponent* object):my_transform(object){}
 		virtual ~InterfaceComponent() {}
 		TransformComponent* GetComponent() {

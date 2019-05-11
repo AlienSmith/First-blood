@@ -16,8 +16,8 @@ namespace GStar {
 	{
 	public:
 		 PhysicComponent(TransformComponent* const transform);
-		 PhysicComponent(TransformComponent* const transform, bool use_gravity, float mass, float roughness);
-		 PhysicComponent(TransformComponent* const transform, bool use_gravity, float mass, float roughness,Vector3 angular_momentum);
+		 PhysicComponent(TransformComponent* const transform, bool use_gravity, float mass, float roughness, float conllision_const);
+		 PhysicComponent(TransformComponent* const transform, bool use_gravity, float mass, float roughness, float conllision_const,Vector3 angular_momentum);
 		 PhysicComponent(const PhysicComponent&) = delete;
 		~ PhysicComponent();
 		inline void AddForce(const Vector3& Force);
@@ -60,6 +60,20 @@ namespace GStar {
 			return;
 		}inline Vector3 GetAngularSpeed()const{
 			return _angular_speed;
+		}inline void UpdateAngularSpeed(float deltatime) {
+			GenerateAngularSpeed();
+			if (_angular_speed != Vector3(0.0f, 0.0f, 0.0f)) {
+				my_transform->_Rotate(_angular_speed*deltatime);
+			}
+			_angular_momentum += deltatime * _totaltorque;
+		}inline void UpdateLinearSpeed(float deltatime) {
+			GStar::Vector3 resistance = GetCurrentResistance();
+			_delta = _speed * deltatime;
+			_speed += (_totalforce + resistance)*deltatime;
+			my_transform->Translate(_delta, GStar::Base::WORLD);
+		}
+		inline float gete() const {
+			return e;
 		}
 	private:
 		inline void ResetValues();
@@ -77,6 +91,8 @@ namespace GStar {
 		bool _usegravity;
 		float _mass;//kg
 		float _roughness;
+		//collision constant for the material 1 for no energy lost during the collision
+		float e;
 		bool _update_in_physicsmanager;
 		inline void GenerateAngularSpeed();
 	};
@@ -92,11 +108,12 @@ namespace GStar {
 	_usegravity(false),
 	_mass(1.0f),
 	_roughness(0.1f),
+	e(1.0f),
 	_update_in_physicsmanager(true){
 		GStar::Vector3 Scale = my_transform->GetScale();
 		_inertia_inverse = LocalSpceInverInertia_Cube(_mass, Scale[0],Scale[1],Scale[2]);
 	}
-	inline PhysicComponent::PhysicComponent(TransformComponent * const transform, bool use_gravity, float mass, float roughness):
+	inline PhysicComponent::PhysicComponent(TransformComponent * const transform, bool use_gravity, float mass, float roughness,float conllision_const):
 	_inertia_inverse(),
 	_angular_momentum(0.0f, 0.0f, 0.0f),
 	_angular_speed(0.0f, 0.0f, 0.0f),
@@ -108,11 +125,12 @@ namespace GStar {
 	_usegravity(use_gravity),
 	_mass(mass),
 	_roughness(roughness),
+	e(conllision_const),
 	_update_in_physicsmanager(true) {
 		GStar::Vector3 Scale = my_transform->GetScale();
 		_inertia_inverse = LocalSpceInverInertia_Cube(_mass, Scale[0], Scale[1], Scale[2]);
 	}
-	inline PhysicComponent::PhysicComponent(TransformComponent * const transform, bool use_gravity, float mass, float roughness, Vector3 angular_momentum) :
+	inline PhysicComponent::PhysicComponent(TransformComponent * const transform, bool use_gravity, float mass, float roughness, float conllision_const,Vector3 angular_momentum) :
 		_inertia_inverse(),
 		_angular_momentum(angular_momentum),
 		_angular_speed(0.0f, 0.0f, 0.0f),
@@ -124,6 +142,7 @@ namespace GStar {
 		_usegravity(use_gravity),
 		_mass(mass),
 		_roughness(roughness),
+		e(conllision_const),
 		_update_in_physicsmanager(true) {
 		GStar::Vector3 Scale = my_transform->GetScale();
 		_inertia_inverse = LocalSpceInverInertia_Cube(_mass, Scale[0], Scale[1], Scale[2]);
@@ -150,8 +169,11 @@ namespace GStar {
 	 //return the value for the current speed
 	 inline Vector3 PhysicComponent::GetCurrentResistance() const
 	 {
-		return (-1.0f* _speed * _speed* _roughness);
-		//return GStar::Vector3(.0f, .0f, .0f);
+		 if (_speed != Vector3(0, 0, 0)) {
+			 Vector3 temp = _speed;
+			 return (-1.0f* _speed.Dot(_speed)* _roughness*temp.Normalize());
+		 }
+		return GStar::Vector3(.0f, .0f, .0f);
 	 }
 
 	 //These used to do angular movment, could cause cache miss,considered move those info here
@@ -167,17 +189,17 @@ namespace GStar {
 	 }
 	 inline void PhysicComponent::Update(float deltatime)
 	 {
-		 GenerateAngularSpeed();
 		 //Linear
 		 GStar::Vector3 resistance = GetCurrentResistance();
 		 _delta = _speed * deltatime;
 		 _speed += (_totalforce + resistance)*deltatime;
 		 my_transform->Translate(_delta, GStar::Base::WORLD);
+		 /*GenerateAngularSpeed();
 		 //Angular
 		 if (_angular_speed != Vector3(0.0f, 0.0f, 0.0f)) {
 			 my_transform->_Rotate(_angular_speed*deltatime);
 		 }
-		 _angular_momentum += deltatime * _totaltorque;
+		 _angular_momentum += deltatime * _totaltorque;*/
 		 this->ResetValues();
 	 }
 }

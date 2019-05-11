@@ -1,16 +1,21 @@
 #pragma once
 #include "TransformComponent.h"
-#include "SmartPointer.h"
 namespace GStar {
+	class CollisionComponent;
+	class Vector3;
 	class InterfaceComponent{
 	public:
 		virtual void Initialize() = 0;
 		//This will work on the updateobject instead of the Object.
 		virtual void Update() = 0;
 		virtual void Terminate() = 0;
-		InterfaceComponent(const SmartPointer<TransformComponent>& object):my_transform(object){}
+		virtual void OnCollision(CollisionComponent* other_collider, const Vector3& Collision_Point){}
+		InterfaceComponent(TransformComponent* object):my_transform(object){}
 		virtual ~InterfaceComponent() {}
+		TransformComponent* GetComponent() {
+			return my_transform;
+		}
 	protected:
-		SmartPointer<TransformComponent> my_transform;
+		TransformComponent* my_transform;
 	};
 }

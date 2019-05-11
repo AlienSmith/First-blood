@@ -83,7 +83,7 @@ public:
 		//add transform to the tree or it will not be updated
 		world.AddToRoot(trans3);
 		trans3->SetTransform(GStar::Vector3(0.1f, 0.05f, -.3f), GStar::WORLD);
-		trans3->Rotate(GStar::Vector3(10.0f, 0.0f, 10.0f));
+		trans3->Rotate(GStar::Vector3(0.0f, 0.0f, 10.0f));
 		//trans3->SetTransform(GStar::Vector3(0.1f, 0.0f, -.3f), GStar::WORLD);
 		//trans3->SetTransform(GStar::Vector3(0.0f, 0.1f, -.3f), GStar::WORLD);
 		trans3->SetScale(GStar::Vector3(.1f, .1f, .1f));
@@ -96,10 +96,10 @@ public:
 		GStar::PhysicComponent* P3 = GStar::PhysicManager::Instance()->AddPhysic(trans3,false,1.0f,.1f);
 		GStar::CollisionManager::AddCollision(P3, GStar::Vector3(1.0f, 1.0f, 1.0f));
 		GStar::InterfaceComponent* I3 = new GStar::PhysicBasedController(P3, 1.0f);
-		imanager.AddInterface(I3);
+		imanager.AddInterface(I3); 
 		//P3->SetSpeed(GStar::Vector3(-.5f,-0.1f,0.0f));
 
-		//Cube2 
+		//Cube2 654
 		trans4 = new GStar::TransformComponent("Cube2");
 		world.AddToRoot(trans4);
 		trans4->SetTransform(GStar::Vector3(-0.05f, 0.0f, -.3f), GStar::WORLD);

@@ -135,6 +135,9 @@
     <ClCompile Include="CollisionManager.cpp">
       <Filter>Collision</Filter>
     </ClCompile>
+    <ClCompile Include="CollisionTest.cpp">
+      <Filter>Collision</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GStar_init.h" />
@@ -313,7 +316,7 @@
       <Filter>Physics\OpenGl\Core\CameraM</Filter>
     </ClInclude>
     <ClInclude Include="CameraComponent.h">
-      <Filter>OldCode</Filter>
+      <Filter>Physics\OldCode</Filter>
     </ClInclude>
     <ClInclude Include="InterfaceComponentManager.h">
       <Filter>Entrance</Filter>
@@ -371,6 +374,12 @@
     </ClInclude>
     <ClInclude Include="Matrix3.h">
       <Filter>Math</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionTest.hpp">
+      <Filter>Collision</Filter>
+    </ClInclude>
+    <ClInclude Include="CollisionEvent.h">
+      <Filter>Entrance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -504,9 +513,6 @@
     <Filter Include="SmartPointer">
       <UniqueIdentifier>{3dcf3588-5f3b-4f8d-b262-8ce3ee80ad0b}</UniqueIdentifier>
     </Filter>
-    <Filter Include="OldCode">
-      <UniqueIdentifier>{bf37cbf9-7c7f-475e-94a9-348d33d86ae9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="RayTracer">
       <UniqueIdentifier>{fc1e2d21-d593-4f1b-9ff0-6b9ad06c9ace}</UniqueIdentifier>
     </Filter>
@@ -576,5 +582,11 @@
     <Filter Include="Collision">
       <UniqueIdentifier>{305ef33b-50cf-45eb-b586-e8a02dd2d963}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Physics\OldCode">
+      <UniqueIdentifier>{bf37cbf9-7c7f-475e-94a9-348d33d86ae9}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Results.txt" />
   </ItemGroup>
 </Project>

@@ -59,6 +59,8 @@ Global
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
 	EndGlobalSection
+<<<<<<< HEAD
+=======
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
 	EndGlobalSection
@@ -80,4 +82,5 @@ Global
 	GlobalSection(Performance) = preSolution
 		HasPerformanceSessions = true
 	EndGlobalSection
+>>>>>>> ffa42c6aca8eb266ca159d51f74cf82e70530bdf
 EndGlobal

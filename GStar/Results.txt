@@ -1,0 +1,13 @@
+Before Optimization
+System function OutputDebugStringA() used by GStar::ConsolePrint() takes 40% samples
+GStar::Vector3::Dot() takes most exclusive samples 5.16% amount functions writen by me
+GStar::Vector3::Cross() takes 1.35% samples
+After Optimization
+System function OutputDebugStringA() used by GStar::ConsolePrint() takes 44% samples
+GStar::Vector3::Dot() takes most exclusive samples 6.53% amount functions writen by me
+GStar::Vector3::Cross() takes 0.55% samples
+
+Other ways of optimization pick up the first two collision that would use least time 
+to happen then only test those objects whose movement have been changed in the last collision
+with other objects.Compare their potential collision time with privous calculated time 
+to find the next collision. It would be less caluculation for every two collision detections. 

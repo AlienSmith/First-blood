@@ -5,6 +5,7 @@
 #include <iterator>
 #include "GSTime.h"
 #include <utility>
+#include "CollisionEvent.h"
 GStar::CollisionManager* GStar::CollisionManager::instance = nullptr;
 GStar::CollisionComponent * GStar::CollisionManager::AddCollision(PhysicComponent * my_physic, const Vector3 & offset)
 {
@@ -62,7 +63,7 @@ void GStar::CollisionManager::Update()
 void GStar::CollisionManager::UpdatePhysic(float deltatime)
 {
 	for (std::vector<CollisionComponent*>::iterator it = CollisionComponents.begin(); it != CollisionComponents.end(); it++) {
-		(*it)->getPhysic()->Update(deltatime);
+		(*it)->getPhysic()->UpdateLinearSpeed(deltatime);
 	}
 }
 void GStar::CollisionManager::GetCollisionPoint(CollisionComponent * A, CollisionComponent * B, const Vector3& normal, Vector3 & o_RA, Vector3 & o_RB, Vector3 & o_Point, float deltatime) const
@@ -179,7 +180,7 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	Vector3 normal = NormalForA;
 	normal.Normalize();
 	GetCollisionPoint(A, B, normal, Ra, Rb, CollisionPoint,deltatime);
-	float impulse = GetImpulse(Ra, Rb, A, B, normal);
+	float impulse = GetImpulse(Ra, Rb, A, B, normal,.5*(A->getPhysic()->gete() + B->getPhysic()->gete()));
 	float delta_A = (impulse / A->getPhysic()->getMass());
 	float delta_B = -1*(impulse / B->getPhysic()->getMass());
 	///Old Algorithm to test linear impulse
@@ -199,7 +200,7 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	Vector3 deltaM_B = -1000*Vector3::Cross(Rb, normal)*impulse;
 	A->getPhysic()->SetAngularMomentum(A->getPhysic()->GetAngularMomentum() +deltaM_A);
 	B->getPhysic()->SetAngularMomentum(B->getPhysic()->GetAngularMomentum() +deltaM_B);
-
+	SendCollisionInfo(A, B, CollisionPoint);
 #if defined(_DEBUG)
 	int idA = A->getPhysic()->GetTransformComponent()->GetName();
 	GStar::Vector3 SpeedA = A->getPhysic()->GetSpeed();
@@ -212,6 +213,11 @@ void GStar::CollisionManager::ApplyCollisionResults(CollisionComponent * A, Coll
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "After Collision Object %i with angular speed %f,%f,%f", idA, Angular_SpeedA[0], Angular_SpeedA[1], Angular_SpeedA[2]);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "After Collision Object %i with angular speed %f,%f,%f", idB, Angular_SpeedB[0], Angular_SpeedB[1], Angular_SpeedB[2]);
 #endif
+}
+
+void GStar::CollisionManager::SendCollisionInfo(CollisionComponent * collider1, CollisionComponent * collider2, const GStar::Vector3 & Point)
+{
+	CollisionSender.Invoke(new CollisionEvent(collider1,collider2, Point));
 }
 
 GStar::Vector3 GStar::LinePlaneIntersection(Vector3 PlanePoint, Vector3 PlaneNormal, Vector3 LinePoint, Vector3 LineDirection)

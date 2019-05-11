@@ -135,7 +135,9 @@
     <ClInclude Include="CameraComponent.h" />
     <ClInclude Include="CameraManager.h" />
     <ClInclude Include="CollisionComponent.h" />
+    <ClInclude Include="CollisionEvent.h" />
     <ClInclude Include="CollisionManager.h" />
+    <ClInclude Include="CollisionTest.hpp" />
     <ClInclude Include="Compare.h" />
     <ClInclude Include="Delegate.h" />
     <ClInclude Include="dielectric.h" />
@@ -217,6 +219,7 @@
     <ClCompile Include="CameraManager.cpp" />
     <ClCompile Include="CollisionComponent.cpp" />
     <ClCompile Include="CollisionManager.cpp" />
+    <ClCompile Include="CollisionTest.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="ConsolePrint.cpp" />
     <ClCompile Include="Controller.cpp" />
@@ -296,6 +299,9 @@
     <Image Include="IronBox.png" />
     <Image Include="wall.jpg" />
     <Image Include="woodcontainer.jpg" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="Results.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -61,7 +61,7 @@ void MainEntrance::Run()
 	check_gl_error();
 	//Intialize Managers
 	GStar::CollisionManager::Instance();
-	GStar::InterfaceComponentManager::Instance()->RegisterCollisionEventReciver();
+	GStar::InterfaceComponentManager::Instance()->Initialize();
 	GStar::PhysicManager::Instance();
 	GStar::RManager::Instance();
 	//RenderLoop

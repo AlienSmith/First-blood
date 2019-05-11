@@ -11,6 +11,8 @@ namespace GStar {
 		void RegisterCollisionEventReciver();
 		void AddInterface(InterfaceComponent* i_pinterface);
 		void Update();
+		void Initialize();
+		InterfaceComponent* FindInterfacewithTransform(TransformComponent* transformcomponent);
 	private:
 		InterfaceComponentManager();
 		static InterfaceComponentManager* instance;

@@ -26,6 +26,7 @@
 #include"CollisionComponent.h"
 #include"CollisionManager.h"
 #include"Vector3.h"
+#include"PongBallController.h"
 void PongGame::Start()
 {
 	uint8_t texels[3] =
@@ -68,9 +69,9 @@ void PongGame::Start()
 	CommonMesh = new GStar::MeshComponent(NT_cubeparameters);
 	CommonShader = new GStar::ShaderComponent(NT_Shaders);
 
-	//Ball and two controllers
+	//Ball and two players
 	GStar::PhysicComponent* Ball = AddCommonObjects("Ball", GStar::Vector3(0.0f, 0.0f, -.3f), GStar::Vector3(.05f, .05f, .05f),.0001f,1.1f,0.0f);
-	Ball->SetSpeed(GStar::Vector3(0.5f, 0.1f, 0.0f));
+	GStar::InterfaceComponent* I_Ball = new GStar::PongBallController(Ball, 3.0f, 0.2f);
 	GStar::PhysicComponent* Player1 = AddCommonObjects("Controller1", GStar::Vector3(-0.4f, 0.0f, -.3f), GStar::Vector3(.05f, .25f, .05f), 10.0f,.9f,0.5f);
 	GStar::InterfaceComponent* I4 = new GStar::PongController(Player1, .1f, 87, 83);
 	imanager.AddInterface(I4);

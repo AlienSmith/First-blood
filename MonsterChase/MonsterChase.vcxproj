@@ -143,6 +143,7 @@
     <ClCompile Include="Monster.cpp" />
     <ClCompile Include="MT_MAIN.cpp" />
     <ClCompile Include="PhysicBasedController.cpp" />
+    <ClCompile Include="PongBallController.cpp" />
     <ClCompile Include="PongController.cpp" />
     <ClCompile Include="PongGame.cpp" />
     <ClCompile Include="SimpleForce.cpp" />
@@ -154,6 +155,7 @@
     <ClInclude Include="LightScene.h" />
     <ClInclude Include="MT_MAIN.hpp" />
     <ClInclude Include="PhysicBasedController.h" />
+    <ClInclude Include="PongBallController.h" />
     <ClInclude Include="PongController.h" />
     <ClInclude Include="PongGame.h" />
     <ClInclude Include="SimpleForce.h" />

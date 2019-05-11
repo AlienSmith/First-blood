@@ -21,6 +21,7 @@
     </ClCompile>
     <ClCompile Include="PongController.cpp" />
     <ClCompile Include="PongGame.cpp" />
+    <ClCompile Include="PongBallController.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -50,6 +51,9 @@
       <Filter>Interfaces</Filter>
     </ClInclude>
     <ClInclude Include="PongController.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
+    <ClInclude Include="PongBallController.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
   </ItemGroup>

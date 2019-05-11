@@ -1,5 +1,6 @@
 #include "InterfaceComponentManager.h"
 #include "ConsolePrint.h"
+#include "PhysicComponent.h"
 namespace GStar {
 	InterfaceComponentManager* InterfaceComponentManager::instance = nullptr;
 	InterfaceComponentManager * GStar::InterfaceComponentManager::Instance()
@@ -33,8 +34,32 @@ namespace GStar {
 			interfacelist.Move();
 		}
 	}
+	void InterfaceComponentManager::Initialize()
+	{
+		RegisterCollisionEventReciver();
+		interfacelist.Resetcurrent();
+		while (interfacelist.HasNext()) {
+			interfacelist.GetNext()->Initialize();
+			interfacelist.Move();
+		}
+	}
+	InterfaceComponent * InterfaceComponentManager::FindInterfacewithTransform(TransformComponent * transformcomponent)
+	{
+		interfacelist.Resetcurrent();
+		while (interfacelist.HasNext()) {
+			if (interfacelist.GetNext()->GetComponent() == transformcomponent){
+				return interfacelist.GetNext();
+			}
+			interfacelist.Move();
+		}
+		return nullptr;
+	}
 	void InterfaceComponentManager::DistributeCollisionEvent(GStar::Event * input)
 	{
-		DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Waring, "Info Sent to InterfaceManager");
+		GStar::CollisionEvent* temp_event = static_cast<GStar::CollisionEvent*>(input);
+		InterfaceComponent* temp = FindInterfacewithTransform(temp_event->ColliderA->getPhysic()->GetTransformComponent());
+		if (temp) {
+			temp->OnCollision(temp_event->ColliderB, temp_event->Point);
+		}
 	}
 }

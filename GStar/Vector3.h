@@ -236,7 +236,7 @@ namespace GStar {
 		Vector3 uv = V;
 		uv.Normalize();
 		float dt = uv.Dot(N);
-		float discriminant = 1.0 - ni_over_nt * ni_over_nt*(1.0f - dt * dt);
+		float discriminant = (float)(1.0 - ni_over_nt * ni_over_nt*(1.0f - dt * dt));
 		if (discriminant > 0) {
 			refracted = ni_over_nt * (V - N * dt) - N * sqrt(discriminant);
 			return true;

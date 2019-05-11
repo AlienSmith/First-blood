@@ -132,14 +132,14 @@ namespace GStar {
 	template<class T>
 	inline SingleLinkedList<T>::~SingleLinkedList()
 	{
-		SingleLinkedListNode<T>* temp = m_pHead;
+		/*SingleLinkedListNode<T>* temp = m_pHead;
 		SingleLinkedListNode<T>* temp1;
 		while (temp != nullptr)
 		{
 			temp1 = temp->GetNext();
 			delete temp;
 			temp = temp1;
-		}
+		}*/
 	}
 
 	template<class T>

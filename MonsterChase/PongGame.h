@@ -17,7 +17,7 @@ public:
 	}
 	virtual ~PongGame() {}
 	virtual void Start();
-	GStar::PhysicComponent* AddCommonObjects(const GStar::MyString& name, const GStar::Vector3& position, const GStar::Vector3& scale,float weight,float collision_constant,float roughness);
+	GStar::PhysicComponent* AddCommonObjects(const GStar::MyString& name, const GStar::Vector3& position, const GStar::Vector3& scale,float weight,float collision_constant,float roughness,bool visible = true);
 	virtual void Update() {}
 	virtual void Terminate() {}
 private:

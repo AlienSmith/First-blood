@@ -372,9 +372,6 @@
     <ClInclude Include="CollisionManager.h">
       <Filter>Collision</Filter>
     </ClInclude>
-    <ClInclude Include="Matrix3.h">
-      <Filter>Math</Filter>
-    </ClInclude>
     <ClInclude Include="CollisionTest.hpp">
       <Filter>Collision</Filter>
     </ClInclude>

@@ -61,5 +61,9 @@ namespace GStar {
 		if (temp) {
 			temp->OnCollision(temp_event->ColliderB, temp_event->Point);
 		}
+		temp = FindInterfacewithTransform(temp_event->ColliderB->getPhysic()->GetTransformComponent());
+		if (temp) {
+			temp->OnCollision(temp_event->ColliderA, temp_event->Point);
+		}
 	}
 }

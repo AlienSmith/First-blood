@@ -65,7 +65,7 @@ void MainEntrance::Run()
 	GStar::PhysicManager::Instance();
 	GStar::RManager::Instance();
 	//RenderLoop
-	while (!glfwWindowShouldClose(myScene->Window())) {
+	while (!glfwWindowShouldClose(myScene->Window())&&game) {
 		if (GStar::SceneInterface::Instance) {
 			GStar::SceneInterface::Instance->Update();
 			check_gl_error();

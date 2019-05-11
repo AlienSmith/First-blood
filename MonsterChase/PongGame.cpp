@@ -27,6 +27,7 @@
 #include"CollisionManager.h"
 #include"Vector3.h"
 #include"PongBallController.h"
+#include"PongWall.h"
 void PongGame::Start()
 {
 	uint8_t texels[3] =
@@ -71,7 +72,8 @@ void PongGame::Start()
 
 	//Ball and two players
 	GStar::PhysicComponent* Ball = AddCommonObjects("Ball", GStar::Vector3(0.0f, 0.0f, -.3f), GStar::Vector3(.05f, .05f, .05f),.0001f,1.1f,0.0f);
-	GStar::InterfaceComponent* I_Ball = new GStar::PongBallController(Ball, 3.0f, 0.2f);
+	GStar::InterfaceComponent* I_Ball = new GStar::PongBallController(Ball, .5f, 0.2f);
+	imanager.AddInterface(I_Ball);
 	GStar::PhysicComponent* Player1 = AddCommonObjects("Controller1", GStar::Vector3(-0.4f, 0.0f, -.3f), GStar::Vector3(.05f, .25f, .05f), 10.0f,.9f,0.5f);
 	GStar::InterfaceComponent* I4 = new GStar::PongController(Player1, .1f, 87, 83);
 	imanager.AddInterface(I4);
@@ -80,20 +82,27 @@ void PongGame::Start()
 	imanager.AddInterface(I5);
 	//Wall 1 2 3 4
 	AddCommonObjects("Wall1", GStar::Vector3(0.0f, .33f, -.3f), GStar::Vector3(1.0f, .05f, .05f), 100000000.0f,1.0f,0.0f);
-	AddCommonObjects("Wall1", GStar::Vector3(0.0f, -.33f, -.3f), GStar::Vector3(1.0f, .05f, .05f),100000000.0f,1.0f,0.0f);
-
+	AddCommonObjects("Wall2", GStar::Vector3(0.0f, -.33f, -.3f), GStar::Vector3(1.0f, .05f, .05f),100000000.0f,1.0f,0.0f);
+	GStar::PhysicComponent* Wall3 = AddCommonObjects("Wall3", GStar::Vector3(0.5f, 0.0f, -.3f), GStar::Vector3(.05f, .6f, .05f), 100000000.0f, 1.0f, 0.0f,false);
+	GStar::InterfaceComponent* IWall3 = new GStar::PongWall(Wall3->GetTransformComponent());
+	imanager.AddInterface(IWall3);
+	GStar::PhysicComponent* Wall4 = AddCommonObjects("Wall4", GStar::Vector3(-0.5f, 0.0f, -.3f), GStar::Vector3(.05f, .6f, .05f), 100000000.0f, 1.0f, 0.0f,false);
+	GStar::InterfaceComponent* IWall4 = new GStar::PongWall(Wall4->GetTransformComponent());
+	imanager.AddInterface(IWall4);
 }
 
-GStar::PhysicComponent * PongGame::AddCommonObjects(const GStar::MyString & name, const GStar::Vector3 & position, const GStar::Vector3 & scale, float weight, float collision_constant, float roughness)
+GStar::PhysicComponent * PongGame::AddCommonObjects(const GStar::MyString & name, const GStar::Vector3 & position, const GStar::Vector3 & scale, float weight, float collision_constant, float roughness,bool visible)
 {
 	GStar::TransformComponent* temp = new GStar::TransformComponent(name);
 	world->AddToRoot(temp);
 	temp->SetTransform(position, GStar::WORLD);
 	temp->SetScale(scale);
 	temp->UpdateTransform();
-	RObject& R5 = renderer->CreateRenderObject(temp);
-	R5.AddComponent(CommonMesh);
-	R5.AddComponent(CommonShader);
+	if (visible) {
+		RObject& R5 = renderer->CreateRenderObject(temp);
+		R5.AddComponent(CommonMesh);
+		R5.AddComponent(CommonShader);
+	}
 	GStar::PhysicComponent* P5 = GStar::PhysicManager::Instance()->AddPhysic(temp, false, weight, roughness,collision_constant);
 	GStar::CollisionManager::AddCollision(P5, GStar::Vector3(1.0f, 1.0f, 1.0f));
 	return P5;

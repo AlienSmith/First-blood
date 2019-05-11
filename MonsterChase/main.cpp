@@ -57,7 +57,7 @@ int main()
 		DestroyMemorySystem();
 	};
 	_CrtDumpMemoryLeaks();
-	int a = 0;
-	std::cin >> a;
-	return a;
+	//int a = 0;
+	//std::cin >> a;
+	return 0;
 }

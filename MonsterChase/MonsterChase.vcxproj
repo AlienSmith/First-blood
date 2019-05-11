@@ -146,6 +146,7 @@
     <ClCompile Include="PongBallController.cpp" />
     <ClCompile Include="PongController.cpp" />
     <ClCompile Include="PongGame.cpp" />
+    <ClCompile Include="PongWall.cpp" />
     <ClCompile Include="SimpleForce.cpp" />
     <ClCompile Include="SimpleRotation.cpp" />
   </ItemGroup>
@@ -158,6 +159,7 @@
     <ClInclude Include="PongBallController.h" />
     <ClInclude Include="PongController.h" />
     <ClInclude Include="PongGame.h" />
+    <ClInclude Include="PongWall.h" />
     <ClInclude Include="SimpleForce.h" />
     <ClInclude Include="SimpleRotation.h" />
     <ClInclude Include="Monster.h" />
@@ -168,6 +170,7 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="readmefinalproject.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

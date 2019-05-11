@@ -22,7 +22,7 @@ namespace GStar {
 	}
 
 	template <typename T> inline constexpr
-		int signum(T x, std::true_type is_signed) {
+		int signum(T x, std::true_type) {
 		return (T(0) < x) - (x < T(0));
 	}
 

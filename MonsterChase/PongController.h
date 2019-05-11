@@ -4,6 +4,7 @@
 #include"MouseInputEvent.h"
 #include"EventManager.h"
 #include"PhysicComponent.h"
+#include "CollisionComponent.h"
 namespace GStar {
 	class PongController : public InterfaceComponent {
 	public:
@@ -12,6 +13,7 @@ namespace GStar {
 		virtual void Update() override;
 		void OnKeyControl(GStar::Event* input);
 		virtual void Terminate() override{}
+		virtual void OnCollision(CollisionComponent* other_collider, const Vector3& Collision_Point) override;
 		~PongController(){}
 	private:
 		GStar::Vector3 delta;

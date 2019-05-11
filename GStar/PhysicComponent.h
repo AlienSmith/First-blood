@@ -1,7 +1,6 @@
 #pragma once
 #include"TransformComponent.h"
 #include"GSTime.h"
-#include"Matrix3.h"
 //Another Component that would not be attached to the gameobject
 namespace GStar {
 	//Since it is a diagonal matrix

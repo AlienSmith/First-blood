@@ -50,7 +50,7 @@ bool GStar::Collided(const CollisionComponent& ColliderA, const CollisionCompone
 	GStar::Vector3 SpeedAtoB = ColliderA.getPhysic()->GetSpeed() - ColliderB.getPhysic()->GetSpeed();
  	GStar::Vector3 axies(0.0f, 0.0f, 0.0f);
 	float smallest_open = deltatime + 1.0f;
-	float largest_close = -1.0*smallest_open;
+	float largest_close = -1.0f*smallest_open;
 	/*if (!(OverLapAtoB(&InfoA, &InfoB, SpeedAtoB, deltatime, largest_close, smallest_open, axies) &&
 		OverLapAtoB(&InfoB, &InfoA, -1.0f*SpeedAtoB, deltatime, largest_close, smallest_open, axies) &&
 		OverLapAB(&InfoA, &InfoB, SpeedAtoB, deltatime, largest_close, smallest_open, axies))) {

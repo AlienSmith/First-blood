@@ -1,14 +1,18 @@
 #include "PongBallController.h"
+#include <math.h>
 GStar::PongBallController::PongBallController(GStar::PhysicComponent * component, float max_speed, float enhance_Scale)
 	:InterfaceComponent(component->GetTransformComponent()),
 	maxspeed(max_speed),
-	enhancement(enhance_Scale)
+	enhancement(enhance_Scale),
+	my_component(component)
 {
 }
 
 void GStar::PongBallController::Initialize()
 {
-	Vector3 temp = Vector3(1,0,0);
+	float tempvalue = ((double)rand() / (RAND_MAX))* 10 + 1;
+	Vector3 temp = Vector3( tempvalue/10.0f + 1.0f, tempvalue/10.0f,0.0f);
+	temp /= 2 * temp.Length();
 	my_component->SetSpeed(temp);
 	DEBUG_PRINT(GStar::LOGPlatform::Output, GStar::LOGType::Log, "Initialized with speed (%f,%f,%f)",temp[0],temp[1],temp[2]);
 	return;

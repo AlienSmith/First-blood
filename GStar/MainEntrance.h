@@ -6,13 +6,17 @@
 class MainEntrance {
 public:
 	static void SetUpAndRun();
+	static void EndGame() {
+		instance->game = false;
+	}
 private:
 	MainEntrance() :
 		lastX(400), lastY(300),
 		myScene(Scene::Create()),
 		myController(new Controller(myScene)),
 		KeyBoardInput(GStar::EventManager::Instance()->RegisterEvent("KeyBoardInput")),
-		MouseInput(GStar::EventManager::Instance()->RegisterEvent("MouseInput")){}
+		MouseInput(GStar::EventManager::Instance()->RegisterEvent("MouseInput")),
+		game(true){}
 	void Run();
 	static MainEntrance* instance;
 	const static float MouseSensitivity;
@@ -22,6 +26,7 @@ private:
 	Controller* myController;
 	GStar::EventUnite& KeyBoardInput;
 	GStar::EventUnite& MouseInput;
+	bool game;
 	static void mouse_call(GLFWwindow* window, double xpos, double ypos);
 	static void framebuffer_size_call(GLFWwindow* window, int width, int height);
 	static void keyboard_call(GLFWwindow* window, int key, int scancode, int action, int mods);

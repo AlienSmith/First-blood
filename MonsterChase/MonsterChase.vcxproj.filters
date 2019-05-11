@@ -19,9 +19,18 @@
     <ClCompile Include="MT_MAIN.cpp">
       <Filter>MT</Filter>
     </ClCompile>
-    <ClCompile Include="PongController.cpp" />
-    <ClCompile Include="PongGame.cpp" />
-    <ClCompile Include="PongBallController.cpp" />
+    <ClCompile Include="PongGame.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="PongBallController.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="PongController.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
+    <ClCompile Include="PongWall.cpp">
+      <Filter>Interfaces</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Game.h" />
@@ -56,6 +65,9 @@
     <ClInclude Include="PongBallController.h">
       <Filter>Interfaces</Filter>
     </ClInclude>
+    <ClInclude Include="PongWall.h">
+      <Filter>Interfaces</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Interfaces">
@@ -75,5 +87,6 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="ReadMe.txt" />
+    <Text Include="readmefinalproject.txt" />
   </ItemGroup>
 </Project>

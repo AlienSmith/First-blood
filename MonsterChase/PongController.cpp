@@ -1,5 +1,4 @@
 #include "PongController.h"
-
 GStar::PongController::PongController(GStar::PhysicComponent * component, float speed, int key1, int key2):
 	InterfaceComponent(component->GetTransformComponent()),
 	delta(Vector3(0,0,0)),
@@ -39,5 +38,12 @@ void GStar::PongController::OnKeyControl(GStar::Event * input)
 		else {
 			delta[1] = -my_speed;
 		}
+	}
+}
+
+void GStar::PongController::OnCollision(CollisionComponent * other_collider, const Vector3 & Collision_Point)
+{
+	if (other_collider->getPhysic()->getMass() > my_component->getMass()) {
+		my_component->SetSpeed(.1f*my_component->GetSpeed());
 	}
 }
